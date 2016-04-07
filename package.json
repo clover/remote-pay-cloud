@@ -1,0 +1,29 @@
+{
+  "name": "clover-cloud",
+  "version": "0.0.27",
+  "description": "Access Clover devices through the cloud",
+  "keywords": [
+    "clover",
+    "remotepay",
+    "POS",
+    "websocket",
+    "payment"
+  ],
+  "bugs": {
+    "url": "https://github.com/clover/clover-cloud/issues"
+  },
+  "license": "ISC",
+  "author": {
+    "name": "clover-sdk",
+    "email": "sdk@clover.com",
+    "url": "http://www.clover.com"
+  },
+  "main": "index.js",
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/clover/clover-cloud"
+  },
+  "dependencies": {
+    "eventemitter3": "~1.1.1"
+  }
+}
