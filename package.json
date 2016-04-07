@@ -1,6 +1,6 @@
 {
   "name": "clover-cloud",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "description": "Access Clover devices through the cloud",
   "keywords": [
     "clover",
@@ -19,9 +19,9 @@
     "url": "http://www.clover.com"
   },
   "main": "index.js",
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/clover/remote-pay-cloud-npm"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/clover/remote-pay-cloud-npm"
   },
   "dependencies": {
     "eventemitter3": "~1.1.1"
