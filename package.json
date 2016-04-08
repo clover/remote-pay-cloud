@@ -1,6 +1,6 @@
 {
-  "name": "clover-cloud",
-  "version": "0.0.30",
+  "name": "remote-pay-cloud",
+  "version": "0.0.1",
   "description": "Access Clover devices through the cloud",
   "keywords": [
     "clover",
