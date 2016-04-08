@@ -1,6 +1,4 @@
-Repository for Clover's cloud connector API.
-
-Published as an NPM package.
+Repository for Clover's cloud connector API.  Published as an NPM package.  Intended for use in a browser environment.
 
 ##At a Glance
 Make a sale.
@@ -15,7 +13,7 @@ var clover = new Clover({
 clover.initDeviceConnection(function(error) {
   if(error) console.log(error)
   else clover.sale({"amount" : 10000, "tipAmount" : 1500 }, 
-    function mySaleResult(error, saleResult) {
+    function(error, saleResult) {
       if(error) console.log(error);
       console.log(saleResult);
       clover.close();
