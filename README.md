@@ -3,7 +3,7 @@ Repository for Clover's cloud connector API.  Published as an NPM package.  Inte
 ##At a Glance
 Make a sale.
 ```
-var cloverLib = require("clover-cloud").Clover;
+var cloverLib = require("remote-pay-cloud").Clover;
 var clover = new Clover({
   "clientId" : "3BZPZ6A6FQ8ZM",
   "domain" : "https://sandbox.dev.clover.com/",
