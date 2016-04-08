@@ -12,7 +12,7 @@ var clover = new Clover({
 });
 clover.initDeviceConnection(function(error) {
   if(error) console.log(error)
-  else clover.sale({"amount" : 10000, "tipAmount" : 1500 }, 
+  else clover.sale({"amount" : 10000 }, 
     function(error, saleResult) {
       if(error) console.log(error);
       console.log(saleResult);
