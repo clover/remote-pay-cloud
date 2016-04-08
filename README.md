@@ -1,8 +1,32 @@
 Repository for Clover's cloud connector API.
 
+Published as an NPM package.
+
+##At a Glance
+Make a sale.
+```
+var cloverLib = require("clover-cloud").Clover;
+var clover = new Clover({
+  "clientId" : "3BZPZ6A6FQ8ZM",
+  "domain" : "https://sandbox.dev.clover.com/",
+  "merchantId" : "VKYQ0RVGMYHRS",
+  "deviceSerialId" : "C021UQ52341078"
+});
+clover.initDeviceConnection(function(error) {
+  if(error) console.log(error)
+  else clover.sale({"amount" : 10000, "tipAmount" : 1500 }, 
+    function mySaleResult(error, saleResult) {
+      if(error) console.log(error);
+      console.log(saleResult);
+      clover.close();
+  });
+});
+```
+
 To make a payment using the High Level Cloud API
 ####Create the Clover object.
 ```
+var cloverLib = require("clover-cloud").Clover;
 var clover = new Clover(configuration);
 ```
 There are several ways the Clover object can be configured.
