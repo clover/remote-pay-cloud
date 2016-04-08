@@ -24,7 +24,7 @@ clover.initDeviceConnection(function(error) {
 To make a payment using the High Level Cloud API
 ####Create the Clover object.
 ```
-var cloverLib = require("clover-cloud").Clover;
+var cloverLib = require("remote-pay-cloud").Clover;
 var clover = new Clover(configuration);
 ```
 There are several ways the Clover object can be configured.
