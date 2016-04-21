@@ -265,6 +265,17 @@ function RemoteMessageBuilder(defaultPackageName) {
         return this.buildRemoteMessage(LanMethod.KEY_PRESS, RemoteMessageBuilder.COMMAND, payload);
     }
 
+
+    /**
+     * @private
+     * @returns {json} a break message
+     */
+     this.buildBreak = function (payload) {
+         payload.method = LanMethod.BREAK;
+         return this.buildRemoteMessage(LanMethod.BREAK, RemoteMessageBuilder.COMMAND, payload);
+     }
+     
+
     /**
      * @private
      * @returns {json} the pong message

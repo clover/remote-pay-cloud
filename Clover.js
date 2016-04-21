@@ -1217,6 +1217,35 @@ function Clover(configurationIN) {
     }
 
     /**
+     * Sends a break message to the device to reset
+     * the state of the device.
+     * <B>Warning: this will cause any pending transaction messages to be lost!</B>
+     * @param {requestCallback} [completionCallback]
+     */
+    this.resetDevice = function(completionCallback) {
+      // Note - this is a pattern for sending keystrokes ot the device.
+      // Available keystrokes can be found in KeyPress.
+      var callbackPayload = {"request": "break"};
+      var uuid = null;
+      if (completionCallback) {
+          uuid = this.genericAcknowledgedCall(callbackPayload, completionCallback, true);
+      }
+      try {
+          this.device.sendBreak(uuid);
+      } catch (error) {
+          var cloverError = new CloverError(LanMethod.BREAK,
+              "Failure attempting to reset device", error);
+          if (completionCallback) {
+              completionCallback(cloverError, {
+                  "code": "ERROR",
+                  "request": callbackPayload
+              });
+          }
+          console.log(cloverError);
+      }
+    }
+
+    /**
      * Opens the cash drawer
      *
      * @param {string} reason - the reason the cash drawer was opened.
