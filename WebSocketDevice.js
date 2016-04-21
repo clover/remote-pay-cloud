@@ -763,6 +763,24 @@ WebSocketDevice.prototype.sendKeyPress = function(keyCode, ackId) {
     this.sendMessage(lanMessage);
 }
 
+
+/**
+ *
+ * @param [ackId] - an optional id for the message.  If set then the break will be acknowledged,
+ *  otherwise there will be no response.
+ */
+WebSocketDevice.prototype.sendBreak = function(ackId) {
+    var payload = {
+
+    };
+    var lanMessage = this.messageBuilder.buildBreak(payload);
+    // If an id is included, then an "ACK" message will be sent for this message
+    if(ackId) lanMessage.id = ackId;
+
+    this.sendMessage(lanMessage);
+}
+
+
 //
 /**
  * Send a message to start a transaction.  This will make the device display the payment screen
@@ -1235,4 +1253,3 @@ WebSocketDevice.prototype.getBase64Image = function(img) {
 if ('undefined' !== typeof module) {
     module.exports = WebSocketDevice;
 }
-
