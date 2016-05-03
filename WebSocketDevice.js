@@ -2,11 +2,11 @@
 // Connect to the device , send, receive messages
 //*********************************************
 
-var CloverID = require("./CloverID.js")
-var EventEmitter = require("eventemitter3")
-var XmlHttpSupport = require("./xmlHttpSupport.js")
+var CloverID = require("./CloverID.js");
+var EventEmitter = require("eventemitter3");
+var XmlHttpSupport = require("./xmlHttpSupport.js");
 
-var RemoteMessageBuilder = require("./RemoteMessageBuilder.js")
+var RemoteMessageBuilder = require("./RemoteMessageBuilder.js");
 
 var log = require('./Logger.js').create();
 
@@ -59,7 +59,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
     this.contactDevice = function(ws_address) {
         this.baseAddress = ws_address;
         this.reContactDevice(this.generateAddress(this.baseAddress));
-    }
+    };
 
     this.generateAddress = function(baseAddress) {
         var connect = "?";
@@ -73,7 +73,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
             generatedAddress = generatedAddress + connect + "forceConnect=false";
         }
         return generatedAddress;
-    }
+    };
     /**
      * Initiates contact with the device.
      *
@@ -82,7 +82,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
     this.reContactDevice = function(ws_address) {
         var me = this;
         // Reset the timestamp values
-        this.pongReceivedMillis = new Date().getTime();
+        // this.pongReceivedMillis = new Date().getTime();
         this.pingSentMillis = new Date().getTime();
 
         /*
@@ -121,7 +121,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
                 log.error(error);
             }
         }
-    }
+    };
 
     this.startSSSS = function(ws_address) {
         var me = this;
@@ -164,7 +164,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
             this.deviceSocket.onmessage = function (event) {
                 var jsonMessage = JSON.parse(event.data);
                 me.receiveMessage(jsonMessage);
-            }
+            };
 
             this.deviceSocket.onerror = function (event) {
                 log.error(event);
@@ -174,7 +174,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
                 else {
                     me.onerror(event);
                 }
-            }
+            };
 
             this.deviceSocket.onclose = function (event) {
                 try {
@@ -188,7 +188,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
                 me.onclose(event);
             }
         }
-    }
+    };
 
 
     this.startupReconnect = function(delay) {
@@ -207,7 +207,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
             this.reconnectAttempts = 0;
             this.onerror(event);
         }
-    }
+    };
 
     /**
      * Called to check the state of the connection.
@@ -230,7 +230,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
         else {
             this.connectionOK();
         }
-    }
+    };
 
     /**
      * Called when an initial connection is actively denied, typically because the
@@ -241,7 +241,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
     this.connectionDenied = function(terminalIdPairedTo) {
         this.eventEmitter.emit(WebSocketDevice.CONNECTION_DENIED, terminalIdPairedTo);
         this.eventEmitter.emit(WebSocketDevice.ALL_MESSAGES, terminalIdPairedTo);
-    }
+    };
 
     /**
      * Called when the connection is OK.
@@ -252,7 +252,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
         var message = "Connection Ok";
         this.eventEmitter.emit(WebSocketDevice.CONNECTION_OK, message);
         this.eventEmitter.emit(WebSocketDevice.ALL_MESSAGES, message);
-    }
+    };
 
     /**
      * The connection was taken away from us.  Do NOT try to reconnect!
@@ -263,7 +263,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
         this.eventEmitter.emit(WebSocketDevice.CONNECTION_STOLEN, message);
         this.eventEmitter.emit(WebSocketDevice.ALL_MESSAGES, message);
         this.forceClose(true);
-    }
+    };
 
     /**
      * Called when the lag on communication has reached an error length
@@ -282,7 +282,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
         }
         this.eventEmitter.emit(WebSocketDevice.CONNECTION_ERROR, message);
         this.eventEmitter.emit(WebSocketDevice.ALL_MESSAGES, message);
-    }
+    };
 
     /**
      * Called when the lag on communication has reached a warning length
@@ -295,7 +295,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
         var message = "Connection is slow...no response in " + lag + " milliseconds";
         this.eventEmitter.emit(WebSocketDevice.CONNECTION_WARNING, message);
         this.eventEmitter.emit(WebSocketDevice.ALL_MESSAGES, message);
-    }
+    };
 
     /**
      * Called on device error
@@ -306,7 +306,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
     this.onerror = function(event) {
         this.eventEmitter.emit(WebSocketDevice.DEVICE_ERROR, event);
         this.eventEmitter.emit(WebSocketDevice.ALL_MESSAGES, event);
-    }
+    };
 
     /**
      * Called when the device is opened
@@ -317,7 +317,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
     this.onopen = function(event) {
         this.eventEmitter.emit(WebSocketDevice.DEVICE_OPEN, event);
         this.eventEmitter.emit(WebSocketDevice.ALL_MESSAGES, event);
-    }
+    };
 
     /**
      * Called when the device is closed
@@ -328,14 +328,14 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
     this.onclose = function(event) {
         this.eventEmitter.emit(WebSocketDevice.DEVICE_CLOSE, event);
         this.eventEmitter.emit(WebSocketDevice.ALL_MESSAGES, event);
-    }
+    };
 
     /**
      * Called to initiate disconnect from the device
      */
     this.disconnectFromDevice = function() {
         this.forceClose();
-    }
+    };
 
     /**
      * Do not really want to ever have to do this, but it is
@@ -367,7 +367,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
             } catch (e) {
             }
         }
-    }
+    };
 
     /**
      * Called to attempt to reconnect ot the device
@@ -399,11 +399,11 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
             // configuration for it. It may require that the user starts the cloud pay display
             this.reContactDevice(this.generateAddress(this.baseAddress));
         }
-    }
+    };
 
     /**
      * Send a message on the websocket.  The parameter will be serialized to json
-     * @param {json} message - the message to send
+     * @param {Object} message - the message to send
      * @private
      */
     this.sendMessage = function(message) {
@@ -453,11 +453,11 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
                 }
             }
         }
-    }
+    };
 
     /**
      * Get a message on the websocket.
-     * @param {json} message - the message received on the socket
+     * @param {Object} message - the message received on the socket
      * @private
      */
     this.receiveMessage = function(message) {
@@ -478,7 +478,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
         }
         this.eventEmitter.emit(message.method, message);
         this.eventEmitter.emit(WebSocketDevice.ALL_MESSAGES, message);
-    }
+    };
 
     /**
      * Registers event callbacks for message method types, and device state.
@@ -491,7 +491,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
      */
     this.on = function (eventName, callback) {
         this.eventEmitter.on(eventName, callback);
-    }
+    };
 
     /**
      * Unregisters an event callback.
@@ -501,7 +501,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
      */
     this.removeListener = function (eventName, callback) {
         this.eventEmitter.removeListener(eventName, callback);
-    }
+    };
 
     /**
      * Unregisters a set of event callbacks.
@@ -512,7 +512,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
         for(var idx=0;idx<listeners.length;idx++){
             this.removeListener(listeners[idx].event, listeners[idx.callback]);
         }
-    }
+    };
 
     /**
      * Registers event callbacks for message method types, and device state. The callback will be
@@ -526,21 +526,21 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
      */
     this.once = function (eventName, callback) {
         this.eventEmitter.once(eventName, callback);
-    }
+    };
 
     /**
      * @private
      */
     this.pongReceived = function() {
         this.pongReceivedMillis = new Date().getTime();
-    }
+    };
 
     /**
      * @private
      */
     this.pingReceived = function() {
         this.pong();
-    }
+    };
 
     /**
      * @private
@@ -548,7 +548,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
     this.pong = function() {
         this.pingSentMillis = new Date().getTime();
         this.sendMessage(this.messageBuilder.buildPong());
-    }
+    };
 
     /**
      * @private
@@ -625,7 +625,7 @@ WebSocketDevice.DEVICE_CLOSE = WebSocketDevice.LOCAL_EVENT + "_DEVICE_CLOSE";
 /**
  * TElls the device to display the passed order.
  *
- * @param {json} order - the entire order json object
+ * @param {Object} order - the entire order json object
  * @param {string} [ackId] - an optional identifier that can be used to track an acknowledgement
  *  to this message.  This should be a unique identifier, but this is NOT enforced in any way.
  *  A "ACK" message will be returned with this identifier as the message id if this
@@ -641,7 +641,7 @@ WebSocketDevice.prototype.sendShowOrderScreen = function(order, ackId) {
     if(ackId) lanMessage.id = ackId;
 
     this.sendMessage(lanMessage);
-}
+};
 
 /**
  * @typedef {Object} Operation
@@ -657,7 +657,7 @@ WebSocketDevice.prototype.sendShowOrderScreen = function(order, ackId) {
 /**
  * Sends an update to the order to the device, and causes it to display the change.
  *
- * @param {json} order - the entire order json object
+ * @param {Object} order - the entire order json object
  * @param {Operation} lineItemsAddedOperation
  * @param {string} [ackId] - an optional identifier that can be used to track an acknowledgement
  *  to this message.  This should be a unique identifier, but this is NOT enforced in any way.
@@ -675,12 +675,12 @@ WebSocketDevice.prototype.sendShowOrderLineItemAdded = function(order, lineItems
     if(ackId) lanMessage.id = ackId;
 
     this.sendMessage(lanMessage);
-}
+};
 
 /**
  * Sends an update to the order to the device, and causes it to display the change.
  *
- * @param {json} order - the entire order json object
+ * @param {Object} order - the entire order json object
  * @param {Operation} lineItemsDeletedOperation
  * @param {string} [ackId] - an optional identifier that can be used to track an acknowledgement
  *  to this message.  This should be a unique identifier, but this is NOT enforced in any way.
@@ -698,12 +698,12 @@ WebSocketDevice.prototype.sendShowOrderLineItemRemoved = function(order, lineIte
     if(ackId) lanMessage.id = ackId;
 
     this.sendMessage(lanMessage);
-}
+};
 
 /**
  * Sends an update to the order to the device, and causes it to display the change.
  *
- * @param {json} order - the entire order json object
+ * @param {Object} order - the entire order json object
  * @param {Operation} discountsAddedOperation
  * @param {string} [ackId] - an optional identifier that can be used to track an acknowledgement
  *  to this message.  This should be a unique identifier, but this is NOT enforced in any way.
@@ -721,12 +721,12 @@ WebSocketDevice.prototype.sendShowOrderDiscountAdded = function(order, discounts
     if(ackId) lanMessage.id = ackId;
 
     this.sendMessage(lanMessage);
-}
+};
 
 /**
  * Sends an update to the order to the device, and causes it to display the change.
  *
- * @param {json} order - the entire order json object
+ * @param {Object} order - the entire order json object
  * @param {Operation} discountsDeletedOperation
  * @param {string} [ackId] - an optional identifier that can be used to track an acknowledgement
  *  to this message.  This should be a unique identifier, but this is NOT enforced in any way.
@@ -744,7 +744,7 @@ WebSocketDevice.prototype.sendShowOrderDiscountRemoved = function(order, discoun
     if(ackId) lanMessage.id = ackId;
 
     this.sendMessage(lanMessage);
-}
+};
 
 /**
  *
@@ -761,7 +761,7 @@ WebSocketDevice.prototype.sendKeyPress = function(keyCode, ackId) {
     if(ackId) lanMessage.id = ackId;
 
     this.sendMessage(lanMessage);
-}
+};
 
 
 /**
@@ -778,14 +778,14 @@ WebSocketDevice.prototype.sendBreak = function(ackId) {
     if(ackId) lanMessage.id = ackId;
 
     this.sendMessage(lanMessage);
-}
+};
 
 
 //
 /**
  * Send a message to start a transaction.  This will make the device display the payment screen
  *
- * @param {json} payIntent - the payment intention object
+ * @param {Object} payIntent - the payment intention object
  * @param {boolean} suppressOnScreenTips
  * @param {string} [ackId] - an optional identifier that can be used to track an acknowledgement
  *  to this message.  This should be a unique identifier, but this is NOT enforced in any way.
@@ -806,13 +806,13 @@ WebSocketDevice.prototype.sendTXStart = function(payIntent, suppressOnScreenTips
     if(ackId) lanMessage.id = ackId;
 
     this.sendMessage(lanMessage);
-}
+};
 
 //
 /**
  * Verify that the signature is valid
  *
- * @param {json} payment - the payment object with signature verification fields populated (positively)
+ * @param {Object} payment - the payment object with signature verification fields populated (positively)
  * @param {string} [ackId] - an optional identifier that can be used to track an acknowledgement
  *  to this message.  This should be a unique identifier, but this is NOT enforced in any way.
  *  A "ACK" message will be returned with this identifier as the message id if this
@@ -829,13 +829,13 @@ WebSocketDevice.prototype.sendSignatureVerified = function(payment, ackId) {
     if(ackId) lanMessage.id = ackId;
 
     this.sendMessage(lanMessage);
-}
+};
 
 // Reject the signature
 /**
  * Verify that the signature is NOT valid
  *
- * @param {json} payment - the payment object with signature verification fields populated (negatively)
+ * @param {Object} payment - the payment object with signature verification fields populated (negatively)
  * @param {string} [ackId] - an optional identifier that can be used to track an acknowledgement
  *  to this message.  This should be a unique identifier, but this is NOT enforced in any way.
  *  A "ACK" message will be returned with this identifier as the message id if this
@@ -852,12 +852,12 @@ WebSocketDevice.prototype.sendSignatureRejected = function(payment, ackId) {
     if(ackId) lanMessage.id = ackId;
 
     this.sendMessage(lanMessage);
-}
+};
 
 /**
  * Void a payment
  *
- * @param {json} payment - the payment object with signature verification fields populated (negatively)
+ * @param {Object} payment - the payment object with signature verification fields populated (negatively)
  * @param voidReason
  * @param {string} [ackId] - an optional identifier that can be used to track an acknowledgement
  *  to this message.  This should be a unique identifier, but this is NOT enforced in any way.
@@ -875,7 +875,7 @@ WebSocketDevice.prototype.sendVoidPayment = function(payment, voidReason, ackId)
     if(ackId) lanMessage.id = ackId;
 
     this.sendMessage(lanMessage);
-}
+};
 
 /**
  * Vault a card
@@ -896,7 +896,7 @@ WebSocketDevice.prototype.sendVaultCard = function(cardEntryMethods, ackId) {
     if(ackId) lanMessage.id = ackId;
 
     this.sendMessage(lanMessage);
-}
+};
 
 /**
  * Refund a payment, partial or complete
@@ -922,7 +922,37 @@ WebSocketDevice.prototype.sendRefund = function(orderId, paymentId, amount, ackI
     if(ackId) lanMessage.id = ackId;
 
     this.sendMessage(lanMessage);
-}
+};
+
+/**
+ * Refund a payment, partial or complete
+ *
+ * @param {string} orderId - the id for the order the refund is against
+ * @param {string} paymentId - the id for the payment on the order the refund is against
+ * @param {number} [amount] - the amount that will be refunded.
+ * @param {boolean} [fullRefund] - If true, the amount of the passed payment will be refunded.
+ * @param {string} [ackId] - an optional identifier that can be used to track an acknowledgement
+ *  to this message.  This should be a unique identifier, but this is NOT enforced in any way.
+ *  A "ACK" message will be returned with this identifier as the message id if this
+ *  parameter is included.  This "ACK" message will be in addition to any other message
+ *  that may be generated as a result of this message being sent.
+ */
+WebSocketDevice.prototype.sendRefundV2 = function(orderId, paymentId, amount, fullRefund, ackId) {
+    var payload = {};
+    payload.orderId = orderId;
+    payload.paymentId = paymentId;
+    if(fullRefund) {
+        payload.fullRefund = fullRefund;
+    } else if(amount) {
+        payload.amount = amount;
+    }
+    payload.version = 2;
+    var lanMessage = this.messageBuilder.buildRefund(payload);
+    // If an id is included, then an "ACK" message will be sent for this message
+    if(ackId) lanMessage.id = ackId;
+
+    this.sendMessage(lanMessage);
+};
 
 /**
  * Capture a preauthorization
@@ -949,7 +979,7 @@ WebSocketDevice.prototype.sendCapturePreAuth = function(orderId, paymentId, amou
     if(ackId) lanMessage.id = ackId;
 
     this.sendMessage(lanMessage);
-}
+};
 
 
 
@@ -974,7 +1004,7 @@ WebSocketDevice.prototype.sendCloseout = function(allowOpenTabs, batchId, ackId)
     if(ackId) lanMessage.id = ackId;
 
     this.sendMessage(lanMessage);
-}
+};
 
 
 /**
@@ -1000,11 +1030,14 @@ WebSocketDevice.prototype.sendTipAdjust = function(orderId, paymentId, tipAmount
     if(ackId) lanMessage.id = ackId;
 
     this.sendMessage(lanMessage);
-}
+};
 
 /**
- * Show the recipt options screen for a specific ordereid/paymentid.
+ * Show the receipt options screen for a specific orderid/paymentid.
  *
+ * @deprecated - this function will result in a Finish_OK message being returned.
+ *  Use sendShowPaymentReceiptOptionsV2 instead.  sendShowPaymentReceiptOptionsV2
+ *  results in only the UI_STATE messages, which is preferable.
  * @param {string} orderId - the id for the order
  * @param {string} paymentId - the id for the payment on the order
  * @param {string} [ackId] - an optional identifier that can be used to track an acknowledgement
@@ -1023,7 +1056,31 @@ WebSocketDevice.prototype.sendShowPaymentReceiptOptions = function(orderId, paym
     if(ackId) lanMessage.id = ackId;
 
     this.sendMessage(lanMessage);
-}
+};
+
+/**
+ * Show the receipt options screen for a specific orderid/paymentid.
+ *
+ * @param {string} orderId - the id for the order
+ * @param {string} paymentId - the id for the payment on the order
+ * @param {string} [ackId] - an optional identifier that can be used to track an acknowledgement
+ *  to this message.  This should be a unique identifier, but this is NOT enforced in any way.
+ *  A "ACK" message will be returned with this identifier as the message id if this
+ *  parameter is included.  This "ACK" message will be in addition to any other message
+ *  that may be generated as a result of this message being sent.
+ */
+WebSocketDevice.prototype.sendShowPaymentReceiptOptionsV2 = function(orderId, paymentId, ackId) {
+    var payload = {};
+    payload.orderId = orderId;
+    payload.paymentId = paymentId;
+    payload.version = 2;
+
+    var lanMessage = this.messageBuilder.buildShowPaymentReceiptOptions(payload);
+    // If an id is included, then an "ACK" message will be sent for this message
+    if(ackId) lanMessage.id = ackId;
+
+    this.sendMessage(lanMessage);
+};
 
 /**
  * Open the cash drawer (if one is connected).
@@ -1044,7 +1101,7 @@ WebSocketDevice.prototype.sendOpenCashDrawer = function(reason, ackId) {
     if(ackId) lanMessage.id = ackId;
 
     this.sendMessage(lanMessage);
-}
+};
 
 /**
  * Send a cancellation message
@@ -1061,7 +1118,7 @@ WebSocketDevice.prototype.sendFinishCancel = function(ackId) {
     if(ackId) lanMessage.id = ackId;
 
     this.sendMessage(lanMessage);
-}
+};
 
 /**
  * Send a message to show the 'Thank You' screen
@@ -1078,7 +1135,7 @@ WebSocketDevice.prototype.sendShowThankYouScreen = function(ackId) {
     if(ackId) lanMessage.id = ackId;
 
     this.sendMessage(lanMessage);
-}
+};
 
 /**
  * Send a message to show the 'Welcome' screen
@@ -1095,7 +1152,7 @@ WebSocketDevice.prototype.sendShowWelcomeScreen = function(ackId) {
     if(ackId) lanMessage.id = ackId;
 
     this.sendMessage(lanMessage);
-}
+};
 
 /**
  * Send a message to show a custom message on the screen
@@ -1114,7 +1171,7 @@ WebSocketDevice.prototype.sendTerminalMessage = function(message, ackId) {
     if(ackId) lanMessage.id = ackId;
 
     this.sendMessage(lanMessage);
-}
+};
 
 /**
  * Send a message to ask the device if it is there.
@@ -1131,7 +1188,7 @@ WebSocketDevice.prototype.sendDiscoveryRequest = function(ackId) {
     if(ackId) lanMessage.id = ackId;
 
     this.sendMessage(lanMessage);
-}
+};
 
 /**
  * Send a message to ask the device to print some text
@@ -1151,7 +1208,7 @@ WebSocketDevice.prototype.sendPrintText = function(textLines, ackId) {
     if(ackId) lanMessage.id = ackId;
 
     this.sendMessage(lanMessage);
-}
+};
 
 /**
  * Send a message to ask the device to shutdown the connection.
@@ -1161,7 +1218,7 @@ WebSocketDevice.prototype.sendShutdown = function() {
     // Note:  the 'ack' is not included here because the device will
     // be shutting down,
     this.sendMessage(lanMessage);
-}
+};
 
 /**
  * Send a message with an image for the device to print.
@@ -1181,7 +1238,7 @@ WebSocketDevice.prototype.sendPrintImage = function(img, ackId) {
     if(ackId) lanMessage.id = ackId;
 
     this.sendMessage(lanMessage);
-}
+};
 
 
 /**
@@ -1201,7 +1258,7 @@ WebSocketDevice.prototype.sendPrintImageFromURL = function(urlString, ackId) {
     if(ackId) lanMessage.id = ackId;
 
     this.sendMessage(lanMessage);
-}
+};
 
 /**
  * Send a message to the device to get the last message it received, along with the response
@@ -1220,7 +1277,7 @@ WebSocketDevice.prototype.sendLastMessageRequest = function(ackId) {
     if(ackId) lanMessage.id = ackId;
 
     this.sendMessage(lanMessage);
-}
+};
 
 
 /**
@@ -1245,7 +1302,7 @@ WebSocketDevice.prototype.getBase64Image = function(img) {
     var dataURL = canvas.toDataURL("image/png");
 
     return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-}
+};
 
 //
 // Expose the module.

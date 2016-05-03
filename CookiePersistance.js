@@ -54,6 +54,13 @@ CookiePersistance.getCookie = function(cname) {
     return "";
 };
 
+CookiePersistance.delete_cookie = function( cname ) {
+    document.cookie = cname + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+};
+
+CookiePersistance.deleteConfigurationCookie = function () {
+    CookiePersistance.delete_cookie(this.configurationName);
+};
 
 //
 // Expose the module.
