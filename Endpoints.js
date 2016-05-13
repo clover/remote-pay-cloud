@@ -15,6 +15,20 @@ function Endpoints(cloverOAuth) {
     this.cloverOAuth = cloverOAuth;
 
     /**
+     * The endpoint used to obtain a merchant
+     *
+     * @param {string} merchantId - the id of the merchant to use when getting the merchant.
+     * @returns {string} endpoint - the url to use to retrieve the merchant
+     */
+    this.getMerchantEndpoint = function(merchantId) {
+        var variables = {};
+        variables[Endpoints.MERCHANT_V3_KEY] = merchantId;
+        variables[Endpoints.ACCESS_TOKEN_KEY] = this.cloverOAuth.getAccessToken();
+        return this.cloverOAuth.configuration.domain +
+          this.setVariables(Endpoints.MERCHANT_V3_PATH + Endpoints.ACCESS_TOKEN_SUFFIX, variables);
+    };
+
+    /**
      * The endpoint used to obtain a list of devices
      *
      * @param {string} merchantId - the id of the merchant to use when getting the device list.
@@ -26,7 +40,7 @@ function Endpoints(cloverOAuth) {
         variables[Endpoints.ACCESS_TOKEN_KEY] = this.cloverOAuth.getAccessToken();
         return this.cloverOAuth.configuration.domain +
             this.setVariables(Endpoints.DEVICE_PATH + Endpoints.ACCESS_TOKEN_SUFFIX, variables);
-    }
+    };
 
     /**
      * Builds the endpoint to send the message to the server to let the device know we want to talk to it.
@@ -39,7 +53,7 @@ function Endpoints(cloverOAuth) {
         variables[Endpoints.ACCESS_TOKEN_KEY] = this.cloverOAuth.getAccessToken();
         return this.cloverOAuth.configuration.domain +
             this.setVariables(Endpoints.REMOTE_PAY_PATH + Endpoints.ACCESS_TOKEN_SUFFIX, variables);
-    }
+    };
 
     /**
      * Does variable replacement on a template
@@ -57,7 +71,7 @@ function Endpoints(cloverOAuth) {
             }
         }
         return template;
-    }
+    };
 
     /**
      *

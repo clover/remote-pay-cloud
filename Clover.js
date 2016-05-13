@@ -33,6 +33,11 @@ function Clover(configurationIN) {
     if (!this.configuration) {
         this.configuration = {};
     }
+    if(this.configuration.debugConfiguration) {
+      this.debugConfiguration = this.configuration.debugConfiguration
+    } else {
+      this.debugConfiguration = {};
+    }
     this.configuration.allowOvertakeConnection =
         Boolean(this.configuration["allowOvertakeConnection"]);
 
@@ -241,7 +246,7 @@ function Clover(configurationIN) {
         else {
             callBackOnDeviceReady();
         }
-    }
+    };
 
     /**
      * Called to initialize the device for communications.
@@ -310,7 +315,7 @@ function Clover(configurationIN) {
                                 me.device.bootStrapReconnect = function(callback) {
                                     xmlHttpSupport.postData(endpoints.getAlertDeviceEndpoint(me.configuration.merchantId),
                                         callback, callback, deviceContactInfo);
-                                }
+                                };
                                 // The format of the data received is:
                                 //{
                                 //    'sent': true | false,
@@ -445,7 +450,7 @@ function Clover(configurationIN) {
                 }
             }
         }
-    }
+    };
 
     /**
      * Loads the configuration that was stored.  This implementation just grabs the
@@ -465,7 +470,7 @@ function Clover(configurationIN) {
             return this.configuration;
         }
         return false;
-    }
+    };
 
     /**
      * Stores the configuration for later retrieval.  This implementation just drops the
@@ -476,7 +481,7 @@ function Clover(configurationIN) {
         if(this.persistanceHandler) {
             this.configuration = this.persistanceHandler.persist(this.configuration);
         }
-    }
+    };
 
     /**
      * This can be overridden to provide any missing configuration information to this.configuration (
@@ -506,7 +511,7 @@ function Clover(configurationIN) {
         } else {
             throw error;
         }
-    }
+    };
 
     /**
      * Handle a set of devices.  Sets up an internal map of devices from serial->device
@@ -532,7 +537,7 @@ function Clover(configurationIN) {
                 this.deviceBySerial[devices[i].serial] = devices[i];
             }
         }
-    }
+    };
 
     /**
      * Contacts the device.  Sends DISCOVERY_REQUEST messages for a period of time until a response is received.
@@ -557,7 +562,7 @@ function Clover(configurationIN) {
             me.device.discoveryTimerId = null;
             me.discoveryResponseReceived = true;
             log.debug("Device has responded to discovery message.");
-        }
+        };
         this.device.once(LanMethod.DISCOVERY_RESPONSE, discoveryResponseCallback);
 
         allCallBacks.push({"event": LanMethod.DISCOVERY_RESPONSE, "callback": discoveryResponseCallback});
@@ -598,7 +603,7 @@ function Clover(configurationIN) {
                     );
             }
             log.info('device opened');
-        }
+        };
         this.device.once(WebSocketDevice.DEVICE_OPEN, onopenCallback);
         allCallBacks.push({"event": WebSocketDevice.DEVICE_OPEN, "callback": onopenCallback});
 
@@ -609,13 +614,13 @@ function Clover(configurationIN) {
                 callBackOnDeviceReady(new CloverError(CloverError.CONNECTION_DENIED,
                     message), message);
             }
-        }
+        };
         this.device.once(WebSocketDevice.CONNECTION_DENIED, connctionDeniedCallback);
         allCallBacks.push({"event": WebSocketDevice.CONNECTION_DENIED, "callback": connctionDeniedCallback});
 
         log.info("Contacting device at " + this.configuration.deviceURL);
         this.device.contactDevice(this.configuration.deviceURL);
-    }
+    };
 
     /**
      * Utility function to ensure that the external payment id is set.
@@ -633,7 +638,7 @@ function Clover(configurationIN) {
         }
         txInfo.externalPaymentId = externalPaymentId;
         return txInfo;
-    }
+    };
 
     /**
      * Sale AKA purchase
@@ -654,7 +659,7 @@ function Clover(configurationIN) {
             this.internalTx(saleInfo, saleRequestCallback, this.sale_payIntentTemplate(), "payment");
         }
         return saleInfo.externalPaymentId;
-    }
+    };
 
     /**
      * Auth
@@ -675,7 +680,7 @@ function Clover(configurationIN) {
             this.internalTx(saleInfo, saleRequestCallback, this.auth_payIntentTemplate(), "payment", true);
         }
         return saleInfo.externalPaymentId;
-    }
+    };
 
     /**
      * Pre Auth
@@ -693,7 +698,7 @@ function Clover(configurationIN) {
             this.internalTx(saleInfo, saleRequestCallback, this.preAuth_payIntentTemplate(), "payment");
         }
         return saleInfo.externalPaymentId;
-    }
+    };
 
     /**
      * Refund AKA credit
@@ -706,7 +711,7 @@ function Clover(configurationIN) {
             refundInfo.amount = Math.abs(refundInfo.amount) * -1;
             this.internalTx(refundInfo, refundRequestCallback, this.refund_payIntentTemplate(), "credit");
         }
-    }
+    };
 
     /**
      *
@@ -723,7 +728,7 @@ function Clover(configurationIN) {
             return false;
         }
         return true;
-    }
+    };
 
     /**
      * @private
@@ -871,7 +876,7 @@ function Clover(configurationIN) {
             } catch (err) {
                 log.error(err);
             }
-            me.device.sendShowWelcomeScreen();
+            me.endOfOperation();
         };
         this.device.once(LanMethod.FINISH_OK, finishOKCB);
         allCallBacks.push({"event": LanMethod.FINISH_OK, "callback": finishOKCB});
@@ -891,7 +896,7 @@ function Clover(configurationIN) {
             } catch (err) {
                 log.error(err);
             }
-            me.device.sendShowWelcomeScreen();
+            me.endOfOperation();
         };
         this.device.once(LanMethod.FINISH_CANCEL, finishCancelCB);
         allCallBacks.push({"event": LanMethod.FINISH_CANCEL, "callback": finishCancelCB});
@@ -906,7 +911,7 @@ function Clover(configurationIN) {
                 "request": txnInfo
             });
         }
-    }
+    };
 
     /**
      *
@@ -965,7 +970,7 @@ function Clover(configurationIN) {
         // return the uuid so the caller of this function can use
         // it when sending a message.
         return uuid;
-    }
+    };
 
     /**
      *
@@ -995,7 +1000,7 @@ function Clover(configurationIN) {
                 "request": callbackPayload
             });
         }
-    }
+    };
 
     /**
      * Refund from a previous payment.
@@ -1021,7 +1026,7 @@ function Clover(configurationIN) {
                 callbackPayload.response.message = payload['message'];
                 callbackPayload.response.reason = payload['reason'];
             }
-        }
+        };
         this.device.once(LanMethod.REFUND_RESPONSE, refundResponseCB);
         allCallBacks.push({"event": LanMethod.REFUND_RESPONSE, "callback": refundResponseCB});
 
@@ -1040,7 +1045,7 @@ function Clover(configurationIN) {
             } catch (err) {
                 log.error(err);
             }
-            me.device.sendShowWelcomeScreen();
+          me.endOfOperation();
         };
         this.device.once(LanMethod.FINISH_OK, finishOKCB);
         allCallBacks.push({"event": LanMethod.FINISH_OK, "callback": finishOKCB});
@@ -1058,20 +1063,25 @@ function Clover(configurationIN) {
             } catch (err) {
                 log.error(err);
             }
-            me.device.sendShowWelcomeScreen();
+          me.endOfOperation();
         };
         this.device.once(LanMethod.FINISH_CANCEL, finishCancelCB);
         allCallBacks.push({"event": LanMethod.FINISH_CANCEL, "callback": finishCancelCB});
 
         try {
+          if (refundRequest["version"] && refundRequest["version"] === 2) {
+            this.device.sendRefundV2(refundRequest.orderId, refundRequest.paymentId,
+              refundRequest["amount"], refundRequest["fullRefund"]);
+          } else {
             this.device.sendRefund(refundRequest.orderId, refundRequest.paymentId, refundRequest["amount"]);
+          }
         } catch (error) {
             var cloverError = new CloverError(LanMethod.REFUND_REQUEST,
                 "Failure attempting to send refund request", error);
             callbackPayload["code"] = "ERROR";
             completionCallback(cloverError, callbackPayload);
         }
-    }
+    };
 
     /**
      * Print an array of strings on the device
@@ -1097,7 +1107,7 @@ function Clover(configurationIN) {
                 });
             }
         }
-    }
+    };
 
     /**
      * Print a receipt from a previous transaction.
@@ -1106,20 +1116,33 @@ function Clover(configurationIN) {
      */
     this.printReceipt = function (printRequest, completionCallback) {
         var callbackPayload = {"request": printRequest};
+        var me = this;
+        var allCallBacks = [];
 
-        var finishCancelCB = function (message) {
-            try {
-                completionCallback(null, callbackPayload);
-            } catch (err) {
-                log.error(err);
+        var onUiState = function onUiState(message) {
+            var payload = JSON.parse(message.payload);
+            if(payload.uiState == "RECEIPT_OPTIONS") {
+                if(payload.uiDirection == "ENTER") {
+                    // we can ignore this.  If a POS wants to do more
+                    // granular integration, they will need to write their
+                    // own handler.
+                } else if(payload.uiDirection == "EXIT") {
+                    if(payload["uiState"] == "RECEIPT_OPTIONS") {
+                        // Remove the UI callback handler, we are done with it.
+                        me.device.removeListeners(allCallBacks);
+                        me.endOfOperation();
+                    }
+                } else {
+                    console.log("Unknown ui event direction:" + payload.uiDirection);
+                }
             }
-            // We could let them do this
-            this.device.sendShowWelcomeScreen();
-        }.bind(this);
-        this.device.once(LanMethod.FINISH_CANCEL, finishCancelCB);
+        };
+        // Listen for UI_STATE messages
+        clover.device.on(LanMethod.UI_STATE, onUiState);
+        allCallBacks.push({"event": LanMethod.UI_STATE, "callback": onUiState});
 
         try {
-            this.device.sendShowPaymentReceiptOptions(printRequest.orderId, printRequest.paymentId);
+            this.device.sendShowPaymentReceiptOptionsV2(printRequest.orderId, printRequest.paymentId);
         } catch (error) {
             var cloverError = new CloverError(LanMethod.SHOW_PAYMENT_RECEIPT_OPTIONS,
                 "Failure attempting to print receipt", error);
@@ -1128,7 +1151,7 @@ function Clover(configurationIN) {
                 "request": callbackPayload
             });
         }
-    }
+    };
 
     /**
      * Prints an image on the receipt printer of the device.
@@ -1157,7 +1180,7 @@ function Clover(configurationIN) {
                 });
             }
         }
-    }
+    };
 
     /**
      * Prints an image on the receipt printer of the device.
@@ -1186,7 +1209,7 @@ function Clover(configurationIN) {
                 });
             }
         }
-    }
+    };
 
     /**
      * Sends an escape code to the device.  The behavior of the device when this is called is
@@ -1214,7 +1237,7 @@ function Clover(configurationIN) {
             }
             log.error(cloverError);
         }
-    }
+    };
 
     /**
      * Sends a break message to the device to reset
@@ -1243,7 +1266,7 @@ function Clover(configurationIN) {
           }
           console.log(cloverError);
       }
-    }
+    };
 
     /**
      * Opens the cash drawer
@@ -1272,7 +1295,7 @@ function Clover(configurationIN) {
             }
             log.error(cloverError);
         }
-    }
+    };
 
     /**
      * @param {TipAdjustRequest} tipAdjustRequest - the refund request
@@ -1298,7 +1321,7 @@ function Clover(configurationIN) {
             callbackPayload["code"] = "ERROR";
             completionCallback(cloverError, callbackPayload);
         }
-    }
+    };
 
     /**
      * Retreive the last transactional message made to the device.
@@ -1326,7 +1349,7 @@ function Clover(configurationIN) {
                 "request": callbackPayload
             });
         }
-    }
+    };
 
     /**
      * Capture a card for future usage in a sale or auth request.
@@ -1336,12 +1359,14 @@ function Clover(configurationIN) {
      */
     this.vaultCard = function (cardEntryMethods, completionCallback) {
         var callbackPayload = {"request": {"cardEntryMethods": cardEntryMethods}};
+        var me = this;
 
         var vaultCardCB = function (message) {
             var payload = JSON.parse(message.payload);
             callbackPayload["response"] = payload;
 
             completionCallback(null, callbackPayload);
+            me.endOfOperation();
         }.bind(this);
         this.device.once(LanMethod.VAULT_CARD_RESPONSE, vaultCardCB);
 
@@ -1355,7 +1380,7 @@ function Clover(configurationIN) {
                 "request": callbackPayload
             });
         }
-    }
+    };
 
     /**
      * Capture a previously made preauthorization.
@@ -1391,7 +1416,7 @@ function Clover(configurationIN) {
                 "request": callbackPayload
             });
         }
-    }
+    };
 
     /**
      *
@@ -1429,7 +1454,7 @@ function Clover(configurationIN) {
                 "request": callbackPayload
             });
         }
-    }
+    };
 
     /**
      * Puts a message on the device screen
@@ -1458,7 +1483,7 @@ function Clover(configurationIN) {
             }
             log.error(cloverError);
         }
-    }
+    };
 
     /**
      * Puts the device in the welcome screen
@@ -1486,7 +1511,7 @@ function Clover(configurationIN) {
             }
             log.error(cloverError);
         }
-    }
+    };
 
     /**
      * Puts the device in the 'thank you' screen
@@ -1514,7 +1539,7 @@ function Clover(configurationIN) {
             }
             log.error(cloverError);
         }
-    }
+    };
 
     /**
      * Sends a message to accept the passed signature on the payment.
@@ -1548,7 +1573,7 @@ function Clover(configurationIN) {
             }
             log.error(cloverError);
         }
-    }
+    };
 
     /**
      * Sends a message to reject the passed signature on the payment.
@@ -1582,7 +1607,7 @@ function Clover(configurationIN) {
             }
             log.error(cloverError);
         }
-    }
+    };
 
     /**
      * Display the passed order.
@@ -1597,7 +1622,7 @@ function Clover(configurationIN) {
             uuid = this.genericAcknowledgedCall(callbackPayload, completionCallback);
         }
         try {
-            this.device.sendShowOrderScreen(order);
+            this.device.sendShowOrderScreen(order, uuid);
         } catch (error) {
             var cloverError = new CloverError(LanMethod.SHOW_ORDER_SCREEN,
                 "Failure attempting to display order", error);
@@ -1609,7 +1634,7 @@ function Clover(configurationIN) {
             }
             log.error(cloverError);
         }
-    }
+    };
 
     // Expects that the lineitem has already been set on the order...
     // this is consistent with the windows api.
@@ -1626,7 +1651,7 @@ function Clover(configurationIN) {
         this.displayOrderInternal(order, "lineItem", lineItem,
             this.device.sendShowOrderLineItemAdded.bind(this.device),
             completionCallback);
-    }
+    };
 
     /**
      * Tells the device to redisplay the passed order, and that a lineItem
@@ -1641,7 +1666,7 @@ function Clover(configurationIN) {
         this.displayOrderInternal(order, "lineItem", lineItem,
             this.device.sendShowOrderLineItemRemoved.bind(this.device),
             completionCallback);
-    }
+    };
 
     /**
      * Tells the device to redisplay the passed order, and that a discount
@@ -1656,7 +1681,7 @@ function Clover(configurationIN) {
         this.displayOrderInternal(order, "discount", discount,
             this.device.sendShowOrderDiscountAdded.bind(this.device),
             completionCallback);
-    }
+    };
 
     /**
      * Tells the device to redisplay the passed order, and that a discount
@@ -1671,7 +1696,7 @@ function Clover(configurationIN) {
         this.displayOrderInternal(order, "discount", discount,
             this.device.sendShowOrderDiscountRemoved.bind(this.device),
             completionCallback);
-    }
+    };
 
     /**
      * Does common functionality to display modified orders
@@ -1696,15 +1721,15 @@ function Clover(configurationIN) {
         try {
             var cloverError = null;
             if (order == null) {
-                var cloverError = new CloverError(CloverError.INVALID_DATA,
+                cloverError = new CloverError(CloverError.INVALID_DATA,
                     "DisplayOrder object cannot be null. ");
             }
             if (order.id == null) {
-                var cloverError = new CloverError(CloverError.INVALID_DATA,
+                cloverError = new CloverError(CloverError.INVALID_DATA,
                     "DisplayOrder id cannot be null. " + order);
             }
             if (orderComponent == null) {
-                var cloverError = new CloverError(CloverError.INVALID_DATA,
+                cloverError = new CloverError(CloverError.INVALID_DATA,
                     orderComponentName + " cannot be null. ");
             }
             if (cloverError) {
@@ -1736,7 +1761,21 @@ function Clover(configurationIN) {
             }
             log.error(cloverError);
         }
-    }
+    };
+
+    /**
+     * @private - action after an operation
+     */
+    this.endOfOperation = function() {
+        // Say "Thank you" for three seconds
+        this.device.sendShowThankYouScreen();
+        // Then say "Welcome"
+        setTimeout(
+          function () {
+              this.device.sendShowWelcomeScreen();
+          }.bind(this), 3000 // three seconds
+        );
+    };
 
     //////////
 
@@ -1783,7 +1822,7 @@ Clover.isInt = function(value) {
     }
     x = parseFloat(value);
     return (x | 0) === x;
-}
+};
 
 Clover.minimalConfigurationPossibilities = [
     ["deviceURL"],
@@ -1877,10 +1916,11 @@ if ('undefined' !== typeof module) {
  * A payment
  *
  * @typedef {Object} TransactionRequest
- * @property {integer} amount - the amount of a sale or refund, including tax
- * @property {integer} [tipAmount] - the amount of a tip.  Added to the amount for the total.  Valid for sale operations
- * @property {integer} [tippableAmount] - the amount that calculated tips are based on.  If not set then 'amount'
- *  is used. Valid for sale operations
+ * @property {Number} amount - the amount of a sale or refund, including tax.  Must be an integer
+ * @property {Number} [tipAmount] - the amount of a tip.  Added to the amount for the total.  Valid for sale operations.
+ *  Must be an integer
+ * @property {Number} [tippableAmount] - the amount that calculated tips are based on.  If not set then 'amount'
+ *  is used. Valid for sale operations.  Must be an integer
  * @property {string} [employeeId] - the valid Clover id of an employee recognized by the device.  Represents the
  *  employee making this sale or refund.
  * @property {boolean} [autoVerifySignature] - optional override to allow either automatic signature verification
@@ -1920,9 +1960,13 @@ if ('undefined' !== typeof module) {
  * @typedef {Object} RefundRequest
  * @property {string} orderId - the id of the order to refund
  * @property {string} paymentId - the id of the payment on the order to refund
- * @property {number} [amount] - the amount to refund.  If not included, the full payment is refunded.  The amount
- *  cannot exceed the original payment, and additional constraints apply to this (EX: if a partial refund
- *  has already been performed then the amount canot exceed the remaining payment amount).
+ * @property {boolean} [fullRefund] - if true, then a full refund is done for the version 2 call.
+ * @property {number} [amount] - the amount to refund.  If not included or 0, version 1 will refund the full payment.
+ *  If using the version 2 call, 0 will result in an error. The amount cannot exceed the original payment, and
+ *  additional constraints apply to this (EX: if a partial refund has already been performed then the amount
+ *  cannot exceed the remaining payment amount).
+ * @property {Number} [version] - the version of the refund request.  If not included, the current version of the
+ *  call is used.  Must be an integer
  */
 
 /**
@@ -1942,18 +1986,20 @@ if ('undefined' !== typeof module) {
 /**
  * @typedef {Object} Payment
  * @property {string} result - the result code for the transaction - "SUCCESS", "CANCEL"
- * @property {integer} [createdTime] - the time in milliseconds that the transaction successfully completed
+ * @property {Number} [createdTime] - the time in milliseconds that the transaction successfully completed.
+ *  Must be an integer
  * @property {CardTransaction} [cardTransaction] - successful transaction information
- * @property {integer} [amount] - the amount of the transaction, including tax
- * @property {integer} [tipAmount] - added tip amount
+ * @property {Number} [amount] - the amount of the transaction, including tax.  Must be an integer
+ * @property {Number} [tipAmount] - added tip amount.  Must be an integer
  * @property {Object} [order] - order information. Ex: id - the order id
  * @property {Object} [employee] - employee information. Ex: id - the employee id
  */
 
 /**
  * @typedef {Object} Credit
- * @property {integer} [amount] - the amount of the transaction, including tax
- * @property {integer} [createdTime] - the time in milliseconds that the transaction successfully completed
+ * @property {Number} [amount] - the amount of the transaction, including tax.  Must be an integer
+ * @property {Number} [createdTime] - the time in milliseconds that the transaction successfully completed.  Must be
+ *  an integer
  * @property {Tender} [tender] - refund information
  * @property {Object} [orderRef] - order information. Ex: id - the order id
  * @property {Object} [employee] - employee information. Ex: id - the employee id
@@ -1968,7 +2014,7 @@ if ('undefined' !== typeof module) {
 
 /**
  * @typedef {Object} CardTransaction
- * @property {integer} authcode - the authorization code
+ * @property {number} authcode - the authorization code.  Must be an integer
  * @property {string} entryType - SWIPED, KEYED, VOICE, VAULTED, OFFLINE_SWIPED, OFFLINE_KEYED, EMV_CONTACT,
  *  EMV_CONTACTLESS, MSD_CONTACTLESS, PINPAD_MANUAL_ENTRY
  * @property {Object} extra - additional information on the transaction.  EX: cvmResult - "SIGNATURE"
@@ -1977,8 +2023,8 @@ if ('undefined' !== typeof module) {
  * @property {string} type - AUTH, PREAUTH, PREAUTHCAPTURE, ADJUST, VOID, VOIDRETURN, RETURN, REFUND,
  *  NAKEDREFUND, GETBALANCE, BATCHCLOSE, ACTIVATE, BALANCE_LOCK, LOAD, CASHOUT, CASHOUT_ACTIVE_STATUS,
  *  REDEMPTION, REDEMPTION_UNLOCK, RELOAD
- * @property {integer} transactionNo
- * @property {integer} last4 - the last 4 digits of the card
+ * @property {Number} transactionNo.  Must be an integer
+ * @property {Number} last4 - the last 4 digits of the card.  Must be an integer
  * @property {string} cardType - VISA, MC, AMEX, DISCOVER, DINERS_CLUB, JCB, MAESTRO, SOLO, LASER,
  *  CHINA_UNION_PAY, CARTE_BLANCHE, UNKNOWN, GIFT_CARD, EBT
  *
@@ -1988,8 +2034,10 @@ if ('undefined' !== typeof module) {
  * @typedef {Object} Signature
  * @property {Stroke[]} strokes - the strokes of the signature.  A series of points representing a single contiguous
  *  line
- * @property {integer} height - the pixal height of the canvas area needed to correctly represent the signature
- * @property {integer} width - the pixal width of the canvas area needed to correctly represent the signature
+ * @property {Number} height - the pixal height of the canvas area needed to correctly represent the signature.
+ *  Must be an integer
+ * @property {Number} width - the pixal width of the canvas area needed to correctly represent the signature.
+ *  Must be an integer
  *
  */
 
@@ -2000,8 +2048,8 @@ if ('undefined' !== typeof module) {
 
 /**
  * @typedef {Object} Point
- * @property {integer} x - the x coordinate location of the point in pixals
- * @property {integer} y - the y coordinate location of the point in pixals
+ * @property {Number} x - the x coordinate location of the point in pixals.  Must be an integer
+ * @property {Number} y - the y coordinate location of the point in pixals.  Must be an integer
  */
 
 
