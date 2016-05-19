@@ -3,7 +3,7 @@ var EventEmitter = require("events").EventEmitter
 
 module.exports = {
     create: create
-}
+};
 
 function create() {
     var log = new EventEmitter();
@@ -16,6 +16,7 @@ function create() {
     log.error = log.emit.bind(log, "log", "error");
     log.debug = log.emit.bind(log, "log", "debug");
 
+    log.enabled = true;
     return log;
 
     function toConsole() {

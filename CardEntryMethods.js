@@ -1,4 +1,3 @@
-
 /**
  * Method of card entry
  * @constructor
@@ -15,11 +14,17 @@ CardEntryMethods.ICC_CONTACT =      parseInt("0010",2) | parseInt("001000000000"
 CardEntryMethods.NFC_CONTACTLESS =  parseInt("0100",2) | parseInt("010000000000",2) | CardEntryMethods.KIOSK_CARD_ENTRY_METHODS;
 CardEntryMethods.MANUAL =           parseInt("1000",2) | parseInt("100000000000",2) | CardEntryMethods.KIOSK_CARD_ENTRY_METHODS;
 
+CardEntryMethods.DEFAULT = (
+  CardEntryMethods.ICC_CONTACT |
+  CardEntryMethods.MAG_STRIPE |
+  CardEntryMethods.NFC_CONTACTLESS
+);
+
 CardEntryMethods.ALL = (
-    CardEntryMethods.ICC_CONTACT |
-    CardEntryMethods.MAG_STRIPE |
-    CardEntryMethods.NFC_CONTACTLESS |
-    CardEntryMethods.MANUAL
+  CardEntryMethods.ICC_CONTACT |
+  CardEntryMethods.MAG_STRIPE |
+  CardEntryMethods.NFC_CONTACTLESS |
+  CardEntryMethods.MANUAL
 );
 
 //

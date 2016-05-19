@@ -3,6 +3,7 @@
 //*********************************************
 
 var CloverID = require("./CloverID.js");
+var CloverError = require("./CloverError.js");
 var EventEmitter = require("eventemitter3");
 var XmlHttpSupport = require("./xmlHttpSupport.js");
 
@@ -334,6 +335,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
      * Called to initiate disconnect from the device
      */
     this.disconnectFromDevice = function() {
+        this.reconnect = false;
         this.forceClose();
     };
 
@@ -404,7 +406,6 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
     /**
      * Send a message on the websocket.  The parameter will be serialized to json
      * @param {Object} message - the message to send
-     * @private
      */
     this.sendMessage = function(message) {
         var stringMessage = message==null?null:JSON.stringify(message);
@@ -426,7 +427,8 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
             }
             else {
                 this.disconnectFromDevice();
-                throw new Error("Device disconnected");
+                throw new CloverError(CloverError.DEVICE_OFFLINE, "Device disconnected, message not sent: " +
+                  stringMessage );
             }
         }
         else {
@@ -468,15 +470,15 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
         if(message.hasOwnProperty("type")) {
             if(message["type"] == RemoteMessageBuilder.PONG) {
                 this.pongReceived(message);
-            }
-            if(message["type"] == RemoteMessageBuilder.PING) {
+            } else if(message["type"] == RemoteMessageBuilder.PING) {
                 this.pingReceived(message);
-            }
-            if(message["type"] == RemoteMessageBuilder.FORCE) {
+            } if(message["type"] == RemoteMessageBuilder.FORCE) {
                 this.connectionStolen(message);
             }
         }
-        this.eventEmitter.emit(message.method, message);
+        if(message.hasOwnProperty("method")) {
+            this.eventEmitter.emit(message.method, message);
+        }
         this.eventEmitter.emit(WebSocketDevice.ALL_MESSAGES, message);
     };
 
