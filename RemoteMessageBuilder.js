@@ -74,8 +74,8 @@ function RemoteMessageBuilder(defaultPackageName, remoteSourceSDK, remoteApplica
         lanMessage.payload = JSON.stringify(payload);
         lanMessage.type = RemoteMessageBuilder.COMMAND;
 
-        lanMessage.remoteSourceSDK = remoteSourceSDK;
-        lanMessage.remoteApplicationID = remoteApplicationID;
+        lanMessage.remoteSourceSDK = this.remoteSourceSDK;
+        lanMessage.remoteApplicationID = this.remoteApplicationID;
 
         if (type)lanMessage.type = type;
         // There is an 'id' in the java instance, but I do not see it being used right now.
