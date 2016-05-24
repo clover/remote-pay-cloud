@@ -24,6 +24,7 @@
     "url": "https://github.com/clover/remote-pay-cloud-npm"
   },
   "dependencies": {
+    "prototype": "*",
     "eventemitter3": "~1.1.1"
   }
 }

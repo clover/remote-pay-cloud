@@ -14,6 +14,8 @@ var VoidReason = require("./VoidReason.js");
 
 var log = require('./Logger.js').create();
 
+CLOVER_CLOUD_SDK_VERSION = "0.0.4";
+
 /**
  * Clover API for external Systems
  *
@@ -42,7 +44,15 @@ function Clover(configurationIN) {
         Boolean(this.configuration["allowOvertakeConnection"]);
 
     this.device = new WebSocketDevice(this.configuration.allowOvertakeConnection, this.configuration["friendlyId"]);
-    this.device.messageBuilder = new RemoteMessageBuilder("com.clover.remote.protocol.lan");
+
+    if(!this.configuration["clientId"]) {
+        throw new CloverError(CloverError.INCOMPLETE_CONFIGURATION, "'clientId' must be included in the configuration.");
+    }
+    this.device.messageBuilder = new RemoteMessageBuilder("com.clover.remote.protocol.websocket",
+      "com.clover.cloverconnector.cloud:" + CLOVER_CLOUD_SDK_VERSION,
+      this.configuration.clientId
+    );
+
     // Echo all messages sent and received.
     this.device.echoAllMessages = false;
     this.pauseBetweenDiscovery = 3000;
@@ -331,6 +341,13 @@ function Clover(configurationIN) {
                                     var url = data.host + Endpoints.WEBSOCKET_PATH + '?token=' + data.token;
                                     me.device.messageBuilder = new RemoteMessageBuilder(
                                         "com.clover.remote.protocol.websocket");
+                                    if(!me.configuration["clientId"]) {
+                                        throw new CloverError(CloverError.INCOMPLETE_CONFIGURATION, "'clientId' must be included in the configuration.");
+                                    }
+                                    me.device.messageBuilder = new RemoteMessageBuilder("com.clover.remote.protocol.websocket",
+                                      "com.clover.cloverconnector.cloud:" + CLOVER_CLOUD_SDK_VERSION,
+                                      me.configuration.clientId
+                                    );
 
                                     log.debug("Server responded with information on how to contact device. " +
                                         "Opening communication channel...");
