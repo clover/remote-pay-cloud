@@ -25,6 +25,7 @@ var order_Order = require("../order/Order");
       this.setMethod(remotemessage_Method["TX_START_RESPONSE"]);
       this.success = undefined;
       this.order = undefined;
+      this.externalPaymentId = undefined;
       this.result = undefined;
     },
 
@@ -68,6 +69,25 @@ var order_Order = require("../order/Order");
 
     /**
     * Set the field value
+    * The external id provided in the initiating pay intent
+    *
+    * @param {String} externalPaymentId 
+    */
+    setExternalPaymentId: function(externalPaymentId) {
+      this.externalPaymentId = externalPaymentId;
+    },
+
+    /**
+    * Get the field value
+    * The external id provided in the initiating pay intent
+      * @return {String} 
+    */
+    getExternalPaymentId: function() {
+      return this.externalPaymentId;
+    },
+
+    /**
+    * Set the field value
     * @param {TxStartResponseResult} result 
     */
     setResult: function(result) {
@@ -88,6 +108,8 @@ TxStartResponseMessage._meta_.fields["success"] = {};
 TxStartResponseMessage._meta_.fields["success"].type = Boolean;
 TxStartResponseMessage._meta_.fields["order"] = {};
 TxStartResponseMessage._meta_.fields["order"].type = order_Order;
+TxStartResponseMessage._meta_.fields["externalPaymentId"] = {};
+TxStartResponseMessage._meta_.fields["externalPaymentId"].type = String;
 TxStartResponseMessage._meta_.fields["result"] = {};
 TxStartResponseMessage._meta_.fields["result"].type = remotemessage_TxStartResponseResult;
 

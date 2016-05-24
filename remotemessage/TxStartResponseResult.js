@@ -9,6 +9,7 @@ TxStartResponseResult = {
   SUCCESS : "SUCCESS",
   ORDER_MODIFIED : "ORDER_MODIFIED",
   ORDER_LOAD : "ORDER_LOAD",
+  DUPLICATE : "DUPLICATE",
   FAIL : "FAIL"
 };
 

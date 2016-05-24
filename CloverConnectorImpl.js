@@ -181,6 +181,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
         this.mapLastMessageResponse();
         this.mapFinishOk();
         this.mapFinishCancel();
+        this.mapTxStartResponse();
     },
 
     extractPayloadFromRemoteMessageJson: function(remoteMessageJson) {
@@ -518,6 +519,52 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
     /**
      * @private
      */
+    mapTxStartResponse: function() {
+        this.device.on(remotemessage.Method.TX_START_RESPONSE, function (message) {
+            log.debug(message);
+            var txStartResponseMessage = new remotemessage.TxStartResponseMessage();
+            this.remoteMessageParser.parseMessage(message, txStartResponseMessage);
+
+            if(!txStartResponseMessage.getSuccess()) {
+                if (this.lastRequest instanceof remotepay.PreAuthRequest) {
+                    var preAuthResponse = new remotepay.PreAuthResponse();
+                    this.populateTxStartResponseToBaseResponse(txStartResponseMessage, preAuthResponse);
+                    this.delegateCloverConnectorListener.onPreAuthResponse(preAuthResponse);
+                } else if (this.lastRequest instanceof remotepay.AuthRequest) {
+                    var authResponse = new remotepay.AuthResponse();
+                    this.populateTxStartResponseToBaseResponse(txStartResponseMessage, authResponse);
+                    this.delegateCloverConnectorListener.onAuthResponse(authResponse);
+                } else if (this.lastRequest instanceof remotepay.SaleRequest) {
+                    var saleResponse = new remotepay.SaleResponse();
+                    this.populateTxStartResponseToBaseResponse(txStartResponseMessage, saleResponse);
+                    this.delegateCloverConnectorListener.onSaleResponse(saleResponse);
+                } else if (this.lastRequest instanceof remotepay.ManualRefundRequest) {
+                    var manualRefundResponse = new remotepay.ManualRefundResponse();
+                    this.populateTxStartResponseToBaseResponse(txStartResponseMessage, manualRefundResponse);
+                    this.delegateCloverConnectorListener.onManualRefundResponse(manualRefundResponse);
+                }
+                this.lastRequest = null;
+                this.endOfOperationCancel();
+            }
+        }.bind(this));
+    },
+
+    /**
+     * @private
+     * @param {TxStartResponseMessage} txStartResponseMessage
+     * @param {BaseResponse} response
+     */
+    populateTxStartResponseToBaseResponse: function(txStartResponseMessage, response) {
+        response.setSuccess(txStartResponseMessage.getSuccess());
+        var result = remotepay.ResponseCode[txStartResponseMessage.getResult()];
+        if(!result)result = remotepay.ResponseCode.FAIL;
+        response.setResult(result);
+        response.setReason(txStartResponseMessage.getExternalPaymentId());
+    },
+
+    /**
+     * @private
+     */
     mapFinishOk: function() {
         this.device.on(remotemessage.Method.FINISH_OK, function (message) {
             log.debug(message);
@@ -581,12 +628,13 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
     mapFinishCancel: function() {
         this.device.on(remotemessage.Method.FINISH_CANCEL, function (message) {
             log.debug(message);
-            /**
+            /*
              * This goes in a deserialization class
              * It will be the RemoteMessageParser
              */
-            var finishcancel = new remotemessage.FinishCancelMessage();
-            this.remoteMessageParser.parseMessage(message, finishcancel);
+            // The actual cancel is not needed right now...
+            // var finishcancel = new remotemessage.FinishCancelMessage();
+            // this.remoteMessageParser.parseMessage(message, finishcancel);
 
             if (this.lastRequest instanceof remotepay.PreAuthRequest) {
                 var preAuthResponse = new remotepay.PreAuthResponse();
@@ -609,7 +657,6 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
             this.endOfOperationCancel();
         }.bind(this));
     },
-
 
     /**
      *
@@ -695,10 +742,11 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
     /**
      * @private
      * @param {BaseResponse} response
+     * @param {boolean} [isDuplicate]
      */
     populateCancelResponse: function(response) {
         response.setSuccess(false);
-        response.setResult(ResponseCode.CANCEL);
+        response.setResult(remotepay.ResponseCode.CANCEL);
     },
 
     /**

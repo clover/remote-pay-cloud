@@ -20,17 +20,17 @@ var payments_Refund = require("../payments/Refund");
     initialize: function($super) {
       $super();
       this._class_ = RefundPaymentResponse;
-      this.refundObj = undefined;
+      this.refund = undefined;
     },
 
     /**
     * Set the field value
     * The actual refund from the request
     *
-    * @param {Refund} refundObj 
+    * @param {Refund} refund 
     */
-    setRefundObj: function(refundObj) {
-      this.refundObj = refundObj;
+    setRefund: function(refund) {
+      this.refund = refund;
     },
 
     /**
@@ -38,14 +38,14 @@ var payments_Refund = require("../payments/Refund");
     * The actual refund from the request
       * @return {Refund} 
     */
-    getRefundObj: function() {
-      return this.refundObj;
+    getRefund: function() {
+      return this.refund;
     }
   });
 
 RefundPaymentResponse._meta_ =  {fields:  {}};
-RefundPaymentResponse._meta_.fields["refundObj"] = {};
-RefundPaymentResponse._meta_.fields["refundObj"].type = payments_Refund;
+RefundPaymentResponse._meta_.fields["refund"] = {};
+RefundPaymentResponse._meta_.fields["refund"].type = payments_Refund;
 
 //
 // Expose the module.
