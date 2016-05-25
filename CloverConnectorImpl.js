@@ -144,6 +144,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
             this.device.sendMessage(message);
         } catch(e) {
             var errorEvent = new CloverDeviceErrorEvent();
+            errorEvent.setType(ErrorType.COMMUNICATION);
             errorEvent.setCode(DeviceErrorEventCode.UnknownError);
             try {
                 if (e && e.message) {
@@ -273,6 +274,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
             // Will figure out error codes later
             log.debug(event);
             var deviceErrorEvent = new remotepay.CloverDeviceErrorEvent();
+            deviceErrorEvent.setType(ErrorType.COMMUNICATION);
             //deviceErrorEvent.setCode(DeviceErrorEventCode.AccessDenied);
             this.delegateCloverConnectorListener.onDeviceError(deviceErrorEvent);
         }.bind(this));
@@ -286,6 +288,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
             // Will figure out error codes later
             log.debug(event);
             var deviceErrorEvent = new remotepay.CloverDeviceErrorEvent();
+            deviceErrorEvent.setType(ErrorType.EXCEPTION);
             //deviceErrorEvent.setCode(DeviceErrorEventCode.AccessDenied);
             this.delegateCloverConnectorListener.onDeviceError(deviceErrorEvent);
         }.bind(this));
@@ -293,6 +296,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
             // Will figure out error codes later
             log.debug(message);
             var deviceErrorEvent = new remotepay.CloverDeviceErrorEvent();
+            deviceErrorEvent.setType(ErrorType.COMMUNICATION);
             //deviceErrorEvent.setCode(DeviceErrorEventCode.AccessDenied);
             this.delegateCloverConnectorListener.onDeviceError(deviceErrorEvent);
         }.bind(this));
@@ -306,6 +310,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
             log.debug(message);
             // Will figure out error codes later
             var deviceErrorEvent = new remotepay.CloverDeviceErrorEvent();
+            deviceErrorEvent.setType(ErrorType.COMMUNICATION);
             deviceErrorEvent.setCode(remotepay.DeviceErrorEventCode.AccessDenied);
             this.delegateCloverConnectorListener.onDeviceError(deviceErrorEvent);
         }.bind(this));
@@ -761,6 +766,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
                 // could not connect, not enough info
                 var errorResponse1 = new remotepay.CloverDeviceErrorEvent();
                 errorResponse1.setCode(DeviceErrorEventCode.InvalidConfig);
+                errorResponse1.setType(ErrorType.VALIDATION);
                 errorResponse1.setMessage("Cannot determine merchant to use.  " +
                   "Configuration is missing merchant id (merchantId)");
                 this.delegateCloverConnectorListener.onDeviceError(errorResponse1);
@@ -777,6 +783,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
                 // Note: Could default to www.clover.com here
                 var errorResponse2 = new remotepay.CloverDeviceErrorEvent();
                 errorResponse2.setCode(DeviceErrorEventCode.InvalidConfig);
+                errorResponse2.setType(ErrorType.VALIDATION);
                 errorResponse2.setMessage("Cannot determine domain to use.  " +
                   "Configuration is missing domain (domain)");
                 this.delegateCloverConnectorListener.onDeviceError(errorResponse2);
@@ -786,6 +793,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
         } else {
             var errorResponse = new remotepay.CloverDeviceErrorEvent();
             errorResponse.setCode(DeviceErrorEventCode.InvalidConfig);
+            errorResponse2.setType(ErrorType.VALIDATION);
             errorResponse.setMessage("Cannot determine client id or domain to use.  " +
               "Configuration is missing domain (domain), or client id (clientId)");
             this.delegateCloverConnectorListener.onDeviceError(errorResponse);
@@ -806,6 +814,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
               }.bind(this),
               function (error) {
                   var errorResponse1 = new remotepay.CloverDeviceErrorEvent();
+                  errorResponse1.setType(ErrorType.COMMUNICATION);
                   errorResponse1.setCode(DeviceErrorEventCode.UnknownError);
                   errorResponse1.setMessage(error);
                   this.delegateCloverConnectorListener.onDeviceError(errorResponse1)
@@ -815,6 +824,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
             // could not connect, not enough info
             var errorResponse = new remotepay.CloverDeviceErrorEvent();
             errorResponse.setCode(DeviceErrorEventCode.InvalidConfig);
+            errorResponse.setType(ErrorType.VALIDATION);
             errorResponse.setMessage("Cannot determine device to use.  " +
               "Configuration is missing device serial id (deviceSerialId)");
             this.delegateCloverConnectorListener.onDeviceError(errorResponse);
@@ -830,6 +840,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
         var myDevice = devices[this.configuration.deviceSerialId];
         if (null == myDevice) {
             var errorResponse = new remotepay.CloverDeviceErrorEvent();
+            errorResponse.setType(ErrorType.VALIDATION);
             errorResponse.setCode(DeviceErrorEventCode.InvalidConfig);
             errorResponse.setMessage("Cannot determine device to use.  " +
               "Device " + this.configuration.deviceSerialId + " not in set returned.");
@@ -903,6 +914,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
           function(data) { this.deviceNotificationSent(endpoints, deviceContactInfo, data);}.bind(this),
           function(error) {
               var errorResponse = new remotepay.CloverDeviceErrorEvent();
+              errorResponse.setType(ErrorType.COMMUNICATION);
               errorResponse.setCode(DeviceErrorEventCode.SendNotificationFailure);
               errorResponse.setMessage("Error sending alert to device." + error);
               this.delegateCloverConnectorListener.onDeviceError(errorResponse);

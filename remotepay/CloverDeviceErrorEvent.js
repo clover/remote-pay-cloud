@@ -7,6 +7,7 @@
 // Prototype.js required
 require("prototype");
 var remotepay_DeviceErrorEventCode = require("../remotepay/DeviceErrorEventCode");
+var remotepay_ErrorType = require("../remotepay/ErrorType");
 
   /**
   * @constructor
@@ -20,6 +21,7 @@ var remotepay_DeviceErrorEventCode = require("../remotepay/DeviceErrorEventCode"
       this._class_ = CloverDeviceErrorEvent;
       this.message = undefined;
       this.code = undefined;
+      this.type = undefined;
     },
 
     /**
@@ -56,6 +58,22 @@ var remotepay_DeviceErrorEventCode = require("../remotepay/DeviceErrorEventCode"
     getCode: function() {
       return this.code;
     },
+
+    /**
+    * Set the field value
+    * @param {ErrorType} type 
+    */
+    setType: function(type) {
+      this.type = type;
+    },
+
+    /**
+    * Get the field value
+    * @return {ErrorType} 
+    */
+    getType: function() {
+      return this.type;
+    },
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {
@@ -79,6 +97,8 @@ CloverDeviceErrorEvent._meta_.fields["message"] = {};
 CloverDeviceErrorEvent._meta_.fields["message"].type = String;
 CloverDeviceErrorEvent._meta_.fields["code"] = {};
 CloverDeviceErrorEvent._meta_.fields["code"].type = remotepay_DeviceErrorEventCode;
+CloverDeviceErrorEvent._meta_.fields["type"] = {};
+CloverDeviceErrorEvent._meta_.fields["type"].type = remotepay_ErrorType;
 
 //
 // Expose the module.
