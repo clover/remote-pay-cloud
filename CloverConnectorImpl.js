@@ -760,7 +760,13 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
     initializeConnection: function() {
         if (this.configuration.oauthToken) {
             if(!this.configuration.merchantId) {
-                this.configuration.merchantId = this.cloverOAuth.getURLParams()["merchant_id"];
+                if(!this.cloverOAuth) {
+                    // We must have the merchant id.  This will make the merchant log in again.
+                    this.configuration.oauthToken = this.getAuthToken(); // calls initializeConnection
+                    return;
+                } else {
+                    this.configuration.merchantId = this.cloverOAuth.getURLParams()["merchant_id"];
+                }
             }
             if(!this.configuration.merchantId) {
                 // could not connect, not enough info

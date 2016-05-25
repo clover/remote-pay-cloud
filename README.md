@@ -1,75 +1,137 @@
 Repository for Clover's cloud connector API.  Published as an NPM package.  Intended for use in a browser environment.
 
-##At a Glance
+##At a Glance 
 Make a sale.
+
 ```
-var cloverLib = require("remote-pay-cloud").Clover;
-var clover = new Clover({
-  "clientId" : "3BZPZ6A6FQ8ZM",
-  "domain" : "https://sandbox.dev.clover.com/",
-  "merchantId" : "VKYQ0RVGMYHRS",
-  "deviceSerialId" : "C021UQ52341078"
+require("prototype");
+var $ = require('jQuery');
+
+var clover = require("remote-pay-cloud");
+var log = clover.Logger.create();
+
+var connector = new clover.CloverConnectorFactory().createICloverConnector({
+    "oauthToken": "1e7a9007-141a-293d-f41d-f603f0842138",
+    "merchantId": "BBFF8NBCXEMDT",
+    "clientId": "3RPTN642FHXTC",
+    "deviceSerialId": "C031UQ52340045",
+    "domain": "https://dev1.dev.clover.com/"
 });
-clover.initDeviceConnection(function(error) {
-  if(error) console.log(error)
-  else clover.sale({"amount" : 10000 }, 
-    function(error, saleResult) {
-      if(error) console.log(error);
-      console.log(saleResult);
-      clover.close();
-  });
+
+var ExampleCloverConnectorListener = Class.create( clover.remotepay.ICloverConnectorListener, {
+    initialize: function (cloverConnector) {
+        this.cloverConnector = cloverConnector;
+    },
+    onReady: function (merchantInfo) {
+        var saleRequest = new clover.remotepay.SaleRequest();
+        saleRequest.setExternalId(clover.CloverID.getNewId());
+        saleRequest.setAmount(10000);
+        this.cloverConnector.sale(saleRequest);
+    },
+    onVerifySignatureRequest: function (request) {
+        log.info(request);
+        this.cloverConnector.acceptSignature(request);
+    },
+    onSaleResponse: function (response) {
+        log.info(response);
+        connector.dispose();
+        if(!response.getIsSale()) {
+            console.error("Response is not an sale!");
+            console.error(response);
+        }
+    }
+});
+
+var connectorListener = new ExampleCloverConnectorListener(connector);
+connector.addCloverConnectorListener(connectorListener);
+connector.initializeConnection();
+
+// Close the connection cleanly on exit.  This should be done with all connectors.
+$(window).on('beforeunload ', function () {
+    try {
+        connector.dispose();
+    } catch (e) {
+        console.log(e);
+    }
 });
 ```
 
-To make a payment using the High Level Cloud API
+To make a payment using the Clover Cloud Connector API
 ####Create the Clover object.
+Import the protoype library and the Clover Cloud Connector library.
 ```
-var cloverLib = require("remote-pay-cloud").Clover;
-var clover = new Clover(configuration);
+require("prototype");
+var clover = require("remote-pay-cloud");
 ```
-There are several ways the Clover object can be configured.
+The connector can be configured in different ways, but some values are required.
 
-Examples of creating the Clover object:
+Examples of configurations for the Connector object:
 
-1. With a clientID, domain, merchantId, deviceSerialId
+1. With a clientID, the device serial id, and the domain
 ```
 {
-  "clientId" : "3BZPZ6A6FQ8ZM",
-  "domain" : "https://sandbox.dev.clover.com/",
-  "merchantId" : "VKYQ0RVGMYHRS",
-  "deviceSerialId" : "C021UQ52341078"
+    "clientId": "3RPTN642FHXTC",
+    "deviceSerialId": "C031UQ52340045",
+    "domain": "https://sandbox.dev.clover.com/"
 }
 ```
-1. With a oauthToken, domain, merchantId, deviceSerialId
+The application page will be redirected to the domain, where the merchant will be prompted to log in.  If the application 
+(represented by the clientId) is not installed, the merchant will be presented with the application page, and prompted to 
+install it.  After the installation, the merchant will be directed to the application page. 
+
+1. With a oauthToken (an authentication token), merchantId, clientId, deviceSerialId and domain
 ```
 {
   "oauthToken" : "6e6313e8-fe33-8662-7ff2-3a6690e0ff14",
-  "domain" : "https://sandbox.dev.clover.com/",
   "merchantId" : "VKYQ0RVGMYHRS",
-  "deviceSerialId" : "C021UQ52341078"
+  "clientId": "3RPTN642FHXTC",
+  "deviceSerialId" : "C021UQ52341078",
+  "domain" : "https://sandbox.dev.clover.com/"
 }
 ```
-1. Relying on a saved configuration in a cookie
+The application will launch directly without a redirect.
 
 ####Define how your program will use the Clover object
-#####In this example, this function will be passed when we start communicating with the device.  If there is an error when communication is initiated, this function will get the error as a parameter.
+#####In this example, we create a custom ICloverConnectorListener that accepts a connector instance.
 ```
-function makeASale(error) {
-  if(error) console.log(error)
-  else clover.sale({"amount" : 12345, "tipAmount" : 123 }, mySaleResult);
-}
+var ExampleCloverConnectorListener = Class.create( clover.remotepay.ICloverConnectorListener, {
+    initialize: function (cloverConnector) {
+        this.cloverConnector = cloverConnector;
+    },
+    ...
 ```
-
-#####Here we define the error-first callback that we pass in to the Clover.sale function above.  If an error occurs, it will be the first parameter.
+####The listener waits to be told that the connection is ready, then begins a sale by creating the request for $100
 ```
-function mySaleResult(error, saleResult) {
-  // do something with the result
-}
+    ...
+    onReady: function (merchantInfo) {
+        var saleRequest = new clover.remotepay.SaleRequest();
+        saleRequest.setExternalId(clover.CloverID.getNewId());
+        saleRequest.setAmount(10000);
+        this.cloverConnector.sale(saleRequest);
+    },
+    ...
 ```
-
-####Start communicating with the device and tell the device to call your program when it is ready
+####If the sale involves collecting a signature for verification, the listener just automatically accepts it.
 ```
-clover.initDeviceConnection(makeASale);
+    ...
+    onVerifySignatureRequest: function (request) {
+        log.info(request);
+        this.cloverConnector.acceptSignature(request);
+    },
+    ...
+```
+####When the sale is complete, the listener notfied with the sale response. 
+```
+    ...
+    onSaleResponse: function (response) {
+        log.info(response);
+        connector.dispose();
+        if(!response.getIsSale()) {
+            console.error("Response is not an sale!");
+            console.error(response);
+        }
+    }
+    ...
 ```
 
 ####Disclaimer
