@@ -2,8 +2,8 @@
  * Error class for Clover specific errors.
  *
  * @param {string} code a code to classify the error.
- * @param {string} message the error message
- * @param {Error} cause the original cause of the error if this wraps some lower level system error.
+ * @param {string} [message] the error message
+ * @param {Error} [cause] the original cause of the error if this wraps some lower level system error.
  * @constructor
  */
 function CloverError(code, message, cause) {

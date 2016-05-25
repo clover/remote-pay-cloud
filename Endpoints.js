@@ -1,18 +1,17 @@
-
 /**
  * Utility to centralize endpoints.
  *
  * @constructor
- * @param {CloverOAuth} cloverOAuth - used to obtain the access token and the domain for building the endpoints. If
+ * @param {EndPointConfig} endPointConfig - used to obtain the access token and the domain for building the endpoints. If
  *  we change this to load endpoints, the access token will still be needed, and the initial endpoint will
  *  still need a domain/url to use as well.
  */
-function Endpoints(cloverOAuth) {
+function Endpoints(endPointConfig) {
 
     /**
      * The object that provides the access token and the configurtion with the domain.
      */
-    this.cloverOAuth = cloverOAuth;
+    this.endPointConfig = endPointConfig;
 
     /**
      * The endpoint used to obtain a merchant
@@ -23,8 +22,8 @@ function Endpoints(cloverOAuth) {
     this.getMerchantEndpoint = function(merchantId) {
         var variables = {};
         variables[Endpoints.MERCHANT_V3_KEY] = merchantId;
-        variables[Endpoints.ACCESS_TOKEN_KEY] = this.cloverOAuth.getAccessToken();
-        return this.cloverOAuth.configuration.domain +
+        variables[Endpoints.ACCESS_TOKEN_KEY] = this.endPointConfig.getAccessToken();
+        return this.endPointConfig.configuration.domain +
           this.setVariables(Endpoints.MERCHANT_V3_PATH + Endpoints.ACCESS_TOKEN_SUFFIX, variables);
     };
 
@@ -37,8 +36,8 @@ function Endpoints(cloverOAuth) {
     this.getDevicesEndpoint = function(merchantId) {
         var variables = {};
         variables[Endpoints.MERCHANT_V3_KEY] = merchantId;
-        variables[Endpoints.ACCESS_TOKEN_KEY] = this.cloverOAuth.getAccessToken();
-        return this.cloverOAuth.configuration.domain +
+        variables[Endpoints.ACCESS_TOKEN_KEY] = this.endPointConfig.getAccessToken();
+        return this.endPointConfig.configuration.domain +
             this.setVariables(Endpoints.DEVICE_PATH + Endpoints.ACCESS_TOKEN_SUFFIX, variables);
     };
 
@@ -50,8 +49,8 @@ function Endpoints(cloverOAuth) {
     this.getAlertDeviceEndpoint = function(merchantId) {
         var variables = {};
         variables[Endpoints.MERCHANT_V3_KEY] = merchantId;
-        variables[Endpoints.ACCESS_TOKEN_KEY] = this.cloverOAuth.getAccessToken();
-        return this.cloverOAuth.configuration.domain +
+        variables[Endpoints.ACCESS_TOKEN_KEY] = this.endPointConfig.getAccessToken();
+        return this.endPointConfig.configuration.domain +
             this.setVariables(Endpoints.REMOTE_PAY_PATH + Endpoints.ACCESS_TOKEN_SUFFIX, variables);
     };
 
