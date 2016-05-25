@@ -67,7 +67,7 @@ The connector can be configured in different ways, but some values are required.
 
 #####Examples of configurations for the Connector object:
 
-1. With a clientID, the device serial id, and the domain
+* With a clientID, the device serial id, and the domain
 ```
 {
     "clientId": "3RPTN642FHXTC",
@@ -77,7 +77,7 @@ The connector can be configured in different ways, but some values are required.
 ```
 The application page will be redirected to the domain, where the merchant will be prompted to log in.  If the application (represented by the clientId) is not installed, the merchant will be presented with the application page, and prompted to install it.  After the installation, the merchant will be directed to the application page. 
 
-2. With a oauthToken (an authentication token), merchantId, clientId, deviceSerialId and domain
+* With a oauthToken (an authentication token), merchantId, clientId, deviceSerialId and domain
 ```
 {
   "oauthToken" : "6e6313e8-fe33-8662-7ff2-3a6690e0ff14",
@@ -89,8 +89,8 @@ The application page will be redirected to the domain, where the merchant will b
 ```
 The application will launch directly without a redirect.
 
-####Define how your program will use the Clover object
-#####In this example, we define a custom ICloverConnectorListener that accepts a connector instance.
+####Define the listener
+* In this example, we define a custom ICloverConnectorListener that accepts a connector instance.
 ```
 var ExampleCloverConnectorListener = Class.create( clover.remotepay.ICloverConnectorListener, {
     initialize: function (cloverConnector) {
@@ -98,7 +98,7 @@ var ExampleCloverConnectorListener = Class.create( clover.remotepay.ICloverConne
     },
     ...
 ```
-####The listener waits to be told that the connection is ready, then begins a sale by creating the request for $100
+* The listener waits to be told that the connection is ready, then begins a sale by creating the request for $100
 ```
     ...
     onReady: function (merchantInfo) {
@@ -109,7 +109,7 @@ var ExampleCloverConnectorListener = Class.create( clover.remotepay.ICloverConne
     },
     ...
 ```
-####If the sale involves collecting a signature for verification, the listener just automatically accepts it.
+* If the sale involves collecting a signature for verification, the listener just automatically accepts it.
 ```
     ...
     onVerifySignatureRequest: function (request) {
@@ -118,7 +118,7 @@ var ExampleCloverConnectorListener = Class.create( clover.remotepay.ICloverConne
     },
     ...
 ```
-####When the sale is complete, the listener notfied with the sale response. 
+* When the sale is complete, the listener is notified with the sale response. 
 ```
     ...
     onSaleResponse: function (response) {
@@ -131,7 +131,9 @@ var ExampleCloverConnectorListener = Class.create( clover.remotepay.ICloverConne
     }
     ...
 ```
-####Now that we have the listener defined, we create an instance of the listener and add it to the connector.  We then initialize the connector which makes it initiate the process to contact the device.  It is at this point that the oauth process begins, and the page may redirect to allow the merchant to login.
+The listener definition is complete. 
+####Create the instance, link it to the connector, and initiate the connection
+* Create an instance of the listener and add it to the connector.  Then initialize the connector which makes it initiate the process to contact the device.  It is at this point that the oauth process begins, and the page may redirect to allow the merchant to login.
 ```
     ...
     var connectorListener = new ExampleCloverConnectorListener(connector);
@@ -139,7 +141,8 @@ var ExampleCloverConnectorListener = Class.create( clover.remotepay.ICloverConne
     connector.initializeConnection();
     ...
 ```
-####Finally, we add a hook to properly close the connector if the browser window is closed.  If the connector is not closed properly, the device will remain paired until it times out.  Note that this implementation uses JQuery to attach the shutdown hook.
+####Properly close the connector if the browser window is closed
+* Add a hook to properly close the connector if the browser window is closed.  If the connector is not closed properly, the device will remain paired until it times out.  Note that this implementation uses JQuery to attach the shutdown hook.
 ```
 ...
 $(window).on('beforeunload ', function () {
