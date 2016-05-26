@@ -37,7 +37,18 @@ function RemoteMessageBuilder(defaultPackageName, remoteSourceSDK, remoteApplica
         remoteMessage.setId(this.getNextMessageId());
         remoteMessage.setMethod(protocolMessage.getMethod());
         remoteMessage.setPackageName(this.defaultPackageName);
-        remoteMessage.setPayload(JSON.stringify(protocolMessage));
+
+        // When our business objects contain arrays and are serialized/ deserialized, an additional
+        // element is introduced.  We need to account for that.
+        var addElementsToArray = function (key, value) {
+            if (key !== 'elements' && Array.isArray(value)) {
+                return {'elements': value};
+            }
+            return value;
+        };
+        var stringMessage = JSON.stringify(protocolMessage, addElementsToArray);
+
+        remoteMessage.setPayload(stringMessage);
         remoteMessage.setType(RemoteMessageType.COMMAND);
         remoteMessage.setRemoteSourceSDK(this.remoteSourceSDK);
         remoteMessage.setRemoteApplicationID(this.remoteApplicationID);
