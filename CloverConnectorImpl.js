@@ -1488,6 +1488,19 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
      */
     getListeners: function() {
         return this.cloverConnectorListeners;
+    },
+
+    /**
+     * Used internally
+     * @protected
+     * @param {LogLevelEnum} logLevel - the logging level
+     * @param {Object} messages - a mappiing of string->string that is passed directly in the message
+     */
+    logMessageRemotely: function(logLevel, messages) {
+        var logMessage = new remotemessage.LogMessage();
+        logMessage.setLogLevel(logLevel);
+        logMessage.setMessages(messages);
+        this.sendMessage(this.messageBuilder.buildRemoteMessageObject(logMessage));
     }
 });
 
