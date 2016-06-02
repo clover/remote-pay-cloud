@@ -18,6 +18,7 @@ remotepay.DeviceEventEnum = require("./DeviceEventEnum");
 remotepay.DeviceEventState = require("./DeviceEventState");
 remotepay.DeviceInfo = require("./DeviceInfo");
 remotepay.DisplayReceiptOptionsRequest = require("./DisplayReceiptOptionsRequest");
+remotepay.ErrorType = require("./ErrorType");
 remotepay.ICloverConnector = require("./ICloverConnector");
 remotepay.ICloverConnectorListener = require("./ICloverConnectorListener");
 remotepay.Img = require("./Img");
