@@ -136,7 +136,9 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
             } else {
                 this.connectionDenied(connectedId);
             }
-            return;
+            if (this.deviceSocket && this.deviceSocket.readyState == WebSocket.OPEN) {
+                return;
+            }
         }
 
         if (!this.deviceSocket || this.deviceSocket.readyState != WebSocket.OPEN) {
@@ -221,6 +223,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
             var lag = (currentMillis - this.pongReceivedMillis);
             if(lag > this.deadConnectionWarnThreshold) {
                 if(lag > this.deadConnectionErrorThreshold) {
+                    this.pongReceivedMillis = new Date().getTime();
                     this.connectionError(lag);
                 }
                 else {
@@ -363,12 +366,14 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
             }
             this.reconnect = oldReconnect;
         }
-        if (this.deviceSocket) {
-            try {
-                this.deviceSocket.close();
-            } catch (e) {
+        setTimeout(function() {
+            if (this.deviceSocket) {
+                try {
+                    this.deviceSocket.close();
+                } catch (e) {
+                }
             }
-        }
+        }.bind(this), 2000);
     };
 
     /**

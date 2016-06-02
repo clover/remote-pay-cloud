@@ -750,19 +750,27 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
      */
     getDeviceId: function(endpoints) {
         if(this.configuration.deviceSerialId) {
-            var xmlHttpSupport = new XmlHttpSupport();
             var url = endpoints.getDevicesEndpoint(this.configuration.merchantId);
-            xmlHttpSupport.getData(url,
-              function (devices) {
-                  this.handleDeviceResult(this.buildMapOfSerialToDevice(devices));
-              }.bind(this),
-              function (error) {
-                  var errorResponse1 = new remotepay.CloverDeviceErrorEvent();
-                  errorResponse1.setCode(DeviceErrorEventCode.UnknownError);
-                  errorResponse1.setMessage(error);
-                  this.delegateCloverConnectorListener.onDeviceError(errorResponse1)
-              }.bind(this)
-            );
+            if(!this["devices"] || !this["devices"][url]) {
+                var xmlHttpSupport = new XmlHttpSupport();
+                xmlHttpSupport.getData(url,
+                  function (devices) {
+                      if(!this["devices"]) {
+                          this.devices = {};
+                      }
+                      this.devices[url] = this.buildMapOfSerialToDevice(devices);
+                      this.handleDeviceResult(this.devices[url]);
+                  }.bind(this),
+                  function (error) {
+                      var errorResponse1 = new remotepay.CloverDeviceErrorEvent();
+                      errorResponse1.setCode(DeviceErrorEventCode.UnknownError);
+                      errorResponse1.setMessage(error);
+                      this.delegateCloverConnectorListener.onDeviceError(errorResponse1)
+                  }.bind(this)
+                );
+            } else {
+                this.handleDeviceResult(this.devices[url]);
+            }
         } else {
             // could not connect, not enough info
             var errorResponse = new remotepay.CloverDeviceErrorEvent();
@@ -901,6 +909,11 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
             this.configuration.deviceURL = url;
             //recurse
             this.device.contactDevice(this.configuration.deviceURL);
+        } else {
+            var errorResponse = new remotepay.CloverDeviceErrorEvent();
+            errorResponse.setCode(DeviceErrorEventCode.SendNotificationFailure);
+            errorResponse.setMessage("Error sending alert to device. Device is not connected to server.");
+            this.delegateCloverConnectorListener.onDeviceError(errorResponse);
         }
     },
 
@@ -1202,12 +1215,15 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
             } catch (e) {
                 log.info(e);
             }
+            /*
             try {
                 this.resetDevice();
             } catch (e) {
                 log.info(e);
             }
+            */
             try {
+                log.info("Calling disconnectFromDevice");
                 this.device.disconnectFromDevice();
             } catch (e) {
                 log.info(e);
