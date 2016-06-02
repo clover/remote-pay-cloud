@@ -10,6 +10,7 @@ ResponseCode = {
   FAIL : "FAIL",
   UNSUPPORTED : "UNSUPPORTED",
   CANCEL : "CANCEL",
+  DUPLICATE : "DUPLICATE",
   ERROR : "ERROR"
 };
 
