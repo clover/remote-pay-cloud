@@ -272,6 +272,15 @@ require("prototype");
     * @return void
     */
     initializeConnection: function() {
+    },
+
+    /**
+    * Returns information on the SDK.  This is a string that is identified by the SDK type, a colon, and the
+  * version with any release candidate appended.
+    * @return {String} 
+    */
+    SDKInfo: function() {
+      return null;
     }
   });
 
