@@ -28,7 +28,12 @@ var EndPointConfig = require("./EndPointConfig.js");
 var MessageBundle = require("./MessageBundle.js");
 var CloudMethod = require("./CloudMethod.js");
 
-CLOVER_CLOUD_SDK_VERSION = "0.0.4";
+
+// !!NOTE!!  The following is automatically updated to reflect the npm version.
+// See the package.json postversion script, which maps to scripts/postversion.sh
+// Do not change this or the versioning may not reflect the npm version correctly.
+CLOVER_CLOUD_SDK_VERSION = "0.0.6";
+CLOVER_CLOUD_SDK_RELEASE_CANDIDATE_VERSION = "";
 
 /**
  *  Interface to the Clover remote-pay API.
@@ -1463,6 +1468,18 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
         var remoteMessage = this.messageBuilder.buildRemoteMessageObject(protocolRequest);
         this.addAcknowledgementHook(remoteMessage.getId(), function(){this.sendVoidPaymentResponse(payment)}.bind(this));
         this.sendMessage(remoteMessage);
+    },
+
+    /**
+     * Returns information on the SDK.  This is a string that is identified by the SDK type, a colon, and the
+     * version with any release candidate appended.
+     * @return {String}
+     */
+    SDKInfo: function() {
+        var sdkInfo = CloverConnectorImpl.RemoteSourceSDK + ":" +
+          CLOVER_CLOUD_SDK_VERSION +
+          CLOVER_CLOUD_SDK_RELEASE_CANDIDATE_VERSION;
+        return sdkInfo;
     },
 
     /**
