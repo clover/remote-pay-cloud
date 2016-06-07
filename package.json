@@ -1,6 +1,6 @@
 {
   "name": "remote-pay-cloud",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "Access Clover devices through the cloud.",
   "keywords": [
     "clover",
@@ -22,6 +22,10 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/clover/remote-pay-cloud-npm"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified, \"$npm_package_version && exit 1",
+    "postversion": "scripts/postversion.sh \"$npm_package_version\""
   },
   "dependencies": {
     "prototype": "*",
