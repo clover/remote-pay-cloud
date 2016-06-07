@@ -23,6 +23,10 @@
     "type": "git",
     "url": "https://github.com/clover/remote-pay-cloud-npm"
   },
+  "scripts": {
+    "test": "echo \"Error: no test specified, \"$npm_package_version && exit 1",
+    "postversion": "scripts/postversion.sh \"$npm_package_version\""
+  },
   "dependencies": {
     "prototype": "*",
     "eventemitter3": "~1.1.1"

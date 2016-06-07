@@ -28,7 +28,11 @@ var EndPointConfig = require("./EndPointConfig.js");
 var MessageBundle = require("./MessageBundle.js");
 var CloudMethod = require("./CloudMethod.js");
 
-CLOVER_CLOUD_SDK_VERSION = "1.0.0";
+
+// !!NOTE!!  The following is automatically updated to reflect the npm version.
+// See the package.json postversion script, which maps to scripts/postversion.sh
+// Do not change this or the versioning may not reflect the npm version correctly.
+CLOVER_CLOUD_SDK_VERSION = "0.1.4";
 CLOVER_CLOUD_SDK_RELEASE_CANDIDATE_VERSION = "";
 
 /**
