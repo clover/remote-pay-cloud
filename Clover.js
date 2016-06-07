@@ -17,7 +17,7 @@ var log = require('./Logger.js').create();
 // !!NOTE!!  The following is automatically updated to reflect the npm version.
 // See the package.json postversion script, which maps to scripts/postversion.sh
 // Do not change this or the versioning may not reflect the npm version correctly.
-CLOVER_CLOUD_SDK_VERSION = "0.1.4";
+CLOVER_CLOUD_SDK_VERSION = "0.0.6";
 
 /**
  * Clover API for external Systems
