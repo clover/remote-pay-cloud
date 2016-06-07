@@ -24,7 +24,7 @@ var DeviceContactInfo = require("./DeviceContactInfo.js");
 var CloverError = require("./CloverError.js");
 var ImageUtil = require("./ImageUtil.js");
 var CloverID = require("./CloverID.js");
-var EndPointConfig = require("./EndPointConfig.js");
+var EndPointConfig = require("./EndpointConfig.js");
 var MessageBundle = require("./MessageBundle.js");
 var CloudMethod = require("./CloudMethod.js");
 
