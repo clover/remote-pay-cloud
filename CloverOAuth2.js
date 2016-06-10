@@ -16,7 +16,7 @@
  */
 
 require("prototype");
-var EndPointConfig = require("./EndPointConfig.js");
+var EndPointConfig = require("./EndpointConfig.js");
 
 /**
  * @constructor

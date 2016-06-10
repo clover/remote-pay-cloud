@@ -24,7 +24,7 @@ var DeviceContactInfo = require("./DeviceContactInfo.js");
 var CloverError = require("./CloverError.js");
 var ImageUtil = require("./ImageUtil.js");
 var CloverID = require("./CloverID.js");
-var EndPointConfig = require("./EndPointConfig.js");
+var EndPointConfig = require("./EndpointConfig.js");
 var MessageBundle = require("./MessageBundle.js");
 var CloudMethod = require("./CloudMethod.js");
 
@@ -32,7 +32,7 @@ var CloudMethod = require("./CloudMethod.js");
 // !!NOTE!!  The following is automatically updated to reflect the npm version.
 // See the package.json postversion script, which maps to scripts/postversion.sh
 // Do not change this or the versioning may not reflect the npm version correctly.
-CLOVER_CLOUD_SDK_VERSION = "0.0.7";
+CLOVER_CLOUD_SDK_VERSION = "0.0.9";
 CLOVER_CLOUD_SDK_RELEASE_CANDIDATE_VERSION = "";
 
 /**
