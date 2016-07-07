@@ -31,6 +31,7 @@ var payments_GiftCard = require("../payments/GiftCard");
       this.taxableAmountRates = undefined;
       this.lineItems = undefined;
       this.employeeId = undefined;
+      this.suppressPayment = "false";
     },
 
     /**
@@ -204,6 +205,22 @@ var payments_GiftCard = require("../payments/GiftCard");
     getEmployeeId: function() {
       return this.employeeId;
     },
+
+    /**
+    * Set the field value
+    * @param {Boolean} suppressPayment 
+    */
+    setSuppressPayment: function(suppressPayment) {
+      this.suppressPayment = suppressPayment;
+    },
+
+    /**
+    * Get the field value
+    * @return {Boolean} 
+    */
+    getSuppressPayment: function() {
+      return this.suppressPayment;
+    },
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {
@@ -245,6 +262,8 @@ GiftCardTransaction._meta_.fields["lineItems"].type = Array;
 GiftCardTransaction._meta_.fields["lineItems"].elementType = payments_LineItemPayment;
 GiftCardTransaction._meta_.fields["employeeId"] = {};
 GiftCardTransaction._meta_.fields["employeeId"].type = String;
+GiftCardTransaction._meta_.fields["suppressPayment"] = {};
+GiftCardTransaction._meta_.fields["suppressPayment"].type = Boolean;
 
 //
 // Expose the module.

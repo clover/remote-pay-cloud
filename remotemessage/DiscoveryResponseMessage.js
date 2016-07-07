@@ -31,6 +31,7 @@ var remotemessage_Message = require("../remotemessage/Message");
       this.supportsTipAdjust = "false";
       this.supportsManualRefund = "false";
       this.supportsMultiPayToken = "false";
+      this.supportsAcknowledgement = "false";
     },
 
     /**
@@ -191,6 +192,22 @@ var remotemessage_Message = require("../remotemessage/Message");
     */
     getSupportsMultiPayToken: function() {
       return this.supportsMultiPayToken;
+    },
+
+    /**
+    * Set the field value
+    * @param {Boolean} supportsAcknowledgement 
+    */
+    setSupportsAcknowledgement: function(supportsAcknowledgement) {
+      this.supportsAcknowledgement = supportsAcknowledgement;
+    },
+
+    /**
+    * Get the field value
+    * @return {Boolean} 
+    */
+    getSupportsAcknowledgement: function() {
+      return this.supportsAcknowledgement;
     }
   });
 
@@ -215,6 +232,8 @@ DiscoveryResponseMessage._meta_.fields["supportsManualRefund"] = {};
 DiscoveryResponseMessage._meta_.fields["supportsManualRefund"].type = Boolean;
 DiscoveryResponseMessage._meta_.fields["supportsMultiPayToken"] = {};
 DiscoveryResponseMessage._meta_.fields["supportsMultiPayToken"].type = Boolean;
+DiscoveryResponseMessage._meta_.fields["supportsAcknowledgement"] = {};
+DiscoveryResponseMessage._meta_.fields["supportsAcknowledgement"].type = Boolean;
 
 //
 // Expose the module.

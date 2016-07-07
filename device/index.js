@@ -7,7 +7,8 @@ device.DeviceProvision = require("./DeviceProvision");
 device.DeviceProvisionState = require("./DeviceProvisionState");
 device.Rom = require("./Rom");
 device.RomBuildType = require("./RomBuildType");
-device.SwapRequestEvent = require("./SwapRequestEvent.js");
+device.SwapRequestEvent = require("./SwapRequestEvent");
+device.index = require("./index.js");
 //
 // Expose the module.
 //

@@ -158,6 +158,20 @@ DelegateCloverConnectorListener = Class.create(ICloverConnectorListener, {
     },
 
     /**
+     * @param {ConfirmPaymentRequest} request
+     * @return void
+     */
+    onConfirmPaymentRequest: function (request) {
+        this.listenersource.getListeners().forEach(function (element) {
+            try {
+                element.onConfirmPaymentRequest(request);
+            } catch (error) {
+                this.handleError("onConfirmPaymentRequest", element, error);
+            }
+        }.bind(this));
+    },
+
+    /**
      * @param {CloseoutResponse} response
      * @return void
      */
@@ -251,20 +265,6 @@ DelegateCloverConnectorListener = Class.create(ICloverConnectorListener, {
                 element.onVaultCardResponse(response);
             } catch (error) {
                 this.handleError("onVaultCardResponse", element, error);
-            }
-        }.bind(this));
-    },
-
-    /**
-     * @param {ConfigErrorResponse} response
-     * @return void
-     */
-    onConfigErrorResponse: function (response) {
-        this.listenersource.getListeners().forEach(function (element) {
-            try {
-                element.onConfigErrorResponse(response);
-            } catch (error) {
-                this.handleError("onConfigErrorResponse", element, error);
             }
         }.bind(this));
     },

@@ -98,6 +98,14 @@ require("prototype");
     },
 
     /**
+    * Will be called, passing in the Payment and Signature, if the user provides an on-screen signature, that needs to be accepted or rejected for a payment.
+    * @param {ConfirmPaymentRequest} request 
+    * @return void
+    */
+    onConfirmPaymentRequest: function(request) {
+    },
+
+    /**
     * Can get called multiple times at various stages. The Reason will contain information about what was successful or what failed.
     * @param {CloseoutResponse} response 
     * @return void

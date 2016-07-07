@@ -12,6 +12,7 @@ var order_VoidReason = require("../order/VoidReason");
 var payments_Result = require("../payments/Result");
 var payments_ServiceChargeAmount = require("../payments/ServiceChargeAmount");
 var payments_PaymentTaxRate = require("../payments/PaymentTaxRate");
+var payments_DCCInfo = require("../payments/DCCInfo");
 var base_Reference = require("../base/Reference");
 var base_Tender = require("../base/Tender");
 var payments_Refund = require("../payments/Refund");
@@ -49,6 +50,7 @@ var payments_Refund = require("../payments/Refund");
       this.note = undefined;
       this.lineItemPayments = undefined;
       this.voidReason = undefined;
+      this.dccInfo = undefined;
     },
 
     /**
@@ -463,6 +465,25 @@ var payments_Refund = require("../payments/Refund");
     getVoidReason: function() {
       return this.voidReason;
     },
+
+    /**
+    * Set the field value
+    * Dynamic Currency Conversion information
+    *
+    * @param {DCCInfo|Null} dccInfo 
+    */
+    setDccInfo: function(dccInfo) {
+      this.dccInfo = dccInfo;
+    },
+
+    /**
+    * Get the field value
+    * Dynamic Currency Conversion information
+      * @return {DCCInfo|Null} 
+    */
+    getDccInfo: function() {
+      return this.dccInfo;
+    },
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {
@@ -531,6 +552,8 @@ Payment._meta_.fields["lineItemPayments"].type = Array;
 Payment._meta_.fields["lineItemPayments"].elementType = payments_LineItemPayment;
 Payment._meta_.fields["voidReason"] = {};
 Payment._meta_.fields["voidReason"].type = order_VoidReason;
+Payment._meta_.fields["dccInfo"] = {};
+Payment._meta_.fields["dccInfo"].type = payments_DCCInfo;
 
 //
 // Expose the module.

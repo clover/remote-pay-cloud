@@ -26,7 +26,7 @@ var remotemessage_Message = require("../remotemessage/Message");
 
     /**
     * Set the field value
-    * If true then order modification operations are supportted.
+    * If true then order modification operations are supported.
     *
     * @param {Boolean|Null} supportsOrderModification 
     */
@@ -36,7 +36,7 @@ var remotemessage_Message = require("../remotemessage/Message");
 
     /**
     * Get the field value
-    * If true then order modification operations are supportted.
+    * If true then order modification operations are supported.
       * @return {Boolean|Null} 
     */
     getSupportsOrderModification: function() {

@@ -2,7 +2,8 @@ module.exports.printer = printer;
 function printer() {}
 
 printer.Printer = require("./Printer");
-printer.PrinterType = require("./PrinterType.js");
+printer.PrinterType = require("./PrinterType");
+printer.index = require("./index.js");
 //
 // Expose the module.
 //
