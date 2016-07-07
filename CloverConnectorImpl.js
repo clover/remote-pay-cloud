@@ -304,6 +304,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
             log.debug(event);
             var deviceErrorEvent = new remotepay.CloverDeviceErrorEvent();
             //deviceErrorEvent.setCode(DeviceErrorEventCode.AccessDenied);
+            deviceErrorEvent.setMessage(JSON.stringify(event));
             this.delegateCloverConnectorListener.onDeviceError(deviceErrorEvent);
         }.bind(this));
         this.device.on(WebSocketDevice.CONNECTION_ERROR, function (message) {
@@ -311,6 +312,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
             log.debug(message);
             var deviceErrorEvent = new remotepay.CloverDeviceErrorEvent();
             //deviceErrorEvent.setCode(DeviceErrorEventCode.AccessDenied);
+            deviceErrorEvent.setMessage(message);
             this.delegateCloverConnectorListener.onDeviceError(deviceErrorEvent);
         }.bind(this));
         this.device.on(WebSocketDevice.CONNECTION_STOLEN, function (message) {
@@ -323,6 +325,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
             log.debug(message);
             // Will figure out error codes later
             var deviceErrorEvent = new remotepay.CloverDeviceErrorEvent();
+            deviceErrorEvent.setMessage(message);
             deviceErrorEvent.setCode(remotepay.DeviceErrorEventCode.AccessDenied);
             this.delegateCloverConnectorListener.onDeviceError(deviceErrorEvent);
         }.bind(this));
