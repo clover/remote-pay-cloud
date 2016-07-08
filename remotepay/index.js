@@ -13,6 +13,7 @@ remotepay.CloseoutRequest = require("./CloseoutRequest");
 remotepay.CloseoutResponse = require("./CloseoutResponse");
 remotepay.CloverDeviceErrorEvent = require("./CloverDeviceErrorEvent");
 remotepay.CloverDeviceEvent = require("./CloverDeviceEvent");
+remotepay.ConfirmPaymentRequest = require("./ConfirmPaymentRequest");
 remotepay.DeviceErrorEventCode = require("./DeviceErrorEventCode");
 remotepay.DeviceEventEnum = require("./DeviceEventEnum");
 remotepay.DeviceEventState = require("./DeviceEventState");
@@ -51,7 +52,8 @@ remotepay.VerifySignatureRequest = require("./VerifySignatureRequest");
 remotepay.VoidCreditRequest = require("./VoidCreditRequest");
 remotepay.VoidCreditResponse = require("./VoidCreditResponse");
 remotepay.VoidPaymentRequest = require("./VoidPaymentRequest");
-remotepay.VoidPaymentResponse = require("./VoidPaymentResponse.js");
+remotepay.VoidPaymentResponse = require("./VoidPaymentResponse");
+remotepay.index = require("./index.js");
 //
 // Expose the module.
 //

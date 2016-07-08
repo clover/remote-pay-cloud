@@ -36,18 +36,19 @@ var base_Reference = require("../base/Reference");
       this.deviceCertificate = undefined;
       this.pedCertificate = undefined;
       this.deviceTypeName = undefined;
-      this.pinDisabled = "false";
-      this.offlinePayments = "false";
-      this.offlinePaymentsAll = "false";
+      this.pinDisabled = false;
+      this.offlinePayments = false;
+      this.offlinePaymentsAll = false;
       this.offlinePaymentsLimit = undefined;
       this.offlinePaymentsPromptThreshold = undefined;
+      this.offlinePaymentsTotalPaymentsLimit = undefined;
+      this.offlinePaymentsLimitDefault = undefined;
+      this.offlinePaymentsPromptThresholdDefault = undefined;
+      this.offlinePaymentsTotalPaymentsLimitDefault = undefined;
+      this.showOfflinePayments = undefined;
+      this.maxOfflineDays = undefined;
+      this.allowStoreAndForward = undefined;
       this.secureReports = undefined;
-      this.tipsEnabled = undefined;
-      this.onPaperTipSignatures = undefined;
-      this.autoPrint = undefined;
-      this.hasDefaultEmployee = undefined;
-      this.printOrderTime = undefined;
-      this.skipReceiptScreen = undefined;
     },
 
     /**
@@ -122,6 +123,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * A prefix that will be applied to order numbers. This is useful if the merchant and/or customer needs to track which device an order came from.
+    *
     * @param {String} orderPrefix 
     */
     setOrderPrefix: function(orderPrefix) {
@@ -130,7 +133,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * @return {String} 
+    * A prefix that will be applied to order numbers. This is useful if the merchant and/or customer needs to track which device an order came from.
+      * @return {String} 
     */
     getOrderPrefix: function() {
       return this.orderPrefix;
@@ -154,6 +158,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * The device's serial number.
+    *
     * @param {String} serial 
     */
     setSerial: function(serial) {
@@ -162,7 +168,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * @return {String} 
+    * The device's serial number.
+      * @return {String} 
     */
     getSerial: function() {
       return this.serial;
@@ -323,6 +330,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * The type of device. Possible values are "GOLDLEAF" (Station), "LEAFCUTTER" (Mobile), "MAPLECUTTER" (Mini), "CLOVER_GO" (Clover Go), or "OTHER" (Unknown).
+    *
     * @param {String} deviceTypeName 
     */
     setDeviceTypeName: function(deviceTypeName) {
@@ -331,7 +340,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * @return {String} 
+    * The type of device. Possible values are "GOLDLEAF" (Station), "LEAFCUTTER" (Mobile), "MAPLECUTTER" (Mini), "CLOVER_GO" (Clover Go), or "OTHER" (Unknown).
+      * @return {String} 
     */
     getDeviceTypeName: function() {
       return this.deviceTypeName;
@@ -339,6 +349,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * Whether this device has PIN prompt disabled.
+    *
     * @param {Boolean} pinDisabled 
     */
     setPinDisabled: function(pinDisabled) {
@@ -347,7 +359,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * @return {Boolean} 
+    * Whether this device has PIN prompt disabled.
+      * @return {Boolean} 
     */
     getPinDisabled: function() {
       return this.pinDisabled;
@@ -419,6 +432,118 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @param {Number} offlinePaymentsTotalPaymentsLimit must be a long integer
+    */
+    setOfflinePaymentsTotalPaymentsLimit: function(offlinePaymentsTotalPaymentsLimit) {
+      this.offlinePaymentsTotalPaymentsLimit = offlinePaymentsTotalPaymentsLimit;
+    },
+
+    /**
+    * Get the field value
+    * @return {Number} must be a long integer
+    */
+    getOfflinePaymentsTotalPaymentsLimit: function() {
+      return this.offlinePaymentsTotalPaymentsLimit;
+    },
+
+    /**
+    * Set the field value
+    * @param {Number} offlinePaymentsLimitDefault must be a long integer
+    */
+    setOfflinePaymentsLimitDefault: function(offlinePaymentsLimitDefault) {
+      this.offlinePaymentsLimitDefault = offlinePaymentsLimitDefault;
+    },
+
+    /**
+    * Get the field value
+    * @return {Number} must be a long integer
+    */
+    getOfflinePaymentsLimitDefault: function() {
+      return this.offlinePaymentsLimitDefault;
+    },
+
+    /**
+    * Set the field value
+    * @param {Number} offlinePaymentsPromptThresholdDefault must be a long integer
+    */
+    setOfflinePaymentsPromptThresholdDefault: function(offlinePaymentsPromptThresholdDefault) {
+      this.offlinePaymentsPromptThresholdDefault = offlinePaymentsPromptThresholdDefault;
+    },
+
+    /**
+    * Get the field value
+    * @return {Number} must be a long integer
+    */
+    getOfflinePaymentsPromptThresholdDefault: function() {
+      return this.offlinePaymentsPromptThresholdDefault;
+    },
+
+    /**
+    * Set the field value
+    * @param {Number} offlinePaymentsTotalPaymentsLimitDefault must be a long integer
+    */
+    setOfflinePaymentsTotalPaymentsLimitDefault: function(offlinePaymentsTotalPaymentsLimitDefault) {
+      this.offlinePaymentsTotalPaymentsLimitDefault = offlinePaymentsTotalPaymentsLimitDefault;
+    },
+
+    /**
+    * Get the field value
+    * @return {Number} must be a long integer
+    */
+    getOfflinePaymentsTotalPaymentsLimitDefault: function() {
+      return this.offlinePaymentsTotalPaymentsLimitDefault;
+    },
+
+    /**
+    * Set the field value
+    * @param {Boolean} showOfflinePayments 
+    */
+    setShowOfflinePayments: function(showOfflinePayments) {
+      this.showOfflinePayments = showOfflinePayments;
+    },
+
+    /**
+    * Get the field value
+    * @return {Boolean} 
+    */
+    getShowOfflinePayments: function() {
+      return this.showOfflinePayments;
+    },
+
+    /**
+    * Set the field value
+    * @param {Number} maxOfflineDays must be a long integer
+    */
+    setMaxOfflineDays: function(maxOfflineDays) {
+      this.maxOfflineDays = maxOfflineDays;
+    },
+
+    /**
+    * Get the field value
+    * @return {Number} must be a long integer
+    */
+    getMaxOfflineDays: function() {
+      return this.maxOfflineDays;
+    },
+
+    /**
+    * Set the field value
+    * @param {Boolean} allowStoreAndForward 
+    */
+    setAllowStoreAndForward: function(allowStoreAndForward) {
+      this.allowStoreAndForward = allowStoreAndForward;
+    },
+
+    /**
+    * Get the field value
+    * @return {Boolean} 
+    */
+    getAllowStoreAndForward: function() {
+      return this.allowStoreAndForward;
+    },
+
+    /**
+    * Set the field value
     * @param {Array.<Reference>} secureReports An array of 
     */
     setSecureReports: function(secureReports) {
@@ -431,102 +556,6 @@ var base_Reference = require("../base/Reference");
     */
     getSecureReports: function() {
       return this.secureReports;
-    },
-
-    /**
-    * Set the field value
-    * @param {Boolean} tipsEnabled 
-    */
-    setTipsEnabled: function(tipsEnabled) {
-      this.tipsEnabled = tipsEnabled;
-    },
-
-    /**
-    * Get the field value
-    * @return {Boolean} 
-    */
-    getTipsEnabled: function() {
-      return this.tipsEnabled;
-    },
-
-    /**
-    * Set the field value
-    * @param {Boolean} onPaperTipSignatures 
-    */
-    setOnPaperTipSignatures: function(onPaperTipSignatures) {
-      this.onPaperTipSignatures = onPaperTipSignatures;
-    },
-
-    /**
-    * Get the field value
-    * @return {Boolean} 
-    */
-    getOnPaperTipSignatures: function() {
-      return this.onPaperTipSignatures;
-    },
-
-    /**
-    * Set the field value
-    * @param {Boolean} autoPrint 
-    */
-    setAutoPrint: function(autoPrint) {
-      this.autoPrint = autoPrint;
-    },
-
-    /**
-    * Get the field value
-    * @return {Boolean} 
-    */
-    getAutoPrint: function() {
-      return this.autoPrint;
-    },
-
-    /**
-    * Set the field value
-    * @param {Boolean} hasDefaultEmployee 
-    */
-    setHasDefaultEmployee: function(hasDefaultEmployee) {
-      this.hasDefaultEmployee = hasDefaultEmployee;
-    },
-
-    /**
-    * Get the field value
-    * @return {Boolean} 
-    */
-    getHasDefaultEmployee: function() {
-      return this.hasDefaultEmployee;
-    },
-
-    /**
-    * Set the field value
-    * @param {String} printOrderTime 
-    */
-    setPrintOrderTime: function(printOrderTime) {
-      this.printOrderTime = printOrderTime;
-    },
-
-    /**
-    * Get the field value
-    * @return {String} 
-    */
-    getPrintOrderTime: function() {
-      return this.printOrderTime;
-    },
-
-    /**
-    * Set the field value
-    * @param {Boolean} skipReceiptScreen 
-    */
-    setSkipReceiptScreen: function(skipReceiptScreen) {
-      this.skipReceiptScreen = skipReceiptScreen;
-    },
-
-    /**
-    * Get the field value
-    * @return {Boolean} 
-    */
-    getSkipReceiptScreen: function() {
-      return this.skipReceiptScreen;
     },
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
@@ -591,21 +620,23 @@ Device._meta_.fields["offlinePaymentsLimit"] = {};
 Device._meta_.fields["offlinePaymentsLimit"].type = Number;
 Device._meta_.fields["offlinePaymentsPromptThreshold"] = {};
 Device._meta_.fields["offlinePaymentsPromptThreshold"].type = Number;
+Device._meta_.fields["offlinePaymentsTotalPaymentsLimit"] = {};
+Device._meta_.fields["offlinePaymentsTotalPaymentsLimit"].type = Number;
+Device._meta_.fields["offlinePaymentsLimitDefault"] = {};
+Device._meta_.fields["offlinePaymentsLimitDefault"].type = Number;
+Device._meta_.fields["offlinePaymentsPromptThresholdDefault"] = {};
+Device._meta_.fields["offlinePaymentsPromptThresholdDefault"].type = Number;
+Device._meta_.fields["offlinePaymentsTotalPaymentsLimitDefault"] = {};
+Device._meta_.fields["offlinePaymentsTotalPaymentsLimitDefault"].type = Number;
+Device._meta_.fields["showOfflinePayments"] = {};
+Device._meta_.fields["showOfflinePayments"].type = Boolean;
+Device._meta_.fields["maxOfflineDays"] = {};
+Device._meta_.fields["maxOfflineDays"].type = Number;
+Device._meta_.fields["allowStoreAndForward"] = {};
+Device._meta_.fields["allowStoreAndForward"].type = Boolean;
 Device._meta_.fields["secureReports"] = {};
 Device._meta_.fields["secureReports"].type = Array;
 Device._meta_.fields["secureReports"].elementType = base_Reference;
-Device._meta_.fields["tipsEnabled"] = {};
-Device._meta_.fields["tipsEnabled"].type = Boolean;
-Device._meta_.fields["onPaperTipSignatures"] = {};
-Device._meta_.fields["onPaperTipSignatures"].type = Boolean;
-Device._meta_.fields["autoPrint"] = {};
-Device._meta_.fields["autoPrint"].type = Boolean;
-Device._meta_.fields["hasDefaultEmployee"] = {};
-Device._meta_.fields["hasDefaultEmployee"].type = Boolean;
-Device._meta_.fields["printOrderTime"] = {};
-Device._meta_.fields["printOrderTime"].type = String;
-Device._meta_.fields["skipReceiptScreen"] = {};
-Device._meta_.fields["skipReceiptScreen"].type = Boolean;
 
 //
 // Expose the module.

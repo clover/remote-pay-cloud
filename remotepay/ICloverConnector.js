@@ -27,6 +27,23 @@ require("prototype");
     },
 
     /**
+    * Accepts a payment that has been challenged.
+    * @param {Payment} payment 
+    * @return void
+    */
+    acceptPayment: function(payment) {
+    },
+
+    /**
+    * Rejects a payment that has been challenged.
+    * @param {Payment} payment 
+    * @param {Challenge} challenge 
+    * @return void
+    */
+    rejectPayment: function(payment, challenge) {
+    },
+
+    /**
     * Request an authorization operation.
     * @param {AuthRequest} authRequest 
     * @return void

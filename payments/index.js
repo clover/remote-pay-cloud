@@ -20,6 +20,7 @@ payments.CardType = require("./CardType");
 payments.Credit = require("./Credit");
 payments.Currency = require("./Currency");
 payments.CvmResult = require("./CvmResult");
+payments.DCCInfo = require("./DCCInfo");
 payments.GatewayTxState = require("./GatewayTxState");
 payments.GatewayTxType = require("./GatewayTxType");
 payments.GatewayTxs = require("./GatewayTxs");
@@ -43,7 +44,8 @@ payments.TerminalParameter = require("./TerminalParameter");
 payments.Transaction = require("./Transaction");
 payments.TxType = require("./TxType");
 payments.Type = require("./Type");
-payments.VaultedCard = require("./VaultedCard.js");
+payments.VaultedCard = require("./VaultedCard");
+payments.index = require("./index.js");
 //
 // Expose the module.
 //

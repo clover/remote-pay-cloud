@@ -7,6 +7,7 @@
 // Prototype.js required
 require("prototype");
 var customers_Customer = require("../customers/Customer");
+var payments_Authorization = require("../payments/Authorization");
 var order_Discount = require("../order/Discount");
 var order_PayType = require("../order/PayType");
 var order_LineItem = require("../order/LineItem");
@@ -18,6 +19,7 @@ var order_OrderTaxRate = require("../order/OrderTaxRate");
 var payments_Refund = require("../payments/Refund");
 var payments_Credit = require("../payments/Credit");
 
+/** The Order object is at the core of Clover’s transaction data. Almost every transaction either creates or updates an Order. When an order is created or updated, the order data is automatically synchronized between the Clover Server and the merchant’s Clover devices. */
   /**
   * @constructor
   */
@@ -56,6 +58,7 @@ var payments_Credit = require("../payments/Credit");
       this.credits = undefined;
       this.voids = undefined;
       this.device = undefined;
+      this.authorizations = undefined;
     },
 
     /**
@@ -79,7 +82,7 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Set the field value
-    * Currency of this order
+    * Currency of this order. For example, "USD"
     *
     * @param {String} currency 
     */
@@ -89,7 +92,7 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Get the field value
-    * Currency of this order
+    * Currency of this order. For example, "USD"
       * @return {String} 
     */
     getCurrency: function() {
@@ -98,6 +101,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Set the field value
+    * List of customers associated with this order.
+    *
     * @param {Array.<Customer>} customers An array of 
     */
     setCustomers: function(customers) {
@@ -106,7 +111,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Get the field value
-    * @return {Array.<Customer>} An array of 
+    * List of customers associated with this order.
+      * @return {Array.<Customer>} An array of 
     */
     getCustomers: function() {
       return this.customers;
@@ -248,6 +254,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Set the field value
+    * Whether this order represents a manual transaction. A manual transaction is a transaction that has an arbitrary amount defined and is not associated with any inventory item. For example, the Clover Sale App and Clover Manual Transaction App create manual transactions. A nanual transactions will have a single associated line item to hold the sale amount, but the generated receipt will display this differently to indicate that it is not considered a typical order with inventory items.
+    *
     * @param {Boolean} manualTransaction 
     */
     setManualTransaction: function(manualTransaction) {
@@ -256,7 +264,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Get the field value
-    * @return {Boolean} 
+    * Whether this order represents a manual transaction. A manual transaction is a transaction that has an arbitrary amount defined and is not associated with any inventory item. For example, the Clover Sale App and Clover Manual Transaction App create manual transactions. A nanual transactions will have a single associated line item to hold the sale amount, but the generated receipt will display this differently to indicate that it is not considered a typical order with inventory items.
+      * @return {Boolean} 
     */
     getManualTransaction: function() {
       return this.manualTransaction;
@@ -264,6 +273,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Set the field value
+    * Whether similar line items should be grouped together on the receipt that this order generates. Item "similarity" is based on items having matching values for a set of properties including price, modifiers, and discounts.
+    *
     * @param {Boolean} groupLineItems 
     */
     setGroupLineItems: function(groupLineItems) {
@@ -272,7 +283,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Get the field value
-    * @return {Boolean} 
+    * Whether similar line items should be grouped together on the receipt that this order generates. Item "similarity" is based on items having matching values for a set of properties including price, modifiers, and discounts.
+      * @return {Boolean} 
     */
     getGroupLineItems: function() {
       return this.groupLineItems;
@@ -280,6 +292,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Set the field value
+    * Whether this order was created in test mode. Payments made against test orders are not processed. Test mode orders can be deleted from the Orders App on the merchant's device or web dashboard (https://www.clover.com/orders/m/{mId}/orders). They will also be deleted when the device sends a POST to the /v2/merchant/{mId}/orders/delete_all_tests endpoint.
+    *
     * @param {Boolean} testMode 
     */
     setTestMode: function(testMode) {
@@ -288,7 +302,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Get the field value
-    * @return {Boolean} 
+    * Whether this order was created in test mode. Payments made against test orders are not processed. Test mode orders can be deleted from the Orders App on the merchant's device or web dashboard (https://www.clover.com/orders/m/{mId}/orders). They will also be deleted when the device sends a POST to the /v2/merchant/{mId}/orders/delete_all_tests endpoint.
+      * @return {Boolean} 
     */
     getTestMode: function() {
       return this.testMode;
@@ -296,7 +311,9 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Set the field value
-    * @param {Null|PayType} payType 
+    * Possible values: SPLIT_GUEST, SPLIT_ITEM, SPLIT_CUSTOM, FULL. During the payment flow, if the user chooses to split the payment for this order, this field will be set to one of the SPLIT_* values to indicate how the full amount should be split. If the user chooses to pay for the order in full with one payment, then this field will be FULL.
+    *
+    * @param {PayType} payType 
     */
     setPayType: function(payType) {
       this.payType = payType;
@@ -304,7 +321,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Get the field value
-    * @return {Null|PayType} 
+    * Possible values: SPLIT_GUEST, SPLIT_ITEM, SPLIT_CUSTOM, FULL. During the payment flow, if the user chooses to split the payment for this order, this field will be set to one of the SPLIT_* values to indicate how the full amount should be split. If the user chooses to pay for the order in full with one payment, then this field will be FULL.
+      * @return {PayType} 
     */
     getPayType: function() {
       return this.payType;
@@ -331,6 +349,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Set the field value
+    * The time at which the client created this order
+    *
     * @param {Number} clientCreatedTime must be a long integer
     */
     setClientCreatedTime: function(clientCreatedTime) {
@@ -339,7 +359,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Get the field value
-    * @return {Number} must be a long integer
+    * The time at which the client created this order
+      * @return {Number} must be a long integer
     */
     getClientCreatedTime: function() {
       return this.clientCreatedTime;
@@ -401,6 +422,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Set the field value
+    * Discounts applied to this order
+    *
     * @param {Array.<Discount>} discounts An array of 
     */
     setDiscounts: function(discounts) {
@@ -409,7 +432,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Get the field value
-    * @return {Array.<Discount>} An array of 
+    * Discounts applied to this order
+      * @return {Array.<Discount>} An array of 
     */
     getDiscounts: function() {
       return this.discounts;
@@ -417,6 +441,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Set the field value
+    * Line items associated with this order
+    *
     * @param {Array.<LineItem>} lineItems An array of 
     */
     setLineItems: function(lineItems) {
@@ -425,7 +451,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Get the field value
-    * @return {Array.<LineItem>} An array of 
+    * Line items associated with this order
+      * @return {Array.<LineItem>} An array of 
     */
     getLineItems: function() {
       return this.lineItems;
@@ -449,7 +476,7 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Set the field value
-    * Payments that were made for this order
+    * Payments that were made for this order. If multiple payments were made, then the payType field should reflect the method used to split the total amount.
     *
     * @param {Array.<Payment>} payments An array of 
     */
@@ -459,7 +486,7 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Get the field value
-    * Payments that were made for this order
+    * Payments that were made for this order. If multiple payments were made, then the payType field should reflect the method used to split the total amount.
       * @return {Array.<Payment>} An array of 
     */
     getPayments: function() {
@@ -487,6 +514,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Set the field value
+    * Credits associated with this order.
+    *
     * @param {Array.<Credit>} credits An array of 
     */
     setCredits: function(credits) {
@@ -495,7 +524,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Get the field value
-    * @return {Array.<Credit>} An array of 
+    * Credits associated with this order.
+      * @return {Array.<Credit>} An array of 
     */
     getCredits: function() {
       return this.credits;
@@ -537,6 +567,25 @@ var payments_Credit = require("../payments/Credit");
     */
     getDevice: function() {
       return this.device;
+    },
+
+    /**
+    * Set the field value
+    * Card authorizations associated with this order
+    *
+    * @param {Array.<Authorization>} authorizations An array of 
+    */
+    setAuthorizations: function(authorizations) {
+      this.authorizations = authorizations;
+    },
+
+    /**
+    * Get the field value
+    * Card authorizations associated with this order
+      * @return {Array.<Authorization>} An array of 
+    */
+    getAuthorizations: function() {
+      return this.authorizations;
     },
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
@@ -621,6 +670,9 @@ Order._meta_.fields["voids"].type = Array;
 Order._meta_.fields["voids"].elementType = payments_Payment;
 Order._meta_.fields["device"] = {};
 Order._meta_.fields["device"].type = base_Reference;
+Order._meta_.fields["authorizations"] = {};
+Order._meta_.fields["authorizations"].type = Array;
+Order._meta_.fields["authorizations"].elementType = payments_Authorization;
 
 //
 // Expose the module.

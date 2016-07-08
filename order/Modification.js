@@ -65,6 +65,8 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Set the field value
+    * the name of the modifier when it was applied
+    *
     * @param {String} name 
     */
     setName: function(name) {
@@ -73,7 +75,8 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Get the field value
-    * @return {String} 
+    * the name of the modifier when it was applied
+      * @return {String} 
     */
     getName: function() {
       return this.name;
@@ -97,6 +100,8 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Set the field value
+    * the additional cost of the modifier when it was applied
+    *
     * @param {Number} amount must be a long integer
     */
     setAmount: function(amount) {
@@ -105,7 +110,8 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Get the field value
-    * @return {Number} must be a long integer
+    * the additional cost of the modifier when it was applied
+      * @return {Number} must be a long integer
     */
     getAmount: function() {
       return this.amount;
@@ -113,7 +119,7 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Set the field value
-    * The modifier object.  Values from the Modifier are copied to the Modification at the time that the order is placed.  Modifier values may change after the order is placed.
+    * The modifier object.  Values from the Modifier are copied to the Modification at the time that the order is placed.  Modifier values may change after the modification is created.
     *
     * @param {Modifier} modifier 
     */
@@ -123,7 +129,7 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Get the field value
-    * The modifier object.  Values from the Modifier are copied to the Modification at the time that the order is placed.  Modifier values may change after the order is placed.
+    * The modifier object.  Values from the Modifier are copied to the Modification at the time that the order is placed.  Modifier values may change after the modification is created.
       * @return {Modifier} 
     */
     getModifier: function() {

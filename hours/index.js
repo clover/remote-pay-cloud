@@ -4,7 +4,8 @@ function hours() {}
 hours.HourRange = require("./HourRange");
 hours.HoursSet = require("./HoursSet");
 hours.Reference = require("./Reference");
-hours.ReferenceType = require("./ReferenceType.js");
+hours.ReferenceType = require("./ReferenceType");
+hours.index = require("./index.js");
 //
 // Expose the module.
 //

@@ -3,6 +3,7 @@ var remotemessage = require("./remotemessage");
 
 MethodToMessage = {};
 
+MethodToMessage[remotemessage.Method.ACK] = AcknowledgementMessage;
 MethodToMessage[remotemessage.Method.CLOSEOUT_RESPONSE] = CloseoutResponseMessage;
 MethodToMessage[remotemessage.Method.CLOSEOUT_REQUEST] = CloseoutRequestMessage;
 MethodToMessage[remotemessage.Method.CAPTURE_PREAUTH_RESPONSE] = CapturePreAuthResponseMessage;
@@ -27,6 +28,8 @@ MethodToMessage[remotemessage.Method.DISCOVERY_RESPONSE] = DiscoveryResponseMess
 MethodToMessage[remotemessage.Method.TIP_ADDED] = TipAddedMessage;
 MethodToMessage[remotemessage.Method.VERIFY_SIGNATURE] = VerifySignatureMessage;
 MethodToMessage[remotemessage.Method.SIGNATURE_VERIFIED] = SignatureVerifiedMessage;
+MethodToMessage[remotemessage.Method.PAYMENT_CONFIRMED] = PaymentConfirmedMessage;
+MethodToMessage[remotemessage.Method.PAYMENT_REJECTED] = PaymentRejectedMessage;
 MethodToMessage[remotemessage.Method.PAYMENT_VOIDED] = PaymentVoidedMessage;
 //MethodToMessage[remotemessage.Method.//PRINT_PAYMENT] = ;
 //MethodToMessage[remotemessage.Method.//REFUND_PRINT_PAYMENT] = ;

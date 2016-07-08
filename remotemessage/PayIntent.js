@@ -46,6 +46,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
       this.vaultedCard = undefined;
       this.allowOfflinePayment = undefined;
       this.approveOfflinePaymentWithoutPrompt = undefined;
+      this.requiresRemoteConfirmation = undefined;
     },
 
     /**
@@ -477,6 +478,22 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     getApproveOfflinePaymentWithoutPrompt: function() {
       return this.approveOfflinePaymentWithoutPrompt;
     },
+
+    /**
+    * Set the field value
+    * @param {Boolean|Null} requiresRemoteConfirmation 
+    */
+    setRequiresRemoteConfirmation: function(requiresRemoteConfirmation) {
+      this.requiresRemoteConfirmation = requiresRemoteConfirmation;
+    },
+
+    /**
+    * Get the field value
+    * @return {Boolean|Null} 
+    */
+    getRequiresRemoteConfirmation: function() {
+      return this.requiresRemoteConfirmation;
+    },
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {
@@ -548,6 +565,8 @@ PayIntent._meta_.fields["allowOfflinePayment"] = {};
 PayIntent._meta_.fields["allowOfflinePayment"].type = Boolean;
 PayIntent._meta_.fields["approveOfflinePaymentWithoutPrompt"] = {};
 PayIntent._meta_.fields["approveOfflinePaymentWithoutPrompt"].type = Boolean;
+PayIntent._meta_.fields["requiresRemoteConfirmation"] = {};
+PayIntent._meta_.fields["requiresRemoteConfirmation"].type = Boolean;
 
 //
 // Expose the module.

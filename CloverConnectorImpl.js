@@ -16,7 +16,6 @@ var CardEntryMethods = require("./CardEntryMethods.js");
 var WebSocketDevice = require("./WebSocketDevice.js");
 var RemoteMessageBuilder = require("./RemoteMessageBuilder.js");
 var RemoteMessageParser = require("./RemoteMessageParser.js");
-// var remotemessage.Method = require("./remotemessage.Method.js");
 var XmlHttpSupport = require("./xmlHttpSupport.js");
 var Endpoints = require("./Endpoints.js");
 var CloverOAuth2 = require("./CloverOAuth2.js");
@@ -32,7 +31,7 @@ var CloudMethod = require("./CloudMethod.js");
 // !!NOTE!!  The following is automatically updated to reflect the npm version.
 // See the package.json postversion script, which maps to scripts/postversion.sh
 // Do not change this or the versioning may not reflect the npm version correctly.
-CLOVER_CLOUD_SDK_VERSION = "0.0.9";
+CLOVER_CLOUD_SDK_VERSION = "0.0.11";
 CLOVER_CLOUD_SDK_RELEASE_CANDIDATE_VERSION = "";
 
 /**
@@ -62,6 +61,9 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
         } else {
             this.configuration = {};
         }
+        // This flag will be set by the discovery response.
+        this.deviceSupportsAckMessages = false;
+
         this.debugConfiguration = {};
         if(this.configuration.debugConfiguration) {
             this.debugConfiguration = this.configuration.debugConfiguration
@@ -136,7 +138,6 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
               }
             );
         }
-        // this.initializeConnection();
     },
 
     /**
@@ -157,7 +158,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
                     errorEvent.setMessage("Could not send message : " + JSON.stringify(message) + "," + JSON.stringify(e));
                 }
             }catch(e) {
-                // no idea what to do know
+                // no idea what to do now
                 log.error(e);
             }
             this.delegateCloverConnectorListener.onDeviceError(errorEvent);
@@ -176,6 +177,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
         this.mapConnectionEvents();
         this.mapDiscoveryResponse();
         this.mapVerifySignature();
+        this.mapConfirmPayment();
         this.mapUIEvents();
         this.mapTipAdjustResponse();
         this.mapCapturePreauthResponse();
@@ -188,6 +190,13 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
         this.mapFinishCancel();
     },
 
+    /**
+     * This is a work in progress to generically extract a RemoteMessage from a json
+     * in a generic way.  It seems to work for the cases where the mapping is correct
+     * in MethodToMessage.
+     *
+     * @param remoteMessageJson
+     */
     extractPayloadFromRemoteMessageJson: function(remoteMessageJson) {
         // Get the remotemessage.Message type for this message
         var responseMessageType = MethodToMessage[remoteMessageJson.getMethod()];
@@ -242,14 +251,18 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
           function (message) {
               // var remoteMessage = new remotemessage.RemoteMessage();
               // Note that the following does not work for The cloud specific messages:
-              // ACK, SHUTDOWN, ERROR; because they are not members of the Method enumeration.
+              // SHUTDOWN, ERROR; because they are not members of the Method enumeration.
               // this.remoteMessageParser.transfertoObject(message, remoteMessage);
               // See if there is a registered callback for the message
-              var callback = this.acknowledgementHooks[message.id];
+              var ackMessage = new remotemessage.AcknowledgementMessage();
+              this.remoteMessageParser.parseMessage(message, ackMessage);
+
+              var callback = this.acknowledgementHooks[ackMessage.getSourceMessageId()];
               if (callback) {
                   try {
                       // These are one time hooks.  Remove the callback
-                      delete this.acknowledgementHooks[message.id];
+                      delete this.acknowledgementHooks[ackMessage.getSourceMessageId()];
+                      // Call the registered callback
                       callback();
                   } catch (e) {
                       log.warn(e);
@@ -274,7 +287,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
             this.delegateCloverConnectorListener.onDisconnected();
         }.bind(this));
         this.device.on(WebSocketDevice.DEVICE_ERROR, function (event) {
-            // Will figure out error codes later
+            // todo: Will figure out error codes later
             log.debug(event);
             var deviceErrorEvent = new remotepay.CloverDeviceErrorEvent();
             //deviceErrorEvent.setCode(DeviceErrorEventCode.AccessDenied);
@@ -291,6 +304,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
             log.debug(event);
             var deviceErrorEvent = new remotepay.CloverDeviceErrorEvent();
             //deviceErrorEvent.setCode(DeviceErrorEventCode.AccessDenied);
+            deviceErrorEvent.setMessage(JSON.stringify(event));
             this.delegateCloverConnectorListener.onDeviceError(deviceErrorEvent);
         }.bind(this));
         this.device.on(WebSocketDevice.CONNECTION_ERROR, function (message) {
@@ -298,6 +312,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
             log.debug(message);
             var deviceErrorEvent = new remotepay.CloverDeviceErrorEvent();
             //deviceErrorEvent.setCode(DeviceErrorEventCode.AccessDenied);
+            deviceErrorEvent.setMessage(message);
             this.delegateCloverConnectorListener.onDeviceError(deviceErrorEvent);
         }.bind(this));
         this.device.on(WebSocketDevice.CONNECTION_STOLEN, function (message) {
@@ -310,6 +325,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
             log.debug(message);
             // Will figure out error codes later
             var deviceErrorEvent = new remotepay.CloverDeviceErrorEvent();
+            deviceErrorEvent.setMessage(message);
             deviceErrorEvent.setCode(remotepay.DeviceErrorEventCode.AccessDenied);
             this.delegateCloverConnectorListener.onDeviceError(deviceErrorEvent);
         }.bind(this));
@@ -338,6 +354,8 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
 
             merchantInfo.setDeviceInfo(deviceInfo);
 
+            this.deviceSupportsAckMessages = discoveryResponse.supportsAcknowledgement;
+
             this.delegateCloverConnectorListener.onReady(merchantInfo);
         }.bind(this));
     },
@@ -348,6 +366,15 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
     mapVerifySignature: function() {
         this.device.on(remotemessage.Method.VERIFY_SIGNATURE, function (message) {
             this.processVerifySignature(message);
+        }.bind(this));
+    },
+
+    /**
+     * @private
+     */
+    mapConfirmPayment: function() {
+        this.device.on(remotemessage.Method.CONFIRM_PAYMENT_MESSAGE, function (message) {
+            this.processConfirmPayment(message);
         }.bind(this));
     },
 
@@ -617,24 +644,33 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
 
 
     /**
-     *
+     * @private
      * @param message
      */
     processVerifySignature: function(message) {
-        var verifySignature = new VerifySignatureMessage();
+        var verifySignature = new remotemessage.VerifySignatureMessage();
         this.remoteMessageParser.parseMessage(message, verifySignature);
-
-        // The payment in the payload is a string, it needs to be
-        // Parsed to json (again).
-        // var paymentJSON = JSON.parse(message.payload.payment);
-        // Stuff it back in to the message as an object
-        // this.transfertoObject(paymentJSON, verifySignature.getPayment());
 
         var verifySignatureRequest = new VerifySignatureRequest();
         verifySignatureRequest.setPayment(verifySignature.getPayment());
         verifySignatureRequest.setSignature(verifySignature.getSignature());
 
         this.delegateCloverConnectorListener.onVerifySignatureRequest(verifySignatureRequest);
+    },
+
+    /**
+     * @private
+     * @param message
+     */
+    processConfirmPayment: function(message) {
+        var confirmPayment = new remotemessage.ConfirmPaymentMessage();
+        this.remoteMessageParser.parseMessage(message, confirmPayment);
+
+        var confirmPaymentRequest = new remotepay.ConfirmPaymentRequest();
+        confirmPaymentRequest.setPayment(confirmPayment.getPayment());
+        confirmPaymentRequest.setChallenges(confirmPayment.getChallenges());
+
+        this.delegateCloverConnectorListener.onConfirmPaymentRequest(confirmPaymentRequest);
     },
 
     /**
@@ -936,6 +972,30 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
     },
 
     /**
+     * Accepts a payment that has been challenged.
+     * @param {Payment} payment
+     * @return void
+     */
+    acceptPayment: function(payment) {
+        var protocolRequest = new remotemessage.PaymentConfirmedMessage();
+        protocolRequest.setPayment(payment);
+        this.sendMessage(this.messageBuilder.buildRemoteMessageObject(protocolRequest));
+    },
+
+    /**
+     * Rejects a payment that has been challenged.
+     * @param {Payment} payment
+     * @param {Challenge} challenge
+     * @return void
+     */
+    rejectPayment: function(payment, challenge) {
+        var protocolRequest = new remotemessage.PaymentRejectedMessage();
+        protocolRequest.setPayment(payment);
+        protocolRequest.setVoidReason(challenge.getReason());
+        this.sendMessage(this.messageBuilder.buildRemoteMessageObject(protocolRequest));
+    },
+
+    /**
      * Request an authorization operation.
      * @param {AuthRequest} request
      * @return void
@@ -983,6 +1043,8 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
           ? this.configuration.disableRestartTransactionWhenFailed : request.getDisableRestartTransactionOnFail());
         payIntent.setRemotePrint(request.getDisablePrinting() === undefined //
           ? this.configuration.remotePrint : request.getDisablePrinting());
+        payIntent.setRequiresRemoteConfirmation(true);
+
         // employeeId? - "id": "DFLTEMPLOYEE"
 
         return payIntent;
@@ -1466,7 +1528,19 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
 
         // Wait for an ACK... then call sendVoidPaymentResponse
         var remoteMessage = this.messageBuilder.buildRemoteMessageObject(protocolRequest);
-        this.addAcknowledgementHook(remoteMessage.getId(), function(){this.sendVoidPaymentResponse(payment)}.bind(this));
+        // This is a backwards compatibility hack.
+        if(this.deviceSupportsAckMessages) {
+            // If acknowledgements are supported, then
+            // wait for an ACK from the device for the message.
+            this.addAcknowledgementHook(remoteMessage.getId(), function () {
+                this.sendVoidPaymentResponse(payment)
+            }.bind(this));
+        } else {
+            //If not just send the response after 1 second.
+            setTimeout(function () {
+                this.sendVoidPaymentResponse(payment)
+            }.bind(this), 1000);
+        }
         this.sendMessage(remoteMessage);
     },
 
@@ -1492,6 +1566,10 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
      *  if no acknowledgement is ever received for the passed id, the callback will never be removed.
      */
     addAcknowledgementHook: function(id, callback) {
+        if(!this.deviceSupportsAckMessages) {
+            log.warn("addAcknowledgementHook called, but device does not support ACK messages.  " +
+              "Callback will never be called or removed from internal acknowledgementHooks store.");
+        }
         this.acknowledgementHooks[id] = callback;
     },
 

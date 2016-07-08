@@ -84,6 +84,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * Additional cost when used
+    *
     * @param {Number} price must be a long integer
     */
     setPrice: function(price) {
@@ -92,7 +94,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * @return {Number} must be a long integer
+    * Additional cost when used
+      * @return {Number} must be a long integer
     */
     getPrice: function() {
       return this.price;

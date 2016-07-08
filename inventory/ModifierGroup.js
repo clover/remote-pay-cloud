@@ -32,6 +32,8 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Set the field value
+    * Unique identifier
+    *
     * @param {String} id 
     */
     setId: function(id) {
@@ -40,7 +42,8 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Get the field value
-    * @return {String} 
+    * Unique identifier
+      * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -83,6 +86,8 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Set the field value
+    * The minimum amount of modifiers from this group that must be applied to associated lineItems when using Register
+    *
     * @param {Number} minRequired must be an integer
     */
     setMinRequired: function(minRequired) {
@@ -91,7 +96,8 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Get the field value
-    * @return {Number} must be an integer
+    * The minimum amount of modifiers from this group that must be applied to associated lineItems when using Register
+      * @return {Number} must be an integer
     */
     getMinRequired: function() {
       return this.minRequired;
@@ -99,6 +105,8 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Set the field value
+    * The maximum amount of modifiers from this group that can be applied to associated lineItems when using Register
+    *
     * @param {Number} maxAllowed must be an integer
     */
     setMaxAllowed: function(maxAllowed) {
@@ -107,7 +115,8 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Get the field value
-    * @return {Number} must be an integer
+    * The maximum amount of modifiers from this group that can be applied to associated lineItems when using Register
+      * @return {Number} must be an integer
     */
     getMaxAllowed: function() {
       return this.maxAllowed;
@@ -115,6 +124,8 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Set the field value
+    * Whether employees will be automatically prompted to add modifiers from this category when using Register
+    *
     * @param {Boolean} showByDefault 
     */
     setShowByDefault: function(showByDefault) {
@@ -123,7 +134,8 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Get the field value
-    * @return {Boolean} 
+    * Whether employees will be automatically prompted to add modifiers from this category when using Register
+      * @return {Boolean} 
     */
     getShowByDefault: function() {
       return this.showByDefault;
@@ -147,7 +159,7 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Set the field value
-    * The ordered, comma-separated list of modifier ids in this group.
+    * An ordered, comma-separated list of modifier ids in this group. (READ ONLY)
     *
     * @param {String} modifierIds 
     */
@@ -157,7 +169,7 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Get the field value
-    * The ordered, comma-separated list of modifier ids in this group.
+    * An ordered, comma-separated list of modifier ids in this group. (READ ONLY)
       * @return {String} 
     */
     getModifierIds: function() {
