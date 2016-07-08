@@ -1058,7 +1058,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
      */
     verifyValidAmount: function (amount, allowZero) {
         if ((amount === undefined) || !CloverConnectorImpl.isInt(amount) || (amount < 0) || (!allowZero && amount === 0)) {
-            throw new CloverError("'amount' must be an integer with a value greater than 0");
+            throw new CloverError(CloverError.INVALID_DATA, "Amount must be an integer with a value greater than 0");
         }
     },
 
