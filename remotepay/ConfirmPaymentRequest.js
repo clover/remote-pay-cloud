@@ -48,7 +48,7 @@ var payments_Payment = require("../payments/Payment");
     * Set the field value
     * The challenges for the payment.
     *
-    * @param {Challenge|Null} challenges 
+    * @param {Array.<Challenge>} challenges An array of 
     */
     setChallenges: function(challenges) {
       this.challenges = challenges;
@@ -57,7 +57,7 @@ var payments_Payment = require("../payments/Payment");
     /**
     * Get the field value
     * The challenges for the payment.
-      * @return {Challenge|Null} 
+      * @return {Array.<Challenge>} An array of 
     */
     getChallenges: function() {
       return this.challenges;
@@ -68,7 +68,8 @@ ConfirmPaymentRequest._meta_ =  {fields:  {}};
 ConfirmPaymentRequest._meta_.fields["payment"] = {};
 ConfirmPaymentRequest._meta_.fields["payment"].type = payments_Payment;
 ConfirmPaymentRequest._meta_.fields["challenges"] = {};
-ConfirmPaymentRequest._meta_.fields["challenges"].type = base_Challenge;
+ConfirmPaymentRequest._meta_.fields["challenges"].type = Array;
+ConfirmPaymentRequest._meta_.fields["challenges"].elementType = base_Challenge;
 
 //
 // Expose the module.
