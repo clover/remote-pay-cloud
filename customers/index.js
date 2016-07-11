@@ -5,8 +5,7 @@ customers.Address = require("./Address");
 customers.Card = require("./Card");
 customers.Customer = require("./Customer");
 customers.EmailAddress = require("./EmailAddress");
-customers.PhoneNumber = require("./PhoneNumber");
-customers.index = require("./index.js");
+customers.PhoneNumber = require("./PhoneNumber.js");
 //
 // Expose the module.
 //

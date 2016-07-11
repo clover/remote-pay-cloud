@@ -71,8 +71,7 @@ remotemessage.VaultCardMessage = require("./VaultCardMessage");
 remotemessage.VaultCardResponseMessage = require("./VaultCardResponseMessage");
 remotemessage.VerifySignatureMessage = require("./VerifySignatureMessage");
 remotemessage.VoidPaymentMessage = require("./VoidPaymentMessage");
-remotemessage.WelcomeMessage = require("./WelcomeMessage");
-remotemessage.index = require("./index.js");
+remotemessage.WelcomeMessage = require("./WelcomeMessage.js");
 //
 // Expose the module.
 //

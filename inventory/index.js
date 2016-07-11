@@ -18,8 +18,7 @@ inventory.Tag = require("./Tag");
 inventory.TagItem = require("./TagItem");
 inventory.TagPrinter = require("./TagPrinter");
 inventory.TaxRate = require("./TaxRate");
-inventory.TaxRateItem = require("./TaxRateItem");
-inventory.index = require("./index.js");
+inventory.TaxRateItem = require("./TaxRateItem.js");
 //
 // Expose the module.
 //

@@ -44,8 +44,7 @@ payments.TerminalParameter = require("./TerminalParameter");
 payments.Transaction = require("./Transaction");
 payments.TxType = require("./TxType");
 payments.Type = require("./Type");
-payments.VaultedCard = require("./VaultedCard");
-payments.index = require("./index.js");
+payments.VaultedCard = require("./VaultedCard.js");
 //
 // Expose the module.
 //

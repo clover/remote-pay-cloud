@@ -52,8 +52,7 @@ remotepay.VerifySignatureRequest = require("./VerifySignatureRequest");
 remotepay.VoidCreditRequest = require("./VoidCreditRequest");
 remotepay.VoidCreditResponse = require("./VoidCreditResponse");
 remotepay.VoidPaymentRequest = require("./VoidPaymentRequest");
-remotepay.VoidPaymentResponse = require("./VoidPaymentResponse");
-remotepay.index = require("./index.js");
+remotepay.VoidPaymentResponse = require("./VoidPaymentResponse.js");
 //
 // Expose the module.
 //

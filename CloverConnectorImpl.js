@@ -147,10 +147,18 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
     sendMessage: function(message) {
         try {
             log.debug("sendMessage", message);
-            this.device.sendMessage(message);
+            if(this.device == null) {
+                var notConnectedErrorEvent = new remotepay.CloverDeviceErrorEvent();
+                notConnectedErrorEvent.setMessage("Device is not connected");
+                notConnectedErrorEvent.setCode(remotepay.DeviceErrorEventCode.NotConnected);
+                notConnectedErrorEvent.setType(remotepay.ErrorType.COMMUNICATION);
+                this.delegateCloverConnectorListener.onDeviceError(notConnectedErrorEvent);
+            } else {
+                this.device.sendMessage(message);
+            }
         } catch(e) {
-            var errorEvent = new CloverDeviceErrorEvent();
-            errorEvent.setCode(DeviceErrorEventCode.UnknownError);
+            var errorEvent = new remotepay.CloverDeviceErrorEvent();
+            errorEvent.setCode(remotepay.DeviceErrorEventCode.UnknownError);
             try {
                 if (e && e.message) {
                     errorEvent.setMessage("Could not send message : " + JSON.stringify(message) + "," + e.message);
@@ -327,6 +335,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
             var deviceErrorEvent = new remotepay.CloverDeviceErrorEvent();
             deviceErrorEvent.setMessage(message);
             deviceErrorEvent.setCode(remotepay.DeviceErrorEventCode.AccessDenied);
+            deviceErrorEvent.setType(remotepay.ErrorType.COMMUNICATION);
             this.delegateCloverConnectorListener.onDeviceError(deviceErrorEvent);
         }.bind(this));
     },

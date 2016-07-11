@@ -135,6 +135,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
                 log.debug("Trying to connect, but already connected.");
             } else {
                 this.connectionDenied(connectedId);
+                return;
             }
             if (this.deviceSocket && this.deviceSocket.readyState == WebSocket.OPEN) {
                 return;

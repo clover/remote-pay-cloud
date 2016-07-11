@@ -41,7 +41,8 @@ DeviceErrorEventCode = {
   None : "None",
   Success : "Success",
   Ok : "Ok",
-  SendNotificationFailure : "SendNotificationFailure"
+  SendNotificationFailure : "SendNotificationFailure",
+  NotConnected : "NotConnected"
 };
 
 

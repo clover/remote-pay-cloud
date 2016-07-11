@@ -13,8 +13,7 @@ base.Points = require("./Points");
 base.Reference = require("./Reference");
 base.ServiceCharge = require("./ServiceCharge");
 base.Signature = require("./Signature");
-base.Tender = require("./Tender");
-base.index = require("./index.js");
+base.Tender = require("./Tender.js");
 //
 // Expose the module.
 //
