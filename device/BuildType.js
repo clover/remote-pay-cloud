@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof device
+* @enum {string}
+*/
 BuildType = {
   ENG : "ENG",
   USER : "USER"

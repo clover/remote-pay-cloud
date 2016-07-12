@@ -11,10 +11,13 @@ var remotemessage_Message = require("../remotemessage/Message");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   RefundRequestMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.RefundRequestMessage
     * @private
     */
     initialize: function($super) {
@@ -31,6 +34,7 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * If true, then it is a full refund.  The amount will be ignored.
     *
+    * @memberof remotemessage.RefundRequestMessage
     * @param {Boolean} fullRefund 
     */
     setFullRefund: function(fullRefund) {
@@ -40,7 +44,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * If true, then it is a full refund.  The amount will be ignored.
-      * @return {Boolean} 
+    * @memberof remotemessage.RefundRequestMessage
+    * @return {Boolean} 
     */
     getFullRefund: function() {
       return this.fullRefund;
@@ -50,6 +55,7 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * Amount of refund.  Used in partial refunds.
     *
+    * @memberof remotemessage.RefundRequestMessage
     * @param {Number} amount must be a long integer
     */
     setAmount: function(amount) {
@@ -59,7 +65,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * Amount of refund.  Used in partial refunds.
-      * @return {Number} must be a long integer
+    * @memberof remotemessage.RefundRequestMessage
+    * @return {Number} must be a long integer
     */
     getAmount: function() {
       return this.amount;
@@ -69,6 +76,7 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * Unique identifier for a order
     *
+    * @memberof remotemessage.RefundRequestMessage
     * @param {String} orderId 
     */
     setOrderId: function(orderId) {
@@ -78,7 +86,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * Unique identifier for a order
-      * @return {String} 
+    * @memberof remotemessage.RefundRequestMessage
+    * @return {String} 
     */
     getOrderId: function() {
       return this.orderId;
@@ -88,6 +97,7 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * Unique identifier for a payment
     *
+    * @memberof remotemessage.RefundRequestMessage
     * @param {String} paymentId 
     */
     setPaymentId: function(paymentId) {
@@ -97,7 +107,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * Unique identifier for a payment
-      * @return {String} 
+    * @memberof remotemessage.RefundRequestMessage
+    * @return {String} 
     */
     getPaymentId: function() {
       return this.paymentId;

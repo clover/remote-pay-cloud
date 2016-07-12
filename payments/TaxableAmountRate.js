@@ -9,10 +9,12 @@ require("prototype");
 
   /**
   * @constructor
+  * @memberof payments
   */
   TaxableAmountRate = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof payments.TaxableAmountRate
     * @private
     */
     initialize: function() {
@@ -26,6 +28,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof payments.TaxableAmountRate
     * @param {String} id 
     */
     setId: function(id) {
@@ -34,6 +37,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof payments.TaxableAmountRate
     * @return {String} 
     */
     getId: function() {
@@ -42,6 +46,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof payments.TaxableAmountRate
     * @param {String} name 
     */
     setName: function(name) {
@@ -50,6 +55,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof payments.TaxableAmountRate
     * @return {String} 
     */
     getName: function() {
@@ -58,6 +64,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof payments.TaxableAmountRate
     * @param {Number} taxableAmount must be a long integer
     */
     setTaxableAmount: function(taxableAmount) {
@@ -66,6 +73,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof payments.TaxableAmountRate
     * @return {Number} must be a long integer
     */
     getTaxableAmount: function() {
@@ -74,6 +82,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof payments.TaxableAmountRate
     * @param {Number} rate must be a long integer
     */
     setRate: function(rate) {
@@ -82,6 +91,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof payments.TaxableAmountRate
     * @return {Number} must be a long integer
     */
     getRate: function() {
@@ -90,6 +100,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof payments.TaxableAmountRate
     * @param {Boolean} isVat 
     */
     setIsVat: function(isVat) {
@@ -98,11 +109,17 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof payments.TaxableAmountRate
     * @return {Boolean} 
     */
     getIsVat: function() {
       return this.isVat;
     },
+
+    /**
+    * @memberof payments.TaxableAmountRate
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

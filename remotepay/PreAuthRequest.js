@@ -11,10 +11,13 @@ var remotepay_TransactionRequest = require("../remotepay/TransactionRequest");
 
   /**
   * @constructor
+  * @augments remotepay.TransactionRequest
+  * @memberof remotepay
   */
   PreAuthRequest = Class.create(remotepay_TransactionRequest, {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.PreAuthRequest
     * @private
     */
     initialize: function($super) {

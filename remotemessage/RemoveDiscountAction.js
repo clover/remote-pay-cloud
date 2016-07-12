@@ -9,10 +9,12 @@ require("prototype");
 
   /**
   * @constructor
+  * @memberof remotemessage
   */
   RemoveDiscountAction = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.RemoveDiscountAction
     * @private
     */
     initialize: function() {
@@ -23,6 +25,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof remotemessage.RemoveDiscountAction
     * @param {String} discountId 
     */
     setDiscountId: function(discountId) {
@@ -31,6 +34,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof remotemessage.RemoveDiscountAction
     * @return {String} 
     */
     getDiscountId: function() {
@@ -39,6 +43,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof remotemessage.RemoveDiscountAction
     * @param {String} lineItemId 
     */
     setLineItemId: function(lineItemId) {
@@ -47,11 +52,17 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof remotemessage.RemoveDiscountAction
     * @return {String} 
     */
     getLineItemId: function() {
       return this.lineItemId;
     },
+
+    /**
+    * @memberof remotemessage.RemoveDiscountAction
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

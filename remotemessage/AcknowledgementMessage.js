@@ -11,10 +11,13 @@ var remotemessage_Message = require("../remotemessage/Message");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   AcknowledgementMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.AcknowledgementMessage
     * @private
     */
     initialize: function($super) {
@@ -28,6 +31,7 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * The remote message id that is being acknowledged
     *
+    * @memberof remotemessage.AcknowledgementMessage
     * @param {String} sourceMessageId 
     */
     setSourceMessageId: function(sourceMessageId) {
@@ -37,7 +41,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * The remote message id that is being acknowledged
-      * @return {String} 
+    * @memberof remotemessage.AcknowledgementMessage
+    * @return {String} 
     */
     getSourceMessageId: function() {
       return this.sourceMessageId;

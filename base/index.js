@@ -1,6 +1,9 @@
 module.exports.base = base;
-function base() {}
-
+                      /**
+                      * @namespace base
+                      */
+                      function base() {}
+                      
 base.Address = require("./Address");
 base.ApprovalStatus = require("./ApprovalStatus");
 base.BusinessTypeCode = require("./BusinessTypeCode");
@@ -15,8 +18,8 @@ base.ServiceCharge = require("./ServiceCharge");
 base.Signature = require("./Signature");
 base.Tender = require("./Tender.js");
 //
-// Expose the module.
-//
-if ('undefined' !== typeof module) {
-  module.exports = base;
-}
+                      // Expose the module.
+                      //
+                      if ('undefined' !== typeof module) {
+                      module.exports = base;
+                      }

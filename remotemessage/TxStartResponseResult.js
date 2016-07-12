@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof remotemessage
+* @enum {string}
+*/
 TxStartResponseResult = {
   SUCCESS : "SUCCESS",
   ORDER_MODIFIED : "ORDER_MODIFIED",

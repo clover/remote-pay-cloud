@@ -9,10 +9,12 @@ require("prototype");
 
   /**
   * @constructor
+  * @memberof customers
   */
   EmailAddress = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof customers.EmailAddress
     * @private
     */
     initialize: function() {
@@ -24,6 +26,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof customers.EmailAddress
     * @param {String} id 
     */
     setId: function(id) {
@@ -32,6 +35,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof customers.EmailAddress
     * @return {String} 
     */
     getId: function() {
@@ -40,6 +44,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof customers.EmailAddress
     * @param {String} emailAddress 
     */
     setEmailAddress: function(emailAddress) {
@@ -48,6 +53,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof customers.EmailAddress
     * @return {String} 
     */
     getEmailAddress: function() {
@@ -56,6 +62,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof customers.EmailAddress
     * @param {Number} verifiedTime must be a long integer
     */
     setVerifiedTime: function(verifiedTime) {
@@ -64,11 +71,17 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof customers.EmailAddress
     * @return {Number} must be a long integer
     */
     getVerifiedTime: function() {
       return this.verifiedTime;
     },
+
+    /**
+    * @memberof customers.EmailAddress
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

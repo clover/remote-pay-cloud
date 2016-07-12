@@ -1,4 +1,7 @@
 module.exports.remotepay = remotepay;
+/**
+* @namespace remotepay
+*/
 function remotepay() {}
 
 remotepay.AuthRequest = require("./AuthRequest");

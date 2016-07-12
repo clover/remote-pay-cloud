@@ -12,10 +12,12 @@ var payments_OverrideType = require("../payments/OverrideType");
 
   /**
   * @constructor
+  * @memberof payments
   */
   TerminalParameter = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof payments.TerminalParameter
     * @private
     */
     initialize: function() {
@@ -37,6 +39,7 @@ var payments_OverrideType = require("../payments/OverrideType");
     * Set the field value
     * Pipe delimited composite key unique identifier
     *
+    * @memberof payments.TerminalParameter
     * @param {String} id 
     */
     setId: function(id) {
@@ -46,7 +49,8 @@ var payments_OverrideType = require("../payments/OverrideType");
     /**
     * Get the field value
     * Pipe delimited composite key unique identifier
-      * @return {String} 
+    * @memberof payments.TerminalParameter
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -54,6 +58,7 @@ var payments_OverrideType = require("../payments/OverrideType");
 
     /**
     * Set the field value
+    * @memberof payments.TerminalParameter
     * @param {String} param 
     */
     setParam: function(param) {
@@ -62,6 +67,7 @@ var payments_OverrideType = require("../payments/OverrideType");
 
     /**
     * Get the field value
+    * @memberof payments.TerminalParameter
     * @return {String} 
     */
     getParam: function() {
@@ -70,7 +76,8 @@ var payments_OverrideType = require("../payments/OverrideType");
 
     /**
     * Set the field value
-    * @param {ParamType} paramType 
+    * @memberof payments.TerminalParameter
+    * @param {payments.ParamType} paramType 
     */
     setParamType: function(paramType) {
       this.paramType = paramType;
@@ -78,7 +85,8 @@ var payments_OverrideType = require("../payments/OverrideType");
 
     /**
     * Get the field value
-    * @return {ParamType} 
+    * @memberof payments.TerminalParameter
+    * @return {payments.ParamType} 
     */
     getParamType: function() {
       return this.paramType;
@@ -86,6 +94,7 @@ var payments_OverrideType = require("../payments/OverrideType");
 
     /**
     * Set the field value
+    * @memberof payments.TerminalParameter
     * @param {String} data 
     */
     setData: function(data) {
@@ -94,6 +103,7 @@ var payments_OverrideType = require("../payments/OverrideType");
 
     /**
     * Get the field value
+    * @memberof payments.TerminalParameter
     * @return {String} 
     */
     getData: function() {
@@ -102,6 +112,7 @@ var payments_OverrideType = require("../payments/OverrideType");
 
     /**
     * Set the field value
+    * @memberof payments.TerminalParameter
     * @param {String} deviceType 
     */
     setDeviceType: function(deviceType) {
@@ -110,6 +121,7 @@ var payments_OverrideType = require("../payments/OverrideType");
 
     /**
     * Get the field value
+    * @memberof payments.TerminalParameter
     * @return {String} 
     */
     getDeviceType: function() {
@@ -118,6 +130,7 @@ var payments_OverrideType = require("../payments/OverrideType");
 
     /**
     * Set the field value
+    * @memberof payments.TerminalParameter
     * @param {String} deviceTypeId 
     */
     setDeviceTypeId: function(deviceTypeId) {
@@ -126,6 +139,7 @@ var payments_OverrideType = require("../payments/OverrideType");
 
     /**
     * Get the field value
+    * @memberof payments.TerminalParameter
     * @return {String} 
     */
     getDeviceTypeId: function() {
@@ -134,6 +148,7 @@ var payments_OverrideType = require("../payments/OverrideType");
 
     /**
     * Set the field value
+    * @memberof payments.TerminalParameter
     * @param {String} overrideName 
     */
     setOverrideName: function(overrideName) {
@@ -142,6 +157,7 @@ var payments_OverrideType = require("../payments/OverrideType");
 
     /**
     * Get the field value
+    * @memberof payments.TerminalParameter
     * @return {String} 
     */
     getOverrideName: function() {
@@ -150,6 +166,7 @@ var payments_OverrideType = require("../payments/OverrideType");
 
     /**
     * Set the field value
+    * @memberof payments.TerminalParameter
     * @param {String} overrideId 
     */
     setOverrideId: function(overrideId) {
@@ -158,6 +175,7 @@ var payments_OverrideType = require("../payments/OverrideType");
 
     /**
     * Get the field value
+    * @memberof payments.TerminalParameter
     * @return {String} 
     */
     getOverrideId: function() {
@@ -166,7 +184,8 @@ var payments_OverrideType = require("../payments/OverrideType");
 
     /**
     * Set the field value
-    * @param {OverrideType} overrideType 
+    * @memberof payments.TerminalParameter
+    * @param {payments.OverrideType} overrideType 
     */
     setOverrideType: function(overrideType) {
       this.overrideType = overrideType;
@@ -174,7 +193,8 @@ var payments_OverrideType = require("../payments/OverrideType");
 
     /**
     * Get the field value
-    * @return {OverrideType} 
+    * @memberof payments.TerminalParameter
+    * @return {payments.OverrideType} 
     */
     getOverrideType: function() {
       return this.overrideType;
@@ -182,6 +202,7 @@ var payments_OverrideType = require("../payments/OverrideType");
 
     /**
     * Set the field value
+    * @memberof payments.TerminalParameter
     * @param {String} aid 
     */
     setAid: function(aid) {
@@ -190,6 +211,7 @@ var payments_OverrideType = require("../payments/OverrideType");
 
     /**
     * Get the field value
+    * @memberof payments.TerminalParameter
     * @return {String} 
     */
     getAid: function() {
@@ -198,7 +220,8 @@ var payments_OverrideType = require("../payments/OverrideType");
 
     /**
     * Set the field value
-    * @param {Array.<Tag>} tagData An array of 
+    * @memberof payments.TerminalParameter
+    * @param {Array.<payments.Tag>} tagData An array of 
     */
     setTagData: function(tagData) {
       this.tagData = tagData;
@@ -206,11 +229,17 @@ var payments_OverrideType = require("../payments/OverrideType");
 
     /**
     * Get the field value
-    * @return {Array.<Tag>} An array of 
+    * @memberof payments.TerminalParameter
+    * @return {Array.<payments.Tag>} An array of 
     */
     getTagData: function() {
       return this.tagData;
     },
+
+    /**
+    * @memberof payments.TerminalParameter
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

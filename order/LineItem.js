@@ -14,10 +14,12 @@ var base_Reference = require("../base/Reference");
 
   /**
   * @constructor
+  * @memberof order
   */
   LineItem = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof order.LineItem
     * @private
     */
     initialize: function() {
@@ -52,6 +54,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Unique identifier
     *
+    * @memberof order.LineItem
     * @param {String} id 
     */
     setId: function(id) {
@@ -61,7 +64,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof order.LineItem
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -71,7 +75,8 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * The order with which the line item is associated
     *
-    * @param {Reference} orderRef 
+    * @memberof order.LineItem
+    * @param {base.Reference} orderRef 
     */
     setOrderRef: function(orderRef) {
       this.orderRef = orderRef;
@@ -80,7 +85,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * The order with which the line item is associated
-      * @return {Reference} 
+    * @memberof order.LineItem
+    * @return {base.Reference} 
     */
     getOrderRef: function() {
       return this.orderRef;
@@ -90,7 +96,8 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Inventory item used to create this line item
     *
-    * @param {Null|Reference} item 
+    * @memberof order.LineItem
+    * @param {Null|base.Reference} item 
     */
     setItem: function(item) {
       this.item = item;
@@ -99,7 +106,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Inventory item used to create this line item
-      * @return {Null|Reference} 
+    * @memberof order.LineItem
+    * @return {Null|base.Reference} 
     */
     getItem: function() {
       return this.item;
@@ -109,6 +117,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Line item name
     *
+    * @memberof order.LineItem
     * @param {Null|String} name 
     */
     setName: function(name) {
@@ -118,7 +127,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Line item name
-      * @return {Null|String} 
+    * @memberof order.LineItem
+    * @return {Null|String} 
     */
     getName: function() {
       return this.name;
@@ -128,6 +138,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Alternate name of the line item
     *
+    * @memberof order.LineItem
     * @param {Null|String} alternateName 
     */
     setAlternateName: function(alternateName) {
@@ -137,7 +148,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Alternate name of the line item
-      * @return {Null|String} 
+    * @memberof order.LineItem
+    * @return {Null|String} 
     */
     getAlternateName: function() {
       return this.alternateName;
@@ -147,6 +159,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Price of the item, typically in cents; use priceType and merchant currency to determine actual item price
     *
+    * @memberof order.LineItem
     * @param {Number} price must be a long integer
     */
     setPrice: function(price) {
@@ -156,7 +169,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Price of the item, typically in cents; use priceType and merchant currency to determine actual item price
-      * @return {Number} must be a long integer
+    * @memberof order.LineItem
+    * @return {Number} must be a long integer
     */
     getPrice: function() {
       return this.price;
@@ -166,6 +180,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Unit quantity
     *
+    * @memberof order.LineItem
     * @param {Null|Number} unitQty must be an integer
     */
     setUnitQty: function(unitQty) {
@@ -175,7 +190,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Unit quantity
-      * @return {Null|Number} must be an integer
+    * @memberof order.LineItem
+    * @return {Null|Number} must be an integer
     */
     getUnitQty: function() {
       return this.unitQty;
@@ -185,6 +201,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Unit name (e.g. oz, lb, etc.)
     *
+    * @memberof order.LineItem
     * @param {Null|String} unitName 
     */
     setUnitName: function(unitName) {
@@ -194,7 +211,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Unit name (e.g. oz, lb, etc.)
-      * @return {Null|String} 
+    * @memberof order.LineItem
+    * @return {Null|String} 
     */
     getUnitName: function() {
       return this.unitName;
@@ -202,6 +220,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof order.LineItem
     * @param {Null|String} itemCode 
     */
     setItemCode: function(itemCode) {
@@ -210,6 +229,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof order.LineItem
     * @return {Null|String} 
     */
     getItemCode: function() {
@@ -218,6 +238,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof order.LineItem
     * @param {Null|String} note 
     */
     setNote: function(note) {
@@ -226,6 +247,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof order.LineItem
     * @return {Null|String} 
     */
     getNote: function() {
@@ -234,6 +256,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof order.LineItem
     * @param {Boolean} printed 
     */
     setPrinted: function(printed) {
@@ -242,6 +265,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof order.LineItem
     * @return {Boolean} 
     */
     getPrinted: function() {
@@ -250,7 +274,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
-    * @param {Null|Reference} exchangedLineItem 
+    * @memberof order.LineItem
+    * @param {Null|base.Reference} exchangedLineItem 
     */
     setExchangedLineItem: function(exchangedLineItem) {
       this.exchangedLineItem = exchangedLineItem;
@@ -258,7 +283,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * @return {Null|Reference} 
+    * @memberof order.LineItem
+    * @return {Null|base.Reference} 
     */
     getExchangedLineItem: function() {
       return this.exchangedLineItem;
@@ -266,6 +292,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof order.LineItem
     * @param {Null|String} binName 
     */
     setBinName: function(binName) {
@@ -274,6 +301,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof order.LineItem
     * @return {Null|String} 
     */
     getBinName: function() {
@@ -282,6 +310,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof order.LineItem
     * @param {Null|String} userData 
     */
     setUserData: function(userData) {
@@ -290,6 +319,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof order.LineItem
     * @return {Null|String} 
     */
     getUserData: function() {
@@ -298,6 +328,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof order.LineItem
     * @param {Number} createdTime must be a long integer
     */
     setCreatedTime: function(createdTime) {
@@ -306,6 +337,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof order.LineItem
     * @return {Number} must be a long integer
     */
     getCreatedTime: function() {
@@ -314,6 +346,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof order.LineItem
     * @param {Number} orderClientCreatedTime must be a long integer
     */
     setOrderClientCreatedTime: function(orderClientCreatedTime) {
@@ -322,6 +355,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof order.LineItem
     * @return {Number} must be a long integer
     */
     getOrderClientCreatedTime: function() {
@@ -330,7 +364,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
-    * @param {Array.<Discount>} discounts An array of 
+    * @memberof order.LineItem
+    * @param {Array.<order.Discount>} discounts An array of 
     */
     setDiscounts: function(discounts) {
       this.discounts = discounts;
@@ -338,7 +373,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * @return {Array.<Discount>} An array of 
+    * @memberof order.LineItem
+    * @return {Array.<order.Discount>} An array of 
     */
     getDiscounts: function() {
       return this.discounts;
@@ -348,6 +384,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * does the calculated flag actually do anything?
     *
+    * @memberof order.LineItem
     * @param {Null|Number} discountAmount must be a long integer
     */
     setDiscountAmount: function(discountAmount) {
@@ -357,7 +394,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * does the calculated flag actually do anything?
-      * @return {Null|Number} must be a long integer
+    * @memberof order.LineItem
+    * @return {Null|Number} must be a long integer
     */
     getDiscountAmount: function() {
       return this.discountAmount;
@@ -365,6 +403,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof order.LineItem
     * @param {Boolean} exchanged 
     */
     setExchanged: function(exchanged) {
@@ -373,6 +412,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof order.LineItem
     * @return {Boolean} 
     */
     getExchanged: function() {
@@ -381,7 +421,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
-    * @param {Array.<Modification>} modifications An array of 
+    * @memberof order.LineItem
+    * @param {Array.<order.Modification>} modifications An array of 
     */
     setModifications: function(modifications) {
       this.modifications = modifications;
@@ -389,7 +430,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * @return {Array.<Modification>} An array of 
+    * @memberof order.LineItem
+    * @return {Array.<order.Modification>} An array of 
     */
     getModifications: function() {
       return this.modifications;
@@ -397,6 +439,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof order.LineItem
     * @param {Boolean} refunded 
     */
     setRefunded: function(refunded) {
@@ -405,6 +448,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof order.LineItem
     * @return {Boolean} 
     */
     getRefunded: function() {
@@ -415,6 +459,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * True if this item should be counted as revenue, for example gift cards and donations would not
     *
+    * @memberof order.LineItem
     * @param {Boolean} isRevenue 
     */
     setIsRevenue: function(isRevenue) {
@@ -424,7 +469,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * True if this item should be counted as revenue, for example gift cards and donations would not
-      * @return {Boolean} 
+    * @memberof order.LineItem
+    * @return {Boolean} 
     */
     getIsRevenue: function() {
       return this.isRevenue;
@@ -432,7 +478,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
-    * @param {Array.<TaxRate>} taxRates An array of 
+    * @memberof order.LineItem
+    * @param {Array.<inventory.TaxRate>} taxRates An array of 
     */
     setTaxRates: function(taxRates) {
       this.taxRates = taxRates;
@@ -440,7 +487,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * @return {Array.<TaxRate>} An array of 
+    * @memberof order.LineItem
+    * @return {Array.<inventory.TaxRate>} An array of 
     */
     getTaxRates: function() {
       return this.taxRates;
@@ -450,7 +498,8 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Payments that were made for this line item
     *
-    * @param {Array.<LineItemPayment>} payments An array of 
+    * @memberof order.LineItem
+    * @param {Array.<payments.LineItemPayment>} payments An array of 
     */
     setPayments: function(payments) {
       this.payments = payments;
@@ -459,11 +508,17 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Payments that were made for this line item
-      * @return {Array.<LineItemPayment>} An array of 
+    * @memberof order.LineItem
+    * @return {Array.<payments.LineItemPayment>} An array of 
     */
     getPayments: function() {
       return this.payments;
     },
+
+    /**
+    * @memberof order.LineItem
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

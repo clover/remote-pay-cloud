@@ -22,10 +22,12 @@ var payments_Credit = require("../payments/Credit");
 /** The Order object is at the core of Clover’s transaction data. Almost every transaction either creates or updates an Order. When an order is created or updated, the order data is automatically synchronized between the Clover Server and the merchant’s Clover devices. */
   /**
   * @constructor
+  * @memberof order
   */
   Order = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof order.Order
     * @private
     */
     initialize: function() {
@@ -65,6 +67,7 @@ var payments_Credit = require("../payments/Credit");
     * Set the field value
     * Unique identifier
     *
+    * @memberof order.Order
     * @param {String} id 
     */
     setId: function(id) {
@@ -74,7 +77,8 @@ var payments_Credit = require("../payments/Credit");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof order.Order
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -84,6 +88,7 @@ var payments_Credit = require("../payments/Credit");
     * Set the field value
     * Currency of this order. For example, "USD"
     *
+    * @memberof order.Order
     * @param {String} currency 
     */
     setCurrency: function(currency) {
@@ -93,7 +98,8 @@ var payments_Credit = require("../payments/Credit");
     /**
     * Get the field value
     * Currency of this order. For example, "USD"
-      * @return {String} 
+    * @memberof order.Order
+    * @return {String} 
     */
     getCurrency: function() {
       return this.currency;
@@ -103,7 +109,8 @@ var payments_Credit = require("../payments/Credit");
     * Set the field value
     * List of customers associated with this order.
     *
-    * @param {Array.<Customer>} customers An array of 
+    * @memberof order.Order
+    * @param {Array.<customers.Customer>} customers An array of 
     */
     setCustomers: function(customers) {
       this.customers = customers;
@@ -112,7 +119,8 @@ var payments_Credit = require("../payments/Credit");
     /**
     * Get the field value
     * List of customers associated with this order.
-      * @return {Array.<Customer>} An array of 
+    * @memberof order.Order
+    * @return {Array.<customers.Customer>} An array of 
     */
     getCustomers: function() {
       return this.customers;
@@ -122,7 +130,8 @@ var payments_Credit = require("../payments/Credit");
     * Set the field value
     * The employee who took this order
     *
-    * @param {Null|Reference} employee 
+    * @memberof order.Order
+    * @param {Null|base.Reference} employee 
     */
     setEmployee: function(employee) {
       this.employee = employee;
@@ -131,7 +140,8 @@ var payments_Credit = require("../payments/Credit");
     /**
     * Get the field value
     * The employee who took this order
-      * @return {Null|Reference} 
+    * @memberof order.Order
+    * @return {Null|base.Reference} 
     */
     getEmployee: function() {
       return this.employee;
@@ -141,6 +151,7 @@ var payments_Credit = require("../payments/Credit");
     * Set the field value
     * Total price of the order
     *
+    * @memberof order.Order
     * @param {Null|Number} total must be a long integer
     */
     setTotal: function(total) {
@@ -150,7 +161,8 @@ var payments_Credit = require("../payments/Credit");
     /**
     * Get the field value
     * Total price of the order
-      * @return {Null|Number} must be a long integer
+    * @memberof order.Order
+    * @return {Null|Number} must be a long integer
     */
     getTotal: function() {
       return this.total;
@@ -158,6 +170,7 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Set the field value
+    * @memberof order.Order
     * @param {Null|String} title 
     */
     setTitle: function(title) {
@@ -166,6 +179,7 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Get the field value
+    * @memberof order.Order
     * @return {Null|String} 
     */
     getTitle: function() {
@@ -174,6 +188,7 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Set the field value
+    * @memberof order.Order
     * @param {Null|String} note 
     */
     setNote: function(note) {
@@ -182,6 +197,7 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Get the field value
+    * @memberof order.Order
     * @return {Null|String} 
     */
     getNote: function() {
@@ -190,7 +206,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Set the field value
-    * @param {Null|OrderType} orderType 
+    * @memberof order.Order
+    * @param {Null|order.OrderType} orderType 
     */
     setOrderType: function(orderType) {
       this.orderType = orderType;
@@ -198,7 +215,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Get the field value
-    * @return {Null|OrderType} 
+    * @memberof order.Order
+    * @return {Null|order.OrderType} 
     */
     getOrderType: function() {
       return this.orderType;
@@ -206,6 +224,7 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Set the field value
+    * @memberof order.Order
     * @param {Boolean} taxRemoved 
     */
     setTaxRemoved: function(taxRemoved) {
@@ -214,6 +233,7 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Get the field value
+    * @memberof order.Order
     * @return {Boolean} 
     */
     getTaxRemoved: function() {
@@ -222,6 +242,7 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Set the field value
+    * @memberof order.Order
     * @param {Boolean} isVat 
     */
     setIsVat: function(isVat) {
@@ -230,6 +251,7 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Get the field value
+    * @memberof order.Order
     * @return {Boolean} 
     */
     getIsVat: function() {
@@ -238,6 +260,7 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Set the field value
+    * @memberof order.Order
     * @param {Null|String} state 
     */
     setState: function(state) {
@@ -246,6 +269,7 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Get the field value
+    * @memberof order.Order
     * @return {Null|String} 
     */
     getState: function() {
@@ -256,6 +280,7 @@ var payments_Credit = require("../payments/Credit");
     * Set the field value
     * Whether this order represents a manual transaction. A manual transaction is a transaction that has an arbitrary amount defined and is not associated with any inventory item. For example, the Clover Sale App and Clover Manual Transaction App create manual transactions. A nanual transactions will have a single associated line item to hold the sale amount, but the generated receipt will display this differently to indicate that it is not considered a typical order with inventory items.
     *
+    * @memberof order.Order
     * @param {Boolean} manualTransaction 
     */
     setManualTransaction: function(manualTransaction) {
@@ -265,7 +290,8 @@ var payments_Credit = require("../payments/Credit");
     /**
     * Get the field value
     * Whether this order represents a manual transaction. A manual transaction is a transaction that has an arbitrary amount defined and is not associated with any inventory item. For example, the Clover Sale App and Clover Manual Transaction App create manual transactions. A nanual transactions will have a single associated line item to hold the sale amount, but the generated receipt will display this differently to indicate that it is not considered a typical order with inventory items.
-      * @return {Boolean} 
+    * @memberof order.Order
+    * @return {Boolean} 
     */
     getManualTransaction: function() {
       return this.manualTransaction;
@@ -275,6 +301,7 @@ var payments_Credit = require("../payments/Credit");
     * Set the field value
     * Whether similar line items should be grouped together on the receipt that this order generates. Item "similarity" is based on items having matching values for a set of properties including price, modifiers, and discounts.
     *
+    * @memberof order.Order
     * @param {Boolean} groupLineItems 
     */
     setGroupLineItems: function(groupLineItems) {
@@ -284,7 +311,8 @@ var payments_Credit = require("../payments/Credit");
     /**
     * Get the field value
     * Whether similar line items should be grouped together on the receipt that this order generates. Item "similarity" is based on items having matching values for a set of properties including price, modifiers, and discounts.
-      * @return {Boolean} 
+    * @memberof order.Order
+    * @return {Boolean} 
     */
     getGroupLineItems: function() {
       return this.groupLineItems;
@@ -294,6 +322,7 @@ var payments_Credit = require("../payments/Credit");
     * Set the field value
     * Whether this order was created in test mode. Payments made against test orders are not processed. Test mode orders can be deleted from the Orders App on the merchant's device or web dashboard (https://www.clover.com/orders/m/{mId}/orders). They will also be deleted when the device sends a POST to the /v2/merchant/{mId}/orders/delete_all_tests endpoint.
     *
+    * @memberof order.Order
     * @param {Boolean} testMode 
     */
     setTestMode: function(testMode) {
@@ -303,7 +332,8 @@ var payments_Credit = require("../payments/Credit");
     /**
     * Get the field value
     * Whether this order was created in test mode. Payments made against test orders are not processed. Test mode orders can be deleted from the Orders App on the merchant's device or web dashboard (https://www.clover.com/orders/m/{mId}/orders). They will also be deleted when the device sends a POST to the /v2/merchant/{mId}/orders/delete_all_tests endpoint.
-      * @return {Boolean} 
+    * @memberof order.Order
+    * @return {Boolean} 
     */
     getTestMode: function() {
       return this.testMode;
@@ -313,7 +343,8 @@ var payments_Credit = require("../payments/Credit");
     * Set the field value
     * Possible values: SPLIT_GUEST, SPLIT_ITEM, SPLIT_CUSTOM, FULL. During the payment flow, if the user chooses to split the payment for this order, this field will be set to one of the SPLIT_* values to indicate how the full amount should be split. If the user chooses to pay for the order in full with one payment, then this field will be FULL.
     *
-    * @param {PayType} payType 
+    * @memberof order.Order
+    * @param {order.PayType} payType 
     */
     setPayType: function(payType) {
       this.payType = payType;
@@ -322,7 +353,8 @@ var payments_Credit = require("../payments/Credit");
     /**
     * Get the field value
     * Possible values: SPLIT_GUEST, SPLIT_ITEM, SPLIT_CUSTOM, FULL. During the payment flow, if the user chooses to split the payment for this order, this field will be set to one of the SPLIT_* values to indicate how the full amount should be split. If the user chooses to pay for the order in full with one payment, then this field will be FULL.
-      * @return {PayType} 
+    * @memberof order.Order
+    * @return {order.PayType} 
     */
     getPayType: function() {
       return this.payType;
@@ -332,6 +364,7 @@ var payments_Credit = require("../payments/Credit");
     * Set the field value
     * Creation timestamp
     *
+    * @memberof order.Order
     * @param {Number} createdTime must be a long integer
     */
     setCreatedTime: function(createdTime) {
@@ -341,7 +374,8 @@ var payments_Credit = require("../payments/Credit");
     /**
     * Get the field value
     * Creation timestamp
-      * @return {Number} must be a long integer
+    * @memberof order.Order
+    * @return {Number} must be a long integer
     */
     getCreatedTime: function() {
       return this.createdTime;
@@ -351,6 +385,7 @@ var payments_Credit = require("../payments/Credit");
     * Set the field value
     * The time at which the client created this order
     *
+    * @memberof order.Order
     * @param {Number} clientCreatedTime must be a long integer
     */
     setClientCreatedTime: function(clientCreatedTime) {
@@ -360,7 +395,8 @@ var payments_Credit = require("../payments/Credit");
     /**
     * Get the field value
     * The time at which the client created this order
-      * @return {Number} must be a long integer
+    * @memberof order.Order
+    * @return {Number} must be a long integer
     */
     getClientCreatedTime: function() {
       return this.clientCreatedTime;
@@ -370,6 +406,7 @@ var payments_Credit = require("../payments/Credit");
     * Set the field value
     * Last modified time of the order
     *
+    * @memberof order.Order
     * @param {Number} modifiedTime must be a long integer
     */
     setModifiedTime: function(modifiedTime) {
@@ -379,7 +416,8 @@ var payments_Credit = require("../payments/Credit");
     /**
     * Get the field value
     * Last modified time of the order
-      * @return {Number} must be a long integer
+    * @memberof order.Order
+    * @return {Number} must be a long integer
     */
     getModifiedTime: function() {
       return this.modifiedTime;
@@ -387,6 +425,7 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Set the field value
+    * @memberof order.Order
     * @param {Number} deletedTimestamp must be a long integer
     */
     setDeletedTimestamp: function(deletedTimestamp) {
@@ -395,6 +434,7 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Get the field value
+    * @memberof order.Order
     * @return {Number} must be a long integer
     */
     getDeletedTimestamp: function() {
@@ -405,7 +445,8 @@ var payments_Credit = require("../payments/Credit");
     * Set the field value
     * Optional service charge (gratuity) applied to this order
     *
-    * @param {Null|ServiceCharge} serviceCharge 
+    * @memberof order.Order
+    * @param {Null|base.ServiceCharge} serviceCharge 
     */
     setServiceCharge: function(serviceCharge) {
       this.serviceCharge = serviceCharge;
@@ -414,7 +455,8 @@ var payments_Credit = require("../payments/Credit");
     /**
     * Get the field value
     * Optional service charge (gratuity) applied to this order
-      * @return {Null|ServiceCharge} 
+    * @memberof order.Order
+    * @return {Null|base.ServiceCharge} 
     */
     getServiceCharge: function() {
       return this.serviceCharge;
@@ -424,7 +466,8 @@ var payments_Credit = require("../payments/Credit");
     * Set the field value
     * Discounts applied to this order
     *
-    * @param {Array.<Discount>} discounts An array of 
+    * @memberof order.Order
+    * @param {Array.<order.Discount>} discounts An array of 
     */
     setDiscounts: function(discounts) {
       this.discounts = discounts;
@@ -433,7 +476,8 @@ var payments_Credit = require("../payments/Credit");
     /**
     * Get the field value
     * Discounts applied to this order
-      * @return {Array.<Discount>} An array of 
+    * @memberof order.Order
+    * @return {Array.<order.Discount>} An array of 
     */
     getDiscounts: function() {
       return this.discounts;
@@ -443,7 +487,8 @@ var payments_Credit = require("../payments/Credit");
     * Set the field value
     * Line items associated with this order
     *
-    * @param {Array.<LineItem>} lineItems An array of 
+    * @memberof order.Order
+    * @param {Array.<order.LineItem>} lineItems An array of 
     */
     setLineItems: function(lineItems) {
       this.lineItems = lineItems;
@@ -452,7 +497,8 @@ var payments_Credit = require("../payments/Credit");
     /**
     * Get the field value
     * Line items associated with this order
-      * @return {Array.<LineItem>} An array of 
+    * @memberof order.Order
+    * @return {Array.<order.LineItem>} An array of 
     */
     getLineItems: function() {
       return this.lineItems;
@@ -460,7 +506,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Set the field value
-    * @param {Array.<OrderTaxRate>} taxRates An array of 
+    * @memberof order.Order
+    * @param {Array.<order.OrderTaxRate>} taxRates An array of 
     */
     setTaxRates: function(taxRates) {
       this.taxRates = taxRates;
@@ -468,7 +515,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Get the field value
-    * @return {Array.<OrderTaxRate>} An array of 
+    * @memberof order.Order
+    * @return {Array.<order.OrderTaxRate>} An array of 
     */
     getTaxRates: function() {
       return this.taxRates;
@@ -478,7 +526,8 @@ var payments_Credit = require("../payments/Credit");
     * Set the field value
     * Payments that were made for this order. If multiple payments were made, then the payType field should reflect the method used to split the total amount.
     *
-    * @param {Array.<Payment>} payments An array of 
+    * @memberof order.Order
+    * @param {Array.<payments.Payment>} payments An array of 
     */
     setPayments: function(payments) {
       this.payments = payments;
@@ -487,7 +536,8 @@ var payments_Credit = require("../payments/Credit");
     /**
     * Get the field value
     * Payments that were made for this order. If multiple payments were made, then the payType field should reflect the method used to split the total amount.
-      * @return {Array.<Payment>} An array of 
+    * @memberof order.Order
+    * @return {Array.<payments.Payment>} An array of 
     */
     getPayments: function() {
       return this.payments;
@@ -497,7 +547,8 @@ var payments_Credit = require("../payments/Credit");
     * Set the field value
     * Refunds that were made for this order
     *
-    * @param {Array.<Refund>} refunds An array of 
+    * @memberof order.Order
+    * @param {Array.<payments.Refund>} refunds An array of 
     */
     setRefunds: function(refunds) {
       this.refunds = refunds;
@@ -506,7 +557,8 @@ var payments_Credit = require("../payments/Credit");
     /**
     * Get the field value
     * Refunds that were made for this order
-      * @return {Array.<Refund>} An array of 
+    * @memberof order.Order
+    * @return {Array.<payments.Refund>} An array of 
     */
     getRefunds: function() {
       return this.refunds;
@@ -516,7 +568,8 @@ var payments_Credit = require("../payments/Credit");
     * Set the field value
     * Credits associated with this order.
     *
-    * @param {Array.<Credit>} credits An array of 
+    * @memberof order.Order
+    * @param {Array.<payments.Credit>} credits An array of 
     */
     setCredits: function(credits) {
       this.credits = credits;
@@ -525,7 +578,8 @@ var payments_Credit = require("../payments/Credit");
     /**
     * Get the field value
     * Credits associated with this order.
-      * @return {Array.<Credit>} An array of 
+    * @memberof order.Order
+    * @return {Array.<payments.Credit>} An array of 
     */
     getCredits: function() {
       return this.credits;
@@ -535,7 +589,8 @@ var payments_Credit = require("../payments/Credit");
     * Set the field value
     * Voided payments associated with this order
     *
-    * @param {Array.<Payment>} voids An array of 
+    * @memberof order.Order
+    * @param {Array.<payments.Payment>} voids An array of 
     */
     setVoids: function(voids) {
       this.voids = voids;
@@ -544,7 +599,8 @@ var payments_Credit = require("../payments/Credit");
     /**
     * Get the field value
     * Voided payments associated with this order
-      * @return {Array.<Payment>} An array of 
+    * @memberof order.Order
+    * @return {Array.<payments.Payment>} An array of 
     */
     getVoids: function() {
       return this.voids;
@@ -554,7 +610,8 @@ var payments_Credit = require("../payments/Credit");
     * Set the field value
     * Device which created the order
     *
-    * @param {Reference|Null} device 
+    * @memberof order.Order
+    * @param {base.Reference|Null} device 
     */
     setDevice: function(device) {
       this.device = device;
@@ -563,7 +620,8 @@ var payments_Credit = require("../payments/Credit");
     /**
     * Get the field value
     * Device which created the order
-      * @return {Reference|Null} 
+    * @memberof order.Order
+    * @return {base.Reference|Null} 
     */
     getDevice: function() {
       return this.device;
@@ -573,7 +631,8 @@ var payments_Credit = require("../payments/Credit");
     * Set the field value
     * Card authorizations associated with this order
     *
-    * @param {Array.<Authorization>} authorizations An array of 
+    * @memberof order.Order
+    * @param {Array.<payments.Authorization>} authorizations An array of 
     */
     setAuthorizations: function(authorizations) {
       this.authorizations = authorizations;
@@ -582,11 +641,17 @@ var payments_Credit = require("../payments/Credit");
     /**
     * Get the field value
     * Card authorizations associated with this order
-      * @return {Array.<Authorization>} An array of 
+    * @memberof order.Order
+    * @return {Array.<payments.Authorization>} An array of 
     */
     getAuthorizations: function() {
       return this.authorizations;
     },
+
+    /**
+    * @memberof order.Order
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

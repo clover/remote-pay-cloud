@@ -10,10 +10,12 @@ var base_Reference = require("../base/Reference");
 
   /**
   * @constructor
+  * @memberof inventory
   */
   Category = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof inventory.Category
     * @private
     */
     initialize: function() {
@@ -28,6 +30,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Unique identifier
     *
+    * @memberof inventory.Category
     * @param {String} id 
     */
     setId: function(id) {
@@ -37,7 +40,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof inventory.Category
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -47,6 +51,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * 
     *
+    * @memberof inventory.Category
     * @param {String} name 
     */
     setName: function(name) {
@@ -56,7 +61,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * 
-      * @return {String} 
+    * @memberof inventory.Category
+    * @return {String} 
     */
     getName: function() {
       return this.name;
@@ -64,6 +70,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof inventory.Category
     * @param {Number} sortOrder must be an integer
     */
     setSortOrder: function(sortOrder) {
@@ -72,6 +79,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof inventory.Category
     * @return {Number} must be an integer
     */
     getSortOrder: function() {
@@ -82,7 +90,8 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Items associated with this category
     *
-    * @param {Array.<Reference>} items An array of 
+    * @memberof inventory.Category
+    * @param {Array.<base.Reference>} items An array of 
     */
     setItems: function(items) {
       this.items = items;
@@ -91,11 +100,17 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Items associated with this category
-      * @return {Array.<Reference>} An array of 
+    * @memberof inventory.Category
+    * @return {Array.<base.Reference>} An array of 
     */
     getItems: function() {
       return this.items;
     },
+
+    /**
+    * @memberof inventory.Category
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

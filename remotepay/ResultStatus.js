@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof remotepay
+* @enum {string}
+*/
 ResultStatus = {
   SUCCESS : "SUCCESS",
   FAIL : "FAIL",

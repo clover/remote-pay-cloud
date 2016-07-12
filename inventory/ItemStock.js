@@ -11,10 +11,12 @@ var base_Reference = require("../base/Reference");
 /** The class is used to update the item stock */
   /**
   * @constructor
+  * @memberof inventory
   */
   ItemStock = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof inventory.ItemStock
     * @private
     */
     initialize: function() {
@@ -28,7 +30,8 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Reference to an item
     *
-    * @param {Reference} item 
+    * @memberof inventory.ItemStock
+    * @param {base.Reference} item 
     */
     setItem: function(item) {
       this.item = item;
@@ -37,7 +40,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Reference to an item
-      * @return {Reference} 
+    * @memberof inventory.ItemStock
+    * @return {base.Reference} 
     */
     getItem: function() {
       return this.item;
@@ -47,6 +51,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * DEPRECATED: use quantity instead
     *
+    * @memberof inventory.ItemStock
     * @param {Null|Number} stockCount must be a long integer
     */
     setStockCount: function(stockCount) {
@@ -56,7 +61,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * DEPRECATED: use quantity instead
-      * @return {Null|Number} must be a long integer
+    * @memberof inventory.ItemStock
+    * @return {Null|Number} must be a long integer
     */
     getStockCount: function() {
       return this.stockCount;
@@ -66,6 +72,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Current count of this item in stock
     *
+    * @memberof inventory.ItemStock
     * @param {Number} quantity must be a double
     */
     setQuantity: function(quantity) {
@@ -75,11 +82,17 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Current count of this item in stock
-      * @return {Number} must be a double
+    * @memberof inventory.ItemStock
+    * @return {Number} must be a double
     */
     getQuantity: function() {
       return this.quantity;
     },
+
+    /**
+    * @memberof inventory.ItemStock
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

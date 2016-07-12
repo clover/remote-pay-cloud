@@ -11,10 +11,13 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
 /** Send a request for a closeout */
   /**
   * @constructor
+  * @augments remotepay.BaseRequest
+  * @memberof remotepay
   */
   CloseoutRequest = Class.create(remotepay_BaseRequest, {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.CloseoutRequest
     * @private
     */
     initialize: function($super) {
@@ -28,6 +31,7 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     * Set the field value
     * Allow closeout if there are open tabs
     *
+    * @memberof remotepay.CloseoutRequest
     * @param {Boolean} allowOpenTabs 
     */
     setAllowOpenTabs: function(allowOpenTabs) {
@@ -37,7 +41,8 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     /**
     * Get the field value
     * Allow closeout if there are open tabs
-      * @return {Boolean} 
+    * @memberof remotepay.CloseoutRequest
+    * @return {Boolean} 
     */
     getAllowOpenTabs: function() {
       return this.allowOpenTabs;
@@ -47,6 +52,7 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     * Set the field value
     * The batch id to close out.  If omitted, then the default current batch is used.
     *
+    * @memberof remotepay.CloseoutRequest
     * @param {String} batchId 
     */
     setBatchId: function(batchId) {
@@ -56,7 +62,8 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     /**
     * Get the field value
     * The batch id to close out.  If omitted, then the default current batch is used.
-      * @return {String} 
+    * @memberof remotepay.CloseoutRequest
+    * @return {String} 
     */
     getBatchId: function() {
       return this.batchId;

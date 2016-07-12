@@ -12,10 +12,13 @@ var remotemessage_RemoveLineItemAction = require("../remotemessage/RemoveLineIte
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   OrderActionRemoveLineItemMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.OrderActionRemoveLineItemMessage
     * @private
     */
     initialize: function($super) {
@@ -27,7 +30,8 @@ var remotemessage_RemoveLineItemAction = require("../remotemessage/RemoveLineIte
 
     /**
     * Set the field value
-    * @param {RemoveLineItemAction} removeLineItemAction 
+    * @memberof remotemessage.OrderActionRemoveLineItemMessage
+    * @param {remotemessage.RemoveLineItemAction} removeLineItemAction 
     */
     setRemoveLineItemAction: function(removeLineItemAction) {
       this.removeLineItemAction = removeLineItemAction;
@@ -35,7 +39,8 @@ var remotemessage_RemoveLineItemAction = require("../remotemessage/RemoveLineIte
 
     /**
     * Get the field value
-    * @return {RemoveLineItemAction} 
+    * @memberof remotemessage.OrderActionRemoveLineItemMessage
+    * @return {remotemessage.RemoveLineItemAction} 
     */
     getRemoveLineItemAction: function() {
       return this.removeLineItemAction;

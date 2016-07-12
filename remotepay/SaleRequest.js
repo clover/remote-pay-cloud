@@ -11,10 +11,13 @@ var remotepay_TransactionRequest = require("../remotepay/TransactionRequest");
 
   /**
   * @constructor
+  * @augments remotepay.TransactionRequest
+  * @memberof remotepay
   */
   SaleRequest = Class.create(remotepay_TransactionRequest, {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.SaleRequest
     * @private
     */
     initialize: function($super) {
@@ -34,6 +37,7 @@ var remotepay_TransactionRequest = require("../remotepay/TransactionRequest");
     * Set the field value
     * Total amount used when calculating tips
     *
+    * @memberof remotepay.SaleRequest
     * @param {Number|Null} tippableAmount must be a long integer, 
     */
     setTippableAmount: function(tippableAmount) {
@@ -43,7 +47,8 @@ var remotepay_TransactionRequest = require("../remotepay/TransactionRequest");
     /**
     * Get the field value
     * Total amount used when calculating tips
-      * @return {Number|Null} must be a long integer, 
+    * @memberof remotepay.SaleRequest
+    * @return {Number|Null} must be a long integer, 
     */
     getTippableAmount: function() {
       return this.tippableAmount;
@@ -53,6 +58,7 @@ var remotepay_TransactionRequest = require("../remotepay/TransactionRequest");
     * Set the field value
     * Included tip
     *
+    * @memberof remotepay.SaleRequest
     * @param {Number|Null} tipAmount must be a long integer, 
     */
     setTipAmount: function(tipAmount) {
@@ -62,7 +68,8 @@ var remotepay_TransactionRequest = require("../remotepay/TransactionRequest");
     /**
     * Get the field value
     * Included tip
-      * @return {Number|Null} must be a long integer, 
+    * @memberof remotepay.SaleRequest
+    * @return {Number|Null} must be a long integer, 
     */
     getTipAmount: function() {
       return this.tipAmount;
@@ -72,6 +79,7 @@ var remotepay_TransactionRequest = require("../remotepay/TransactionRequest");
     * Set the field value
     * Do not allow cash back
     *
+    * @memberof remotepay.SaleRequest
     * @param {Boolean|Null} disableCashback 
     */
     setDisableCashback: function(disableCashback) {
@@ -81,7 +89,8 @@ var remotepay_TransactionRequest = require("../remotepay/TransactionRequest");
     /**
     * Get the field value
     * Do not allow cash back
-      * @return {Boolean|Null} 
+    * @memberof remotepay.SaleRequest
+    * @return {Boolean|Null} 
     */
     getDisableCashback: function() {
       return this.disableCashback;
@@ -91,6 +100,7 @@ var remotepay_TransactionRequest = require("../remotepay/TransactionRequest");
     * Set the field value
     * If true, the tip screen will not be displayed on the device, even if the merchant is configured for tips on screen
     *
+    * @memberof remotepay.SaleRequest
     * @param {Boolean|Null} disableTipOnScreen 
     */
     setDisableTipOnScreen: function(disableTipOnScreen) {
@@ -100,7 +110,8 @@ var remotepay_TransactionRequest = require("../remotepay/TransactionRequest");
     /**
     * Get the field value
     * If true, the tip screen will not be displayed on the device, even if the merchant is configured for tips on screen
-      * @return {Boolean|Null} 
+    * @memberof remotepay.SaleRequest
+    * @return {Boolean|Null} 
     */
     getDisableTipOnScreen: function() {
       return this.disableTipOnScreen;
@@ -110,6 +121,7 @@ var remotepay_TransactionRequest = require("../remotepay/TransactionRequest");
     * Set the field value
     * Amount paid in tips
     *
+    * @memberof remotepay.SaleRequest
     * @param {Number|Null} taxAmount must be a long integer, 
     */
     setTaxAmount: function(taxAmount) {
@@ -119,7 +131,8 @@ var remotepay_TransactionRequest = require("../remotepay/TransactionRequest");
     /**
     * Get the field value
     * Amount paid in tips
-      * @return {Number|Null} must be a long integer, 
+    * @memberof remotepay.SaleRequest
+    * @return {Number|Null} must be a long integer, 
     */
     getTaxAmount: function() {
       return this.taxAmount;
@@ -129,6 +142,7 @@ var remotepay_TransactionRequest = require("../remotepay/TransactionRequest");
     * Set the field value
     * If true then offline payments can be accepted
     *
+    * @memberof remotepay.SaleRequest
     * @param {Boolean|Null} allowOfflinePayment 
     */
     setAllowOfflinePayment: function(allowOfflinePayment) {
@@ -138,7 +152,8 @@ var remotepay_TransactionRequest = require("../remotepay/TransactionRequest");
     /**
     * Get the field value
     * If true then offline payments can be accepted
-      * @return {Boolean|Null} 
+    * @memberof remotepay.SaleRequest
+    * @return {Boolean|Null} 
     */
     getAllowOfflinePayment: function() {
       return this.allowOfflinePayment;
@@ -148,6 +163,7 @@ var remotepay_TransactionRequest = require("../remotepay/TransactionRequest");
     * Set the field value
     * If true then offline payments will be approved without a prompt
     *
+    * @memberof remotepay.SaleRequest
     * @param {Boolean|Null} approveOfflinePaymentWithoutPrompt 
     */
     setApproveOfflinePaymentWithoutPrompt: function(approveOfflinePaymentWithoutPrompt) {
@@ -157,7 +173,8 @@ var remotepay_TransactionRequest = require("../remotepay/TransactionRequest");
     /**
     * Get the field value
     * If true then offline payments will be approved without a prompt
-      * @return {Boolean|Null} 
+    * @memberof remotepay.SaleRequest
+    * @return {Boolean|Null} 
     */
     getApproveOfflinePaymentWithoutPrompt: function() {
       return this.approveOfflinePaymentWithoutPrompt;

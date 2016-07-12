@@ -10,10 +10,12 @@ var remotemessage_ResultStatus = require("../remotemessage/ResultStatus");
 
   /**
   * @constructor
+  * @memberof remotemessage
   */
   ResultStatusEnum = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.ResultStatusEnum
     * @private
     */
     initialize: function() {
@@ -23,7 +25,8 @@ var remotemessage_ResultStatus = require("../remotemessage/ResultStatus");
 
     /**
     * Set the field value
-    * @param {ResultStatus} status 
+    * @memberof remotemessage.ResultStatusEnum
+    * @param {remotemessage.ResultStatus} status 
     */
     setStatus: function(status) {
       this.status = status;
@@ -31,11 +34,17 @@ var remotemessage_ResultStatus = require("../remotemessage/ResultStatus");
 
     /**
     * Get the field value
-    * @return {ResultStatus} 
+    * @memberof remotemessage.ResultStatusEnum
+    * @return {remotemessage.ResultStatus} 
     */
     getStatus: function() {
       return this.status;
     },
+
+    /**
+    * @memberof remotemessage.ResultStatusEnum
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

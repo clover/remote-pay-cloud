@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof payments
+* @enum {string}
+*/
 GiftCardState = {
   INVALID : "INVALID",
   ACTIVATED : "ACTIVATED",

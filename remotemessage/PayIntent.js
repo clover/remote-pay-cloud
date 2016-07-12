@@ -13,10 +13,12 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
   /**
   * @constructor
+  * @memberof remotemessage
   */
   PayIntent = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.PayIntent
     * @private
     */
     initialize: function() {
@@ -53,6 +55,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     * Set the field value
     * The action to fire in the device (com.clover.remote.protocol.action.START_REMOTE_PROTOCOL_PAY)
     *
+    * @memberof remotemessage.PayIntent
     * @param {String} action 
     */
     setAction: function(action) {
@@ -62,7 +65,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     /**
     * Get the field value
     * The action to fire in the device (com.clover.remote.protocol.action.START_REMOTE_PROTOCOL_PAY)
-      * @return {String} 
+    * @memberof remotemessage.PayIntent
+    * @return {String} 
     */
     getAction: function() {
       return this.action;
@@ -72,6 +76,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     * Set the field value
     * Amount for transaction
     *
+    * @memberof remotemessage.PayIntent
     * @param {Number|Null} amount must be a long integer, 
     */
     setAmount: function(amount) {
@@ -81,7 +86,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     /**
     * Get the field value
     * Amount for transaction
-      * @return {Number|Null} must be a long integer, 
+    * @memberof remotemessage.PayIntent
+    * @return {Number|Null} must be a long integer, 
     */
     getAmount: function() {
       return this.amount;
@@ -91,6 +97,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     * Set the field value
     * Amount used when calculating on screen tips
     *
+    * @memberof remotemessage.PayIntent
     * @param {Number|Null} tippableAmount must be a long integer, 
     */
     setTippableAmount: function(tippableAmount) {
@@ -100,7 +107,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     /**
     * Get the field value
     * Amount used when calculating on screen tips
-      * @return {Number|Null} must be a long integer, 
+    * @memberof remotemessage.PayIntent
+    * @return {Number|Null} must be a long integer, 
     */
     getTippableAmount: function() {
       return this.tippableAmount;
@@ -110,6 +118,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     * Set the field value
     * Amount paid in tips
     *
+    * @memberof remotemessage.PayIntent
     * @param {Number|Null} tipAmount must be a long integer, 
     */
     setTipAmount: function(tipAmount) {
@@ -119,7 +128,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     /**
     * Get the field value
     * Amount paid in tips
-      * @return {Number|Null} must be a long integer, 
+    * @memberof remotemessage.PayIntent
+    * @return {Number|Null} must be a long integer, 
     */
     getTipAmount: function() {
       return this.tipAmount;
@@ -127,6 +137,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Set the field value
+    * @memberof remotemessage.PayIntent
     * @param {Number|Null} taxAmount must be a long integer, 
     */
     setTaxAmount: function(taxAmount) {
@@ -135,6 +146,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Get the field value
+    * @memberof remotemessage.PayIntent
     * @return {Number|Null} must be a long integer, 
     */
     getTaxAmount: function() {
@@ -145,6 +157,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     * Set the field value
     * Unique identifier for a order
     *
+    * @memberof remotemessage.PayIntent
     * @param {String} orderId 
     */
     setOrderId: function(orderId) {
@@ -154,7 +167,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     /**
     * Get the field value
     * Unique identifier for a order
-      * @return {String} 
+    * @memberof remotemessage.PayIntent
+    * @return {String} 
     */
     getOrderId: function() {
       return this.orderId;
@@ -164,6 +178,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     * Set the field value
     * Unique identifier for a employee
     *
+    * @memberof remotemessage.PayIntent
     * @param {String} employeeId 
     */
     setEmployeeId: function(employeeId) {
@@ -173,7 +188,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     /**
     * Get the field value
     * Unique identifier for a employee
-      * @return {String} 
+    * @memberof remotemessage.PayIntent
+    * @return {String} 
     */
     getEmployeeId: function() {
       return this.employeeId;
@@ -181,7 +197,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Set the field value
-    * @param {TransactionType} transactionType 
+    * @memberof remotemessage.PayIntent
+    * @param {remotemessage.TransactionType} transactionType 
     */
     setTransactionType: function(transactionType) {
       this.transactionType = transactionType;
@@ -189,7 +206,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Get the field value
-    * @return {TransactionType} 
+    * @memberof remotemessage.PayIntent
+    * @return {remotemessage.TransactionType} 
     */
     getTransactionType: function() {
       return this.transactionType;
@@ -197,7 +215,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Set the field value
-    * @param {Array.<TaxableAmountRate>} taxableAmountRateList An array of 
+    * @memberof remotemessage.PayIntent
+    * @param {Array.<payments.TaxableAmountRate>} taxableAmountRateList An array of 
     */
     setTaxableAmountRateList: function(taxableAmountRateList) {
       this.taxableAmountRateList = taxableAmountRateList;
@@ -205,7 +224,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Get the field value
-    * @return {Array.<TaxableAmountRate>} An array of 
+    * @memberof remotemessage.PayIntent
+    * @return {Array.<payments.TaxableAmountRate>} An array of 
     */
     getTaxableAmountRateList: function() {
       return this.taxableAmountRateList;
@@ -213,7 +233,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Set the field value
-    * @param {Array.<ServiceChargeAmount>} serviceChargeAmount An array of 
+    * @memberof remotemessage.PayIntent
+    * @param {Array.<payments.ServiceChargeAmount>} serviceChargeAmount An array of 
     */
     setServiceChargeAmount: function(serviceChargeAmount) {
       this.serviceChargeAmount = serviceChargeAmount;
@@ -221,7 +242,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Get the field value
-    * @return {Array.<ServiceChargeAmount>} An array of 
+    * @memberof remotemessage.PayIntent
+    * @return {Array.<payments.ServiceChargeAmount>} An array of 
     */
     getServiceChargeAmount: function() {
       return this.serviceChargeAmount;
@@ -231,6 +253,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     * Set the field value
     * If true, then cash back will not be offered.
     *
+    * @memberof remotemessage.PayIntent
     * @param {Boolean} isDisableCashBack 
     */
     setIsDisableCashBack: function(isDisableCashBack) {
@@ -240,7 +263,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     /**
     * Get the field value
     * If true, then cash back will not be offered.
-      * @return {Boolean} 
+    * @memberof remotemessage.PayIntent
+    * @return {Boolean} 
     */
     getIsDisableCashBack: function() {
       return this.isDisableCashBack;
@@ -248,6 +272,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Set the field value
+    * @memberof remotemessage.PayIntent
     * @param {Boolean} isTesting 
     */
     setIsTesting: function(isTesting) {
@@ -256,6 +281,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Get the field value
+    * @memberof remotemessage.PayIntent
     * @return {Boolean} 
     */
     getIsTesting: function() {
@@ -266,6 +292,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     * Set the field value
     * Allowed entry methods
     *
+    * @memberof remotemessage.PayIntent
     * @param {Number} cardEntryMethods must be an integer
     */
     setCardEntryMethods: function(cardEntryMethods) {
@@ -275,7 +302,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     /**
     * Get the field value
     * Allowed entry methods
-      * @return {Number} must be an integer
+    * @memberof remotemessage.PayIntent
+    * @return {Number} must be an integer
     */
     getCardEntryMethods: function() {
       return this.cardEntryMethods;
@@ -283,6 +311,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Set the field value
+    * @memberof remotemessage.PayIntent
     * @param {String} voiceAuthCode 
     */
     setVoiceAuthCode: function(voiceAuthCode) {
@@ -291,6 +320,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Get the field value
+    * @memberof remotemessage.PayIntent
     * @return {String} 
     */
     getVoiceAuthCode: function() {
@@ -299,6 +329,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Set the field value
+    * @memberof remotemessage.PayIntent
     * @param {String} streetAddress 
     */
     setStreetAddress: function(streetAddress) {
@@ -307,6 +338,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Get the field value
+    * @memberof remotemessage.PayIntent
     * @return {String} 
     */
     getStreetAddress: function() {
@@ -315,6 +347,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Set the field value
+    * @memberof remotemessage.PayIntent
     * @param {Boolean} isCardNotPresent 
     */
     setIsCardNotPresent: function(isCardNotPresent) {
@@ -323,6 +356,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Get the field value
+    * @memberof remotemessage.PayIntent
     * @return {Boolean} 
     */
     getIsCardNotPresent: function() {
@@ -331,6 +365,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Set the field value
+    * @memberof remotemessage.PayIntent
     * @param {String} cardDataMessage 
     */
     setCardDataMessage: function(cardDataMessage) {
@@ -339,6 +374,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Get the field value
+    * @memberof remotemessage.PayIntent
     * @return {String} 
     */
     getCardDataMessage: function() {
@@ -349,6 +385,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     * Set the field value
     * If true, then the receiver of this message does NOT print
     *
+    * @memberof remotemessage.PayIntent
     * @param {Boolean} remotePrint 
     */
     setRemotePrint: function(remotePrint) {
@@ -358,7 +395,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     /**
     * Get the field value
     * If true, then the receiver of this message does NOT print
-      * @return {Boolean} 
+    * @memberof remotemessage.PayIntent
+    * @return {Boolean} 
     */
     getRemotePrint: function() {
       return this.remotePrint;
@@ -366,6 +404,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Set the field value
+    * @memberof remotemessage.PayIntent
     * @param {String} transactionNo 
     */
     setTransactionNo: function(transactionNo) {
@@ -374,6 +413,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Get the field value
+    * @memberof remotemessage.PayIntent
     * @return {String} 
     */
     getTransactionNo: function() {
@@ -382,6 +422,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Set the field value
+    * @memberof remotemessage.PayIntent
     * @param {Boolean} isForceSwipePinEntry 
     */
     setIsForceSwipePinEntry: function(isForceSwipePinEntry) {
@@ -390,6 +431,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Get the field value
+    * @memberof remotemessage.PayIntent
     * @return {Boolean} 
     */
     getIsForceSwipePinEntry: function() {
@@ -398,6 +440,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Set the field value
+    * @memberof remotemessage.PayIntent
     * @param {Boolean} disableRestartTransactionWhenFailed 
     */
     setDisableRestartTransactionWhenFailed: function(disableRestartTransactionWhenFailed) {
@@ -406,6 +449,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Get the field value
+    * @memberof remotemessage.PayIntent
     * @return {Boolean} 
     */
     getDisableRestartTransactionWhenFailed: function() {
@@ -416,6 +460,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     * Set the field value
     * An id that allows an external system to link to a payment.
     *
+    * @memberof remotemessage.PayIntent
     * @param {String} externalPaymentId 
     */
     setExternalPaymentId: function(externalPaymentId) {
@@ -425,7 +470,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     /**
     * Get the field value
     * An id that allows an external system to link to a payment.
-      * @return {String} 
+    * @memberof remotemessage.PayIntent
+    * @return {String} 
     */
     getExternalPaymentId: function() {
       return this.externalPaymentId;
@@ -433,7 +479,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Set the field value
-    * @param {VaultedCard} vaultedCard 
+    * @memberof remotemessage.PayIntent
+    * @param {payments.VaultedCard} vaultedCard 
     */
     setVaultedCard: function(vaultedCard) {
       this.vaultedCard = vaultedCard;
@@ -441,7 +488,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Get the field value
-    * @return {VaultedCard} 
+    * @memberof remotemessage.PayIntent
+    * @return {payments.VaultedCard} 
     */
     getVaultedCard: function() {
       return this.vaultedCard;
@@ -449,6 +497,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Set the field value
+    * @memberof remotemessage.PayIntent
     * @param {Boolean|Null} allowOfflinePayment 
     */
     setAllowOfflinePayment: function(allowOfflinePayment) {
@@ -457,6 +506,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Get the field value
+    * @memberof remotemessage.PayIntent
     * @return {Boolean|Null} 
     */
     getAllowOfflinePayment: function() {
@@ -465,6 +515,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Set the field value
+    * @memberof remotemessage.PayIntent
     * @param {Boolean|Null} approveOfflinePaymentWithoutPrompt 
     */
     setApproveOfflinePaymentWithoutPrompt: function(approveOfflinePaymentWithoutPrompt) {
@@ -473,6 +524,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Get the field value
+    * @memberof remotemessage.PayIntent
     * @return {Boolean|Null} 
     */
     getApproveOfflinePaymentWithoutPrompt: function() {
@@ -481,6 +533,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Set the field value
+    * @memberof remotemessage.PayIntent
     * @param {Boolean|Null} requiresRemoteConfirmation 
     */
     setRequiresRemoteConfirmation: function(requiresRemoteConfirmation) {
@@ -489,11 +542,17 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Get the field value
+    * @memberof remotemessage.PayIntent
     * @return {Boolean|Null} 
     */
     getRequiresRemoteConfirmation: function() {
       return this.requiresRemoteConfirmation;
     },
+
+    /**
+    * @memberof remotemessage.PayIntent
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

@@ -12,10 +12,12 @@ var order_LineItem = require("../order/LineItem");
 /** For reporting on a removed line item */
   /**
   * @constructor
+  * @memberof order
   */
   VoidedLineItem = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof order.VoidedLineItem
     * @private
     */
     initialize: function() {
@@ -30,7 +32,8 @@ var order_LineItem = require("../order/LineItem");
     * Set the field value
     * The line item that was voided
     *
-    * @param {LineItem} lineItem 
+    * @memberof order.VoidedLineItem
+    * @param {order.LineItem} lineItem 
     */
     setLineItem: function(lineItem) {
       this.lineItem = lineItem;
@@ -39,7 +42,8 @@ var order_LineItem = require("../order/LineItem");
     /**
     * Get the field value
     * The line item that was voided
-      * @return {LineItem} 
+    * @memberof order.VoidedLineItem
+    * @return {order.LineItem} 
     */
     getLineItem: function() {
       return this.lineItem;
@@ -49,6 +53,7 @@ var order_LineItem = require("../order/LineItem");
     * Set the field value
     * Why was the line item voided
     *
+    * @memberof order.VoidedLineItem
     * @param {Null|String} reason 
     */
     setReason: function(reason) {
@@ -58,7 +63,8 @@ var order_LineItem = require("../order/LineItem");
     /**
     * Get the field value
     * Why was the line item voided
-      * @return {Null|String} 
+    * @memberof order.VoidedLineItem
+    * @return {Null|String} 
     */
     getReason: function() {
       return this.reason;
@@ -68,7 +74,8 @@ var order_LineItem = require("../order/LineItem");
     * Set the field value
     * Who voided the item
     *
-    * @param {Employee} removedBy 
+    * @memberof order.VoidedLineItem
+    * @param {employees.Employee} removedBy 
     */
     setRemovedBy: function(removedBy) {
       this.removedBy = removedBy;
@@ -77,7 +84,8 @@ var order_LineItem = require("../order/LineItem");
     /**
     * Get the field value
     * Who voided the item
-      * @return {Employee} 
+    * @memberof order.VoidedLineItem
+    * @return {employees.Employee} 
     */
     getRemovedBy: function() {
       return this.removedBy;
@@ -87,7 +95,8 @@ var order_LineItem = require("../order/LineItem");
     * Set the field value
     * Who created the order from which the line item was voided
     *
-    * @param {Employee} createdBy 
+    * @memberof order.VoidedLineItem
+    * @param {employees.Employee} createdBy 
     */
     setCreatedBy: function(createdBy) {
       this.createdBy = createdBy;
@@ -96,11 +105,17 @@ var order_LineItem = require("../order/LineItem");
     /**
     * Get the field value
     * Who created the order from which the line item was voided
-      * @return {Employee} 
+    * @memberof order.VoidedLineItem
+    * @return {employees.Employee} 
     */
     getCreatedBy: function() {
       return this.createdBy;
     },
+
+    /**
+    * @memberof order.VoidedLineItem
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

@@ -11,10 +11,13 @@ var payments_Refund = require("../payments/Refund");
 
   /**
   * @constructor
+  * @augments remotepay.BaseResponse
+  * @memberof remotepay
   */
   RefundPaymentResponse = Class.create(remotepay_BaseResponse, {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.RefundPaymentResponse
     * @private
     */
     initialize: function($super) {
@@ -27,7 +30,8 @@ var payments_Refund = require("../payments/Refund");
     * Set the field value
     * The actual refund from the request
     *
-    * @param {Refund} refund 
+    * @memberof remotepay.RefundPaymentResponse
+    * @param {payments.Refund} refund 
     */
     setRefund: function(refund) {
       this.refund = refund;
@@ -36,7 +40,8 @@ var payments_Refund = require("../payments/Refund");
     /**
     * Get the field value
     * The actual refund from the request
-      * @return {Refund} 
+    * @memberof remotepay.RefundPaymentResponse
+    * @return {payments.Refund} 
     */
     getRefund: function() {
       return this.refund;

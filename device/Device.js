@@ -11,10 +11,12 @@ var base_Reference = require("../base/Reference");
 
   /**
   * @constructor
+  * @memberof device
   */
   Device = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof device.Device
     * @private
     */
     initialize: function() {
@@ -55,6 +57,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Unique identifier
     *
+    * @memberof device.Device
     * @param {String} id 
     */
     setId: function(id) {
@@ -64,7 +67,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof device.Device
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -74,6 +78,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Name of the device (if entered)
     *
+    * @memberof device.Device
     * @param {String} name 
     */
     setName: function(name) {
@@ -83,7 +88,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Name of the device (if entered)
-      * @return {String} 
+    * @memberof device.Device
+    * @return {String} 
     */
     getName: function() {
       return this.name;
@@ -91,6 +97,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof device.Device
     * @param {String} model 
     */
     setModel: function(model) {
@@ -99,6 +106,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof device.Device
     * @return {String} 
     */
     getModel: function() {
@@ -107,7 +115,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
-    * @param {Reference} merchant 
+    * @memberof device.Device
+    * @param {base.Reference} merchant 
     */
     setMerchant: function(merchant) {
       this.merchant = merchant;
@@ -115,7 +124,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * @return {Reference} 
+    * @memberof device.Device
+    * @return {base.Reference} 
     */
     getMerchant: function() {
       return this.merchant;
@@ -125,6 +135,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * A prefix that will be applied to order numbers. This is useful if the merchant and/or customer needs to track which device an order came from.
     *
+    * @memberof device.Device
     * @param {String} orderPrefix 
     */
     setOrderPrefix: function(orderPrefix) {
@@ -134,7 +145,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * A prefix that will be applied to order numbers. This is useful if the merchant and/or customer needs to track which device an order came from.
-      * @return {String} 
+    * @memberof device.Device
+    * @return {String} 
     */
     getOrderPrefix: function() {
       return this.orderPrefix;
@@ -142,6 +154,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof device.Device
     * @param {Null|Number} terminalPrefix must be an integer
     */
     setTerminalPrefix: function(terminalPrefix) {
@@ -150,6 +163,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof device.Device
     * @return {Null|Number} must be an integer
     */
     getTerminalPrefix: function() {
@@ -160,6 +174,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * The device's serial number.
     *
+    * @memberof device.Device
     * @param {String} serial 
     */
     setSerial: function(serial) {
@@ -169,7 +184,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * The device's serial number.
-      * @return {String} 
+    * @memberof device.Device
+    * @return {String} 
     */
     getSerial: function() {
       return this.serial;
@@ -177,6 +193,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof device.Device
     * @param {Number} buildNumber must be a long integer
     */
     setBuildNumber: function(buildNumber) {
@@ -185,6 +202,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof device.Device
     * @return {Number} must be a long integer
     */
     getBuildNumber: function() {
@@ -193,6 +211,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof device.Device
     * @param {String} secureId 
     */
     setSecureId: function(secureId) {
@@ -201,6 +220,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof device.Device
     * @return {String} 
     */
     getSecureId: function() {
@@ -209,7 +229,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
-    * @param {BuildType} buildType 
+    * @memberof device.Device
+    * @param {device.BuildType} buildType 
     */
     setBuildType: function(buildType) {
       this.buildType = buildType;
@@ -217,7 +238,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * @return {BuildType} 
+    * @memberof device.Device
+    * @return {device.BuildType} 
     */
     getBuildType: function() {
       return this.buildType;
@@ -225,6 +247,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof device.Device
     * @param {String} cpuId 
     */
     setCpuId: function(cpuId) {
@@ -233,6 +256,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof device.Device
     * @return {String} 
     */
     getCpuId: function() {
@@ -243,6 +267,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * The IMEI of the device
     *
+    * @memberof device.Device
     * @param {String} imei 
     */
     setImei: function(imei) {
@@ -252,7 +277,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * The IMEI of the device
-      * @return {String} 
+    * @memberof device.Device
+    * @return {String} 
     */
     getImei: function() {
       return this.imei;
@@ -262,6 +288,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * The IMSI of the SIM in the device (if present)
     *
+    * @memberof device.Device
     * @param {String} imsi 
     */
     setImsi: function(imsi) {
@@ -271,7 +298,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * The IMSI of the SIM in the device (if present)
-      * @return {String} 
+    * @memberof device.Device
+    * @return {String} 
     */
     getImsi: function() {
       return this.imsi;
@@ -281,6 +309,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * The ICCID of the SIM in the device (if present)
     *
+    * @memberof device.Device
     * @param {String} simIccid 
     */
     setSimIccid: function(simIccid) {
@@ -290,7 +319,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * The ICCID of the SIM in the device (if present)
-      * @return {String} 
+    * @memberof device.Device
+    * @return {String} 
     */
     getSimIccid: function() {
       return this.simIccid;
@@ -298,6 +328,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof device.Device
     * @param {String} deviceCertificate 
     */
     setDeviceCertificate: function(deviceCertificate) {
@@ -306,6 +337,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof device.Device
     * @return {String} 
     */
     getDeviceCertificate: function() {
@@ -314,6 +346,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof device.Device
     * @param {String} pedCertificate 
     */
     setPedCertificate: function(pedCertificate) {
@@ -322,6 +355,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof device.Device
     * @return {String} 
     */
     getPedCertificate: function() {
@@ -332,6 +366,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * The type of device. Possible values are "GOLDLEAF" (Station), "LEAFCUTTER" (Mobile), "MAPLECUTTER" (Mini), "CLOVER_GO" (Clover Go), or "OTHER" (Unknown).
     *
+    * @memberof device.Device
     * @param {String} deviceTypeName 
     */
     setDeviceTypeName: function(deviceTypeName) {
@@ -341,7 +376,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * The type of device. Possible values are "GOLDLEAF" (Station), "LEAFCUTTER" (Mobile), "MAPLECUTTER" (Mini), "CLOVER_GO" (Clover Go), or "OTHER" (Unknown).
-      * @return {String} 
+    * @memberof device.Device
+    * @return {String} 
     */
     getDeviceTypeName: function() {
       return this.deviceTypeName;
@@ -351,6 +387,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Whether this device has PIN prompt disabled.
     *
+    * @memberof device.Device
     * @param {Boolean} pinDisabled 
     */
     setPinDisabled: function(pinDisabled) {
@@ -360,7 +397,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Whether this device has PIN prompt disabled.
-      * @return {Boolean} 
+    * @memberof device.Device
+    * @return {Boolean} 
     */
     getPinDisabled: function() {
       return this.pinDisabled;
@@ -368,6 +406,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof device.Device
     * @param {Boolean} offlinePayments 
     */
     setOfflinePayments: function(offlinePayments) {
@@ -376,6 +415,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof device.Device
     * @return {Boolean} 
     */
     getOfflinePayments: function() {
@@ -384,6 +424,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof device.Device
     * @param {Boolean} offlinePaymentsAll 
     */
     setOfflinePaymentsAll: function(offlinePaymentsAll) {
@@ -392,6 +433,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof device.Device
     * @return {Boolean} 
     */
     getOfflinePaymentsAll: function() {
@@ -400,6 +442,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof device.Device
     * @param {Number} offlinePaymentsLimit must be a long integer
     */
     setOfflinePaymentsLimit: function(offlinePaymentsLimit) {
@@ -408,6 +451,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof device.Device
     * @return {Number} must be a long integer
     */
     getOfflinePaymentsLimit: function() {
@@ -416,6 +460,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof device.Device
     * @param {Number} offlinePaymentsPromptThreshold must be a long integer
     */
     setOfflinePaymentsPromptThreshold: function(offlinePaymentsPromptThreshold) {
@@ -424,6 +469,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof device.Device
     * @return {Number} must be a long integer
     */
     getOfflinePaymentsPromptThreshold: function() {
@@ -432,6 +478,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof device.Device
     * @param {Number} offlinePaymentsTotalPaymentsLimit must be a long integer
     */
     setOfflinePaymentsTotalPaymentsLimit: function(offlinePaymentsTotalPaymentsLimit) {
@@ -440,6 +487,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof device.Device
     * @return {Number} must be a long integer
     */
     getOfflinePaymentsTotalPaymentsLimit: function() {
@@ -448,6 +496,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof device.Device
     * @param {Number} offlinePaymentsLimitDefault must be a long integer
     */
     setOfflinePaymentsLimitDefault: function(offlinePaymentsLimitDefault) {
@@ -456,6 +505,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof device.Device
     * @return {Number} must be a long integer
     */
     getOfflinePaymentsLimitDefault: function() {
@@ -464,6 +514,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof device.Device
     * @param {Number} offlinePaymentsPromptThresholdDefault must be a long integer
     */
     setOfflinePaymentsPromptThresholdDefault: function(offlinePaymentsPromptThresholdDefault) {
@@ -472,6 +523,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof device.Device
     * @return {Number} must be a long integer
     */
     getOfflinePaymentsPromptThresholdDefault: function() {
@@ -480,6 +532,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof device.Device
     * @param {Number} offlinePaymentsTotalPaymentsLimitDefault must be a long integer
     */
     setOfflinePaymentsTotalPaymentsLimitDefault: function(offlinePaymentsTotalPaymentsLimitDefault) {
@@ -488,6 +541,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof device.Device
     * @return {Number} must be a long integer
     */
     getOfflinePaymentsTotalPaymentsLimitDefault: function() {
@@ -496,6 +550,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof device.Device
     * @param {Boolean} showOfflinePayments 
     */
     setShowOfflinePayments: function(showOfflinePayments) {
@@ -504,6 +559,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof device.Device
     * @return {Boolean} 
     */
     getShowOfflinePayments: function() {
@@ -512,6 +568,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof device.Device
     * @param {Number} maxOfflineDays must be a long integer
     */
     setMaxOfflineDays: function(maxOfflineDays) {
@@ -520,6 +577,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof device.Device
     * @return {Number} must be a long integer
     */
     getMaxOfflineDays: function() {
@@ -528,6 +586,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof device.Device
     * @param {Boolean} allowStoreAndForward 
     */
     setAllowStoreAndForward: function(allowStoreAndForward) {
@@ -536,6 +595,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof device.Device
     * @return {Boolean} 
     */
     getAllowStoreAndForward: function() {
@@ -544,7 +604,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
-    * @param {Array.<Reference>} secureReports An array of 
+    * @memberof device.Device
+    * @param {Array.<base.Reference>} secureReports An array of 
     */
     setSecureReports: function(secureReports) {
       this.secureReports = secureReports;
@@ -552,11 +613,17 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * @return {Array.<Reference>} An array of 
+    * @memberof device.Device
+    * @return {Array.<base.Reference>} An array of 
     */
     getSecureReports: function() {
       return this.secureReports;
     },
+
+    /**
+    * @memberof device.Device
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

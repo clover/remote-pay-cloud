@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof payments
+* @enum {string}
+*/
 BatchType = {
   MANUAL_CLOSE : "MANUAL_CLOSE",
   AUTO_CLOSE : "AUTO_CLOSE"

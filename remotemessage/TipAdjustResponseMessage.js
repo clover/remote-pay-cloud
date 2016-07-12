@@ -11,10 +11,13 @@ var remotemessage_Message = require("../remotemessage/Message");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   TipAdjustResponseMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.TipAdjustResponseMessage
     * @private
     */
     initialize: function($super) {
@@ -31,6 +34,7 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * If true the tip adjustment succeeded
     *
+    * @memberof remotemessage.TipAdjustResponseMessage
     * @param {Boolean} success 
     */
     setSuccess: function(success) {
@@ -40,7 +44,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * If true the tip adjustment succeeded
-      * @return {Boolean} 
+    * @memberof remotemessage.TipAdjustResponseMessage
+    * @return {Boolean} 
     */
     getSuccess: function() {
       return this.success;
@@ -50,6 +55,7 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * Amount of tip
     *
+    * @memberof remotemessage.TipAdjustResponseMessage
     * @param {Number} amount must be a long integer
     */
     setAmount: function(amount) {
@@ -59,7 +65,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * Amount of tip
-      * @return {Number} must be a long integer
+    * @memberof remotemessage.TipAdjustResponseMessage
+    * @return {Number} must be a long integer
     */
     getAmount: function() {
       return this.amount;
@@ -69,6 +76,7 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * Unique identifier for a order
     *
+    * @memberof remotemessage.TipAdjustResponseMessage
     * @param {String} orderId 
     */
     setOrderId: function(orderId) {
@@ -78,7 +86,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * Unique identifier for a order
-      * @return {String} 
+    * @memberof remotemessage.TipAdjustResponseMessage
+    * @return {String} 
     */
     getOrderId: function() {
       return this.orderId;
@@ -88,6 +97,7 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * Unique identifier for a payment
     *
+    * @memberof remotemessage.TipAdjustResponseMessage
     * @param {String} paymentId 
     */
     setPaymentId: function(paymentId) {
@@ -97,7 +107,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * Unique identifier for a payment
-      * @return {String} 
+    * @memberof remotemessage.TipAdjustResponseMessage
+    * @return {String} 
     */
     getPaymentId: function() {
       return this.paymentId;

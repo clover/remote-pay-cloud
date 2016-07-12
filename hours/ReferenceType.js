@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof hours
+* @enum {string}
+*/
 ReferenceType = {
   ORDER_TYPE : "ORDER_TYPE",
   ITEM_GROUP : "ITEM_GROUP",

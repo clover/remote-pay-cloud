@@ -9,10 +9,12 @@ require("prototype");
 
   /**
   * @constructor
+  * @memberof customers
   */
   PhoneNumber = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof customers.PhoneNumber
     * @private
     */
     initialize: function() {
@@ -23,6 +25,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof customers.PhoneNumber
     * @param {String} id 
     */
     setId: function(id) {
@@ -31,6 +34,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof customers.PhoneNumber
     * @return {String} 
     */
     getId: function() {
@@ -39,6 +43,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof customers.PhoneNumber
     * @param {String} phoneNumber 
     */
     setPhoneNumber: function(phoneNumber) {
@@ -47,11 +52,17 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof customers.PhoneNumber
     * @return {String} 
     */
     getPhoneNumber: function() {
       return this.phoneNumber;
     },
+
+    /**
+    * @memberof customers.PhoneNumber
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

@@ -17,10 +17,13 @@ var order_operation_DiscountsDeletedOperation = require("../order/operation/Disc
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   OrderUpdateMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.OrderUpdateMessage
     * @private
     */
     initialize: function($super) {
@@ -39,7 +42,8 @@ var order_operation_DiscountsDeletedOperation = require("../order/operation/Disc
     * Set the field value
     * The order that is to be displayed.
     *
-    * @param {DisplayOrder} order 
+    * @memberof remotemessage.OrderUpdateMessage
+    * @param {order.DisplayOrder} order 
     */
     setOrder: function(order) {
       this.order = order;
@@ -48,7 +52,8 @@ var order_operation_DiscountsDeletedOperation = require("../order/operation/Disc
     /**
     * Get the field value
     * The order that is to be displayed.
-      * @return {DisplayOrder} 
+    * @memberof remotemessage.OrderUpdateMessage
+    * @return {order.DisplayOrder} 
     */
     getOrder: function() {
       return this.order;
@@ -58,7 +63,8 @@ var order_operation_DiscountsDeletedOperation = require("../order/operation/Disc
     * Set the field value
     * Items that were added to the display order.
     *
-    * @param {LineItemsAddedOperation} lineItemsAddedOperation 
+    * @memberof remotemessage.OrderUpdateMessage
+    * @param {order.operation.LineItemsAddedOperation} lineItemsAddedOperation 
     */
     setLineItemsAddedOperation: function(lineItemsAddedOperation) {
       this.lineItemsAddedOperation = lineItemsAddedOperation;
@@ -67,7 +73,8 @@ var order_operation_DiscountsDeletedOperation = require("../order/operation/Disc
     /**
     * Get the field value
     * Items that were added to the display order.
-      * @return {LineItemsAddedOperation} 
+    * @memberof remotemessage.OrderUpdateMessage
+    * @return {order.operation.LineItemsAddedOperation} 
     */
     getLineItemsAddedOperation: function() {
       return this.lineItemsAddedOperation;
@@ -77,7 +84,8 @@ var order_operation_DiscountsDeletedOperation = require("../order/operation/Disc
     * Set the field value
     * Items that were added to the display order.
     *
-    * @param {LineItemsDeletedOperation} lineItemsDeletedOperation 
+    * @memberof remotemessage.OrderUpdateMessage
+    * @param {order.operation.LineItemsDeletedOperation} lineItemsDeletedOperation 
     */
     setLineItemsDeletedOperation: function(lineItemsDeletedOperation) {
       this.lineItemsDeletedOperation = lineItemsDeletedOperation;
@@ -86,7 +94,8 @@ var order_operation_DiscountsDeletedOperation = require("../order/operation/Disc
     /**
     * Get the field value
     * Items that were added to the display order.
-      * @return {LineItemsDeletedOperation} 
+    * @memberof remotemessage.OrderUpdateMessage
+    * @return {order.operation.LineItemsDeletedOperation} 
     */
     getLineItemsDeletedOperation: function() {
       return this.lineItemsDeletedOperation;
@@ -96,7 +105,8 @@ var order_operation_DiscountsDeletedOperation = require("../order/operation/Disc
     * Set the field value
     * Items that were added to the display order.
     *
-    * @param {DiscountsAddedOperation} discountsAddedOperation 
+    * @memberof remotemessage.OrderUpdateMessage
+    * @param {order.operation.DiscountsAddedOperation} discountsAddedOperation 
     */
     setDiscountsAddedOperation: function(discountsAddedOperation) {
       this.discountsAddedOperation = discountsAddedOperation;
@@ -105,7 +115,8 @@ var order_operation_DiscountsDeletedOperation = require("../order/operation/Disc
     /**
     * Get the field value
     * Items that were added to the display order.
-      * @return {DiscountsAddedOperation} 
+    * @memberof remotemessage.OrderUpdateMessage
+    * @return {order.operation.DiscountsAddedOperation} 
     */
     getDiscountsAddedOperation: function() {
       return this.discountsAddedOperation;
@@ -115,7 +126,8 @@ var order_operation_DiscountsDeletedOperation = require("../order/operation/Disc
     * Set the field value
     * Items that were added to the display order.
     *
-    * @param {DiscountsDeletedOperation} discountsDeletedOperation 
+    * @memberof remotemessage.OrderUpdateMessage
+    * @param {order.operation.DiscountsDeletedOperation} discountsDeletedOperation 
     */
     setDiscountsDeletedOperation: function(discountsDeletedOperation) {
       this.discountsDeletedOperation = discountsDeletedOperation;
@@ -124,7 +136,8 @@ var order_operation_DiscountsDeletedOperation = require("../order/operation/Disc
     /**
     * Get the field value
     * Items that were added to the display order.
-      * @return {DiscountsDeletedOperation} 
+    * @memberof remotemessage.OrderUpdateMessage
+    * @return {order.operation.DiscountsDeletedOperation} 
     */
     getDiscountsDeletedOperation: function() {
       return this.discountsDeletedOperation;
@@ -134,7 +147,8 @@ var order_operation_DiscountsDeletedOperation = require("../order/operation/Disc
     * Set the field value
     * Items that were added to the display order.
     *
-    * @param {OrderDeletedOperation} orderDeletedOperation 
+    * @memberof remotemessage.OrderUpdateMessage
+    * @param {order.operation.OrderDeletedOperation} orderDeletedOperation 
     */
     setOrderDeletedOperation: function(orderDeletedOperation) {
       this.orderDeletedOperation = orderDeletedOperation;
@@ -143,7 +157,8 @@ var order_operation_DiscountsDeletedOperation = require("../order/operation/Disc
     /**
     * Get the field value
     * Items that were added to the display order.
-      * @return {OrderDeletedOperation} 
+    * @memberof remotemessage.OrderUpdateMessage
+    * @return {order.operation.OrderDeletedOperation} 
     */
     getOrderDeletedOperation: function() {
       return this.orderDeletedOperation;

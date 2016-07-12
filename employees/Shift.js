@@ -10,10 +10,12 @@ var employees_Employee = require("../employees/Employee");
 
   /**
   * @constructor
+  * @memberof employees
   */
   Shift = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof employees.Shift
     * @private
     */
     initialize: function() {
@@ -34,6 +36,7 @@ var employees_Employee = require("../employees/Employee");
     * Set the field value
     * Unique identifier
     *
+    * @memberof employees.Shift
     * @param {String} id 
     */
     setId: function(id) {
@@ -43,7 +46,8 @@ var employees_Employee = require("../employees/Employee");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof employees.Shift
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -53,7 +57,8 @@ var employees_Employee = require("../employees/Employee");
     * Set the field value
     * The employee that worked this shift
     *
-    * @param {Employee} employee 
+    * @memberof employees.Shift
+    * @param {employees.Employee} employee 
     */
     setEmployee: function(employee) {
       this.employee = employee;
@@ -62,7 +67,8 @@ var employees_Employee = require("../employees/Employee");
     /**
     * Get the field value
     * The employee that worked this shift
-      * @return {Employee} 
+    * @memberof employees.Shift
+    * @return {employees.Employee} 
     */
     getEmployee: function() {
       return this.employee;
@@ -72,6 +78,7 @@ var employees_Employee = require("../employees/Employee");
     * Set the field value
     * Amount of cash tips collected
     *
+    * @memberof employees.Shift
     * @param {Number} cashTipsCollected must be a long integer
     */
     setCashTipsCollected: function(cashTipsCollected) {
@@ -81,7 +88,8 @@ var employees_Employee = require("../employees/Employee");
     /**
     * Get the field value
     * Amount of cash tips collected
-      * @return {Number} must be a long integer
+    * @memberof employees.Shift
+    * @return {Number} must be a long integer
     */
     getCashTipsCollected: function() {
       return this.cashTipsCollected;
@@ -91,6 +99,7 @@ var employees_Employee = require("../employees/Employee");
     * Set the field value
     * Whether the employee used server banking
     *
+    * @memberof employees.Shift
     * @param {Boolean} serverBanking 
     */
     setServerBanking: function(serverBanking) {
@@ -100,7 +109,8 @@ var employees_Employee = require("../employees/Employee");
     /**
     * Get the field value
     * Whether the employee used server banking
-      * @return {Boolean} 
+    * @memberof employees.Shift
+    * @return {Boolean} 
     */
     getServerBanking: function() {
       return this.serverBanking;
@@ -110,6 +120,7 @@ var employees_Employee = require("../employees/Employee");
     * Set the field value
     * Clock in time
     *
+    * @memberof employees.Shift
     * @param {Number} inTime must be a long integer
     */
     setInTime: function(inTime) {
@@ -119,7 +130,8 @@ var employees_Employee = require("../employees/Employee");
     /**
     * Get the field value
     * Clock in time
-      * @return {Number} must be a long integer
+    * @memberof employees.Shift
+    * @return {Number} must be a long integer
     */
     getInTime: function() {
       return this.inTime;
@@ -129,6 +141,7 @@ var employees_Employee = require("../employees/Employee");
     * Set the field value
     * Overridden clock in time
     *
+    * @memberof employees.Shift
     * @param {Number} overrideInTime must be a long integer
     */
     setOverrideInTime: function(overrideInTime) {
@@ -138,7 +151,8 @@ var employees_Employee = require("../employees/Employee");
     /**
     * Get the field value
     * Overridden clock in time
-      * @return {Number} must be a long integer
+    * @memberof employees.Shift
+    * @return {Number} must be a long integer
     */
     getOverrideInTime: function() {
       return this.overrideInTime;
@@ -148,7 +162,8 @@ var employees_Employee = require("../employees/Employee");
     * Set the field value
     * The employee who overrode the clock in time
     *
-    * @param {Employee} overrideInEmployee 
+    * @memberof employees.Shift
+    * @param {employees.Employee} overrideInEmployee 
     */
     setOverrideInEmployee: function(overrideInEmployee) {
       this.overrideInEmployee = overrideInEmployee;
@@ -157,7 +172,8 @@ var employees_Employee = require("../employees/Employee");
     /**
     * Get the field value
     * The employee who overrode the clock in time
-      * @return {Employee} 
+    * @memberof employees.Shift
+    * @return {employees.Employee} 
     */
     getOverrideInEmployee: function() {
       return this.overrideInEmployee;
@@ -167,6 +183,7 @@ var employees_Employee = require("../employees/Employee");
     * Set the field value
     * Clock out time
     *
+    * @memberof employees.Shift
     * @param {Number} outTime must be a long integer
     */
     setOutTime: function(outTime) {
@@ -176,7 +193,8 @@ var employees_Employee = require("../employees/Employee");
     /**
     * Get the field value
     * Clock out time
-      * @return {Number} must be a long integer
+    * @memberof employees.Shift
+    * @return {Number} must be a long integer
     */
     getOutTime: function() {
       return this.outTime;
@@ -186,6 +204,7 @@ var employees_Employee = require("../employees/Employee");
     * Set the field value
     * Overridden clock out time
     *
+    * @memberof employees.Shift
     * @param {Number} overrideOutTime must be a long integer
     */
     setOverrideOutTime: function(overrideOutTime) {
@@ -195,7 +214,8 @@ var employees_Employee = require("../employees/Employee");
     /**
     * Get the field value
     * Overridden clock out time
-      * @return {Number} must be a long integer
+    * @memberof employees.Shift
+    * @return {Number} must be a long integer
     */
     getOverrideOutTime: function() {
       return this.overrideOutTime;
@@ -205,7 +225,8 @@ var employees_Employee = require("../employees/Employee");
     * Set the field value
     * The employee who overrode the clock out time
     *
-    * @param {Employee} overrideOutEmployee 
+    * @memberof employees.Shift
+    * @param {employees.Employee} overrideOutEmployee 
     */
     setOverrideOutEmployee: function(overrideOutEmployee) {
       this.overrideOutEmployee = overrideOutEmployee;
@@ -214,11 +235,17 @@ var employees_Employee = require("../employees/Employee");
     /**
     * Get the field value
     * The employee who overrode the clock out time
-      * @return {Employee} 
+    * @memberof employees.Shift
+    * @return {employees.Employee} 
     */
     getOverrideOutEmployee: function() {
       return this.overrideOutEmployee;
     },
+
+    /**
+    * @memberof employees.Shift
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

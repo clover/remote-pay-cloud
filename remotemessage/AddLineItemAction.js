@@ -10,10 +10,12 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
 
   /**
   * @constructor
+  * @memberof remotemessage
   */
   AddLineItemAction = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.AddLineItemAction
     * @private
     */
     initialize: function() {
@@ -24,7 +26,8 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
 
     /**
     * Set the field value
-    * @param {DisplayLineItem} discount 
+    * @memberof remotemessage.AddLineItemAction
+    * @param {order.DisplayLineItem} discount 
     */
     setDiscount: function(discount) {
       this.discount = discount;
@@ -32,7 +35,8 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
 
     /**
     * Get the field value
-    * @return {DisplayLineItem} 
+    * @memberof remotemessage.AddLineItemAction
+    * @return {order.DisplayLineItem} 
     */
     getDiscount: function() {
       return this.discount;
@@ -40,6 +44,7 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
 
     /**
     * Set the field value
+    * @memberof remotemessage.AddLineItemAction
     * @param {Boolean} taxable 
     */
     setTaxable: function(taxable) {
@@ -48,11 +53,17 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
 
     /**
     * Get the field value
+    * @memberof remotemessage.AddLineItemAction
     * @return {Boolean} 
     */
     getTaxable: function() {
       return this.taxable;
     },
+
+    /**
+    * @memberof remotemessage.AddLineItemAction
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

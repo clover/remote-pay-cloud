@@ -9,10 +9,12 @@ require("prototype");
 
   /**
   * @constructor
+  * @memberof payments
   */
   DCCInfo = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof payments.DCCInfo
     * @private
     */
     initialize: function() {
@@ -30,6 +32,7 @@ require("prototype");
     * Set the field value
     * Inquiry Rate ID (IPG)
     *
+    * @memberof payments.DCCInfo
     * @param {Number} inquiryRateId must be a long integer
     */
     setInquiryRateId: function(inquiryRateId) {
@@ -39,7 +42,8 @@ require("prototype");
     /**
     * Get the field value
     * Inquiry Rate ID (IPG)
-      * @return {Number} must be a long integer
+    * @memberof payments.DCCInfo
+    * @return {Number} must be a long integer
     */
     getInquiryRateId: function() {
       return this.inquiryRateId;
@@ -49,6 +53,7 @@ require("prototype");
     * Set the field value
     * Flag indicating whether DCC was applied on this txn
     *
+    * @memberof payments.DCCInfo
     * @param {Boolean} dccApplied 
     */
     setDccApplied: function(dccApplied) {
@@ -58,7 +63,8 @@ require("prototype");
     /**
     * Get the field value
     * Flag indicating whether DCC was applied on this txn
-      * @return {Boolean} 
+    * @memberof payments.DCCInfo
+    * @return {Boolean} 
     */
     getDccApplied: function() {
       return this.dccApplied;
@@ -68,6 +74,7 @@ require("prototype");
     * Set the field value
     * Foreign currency code
     *
+    * @memberof payments.DCCInfo
     * @param {String} foreignCurrencyCode 
     */
     setForeignCurrencyCode: function(foreignCurrencyCode) {
@@ -77,7 +84,8 @@ require("prototype");
     /**
     * Get the field value
     * Foreign currency code
-      * @return {String} 
+    * @memberof payments.DCCInfo
+    * @return {String} 
     */
     getForeignCurrencyCode: function() {
       return this.foreignCurrencyCode;
@@ -87,6 +95,7 @@ require("prototype");
     * Set the field value
     * Foreign (transaction) amount
     *
+    * @memberof payments.DCCInfo
     * @param {Number} foreignAmount must be a long integer
     */
     setForeignAmount: function(foreignAmount) {
@@ -96,7 +105,8 @@ require("prototype");
     /**
     * Get the field value
     * Foreign (transaction) amount
-      * @return {Number} must be a long integer
+    * @memberof payments.DCCInfo
+    * @return {Number} must be a long integer
     */
     getForeignAmount: function() {
       return this.foreignAmount;
@@ -106,6 +116,7 @@ require("prototype");
     * Set the field value
     * Exchange Rate
     *
+    * @memberof payments.DCCInfo
     * @param {Number} exchangeRate must be a double
     */
     setExchangeRate: function(exchangeRate) {
@@ -115,7 +126,8 @@ require("prototype");
     /**
     * Get the field value
     * Exchange Rate
-      * @return {Number} must be a double
+    * @memberof payments.DCCInfo
+    * @return {Number} must be a double
     */
     getExchangeRate: function() {
       return this.exchangeRate;
@@ -125,6 +137,7 @@ require("prototype");
     * Set the field value
     * Margin Rate Percentage
     *
+    * @memberof payments.DCCInfo
     * @param {String} marginRatePercentage 
     */
     setMarginRatePercentage: function(marginRatePercentage) {
@@ -134,7 +147,8 @@ require("prototype");
     /**
     * Get the field value
     * Margin Rate Percentage
-      * @return {String} 
+    * @memberof payments.DCCInfo
+    * @return {String} 
     */
     getMarginRatePercentage: function() {
       return this.marginRatePercentage;
@@ -144,6 +158,7 @@ require("prototype");
     * Set the field value
     * Exchange Rate Source Name
     *
+    * @memberof payments.DCCInfo
     * @param {String} exchangeRateSourceName 
     */
     setExchangeRateSourceName: function(exchangeRateSourceName) {
@@ -153,11 +168,17 @@ require("prototype");
     /**
     * Get the field value
     * Exchange Rate Source Name
-      * @return {String} 
+    * @memberof payments.DCCInfo
+    * @return {String} 
     */
     getExchangeRateSourceName: function() {
       return this.exchangeRateSourceName;
     },
+
+    /**
+    * @memberof payments.DCCInfo
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

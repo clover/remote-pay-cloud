@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof remotepay
+* @enum {string}
+*/
 DeviceErrorEventCode = {
   InvalidConfig : "InvalidConfig",
   IoSyncFailed : "IoSyncFailed",

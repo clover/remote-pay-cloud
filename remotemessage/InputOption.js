@@ -10,10 +10,12 @@ var remotemessage_KeyPress = require("../remotemessage/KeyPress");
 
   /**
   * @constructor
+  * @memberof remotemessage
   */
   InputOption = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.InputOption
     * @private
     */
     initialize: function() {
@@ -26,7 +28,8 @@ var remotemessage_KeyPress = require("../remotemessage/KeyPress");
     * Set the field value
     * The keypress this represents
     *
-    * @param {KeyPress} keyPress 
+    * @memberof remotemessage.InputOption
+    * @param {remotemessage.KeyPress} keyPress 
     */
     setKeyPress: function(keyPress) {
       this.keyPress = keyPress;
@@ -35,7 +38,8 @@ var remotemessage_KeyPress = require("../remotemessage/KeyPress");
     /**
     * Get the field value
     * The keypress this represents
-      * @return {KeyPress} 
+    * @memberof remotemessage.InputOption
+    * @return {remotemessage.KeyPress} 
     */
     getKeyPress: function() {
       return this.keyPress;
@@ -45,6 +49,7 @@ var remotemessage_KeyPress = require("../remotemessage/KeyPress");
     * Set the field value
     * A description of what this input option represents
     *
+    * @memberof remotemessage.InputOption
     * @param {String} description 
     */
     setDescription: function(description) {
@@ -54,11 +59,17 @@ var remotemessage_KeyPress = require("../remotemessage/KeyPress");
     /**
     * Get the field value
     * A description of what this input option represents
-      * @return {String} 
+    * @memberof remotemessage.InputOption
+    * @return {String} 
     */
     getDescription: function() {
       return this.description;
     },
+
+    /**
+    * @memberof remotemessage.InputOption
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof employees
+* @enum {string}
+*/
 AccountRole = {
   ADMIN : "ADMIN",
   MANAGER : "MANAGER",

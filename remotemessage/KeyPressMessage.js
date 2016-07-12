@@ -12,10 +12,13 @@ var remotemessage_Message = require("../remotemessage/Message");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   KeyPressMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.KeyPressMessage
     * @private
     */
     initialize: function($super) {
@@ -27,7 +30,8 @@ var remotemessage_Message = require("../remotemessage/Message");
 
     /**
     * Set the field value
-    * @param {KeyPress} keyPress 
+    * @memberof remotemessage.KeyPressMessage
+    * @param {remotemessage.KeyPress} keyPress 
     */
     setKeyPress: function(keyPress) {
       this.keyPress = keyPress;
@@ -35,7 +39,8 @@ var remotemessage_Message = require("../remotemessage/Message");
 
     /**
     * Get the field value
-    * @return {KeyPress} 
+    * @memberof remotemessage.KeyPressMessage
+    * @return {remotemessage.KeyPress} 
     */
     getKeyPress: function() {
       return this.keyPress;

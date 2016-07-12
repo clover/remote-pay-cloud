@@ -10,10 +10,13 @@ var remotepay_BaseResponse = require("../remotepay/BaseResponse");
 
   /**
   * @constructor
+  * @augments remotepay.BaseResponse
+  * @memberof remotepay
   */
   TipAdded = Class.create(remotepay_BaseResponse, {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.TipAdded
     * @private
     */
     initialize: function($super) {
@@ -26,6 +29,7 @@ var remotepay_BaseResponse = require("../remotepay/BaseResponse");
     * Set the field value
     * Tip amount
     *
+    * @memberof remotepay.TipAdded
     * @param {Number} tipAmount must be a long integer
     */
     setTipAmount: function(tipAmount) {
@@ -35,7 +39,8 @@ var remotepay_BaseResponse = require("../remotepay/BaseResponse");
     /**
     * Get the field value
     * Tip amount
-      * @return {Number} must be a long integer
+    * @memberof remotepay.TipAdded
+    * @return {Number} must be a long integer
     */
     getTipAmount: function() {
       return this.tipAmount;

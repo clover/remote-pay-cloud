@@ -1,5 +1,11 @@
 module.exports.order = order;
+/**
+* @namespace order
+*/
 function order() {}
+/**
+* @namespace order.operation
+*/
 order.operation = {}
 
 order.CustomerIdMethod = require("./CustomerIdMethod");

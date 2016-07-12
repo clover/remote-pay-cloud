@@ -25,10 +25,14 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified, \"$npm_package_version && exit 1",
-    "postversion": "scripts/postversion.sh \"$npm_package_version\""
+    "postversion": "scripts/postversion.sh \"$npm_package_version\"",
+    "preinstall": "scripts/generateDocs.sh"
   },
   "dependencies": {
     "prototype": "*",
     "eventemitter3": "~1.1.1"
+  },
+  "devDependencies": {
+    "jsdoc": "*"
   }
 }

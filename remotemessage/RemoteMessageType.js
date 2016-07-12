@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof remotemessage
+* @enum {string}
+*/
 RemoteMessageType = {
   COMMAND : "COMMAND",
   QUERY : "QUERY",

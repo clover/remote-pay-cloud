@@ -12,10 +12,13 @@ var base_Signature = require("../base/Signature");
 
   /**
   * @constructor
+  * @augments remotepay.BaseResponse
+  * @memberof remotepay
   */
   PaymentResponse = Class.create(remotepay_BaseResponse, {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.PaymentResponse
     * @private
     */
     initialize: function($super) {
@@ -32,7 +35,8 @@ var base_Signature = require("../base/Signature");
     * Set the field value
     * The payment from the sale
     *
-    * @param {Payment} payment 
+    * @memberof remotepay.PaymentResponse
+    * @param {payments.Payment} payment 
     */
     setPayment: function(payment) {
       this.payment = payment;
@@ -41,7 +45,8 @@ var base_Signature = require("../base/Signature");
     /**
     * Get the field value
     * The payment from the sale
-      * @return {Payment} 
+    * @memberof remotepay.PaymentResponse
+    * @return {payments.Payment} 
     */
     getPayment: function() {
       return this.payment;
@@ -49,6 +54,7 @@ var base_Signature = require("../base/Signature");
 
     /**
     * Set the field value
+    * @memberof remotepay.PaymentResponse
     * @param {Boolean} isSale 
     */
     setIsSale: function(isSale) {
@@ -57,6 +63,7 @@ var base_Signature = require("../base/Signature");
 
     /**
     * Get the field value
+    * @memberof remotepay.PaymentResponse
     * @return {Boolean} 
     */
     getIsSale: function() {
@@ -65,6 +72,7 @@ var base_Signature = require("../base/Signature");
 
     /**
     * Set the field value
+    * @memberof remotepay.PaymentResponse
     * @param {Boolean} isPreAuth 
     */
     setIsPreAuth: function(isPreAuth) {
@@ -73,6 +81,7 @@ var base_Signature = require("../base/Signature");
 
     /**
     * Get the field value
+    * @memberof remotepay.PaymentResponse
     * @return {Boolean} 
     */
     getIsPreAuth: function() {
@@ -81,6 +90,7 @@ var base_Signature = require("../base/Signature");
 
     /**
     * Set the field value
+    * @memberof remotepay.PaymentResponse
     * @param {Boolean} isAuth 
     */
     setIsAuth: function(isAuth) {
@@ -89,6 +99,7 @@ var base_Signature = require("../base/Signature");
 
     /**
     * Get the field value
+    * @memberof remotepay.PaymentResponse
     * @return {Boolean} 
     */
     getIsAuth: function() {
@@ -97,7 +108,8 @@ var base_Signature = require("../base/Signature");
 
     /**
     * Set the field value
-    * @param {Signature|Null} signature 
+    * @memberof remotepay.PaymentResponse
+    * @param {base.Signature|Null} signature 
     */
     setSignature: function(signature) {
       this.signature = signature;
@@ -105,7 +117,8 @@ var base_Signature = require("../base/Signature");
 
     /**
     * Get the field value
-    * @return {Signature|Null} 
+    * @memberof remotepay.PaymentResponse
+    * @return {base.Signature|Null} 
     */
     getSignature: function() {
       return this.signature;

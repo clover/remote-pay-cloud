@@ -12,10 +12,13 @@ var remotemessage_RemoveDiscountAction = require("../remotemessage/RemoveDiscoun
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   OrderActionRemoveDiscountMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.OrderActionRemoveDiscountMessage
     * @private
     */
     initialize: function($super) {
@@ -27,7 +30,8 @@ var remotemessage_RemoveDiscountAction = require("../remotemessage/RemoveDiscoun
 
     /**
     * Set the field value
-    * @param {RemoveDiscountAction} removeDiscountAction 
+    * @memberof remotemessage.OrderActionRemoveDiscountMessage
+    * @param {remotemessage.RemoveDiscountAction} removeDiscountAction 
     */
     setRemoveDiscountAction: function(removeDiscountAction) {
       this.removeDiscountAction = removeDiscountAction;
@@ -35,7 +39,8 @@ var remotemessage_RemoveDiscountAction = require("../remotemessage/RemoveDiscoun
 
     /**
     * Get the field value
-    * @return {RemoveDiscountAction} 
+    * @memberof remotemessage.OrderActionRemoveDiscountMessage
+    * @return {remotemessage.RemoveDiscountAction} 
     */
     getRemoveDiscountAction: function() {
       return this.removeDiscountAction;

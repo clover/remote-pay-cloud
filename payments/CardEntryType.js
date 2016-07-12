@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof payments
+* @enum {string}
+*/
 CardEntryType = {
   SWIPED : "SWIPED",
   KEYED : "KEYED",

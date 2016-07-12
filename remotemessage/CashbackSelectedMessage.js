@@ -11,10 +11,13 @@ var remotemessage_Message = require("../remotemessage/Message");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   CashbackSelectedMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.CashbackSelectedMessage
     * @private
     */
     initialize: function($super) {
@@ -28,6 +31,7 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * Amount of cash selected
     *
+    * @memberof remotemessage.CashbackSelectedMessage
     * @param {Number} cashbackAmount must be a long integer
     */
     setCashbackAmount: function(cashbackAmount) {
@@ -37,7 +41,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * Amount of cash selected
-      * @return {Number} must be a long integer
+    * @memberof remotemessage.CashbackSelectedMessage
+    * @return {Number} must be a long integer
     */
     getCashbackAmount: function() {
       return this.cashbackAmount;

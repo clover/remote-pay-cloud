@@ -10,10 +10,12 @@ var remotepay_TransactionType = require("../remotepay/TransactionType");
 
   /**
   * @constructor
+  * @memberof remotepay
   */
   TransactionTypeEnum = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.TransactionTypeEnum
     * @private
     */
     initialize: function() {
@@ -23,7 +25,8 @@ var remotepay_TransactionType = require("../remotepay/TransactionType");
 
     /**
     * Set the field value
-    * @param {TransactionType} status 
+    * @memberof remotepay.TransactionTypeEnum
+    * @param {remotepay.TransactionType} status 
     */
     setStatus: function(status) {
       this.status = status;
@@ -31,11 +34,17 @@ var remotepay_TransactionType = require("../remotepay/TransactionType");
 
     /**
     * Get the field value
-    * @return {TransactionType} 
+    * @memberof remotepay.TransactionTypeEnum
+    * @return {remotepay.TransactionType} 
     */
     getStatus: function() {
       return this.status;
     },
+
+    /**
+    * @memberof remotepay.TransactionTypeEnum
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

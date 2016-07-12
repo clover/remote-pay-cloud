@@ -11,10 +11,12 @@ var inventory_Category = require("../inventory/Category");
 
   /**
   * @constructor
+  * @memberof inventory
   */
   CategoryItem = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof inventory.CategoryItem
     * @private
     */
     initialize: function() {
@@ -25,7 +27,8 @@ var inventory_Category = require("../inventory/Category");
 
     /**
     * Set the field value
-    * @param {Item} item 
+    * @memberof inventory.CategoryItem
+    * @param {inventory.Item} item 
     */
     setItem: function(item) {
       this.item = item;
@@ -33,7 +36,8 @@ var inventory_Category = require("../inventory/Category");
 
     /**
     * Get the field value
-    * @return {Item} 
+    * @memberof inventory.CategoryItem
+    * @return {inventory.Item} 
     */
     getItem: function() {
       return this.item;
@@ -41,7 +45,8 @@ var inventory_Category = require("../inventory/Category");
 
     /**
     * Set the field value
-    * @param {Category} category 
+    * @memberof inventory.CategoryItem
+    * @param {inventory.Category} category 
     */
     setCategory: function(category) {
       this.category = category;
@@ -49,11 +54,17 @@ var inventory_Category = require("../inventory/Category");
 
     /**
     * Get the field value
-    * @return {Category} 
+    * @memberof inventory.CategoryItem
+    * @return {inventory.Category} 
     */
     getCategory: function() {
       return this.category;
     },
+
+    /**
+    * @memberof inventory.CategoryItem
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

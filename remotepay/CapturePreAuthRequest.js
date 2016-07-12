@@ -11,10 +11,13 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
 /** Captures a previously made pre auth */
   /**
   * @constructor
+  * @augments remotepay.BaseRequest
+  * @memberof remotepay
   */
   CapturePreAuthRequest = Class.create(remotepay_BaseRequest, {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.CapturePreAuthRequest
     * @private
     */
     initialize: function($super) {
@@ -29,6 +32,7 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     * Set the field value
     * Total amount paid
     *
+    * @memberof remotepay.CapturePreAuthRequest
     * @param {Number} amount must be a long integer
     */
     setAmount: function(amount) {
@@ -38,7 +42,8 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     /**
     * Get the field value
     * Total amount paid
-      * @return {Number} must be a long integer
+    * @memberof remotepay.CapturePreAuthRequest
+    * @return {Number} must be a long integer
     */
     getAmount: function() {
       return this.amount;
@@ -48,6 +53,7 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     * Set the field value
     * Amount paid in tips
     *
+    * @memberof remotepay.CapturePreAuthRequest
     * @param {Number|Null} tipAmount must be a long integer, 
     */
     setTipAmount: function(tipAmount) {
@@ -57,7 +63,8 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     /**
     * Get the field value
     * Amount paid in tips
-      * @return {Number|Null} must be a long integer, 
+    * @memberof remotepay.CapturePreAuthRequest
+    * @return {Number|Null} must be a long integer, 
     */
     getTipAmount: function() {
       return this.tipAmount;
@@ -67,6 +74,7 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     * Set the field value
     * Unique identifier for a payment
     *
+    * @memberof remotepay.CapturePreAuthRequest
     * @param {String} paymentId 
     */
     setPaymentId: function(paymentId) {
@@ -76,7 +84,8 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     /**
     * Get the field value
     * Unique identifier for a payment
-      * @return {String} 
+    * @memberof remotepay.CapturePreAuthRequest
+    * @return {String} 
     */
     getPaymentId: function() {
       return this.paymentId;

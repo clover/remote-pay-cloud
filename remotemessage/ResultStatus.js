@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof remotemessage
+* @enum {string}
+*/
 ResultStatus = {
   SUCCESS : "SUCCESS",
   FAIL : "FAIL",

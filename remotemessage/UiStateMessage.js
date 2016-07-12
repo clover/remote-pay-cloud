@@ -14,10 +14,13 @@ var remotemessage_UiState = require("../remotemessage/UiState");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   UiStateMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.UiStateMessage
     * @private
     */
     initialize: function($super) {
@@ -34,6 +37,7 @@ var remotemessage_UiState = require("../remotemessage/UiState");
     * Set the field value
     * The text for the UI
     *
+    * @memberof remotemessage.UiStateMessage
     * @param {String} uiText 
     */
     setUiText: function(uiText) {
@@ -43,7 +47,8 @@ var remotemessage_UiState = require("../remotemessage/UiState");
     /**
     * Get the field value
     * The text for the UI
-      * @return {String} 
+    * @memberof remotemessage.UiStateMessage
+    * @return {String} 
     */
     getUiText: function() {
       return this.uiText;
@@ -51,7 +56,8 @@ var remotemessage_UiState = require("../remotemessage/UiState");
 
     /**
     * Set the field value
-    * @param {UiDirection} uiDirection 
+    * @memberof remotemessage.UiStateMessage
+    * @param {remotemessage.UiDirection} uiDirection 
     */
     setUiDirection: function(uiDirection) {
       this.uiDirection = uiDirection;
@@ -59,7 +65,8 @@ var remotemessage_UiState = require("../remotemessage/UiState");
 
     /**
     * Get the field value
-    * @return {UiDirection} 
+    * @memberof remotemessage.UiStateMessage
+    * @return {remotemessage.UiDirection} 
     */
     getUiDirection: function() {
       return this.uiDirection;
@@ -67,7 +74,8 @@ var remotemessage_UiState = require("../remotemessage/UiState");
 
     /**
     * Set the field value
-    * @param {Array.<InputOption>} inputOptions An array of 
+    * @memberof remotemessage.UiStateMessage
+    * @param {Array.<remotemessage.InputOption>} inputOptions An array of 
     */
     setInputOptions: function(inputOptions) {
       this.inputOptions = inputOptions;
@@ -75,7 +83,8 @@ var remotemessage_UiState = require("../remotemessage/UiState");
 
     /**
     * Get the field value
-    * @return {Array.<InputOption>} An array of 
+    * @memberof remotemessage.UiStateMessage
+    * @return {Array.<remotemessage.InputOption>} An array of 
     */
     getInputOptions: function() {
       return this.inputOptions;
@@ -83,7 +92,8 @@ var remotemessage_UiState = require("../remotemessage/UiState");
 
     /**
     * Set the field value
-    * @param {UiState} uiState 
+    * @memberof remotemessage.UiStateMessage
+    * @param {remotemessage.UiState} uiState 
     */
     setUiState: function(uiState) {
       this.uiState = uiState;
@@ -91,7 +101,8 @@ var remotemessage_UiState = require("../remotemessage/UiState");
 
     /**
     * Get the field value
-    * @return {UiState} 
+    * @memberof remotemessage.UiStateMessage
+    * @return {remotemessage.UiState} 
     */
     getUiState: function() {
       return this.uiState;

@@ -12,10 +12,13 @@ var payments_Payment = require("../payments/Payment");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   SignatureVerifiedMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.SignatureVerifiedMessage
     * @private
     */
     initialize: function($super) {
@@ -30,7 +33,8 @@ var payments_Payment = require("../payments/Payment");
     * Set the field value
     * A payment
     *
-    * @param {Payment} payment 
+    * @memberof remotemessage.SignatureVerifiedMessage
+    * @param {payments.Payment} payment 
     */
     setPayment: function(payment) {
       this.payment = payment;
@@ -39,7 +43,8 @@ var payments_Payment = require("../payments/Payment");
     /**
     * Get the field value
     * A payment
-      * @return {Payment} 
+    * @memberof remotemessage.SignatureVerifiedMessage
+    * @return {payments.Payment} 
     */
     getPayment: function() {
       return this.payment;
@@ -49,6 +54,7 @@ var payments_Payment = require("../payments/Payment");
     * Set the field value
     * If true the signature is verified
     *
+    * @memberof remotemessage.SignatureVerifiedMessage
     * @param {Boolean} verified 
     */
     setVerified: function(verified) {
@@ -58,7 +64,8 @@ var payments_Payment = require("../payments/Payment");
     /**
     * Get the field value
     * If true the signature is verified
-      * @return {Boolean} 
+    * @memberof remotemessage.SignatureVerifiedMessage
+    * @return {Boolean} 
     */
     getVerified: function() {
       return this.verified;

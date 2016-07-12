@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof base
+* @enum {string}
+*/
 ChallengeType = {
   DUPLICATE_CHALLENGE : "DUPLICATE_CHALLENGE",
   OFFLINE_CHALLENGE : "OFFLINE_CHALLENGE"

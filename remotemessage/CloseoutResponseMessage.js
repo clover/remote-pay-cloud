@@ -13,10 +13,13 @@ var remotemessage_Message = require("../remotemessage/Message");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   CloseoutResponseMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.CloseoutResponseMessage
     * @private
     */
     initialize: function($super) {
@@ -32,6 +35,7 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * Detail information.
     *
+    * @memberof remotemessage.CloseoutResponseMessage
     * @param {String} reason 
     */
     setReason: function(reason) {
@@ -41,7 +45,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * Detail information.
-      * @return {String} 
+    * @memberof remotemessage.CloseoutResponseMessage
+    * @return {String} 
     */
     getReason: function() {
       return this.reason;
@@ -51,7 +56,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * The status of the request.
     *
-    * @param {ResultStatus} status 
+    * @memberof remotemessage.CloseoutResponseMessage
+    * @param {remotemessage.ResultStatus} status 
     */
     setStatus: function(status) {
       this.status = status;
@@ -60,7 +66,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * The status of the request.
-      * @return {ResultStatus} 
+    * @memberof remotemessage.CloseoutResponseMessage
+    * @return {remotemessage.ResultStatus} 
     */
     getStatus: function() {
       return this.status;
@@ -70,7 +77,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * The closeout info.
     *
-    * @param {Batch} batch 
+    * @memberof remotemessage.CloseoutResponseMessage
+    * @param {payments.Batch} batch 
     */
     setBatch: function(batch) {
       this.batch = batch;
@@ -79,7 +87,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * The closeout info.
-      * @return {Batch} 
+    * @memberof remotemessage.CloseoutResponseMessage
+    * @return {payments.Batch} 
     */
     getBatch: function() {
       return this.batch;

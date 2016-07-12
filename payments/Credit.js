@@ -14,10 +14,12 @@ var base_Tender = require("../base/Tender");
 
   /**
   * @constructor
+  * @memberof payments
   */
   Credit = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof payments.Credit
     * @private
     */
     initialize: function() {
@@ -42,6 +44,7 @@ var base_Tender = require("../base/Tender");
     * Set the field value
     * Unique identifier
     *
+    * @memberof payments.Credit
     * @param {String} id 
     */
     setId: function(id) {
@@ -51,7 +54,8 @@ var base_Tender = require("../base/Tender");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof payments.Credit
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -61,7 +65,8 @@ var base_Tender = require("../base/Tender");
     * Set the field value
     * The order with which the credit is associated
     *
-    * @param {Reference} orderRef 
+    * @memberof payments.Credit
+    * @param {base.Reference} orderRef 
     */
     setOrderRef: function(orderRef) {
       this.orderRef = orderRef;
@@ -70,7 +75,8 @@ var base_Tender = require("../base/Tender");
     /**
     * Get the field value
     * The order with which the credit is associated
-      * @return {Reference} 
+    * @memberof payments.Credit
+    * @return {base.Reference} 
     */
     getOrderRef: function() {
       return this.orderRef;
@@ -80,7 +86,8 @@ var base_Tender = require("../base/Tender");
     * Set the field value
     * Device which processed this credit
     *
-    * @param {Reference|Null} device 
+    * @memberof payments.Credit
+    * @param {base.Reference|Null} device 
     */
     setDevice: function(device) {
       this.device = device;
@@ -89,7 +96,8 @@ var base_Tender = require("../base/Tender");
     /**
     * Get the field value
     * Device which processed this credit
-      * @return {Reference|Null} 
+    * @memberof payments.Credit
+    * @return {base.Reference|Null} 
     */
     getDevice: function() {
       return this.device;
@@ -99,7 +107,8 @@ var base_Tender = require("../base/Tender");
     * Set the field value
     * The tender type associated with this payment, e.g. credit card, cash, etc.
     *
-    * @param {Tender} tender 
+    * @memberof payments.Credit
+    * @param {base.Tender} tender 
     */
     setTender: function(tender) {
       this.tender = tender;
@@ -108,7 +117,8 @@ var base_Tender = require("../base/Tender");
     /**
     * Get the field value
     * The tender type associated with this payment, e.g. credit card, cash, etc.
-      * @return {Tender} 
+    * @memberof payments.Credit
+    * @return {base.Tender} 
     */
     getTender: function() {
       return this.tender;
@@ -118,7 +128,8 @@ var base_Tender = require("../base/Tender");
     * Set the field value
     * The employee who processed the payment
     *
-    * @param {Reference} employee 
+    * @memberof payments.Credit
+    * @param {base.Reference} employee 
     */
     setEmployee: function(employee) {
       this.employee = employee;
@@ -127,7 +138,8 @@ var base_Tender = require("../base/Tender");
     /**
     * Get the field value
     * The employee who processed the payment
-      * @return {Reference} 
+    * @memberof payments.Credit
+    * @return {base.Reference} 
     */
     getEmployee: function() {
       return this.employee;
@@ -137,7 +149,8 @@ var base_Tender = require("../base/Tender");
     * Set the field value
     * Customer who received the credit/refund
     *
-    * @param {Customer} customers 
+    * @memberof payments.Credit
+    * @param {customers.Customer} customers 
     */
     setCustomers: function(customers) {
       this.customers = customers;
@@ -146,7 +159,8 @@ var base_Tender = require("../base/Tender");
     /**
     * Get the field value
     * Customer who received the credit/refund
-      * @return {Customer} 
+    * @memberof payments.Credit
+    * @return {customers.Customer} 
     */
     getCustomers: function() {
       return this.customers;
@@ -156,6 +170,7 @@ var base_Tender = require("../base/Tender");
     * Set the field value
     * Amount paid
     *
+    * @memberof payments.Credit
     * @param {Number} amount must be a long integer
     */
     setAmount: function(amount) {
@@ -165,7 +180,8 @@ var base_Tender = require("../base/Tender");
     /**
     * Get the field value
     * Amount paid
-      * @return {Number} must be a long integer
+    * @memberof payments.Credit
+    * @return {Number} must be a long integer
     */
     getAmount: function() {
       return this.amount;
@@ -175,6 +191,7 @@ var base_Tender = require("../base/Tender");
     * Set the field value
     * Amount paid in tax
     *
+    * @memberof payments.Credit
     * @param {Number|Null} taxAmount must be a long integer, 
     */
     setTaxAmount: function(taxAmount) {
@@ -184,7 +201,8 @@ var base_Tender = require("../base/Tender");
     /**
     * Get the field value
     * Amount paid in tax
-      * @return {Number|Null} must be a long integer, 
+    * @memberof payments.Credit
+    * @return {Number|Null} must be a long integer, 
     */
     getTaxAmount: function() {
       return this.taxAmount;
@@ -192,7 +210,8 @@ var base_Tender = require("../base/Tender");
 
     /**
     * Set the field value
-    * @param {Array.<TaxableAmountRate>} taxRates An array of 
+    * @memberof payments.Credit
+    * @param {Array.<payments.TaxableAmountRate>} taxRates An array of 
     */
     setTaxRates: function(taxRates) {
       this.taxRates = taxRates;
@@ -200,7 +219,8 @@ var base_Tender = require("../base/Tender");
 
     /**
     * Get the field value
-    * @return {Array.<TaxableAmountRate>} An array of 
+    * @memberof payments.Credit
+    * @return {Array.<payments.TaxableAmountRate>} An array of 
     */
     getTaxRates: function() {
       return this.taxRates;
@@ -210,6 +230,7 @@ var base_Tender = require("../base/Tender");
     * Set the field value
     * Time payment was recorded on server
     *
+    * @memberof payments.Credit
     * @param {Number} createdTime must be a long integer
     */
     setCreatedTime: function(createdTime) {
@@ -219,7 +240,8 @@ var base_Tender = require("../base/Tender");
     /**
     * Get the field value
     * Time payment was recorded on server
-      * @return {Number} must be a long integer
+    * @memberof payments.Credit
+    * @return {Number} must be a long integer
     */
     getCreatedTime: function() {
       return this.createdTime;
@@ -227,6 +249,7 @@ var base_Tender = require("../base/Tender");
 
     /**
     * Set the field value
+    * @memberof payments.Credit
     * @param {Number} clientCreatedTime must be a long integer
     */
     setClientCreatedTime: function(clientCreatedTime) {
@@ -235,6 +258,7 @@ var base_Tender = require("../base/Tender");
 
     /**
     * Get the field value
+    * @memberof payments.Credit
     * @return {Number} must be a long integer
     */
     getClientCreatedTime: function() {
@@ -245,7 +269,8 @@ var base_Tender = require("../base/Tender");
     * Set the field value
     * Information about the card used for credit/debit card payments
     *
-    * @param {CardTransaction} cardTransaction 
+    * @memberof payments.Credit
+    * @param {payments.CardTransaction} cardTransaction 
     */
     setCardTransaction: function(cardTransaction) {
       this.cardTransaction = cardTransaction;
@@ -254,7 +279,8 @@ var base_Tender = require("../base/Tender");
     /**
     * Get the field value
     * Information about the card used for credit/debit card payments
-      * @return {CardTransaction} 
+    * @memberof payments.Credit
+    * @return {payments.CardTransaction} 
     */
     getCardTransaction: function() {
       return this.cardTransaction;
@@ -262,6 +288,7 @@ var base_Tender = require("../base/Tender");
 
     /**
     * Set the field value
+    * @memberof payments.Credit
     * @param {Boolean} voided 
     */
     setVoided: function(voided) {
@@ -270,6 +297,7 @@ var base_Tender = require("../base/Tender");
 
     /**
     * Get the field value
+    * @memberof payments.Credit
     * @return {Boolean} 
     */
     getVoided: function() {
@@ -278,6 +306,7 @@ var base_Tender = require("../base/Tender");
 
     /**
     * Set the field value
+    * @memberof payments.Credit
     * @param {String} voidReason 
     */
     setVoidReason: function(voidReason) {
@@ -286,11 +315,17 @@ var base_Tender = require("../base/Tender");
 
     /**
     * Get the field value
+    * @memberof payments.Credit
     * @return {String} 
     */
     getVoidReason: function() {
       return this.voidReason;
     },
+
+    /**
+    * @memberof payments.Credit
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

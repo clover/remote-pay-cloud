@@ -13,10 +13,13 @@ var payments_Payment = require("../payments/Payment");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   ConfirmPaymentMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.ConfirmPaymentMessage
     * @private
     */
     initialize: function($super) {
@@ -31,7 +34,8 @@ var payments_Payment = require("../payments/Payment");
     * Set the field value
     * A payment
     *
-    * @param {Payment} payment 
+    * @memberof remotemessage.ConfirmPaymentMessage
+    * @param {payments.Payment} payment 
     */
     setPayment: function(payment) {
       this.payment = payment;
@@ -40,7 +44,8 @@ var payments_Payment = require("../payments/Payment");
     /**
     * Get the field value
     * A payment
-      * @return {Payment} 
+    * @memberof remotemessage.ConfirmPaymentMessage
+    * @return {payments.Payment} 
     */
     getPayment: function() {
       return this.payment;
@@ -50,7 +55,8 @@ var payments_Payment = require("../payments/Payment");
     * Set the field value
     * The challenges for the payment.
     *
-    * @param {Array.<Challenge>} challenges An array of 
+    * @memberof remotemessage.ConfirmPaymentMessage
+    * @param {Array.<base.Challenge>} challenges An array of 
     */
     setChallenges: function(challenges) {
       this.challenges = challenges;
@@ -59,7 +65,8 @@ var payments_Payment = require("../payments/Payment");
     /**
     * Get the field value
     * The challenges for the payment.
-      * @return {Array.<Challenge>} An array of 
+    * @memberof remotemessage.ConfirmPaymentMessage
+    * @return {Array.<base.Challenge>} An array of 
     */
     getChallenges: function() {
       return this.challenges;

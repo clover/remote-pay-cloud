@@ -10,10 +10,12 @@ var base_Points = require("../base/Points");
 
   /**
   * @constructor
+  * @memberof base
   */
   Signature = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof base.Signature
     * @private
     */
     initialize: function() {
@@ -25,7 +27,8 @@ var base_Points = require("../base/Points");
     * Set the field value
     * A series of strokes representing a signature
     *
-    * @param {Array.<Points>} strokes An array of 
+    * @memberof base.Signature
+    * @param {Array.<base.Points>} strokes An array of 
     */
     setStrokes: function(strokes) {
       this.strokes = strokes;
@@ -34,11 +37,17 @@ var base_Points = require("../base/Points");
     /**
     * Get the field value
     * A series of strokes representing a signature
-      * @return {Array.<Points>} An array of 
+    * @memberof base.Signature
+    * @return {Array.<base.Points>} An array of 
     */
     getStrokes: function() {
       return this.strokes;
     },
+
+    /**
+    * @memberof base.Signature
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

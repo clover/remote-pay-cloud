@@ -9,10 +9,12 @@ require("prototype");
 
   /**
   * @constructor
+  * @memberof order
   */
   DisplayPayment = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof order.DisplayPayment
     * @private
     */
     initialize: function() {
@@ -28,6 +30,7 @@ require("prototype");
     * Set the field value
     * Unique identifier
     *
+    * @memberof order.DisplayPayment
     * @param {String} id 
     */
     setId: function(id) {
@@ -37,7 +40,8 @@ require("prototype");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof order.DisplayPayment
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -47,6 +51,7 @@ require("prototype");
     * Set the field value
     * Formatted display string for the tender e.g. credit card, cash, etc.
     *
+    * @memberof order.DisplayPayment
     * @param {String} label 
     */
     setLabel: function(label) {
@@ -56,7 +61,8 @@ require("prototype");
     /**
     * Get the field value
     * Formatted display string for the tender e.g. credit card, cash, etc.
-      * @return {String} 
+    * @memberof order.DisplayPayment
+    * @return {String} 
     */
     getLabel: function() {
       return this.label;
@@ -66,6 +72,7 @@ require("prototype");
     * Set the field value
     * Formatted total amount paid
     *
+    * @memberof order.DisplayPayment
     * @param {String} amount 
     */
     setAmount: function(amount) {
@@ -75,7 +82,8 @@ require("prototype");
     /**
     * Get the field value
     * Formatted total amount paid
-      * @return {String} 
+    * @memberof order.DisplayPayment
+    * @return {String} 
     */
     getAmount: function() {
       return this.amount;
@@ -85,6 +93,7 @@ require("prototype");
     * Set the field value
     * Formatted amount paid in tips
     *
+    * @memberof order.DisplayPayment
     * @param {String|Null} tipAmount 
     */
     setTipAmount: function(tipAmount) {
@@ -94,7 +103,8 @@ require("prototype");
     /**
     * Get the field value
     * Formatted amount paid in tips
-      * @return {String|Null} 
+    * @memberof order.DisplayPayment
+    * @return {String|Null} 
     */
     getTipAmount: function() {
       return this.tipAmount;
@@ -104,6 +114,7 @@ require("prototype");
     * Set the field value
     * Formatted amount paid in tax
     *
+    * @memberof order.DisplayPayment
     * @param {Number|Null} taxAmount must be a long integer, 
     */
     setTaxAmount: function(taxAmount) {
@@ -113,11 +124,17 @@ require("prototype");
     /**
     * Get the field value
     * Formatted amount paid in tax
-      * @return {Number|Null} must be a long integer, 
+    * @memberof order.DisplayPayment
+    * @return {Number|Null} must be a long integer, 
     */
     getTaxAmount: function() {
       return this.taxAmount;
     },
+
+    /**
+    * @memberof order.DisplayPayment
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

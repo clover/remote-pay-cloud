@@ -11,10 +11,13 @@ var remotemessage_Message = require("../remotemessage/Message");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   TextPrintMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.TextPrintMessage
     * @private
     */
     initialize: function($super) {
@@ -26,6 +29,7 @@ var remotemessage_Message = require("../remotemessage/Message");
 
     /**
     * Set the field value
+    * @memberof remotemessage.TextPrintMessage
     * @param {Array.<String>} textLines An array of 
     */
     setTextLines: function(textLines) {
@@ -34,6 +38,7 @@ var remotemessage_Message = require("../remotemessage/Message");
 
     /**
     * Get the field value
+    * @memberof remotemessage.TextPrintMessage
     * @return {Array.<String>} An array of 
     */
     getTextLines: function() {

@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof payments
+* @enum {string}
+*/
 GatewayTxState = {
   INITIATED : "INITIATED",
   INITIATED_ON_AUTH : "INITIATED_ON_AUTH",

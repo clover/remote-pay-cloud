@@ -11,10 +11,12 @@ var employees_Permissions = require("../employees/Permissions");
 
   /**
   * @constructor
+  * @memberof employees
   */
   PermissionSet = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof employees.PermissionSet
     * @private
     */
     initialize: function() {
@@ -33,6 +35,7 @@ var employees_Permissions = require("../employees/Permissions");
     * Set the field value
     * Unique identifier
     *
+    * @memberof employees.PermissionSet
     * @param {String} id 
     */
     setId: function(id) {
@@ -42,7 +45,8 @@ var employees_Permissions = require("../employees/Permissions");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof employees.PermissionSet
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -52,6 +56,7 @@ var employees_Permissions = require("../employees/Permissions");
     * Set the field value
     * Key of the permissionSet
     *
+    * @memberof employees.PermissionSet
     * @param {String} name 
     */
     setName: function(name) {
@@ -61,7 +66,8 @@ var employees_Permissions = require("../employees/Permissions");
     /**
     * Get the field value
     * Key of the permissionSet
-      * @return {String} 
+    * @memberof employees.PermissionSet
+    * @return {String} 
     */
     getName: function() {
       return this.name;
@@ -71,6 +77,7 @@ var employees_Permissions = require("../employees/Permissions");
     * Set the field value
     * Label of the permissionSet
     *
+    * @memberof employees.PermissionSet
     * @param {String} label 
     */
     setLabel: function(label) {
@@ -80,7 +87,8 @@ var employees_Permissions = require("../employees/Permissions");
     /**
     * Get the field value
     * Label of the permissionSet
-      * @return {String} 
+    * @memberof employees.PermissionSet
+    * @return {String} 
     */
     getLabel: function() {
       return this.label;
@@ -88,7 +96,8 @@ var employees_Permissions = require("../employees/Permissions");
 
     /**
     * Set the field value
-    * @param {Reference} app 
+    * @memberof employees.PermissionSet
+    * @param {base.Reference} app 
     */
     setApp: function(app) {
       this.app = app;
@@ -96,7 +105,8 @@ var employees_Permissions = require("../employees/Permissions");
 
     /**
     * Get the field value
-    * @return {Reference} 
+    * @memberof employees.PermissionSet
+    * @return {base.Reference} 
     */
     getApp: function() {
       return this.app;
@@ -104,6 +114,7 @@ var employees_Permissions = require("../employees/Permissions");
 
     /**
     * Set the field value
+    * @memberof employees.PermissionSet
     * @param {Boolean} employeeDefault 
     */
     setEmployeeDefault: function(employeeDefault) {
@@ -112,6 +123,7 @@ var employees_Permissions = require("../employees/Permissions");
 
     /**
     * Get the field value
+    * @memberof employees.PermissionSet
     * @return {Boolean} 
     */
     getEmployeeDefault: function() {
@@ -120,6 +132,7 @@ var employees_Permissions = require("../employees/Permissions");
 
     /**
     * Set the field value
+    * @memberof employees.PermissionSet
     * @param {Boolean} managerDefault 
     */
     setManagerDefault: function(managerDefault) {
@@ -128,6 +141,7 @@ var employees_Permissions = require("../employees/Permissions");
 
     /**
     * Get the field value
+    * @memberof employees.PermissionSet
     * @return {Boolean} 
     */
     getManagerDefault: function() {
@@ -138,7 +152,8 @@ var employees_Permissions = require("../employees/Permissions");
     * Set the field value
     * Bitmap of permissions
     *
-    * @param {Permissions} permissions 
+    * @memberof employees.PermissionSet
+    * @param {employees.Permissions} permissions 
     */
     setPermissions: function(permissions) {
       this.permissions = permissions;
@@ -147,7 +162,8 @@ var employees_Permissions = require("../employees/Permissions");
     /**
     * Get the field value
     * Bitmap of permissions
-      * @return {Permissions} 
+    * @memberof employees.PermissionSet
+    * @return {employees.Permissions} 
     */
     getPermissions: function() {
       return this.permissions;
@@ -157,7 +173,8 @@ var employees_Permissions = require("../employees/Permissions");
     * Set the field value
     * roles enabled for this merchant
     *
-    * @param {Array.<Reference>} roles An array of 
+    * @memberof employees.PermissionSet
+    * @param {Array.<base.Reference>} roles An array of 
     */
     setRoles: function(roles) {
       this.roles = roles;
@@ -166,11 +183,17 @@ var employees_Permissions = require("../employees/Permissions");
     /**
     * Get the field value
     * roles enabled for this merchant
-      * @return {Array.<Reference>} An array of 
+    * @memberof employees.PermissionSet
+    * @return {Array.<base.Reference>} An array of 
     */
     getRoles: function() {
       return this.roles;
     },
+
+    /**
+    * @memberof employees.PermissionSet
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

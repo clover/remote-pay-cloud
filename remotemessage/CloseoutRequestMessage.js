@@ -11,10 +11,13 @@ var remotemessage_Message = require("../remotemessage/Message");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   CloseoutRequestMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.CloseoutRequestMessage
     * @private
     */
     initialize: function($super) {
@@ -29,6 +32,7 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * If true then open tabs can still be closed out.
     *
+    * @memberof remotemessage.CloseoutRequestMessage
     * @param {Boolean} allowOpenTabs 
     */
     setAllowOpenTabs: function(allowOpenTabs) {
@@ -38,7 +42,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * If true then open tabs can still be closed out.
-      * @return {Boolean} 
+    * @memberof remotemessage.CloseoutRequestMessage
+    * @return {Boolean} 
     */
     getAllowOpenTabs: function() {
       return this.allowOpenTabs;
@@ -48,6 +53,7 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * Reserved for future use.  Specifies the batch to close.
     *
+    * @memberof remotemessage.CloseoutRequestMessage
     * @param {String} batchId 
     */
     setBatchId: function(batchId) {
@@ -57,7 +63,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * Reserved for future use.  Specifies the batch to close.
-      * @return {String} 
+    * @memberof remotemessage.CloseoutRequestMessage
+    * @return {String} 
     */
     getBatchId: function() {
       return this.batchId;

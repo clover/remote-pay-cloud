@@ -11,10 +11,12 @@ var base_Reference = require("../base/Reference");
 
   /**
   * @constructor
+  * @memberof employees
   */
   Role = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof employees.Role
     * @private
     */
     initialize: function() {
@@ -29,6 +31,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Unique identifier
     *
+    * @memberof employees.Role
     * @param {String} id 
     */
     setId: function(id) {
@@ -38,7 +41,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof employees.Role
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -48,6 +52,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Full name of the role
     *
+    * @memberof employees.Role
     * @param {String} name 
     */
     setName: function(name) {
@@ -57,7 +62,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Full name of the role
-      * @return {String} 
+    * @memberof employees.Role
+    * @return {String} 
     */
     getName: function() {
       return this.name;
@@ -67,7 +73,8 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Base System Role
     *
-    * @param {AccountRole} systemRole 
+    * @memberof employees.Role
+    * @param {employees.AccountRole} systemRole 
     */
     setSystemRole: function(systemRole) {
       this.systemRole = systemRole;
@@ -76,7 +83,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Base System Role
-      * @return {AccountRole} 
+    * @memberof employees.Role
+    * @return {employees.AccountRole} 
     */
     getSystemRole: function() {
       return this.systemRole;
@@ -86,7 +94,8 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * employees with this role
     *
-    * @param {Array.<Reference>} employeesRef An array of 
+    * @memberof employees.Role
+    * @param {Array.<base.Reference>} employeesRef An array of 
     */
     setEmployeesRef: function(employeesRef) {
       this.employeesRef = employeesRef;
@@ -95,11 +104,17 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * employees with this role
-      * @return {Array.<Reference>} An array of 
+    * @memberof employees.Role
+    * @return {Array.<base.Reference>} An array of 
     */
     getEmployeesRef: function() {
       return this.employeesRef;
     },
+
+    /**
+    * @memberof employees.Role
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

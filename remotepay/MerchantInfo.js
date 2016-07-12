@@ -10,10 +10,12 @@ var remotepay_DeviceInfo = require("../remotepay/DeviceInfo");
 
   /**
   * @constructor
+  * @memberof remotepay
   */
   MerchantInfo = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.MerchantInfo
     * @private
     */
     initialize: function() {
@@ -34,6 +36,7 @@ var remotepay_DeviceInfo = require("../remotepay/DeviceInfo");
     * Set the field value
     * Unique identifier
     *
+    * @memberof remotepay.MerchantInfo
     * @param {String} merchantID 
     */
     setMerchantID: function(merchantID) {
@@ -43,7 +46,8 @@ var remotepay_DeviceInfo = require("../remotepay/DeviceInfo");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof remotepay.MerchantInfo
+    * @return {String} 
     */
     getMerchantID: function() {
       return this.merchantID;
@@ -51,6 +55,7 @@ var remotepay_DeviceInfo = require("../remotepay/DeviceInfo");
 
     /**
     * Set the field value
+    * @memberof remotepay.MerchantInfo
     * @param {String} merchantMID 
     */
     setMerchantMID: function(merchantMID) {
@@ -59,6 +64,7 @@ var remotepay_DeviceInfo = require("../remotepay/DeviceInfo");
 
     /**
     * Get the field value
+    * @memberof remotepay.MerchantInfo
     * @return {String} 
     */
     getMerchantMID: function() {
@@ -69,6 +75,7 @@ var remotepay_DeviceInfo = require("../remotepay/DeviceInfo");
     * Set the field value
     * Name of the merchant
     *
+    * @memberof remotepay.MerchantInfo
     * @param {String} merchantName 
     */
     setMerchantName: function(merchantName) {
@@ -78,7 +85,8 @@ var remotepay_DeviceInfo = require("../remotepay/DeviceInfo");
     /**
     * Get the field value
     * Name of the merchant
-      * @return {String} 
+    * @memberof remotepay.MerchantInfo
+    * @return {String} 
     */
     getMerchantName: function() {
       return this.merchantName;
@@ -86,6 +94,7 @@ var remotepay_DeviceInfo = require("../remotepay/DeviceInfo");
 
     /**
     * Set the field value
+    * @memberof remotepay.MerchantInfo
     * @param {Boolean} supportsAuths 
     */
     setSupportsAuths: function(supportsAuths) {
@@ -94,6 +103,7 @@ var remotepay_DeviceInfo = require("../remotepay/DeviceInfo");
 
     /**
     * Get the field value
+    * @memberof remotepay.MerchantInfo
     * @return {Boolean} 
     */
     getSupportsAuths: function() {
@@ -102,6 +112,7 @@ var remotepay_DeviceInfo = require("../remotepay/DeviceInfo");
 
     /**
     * Set the field value
+    * @memberof remotepay.MerchantInfo
     * @param {Boolean} supportsPreAuths 
     */
     setSupportsPreAuths: function(supportsPreAuths) {
@@ -110,6 +121,7 @@ var remotepay_DeviceInfo = require("../remotepay/DeviceInfo");
 
     /**
     * Get the field value
+    * @memberof remotepay.MerchantInfo
     * @return {Boolean} 
     */
     getSupportsPreAuths: function() {
@@ -118,6 +130,7 @@ var remotepay_DeviceInfo = require("../remotepay/DeviceInfo");
 
     /**
     * Set the field value
+    * @memberof remotepay.MerchantInfo
     * @param {Boolean} supportsSales 
     */
     setSupportsSales: function(supportsSales) {
@@ -126,6 +139,7 @@ var remotepay_DeviceInfo = require("../remotepay/DeviceInfo");
 
     /**
     * Get the field value
+    * @memberof remotepay.MerchantInfo
     * @return {Boolean} 
     */
     getSupportsSales: function() {
@@ -134,6 +148,7 @@ var remotepay_DeviceInfo = require("../remotepay/DeviceInfo");
 
     /**
     * Set the field value
+    * @memberof remotepay.MerchantInfo
     * @param {Boolean} supportsVaultCards 
     */
     setSupportsVaultCards: function(supportsVaultCards) {
@@ -142,6 +157,7 @@ var remotepay_DeviceInfo = require("../remotepay/DeviceInfo");
 
     /**
     * Get the field value
+    * @memberof remotepay.MerchantInfo
     * @return {Boolean} 
     */
     getSupportsVaultCards: function() {
@@ -150,6 +166,7 @@ var remotepay_DeviceInfo = require("../remotepay/DeviceInfo");
 
     /**
     * Set the field value
+    * @memberof remotepay.MerchantInfo
     * @param {Boolean} supportsManualRefunds 
     */
     setSupportsManualRefunds: function(supportsManualRefunds) {
@@ -158,6 +175,7 @@ var remotepay_DeviceInfo = require("../remotepay/DeviceInfo");
 
     /**
     * Get the field value
+    * @memberof remotepay.MerchantInfo
     * @return {Boolean} 
     */
     getSupportsManualRefunds: function() {
@@ -166,6 +184,7 @@ var remotepay_DeviceInfo = require("../remotepay/DeviceInfo");
 
     /**
     * Set the field value
+    * @memberof remotepay.MerchantInfo
     * @param {Boolean} supportsTipAdjust 
     */
     setSupportsTipAdjust: function(supportsTipAdjust) {
@@ -174,6 +193,7 @@ var remotepay_DeviceInfo = require("../remotepay/DeviceInfo");
 
     /**
     * Get the field value
+    * @memberof remotepay.MerchantInfo
     * @return {Boolean} 
     */
     getSupportsTipAdjust: function() {
@@ -182,7 +202,8 @@ var remotepay_DeviceInfo = require("../remotepay/DeviceInfo");
 
     /**
     * Set the field value
-    * @param {DeviceInfo} deviceInfo 
+    * @memberof remotepay.MerchantInfo
+    * @param {remotepay.DeviceInfo} deviceInfo 
     */
     setDeviceInfo: function(deviceInfo) {
       this.deviceInfo = deviceInfo;
@@ -190,11 +211,17 @@ var remotepay_DeviceInfo = require("../remotepay/DeviceInfo");
 
     /**
     * Get the field value
-    * @return {DeviceInfo} 
+    * @memberof remotepay.MerchantInfo
+    * @return {remotepay.DeviceInfo} 
     */
     getDeviceInfo: function() {
       return this.deviceInfo;
     },
+
+    /**
+    * @memberof remotepay.MerchantInfo
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

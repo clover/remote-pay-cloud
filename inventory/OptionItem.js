@@ -11,10 +11,12 @@ var base_Reference = require("../base/Reference");
 /** This class represents the association between an item and an option */
   /**
   * @constructor
+  * @memberof inventory
   */
   OptionItem = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof inventory.OptionItem
     * @private
     */
     initialize: function() {
@@ -27,7 +29,8 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Reference to an option
     *
-    * @param {Null|Reference} option 
+    * @memberof inventory.OptionItem
+    * @param {Null|base.Reference} option 
     */
     setOption: function(option) {
       this.option = option;
@@ -36,7 +39,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Reference to an option
-      * @return {Null|Reference} 
+    * @memberof inventory.OptionItem
+    * @return {Null|base.Reference} 
     */
     getOption: function() {
       return this.option;
@@ -46,7 +50,8 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Reference to an item
     *
-    * @param {Null|Reference} item 
+    * @memberof inventory.OptionItem
+    * @param {Null|base.Reference} item 
     */
     setItem: function(item) {
       this.item = item;
@@ -55,11 +60,17 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Reference to an item
-      * @return {Null|Reference} 
+    * @memberof inventory.OptionItem
+    * @return {Null|base.Reference} 
     */
     getItem: function() {
       return this.item;
     },
+
+    /**
+    * @memberof inventory.OptionItem
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

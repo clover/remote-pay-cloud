@@ -12,10 +12,12 @@ var inventory_Modifier = require("../inventory/Modifier");
 /** Snapshot of a line item modifier at the time that the order was placed. */
   /**
   * @constructor
+  * @memberof order
   */
   Modification = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof order.Modification
     * @private
     */
     initialize: function() {
@@ -30,6 +32,7 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Set the field value
+    * @memberof order.Modification
     * @param {String} id 
     */
     setId: function(id) {
@@ -38,6 +41,7 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Get the field value
+    * @memberof order.Modification
     * @return {String} 
     */
     getId: function() {
@@ -48,7 +52,8 @@ var inventory_Modifier = require("../inventory/Modifier");
     * Set the field value
     * The line item with which the modification is associated
     *
-    * @param {Reference} lineItemRef 
+    * @memberof order.Modification
+    * @param {base.Reference} lineItemRef 
     */
     setLineItemRef: function(lineItemRef) {
       this.lineItemRef = lineItemRef;
@@ -57,7 +62,8 @@ var inventory_Modifier = require("../inventory/Modifier");
     /**
     * Get the field value
     * The line item with which the modification is associated
-      * @return {Reference} 
+    * @memberof order.Modification
+    * @return {base.Reference} 
     */
     getLineItemRef: function() {
       return this.lineItemRef;
@@ -67,6 +73,7 @@ var inventory_Modifier = require("../inventory/Modifier");
     * Set the field value
     * the name of the modifier when it was applied
     *
+    * @memberof order.Modification
     * @param {String} name 
     */
     setName: function(name) {
@@ -76,7 +83,8 @@ var inventory_Modifier = require("../inventory/Modifier");
     /**
     * Get the field value
     * the name of the modifier when it was applied
-      * @return {String} 
+    * @memberof order.Modification
+    * @return {String} 
     */
     getName: function() {
       return this.name;
@@ -84,6 +92,7 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Set the field value
+    * @memberof order.Modification
     * @param {String} alternateName 
     */
     setAlternateName: function(alternateName) {
@@ -92,6 +101,7 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Get the field value
+    * @memberof order.Modification
     * @return {String} 
     */
     getAlternateName: function() {
@@ -102,6 +112,7 @@ var inventory_Modifier = require("../inventory/Modifier");
     * Set the field value
     * the additional cost of the modifier when it was applied
     *
+    * @memberof order.Modification
     * @param {Number} amount must be a long integer
     */
     setAmount: function(amount) {
@@ -111,7 +122,8 @@ var inventory_Modifier = require("../inventory/Modifier");
     /**
     * Get the field value
     * the additional cost of the modifier when it was applied
-      * @return {Number} must be a long integer
+    * @memberof order.Modification
+    * @return {Number} must be a long integer
     */
     getAmount: function() {
       return this.amount;
@@ -121,7 +133,8 @@ var inventory_Modifier = require("../inventory/Modifier");
     * Set the field value
     * The modifier object.  Values from the Modifier are copied to the Modification at the time that the order is placed.  Modifier values may change after the modification is created.
     *
-    * @param {Modifier} modifier 
+    * @memberof order.Modification
+    * @param {inventory.Modifier} modifier 
     */
     setModifier: function(modifier) {
       this.modifier = modifier;
@@ -130,11 +143,17 @@ var inventory_Modifier = require("../inventory/Modifier");
     /**
     * Get the field value
     * The modifier object.  Values from the Modifier are copied to the Modification at the time that the order is placed.  Modifier values may change after the modification is created.
-      * @return {Modifier} 
+    * @memberof order.Modification
+    * @return {inventory.Modifier} 
     */
     getModifier: function() {
       return this.modifier;
     },
+
+    /**
+    * @memberof order.Modification
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

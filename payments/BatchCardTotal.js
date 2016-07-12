@@ -10,10 +10,12 @@ var payments_CardType = require("../payments/CardType");
 
   /**
   * @constructor
+  * @memberof payments
   */
   BatchCardTotal = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof payments.BatchCardTotal
     * @private
     */
     initialize: function() {
@@ -25,7 +27,8 @@ var payments_CardType = require("../payments/CardType");
 
     /**
     * Set the field value
-    * @param {CardType} cardType 
+    * @memberof payments.BatchCardTotal
+    * @param {payments.CardType} cardType 
     */
     setCardType: function(cardType) {
       this.cardType = cardType;
@@ -33,7 +36,8 @@ var payments_CardType = require("../payments/CardType");
 
     /**
     * Get the field value
-    * @return {CardType} 
+    * @memberof payments.BatchCardTotal
+    * @return {payments.CardType} 
     */
     getCardType: function() {
       return this.cardType;
@@ -43,6 +47,7 @@ var payments_CardType = require("../payments/CardType");
     * Set the field value
     * Total count of types
     *
+    * @memberof payments.BatchCardTotal
     * @param {Number} count must be a long integer
     */
     setCount: function(count) {
@@ -52,7 +57,8 @@ var payments_CardType = require("../payments/CardType");
     /**
     * Get the field value
     * Total count of types
-      * @return {Number} must be a long integer
+    * @memberof payments.BatchCardTotal
+    * @return {Number} must be a long integer
     */
     getCount: function() {
       return this.count;
@@ -62,6 +68,7 @@ var payments_CardType = require("../payments/CardType");
     * Set the field value
     * Total amount for type
     *
+    * @memberof payments.BatchCardTotal
     * @param {Number} total must be a long integer
     */
     setTotal: function(total) {
@@ -71,11 +78,17 @@ var payments_CardType = require("../payments/CardType");
     /**
     * Get the field value
     * Total amount for type
-      * @return {Number} must be a long integer
+    * @memberof payments.BatchCardTotal
+    * @return {Number} must be a long integer
     */
     getTotal: function() {
       return this.total;
     },
+
+    /**
+    * @memberof payments.BatchCardTotal
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

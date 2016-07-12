@@ -11,10 +11,13 @@ var remotemessage_Message = require("../remotemessage/Message");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   LastMessageResponseMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.LastMessageResponseMessage
     * @private
     */
     initialize: function($super) {
@@ -29,7 +32,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * The last transactional request the device recorded
     *
-    * @param {Message} request 
+    * @memberof remotemessage.LastMessageResponseMessage
+    * @param {remotemessage.Message} request 
     */
     setRequest: function(request) {
       this.request = request;
@@ -38,7 +42,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * The last transactional request the device recorded
-      * @return {Message} 
+    * @memberof remotemessage.LastMessageResponseMessage
+    * @return {remotemessage.Message} 
     */
     getRequest: function() {
       return this.request;
@@ -48,7 +53,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * The last transactional response the device recorded
     *
-    * @param {Message} response 
+    * @memberof remotemessage.LastMessageResponseMessage
+    * @param {remotemessage.Message} response 
     */
     setResponse: function(response) {
       this.response = response;
@@ -57,7 +63,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * The last transactional response the device recorded
-      * @return {Message} 
+    * @memberof remotemessage.LastMessageResponseMessage
+    * @return {remotemessage.Message} 
     */
     getResponse: function() {
       return this.response;

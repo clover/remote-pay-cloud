@@ -10,10 +10,12 @@ var base_Reference = require("../base/Reference");
 
   /**
   * @constructor
+  * @memberof inventory
   */
   Modifier = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof inventory.Modifier
     * @private
     */
     initialize: function() {
@@ -29,6 +31,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Unique identifier
     *
+    * @memberof inventory.Modifier
     * @param {String} id 
     */
     setId: function(id) {
@@ -38,7 +41,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof inventory.Modifier
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -48,6 +52,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Name of the modifier
     *
+    * @memberof inventory.Modifier
     * @param {String} name 
     */
     setName: function(name) {
@@ -57,7 +62,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Name of the modifier
-      * @return {String} 
+    * @memberof inventory.Modifier
+    * @return {String} 
     */
     getName: function() {
       return this.name;
@@ -67,6 +73,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Alternate name of the modifier
     *
+    * @memberof inventory.Modifier
     * @param {String} alternateName 
     */
     setAlternateName: function(alternateName) {
@@ -76,7 +83,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Alternate name of the modifier
-      * @return {String} 
+    * @memberof inventory.Modifier
+    * @return {String} 
     */
     getAlternateName: function() {
       return this.alternateName;
@@ -86,6 +94,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Additional cost when used
     *
+    * @memberof inventory.Modifier
     * @param {Number} price must be a long integer
     */
     setPrice: function(price) {
@@ -95,7 +104,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Additional cost when used
-      * @return {Number} must be a long integer
+    * @memberof inventory.Modifier
+    * @return {Number} must be a long integer
     */
     getPrice: function() {
       return this.price;
@@ -103,7 +113,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
-    * @param {Reference} modifierGroup 
+    * @memberof inventory.Modifier
+    * @param {base.Reference} modifierGroup 
     */
     setModifierGroup: function(modifierGroup) {
       this.modifierGroup = modifierGroup;
@@ -111,11 +122,17 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * @return {Reference} 
+    * @memberof inventory.Modifier
+    * @return {base.Reference} 
     */
     getModifierGroup: function() {
       return this.modifierGroup;
     },
+
+    /**
+    * @memberof inventory.Modifier
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

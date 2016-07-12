@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof payments
+* @enum {string}
+*/
 CardType = {
   VISA : "VISA",
   MC : "MC",

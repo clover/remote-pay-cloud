@@ -12,10 +12,13 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
   /**
   * @constructor
+  * @augments remotepay.BaseRequest
+  * @memberof remotepay
   */
   TransactionRequest = Class.create(remotepay_BaseRequest, {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.TransactionRequest
     * @private
     */
     initialize: function($super) {
@@ -35,6 +38,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     * Set the field value
     * Do not print
     *
+    * @memberof remotepay.TransactionRequest
     * @param {Boolean|Null} disablePrinting 
     */
     setDisablePrinting: function(disablePrinting) {
@@ -44,7 +48,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     /**
     * Get the field value
     * Do not print
-      * @return {Boolean|Null} 
+    * @memberof remotepay.TransactionRequest
+    * @return {Boolean|Null} 
     */
     getDisablePrinting: function() {
       return this.disablePrinting;
@@ -54,6 +59,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     * Set the field value
     * If true then card not present is accepted
     *
+    * @memberof remotepay.TransactionRequest
     * @param {Boolean|Null} cardNotPresent 
     */
     setCardNotPresent: function(cardNotPresent) {
@@ -63,7 +69,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     /**
     * Get the field value
     * If true then card not present is accepted
-      * @return {Boolean|Null} 
+    * @memberof remotepay.TransactionRequest
+    * @return {Boolean|Null} 
     */
     getCardNotPresent: function() {
       return this.cardNotPresent;
@@ -73,6 +80,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     * Set the field value
     * If the transaction times out or fails because of decline, do not restart it
     *
+    * @memberof remotepay.TransactionRequest
     * @param {Boolean|Null} disableRestartTransactionOnFail 
     */
     setDisableRestartTransactionOnFail: function(disableRestartTransactionOnFail) {
@@ -82,7 +90,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     /**
     * Get the field value
     * If the transaction times out or fails because of decline, do not restart it
-      * @return {Boolean|Null} 
+    * @memberof remotepay.TransactionRequest
+    * @return {Boolean|Null} 
     */
     getDisableRestartTransactionOnFail: function() {
       return this.disableRestartTransactionOnFail;
@@ -92,6 +101,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     * Set the field value
     * Total amount paid
     *
+    * @memberof remotepay.TransactionRequest
     * @param {Number|Null} amount must be a long integer, 
     */
     setAmount: function(amount) {
@@ -101,7 +111,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     /**
     * Get the field value
     * Total amount paid
-      * @return {Number|Null} must be a long integer, 
+    * @memberof remotepay.TransactionRequest
+    * @return {Number|Null} must be a long integer, 
     */
     getAmount: function() {
       return this.amount;
@@ -111,6 +122,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     * Set the field value
     * Allowed entry methods
     *
+    * @memberof remotepay.TransactionRequest
     * @param {Number|Null} cardEntryMethods must be an integer, 
     */
     setCardEntryMethods: function(cardEntryMethods) {
@@ -120,7 +132,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     /**
     * Get the field value
     * Allowed entry methods
-      * @return {Number|Null} must be an integer, 
+    * @memberof remotepay.TransactionRequest
+    * @return {Number|Null} must be an integer, 
     */
     getCardEntryMethods: function() {
       return this.cardEntryMethods;
@@ -130,7 +143,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     * Set the field value
     * A saved card
     *
-    * @param {VaultedCard|Null} vaultedCard 
+    * @memberof remotepay.TransactionRequest
+    * @param {payments.VaultedCard|Null} vaultedCard 
     */
     setVaultedCard: function(vaultedCard) {
       this.vaultedCard = vaultedCard;
@@ -139,7 +153,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     /**
     * Get the field value
     * A saved card
-      * @return {VaultedCard|Null} 
+    * @memberof remotepay.TransactionRequest
+    * @return {payments.VaultedCard|Null} 
     */
     getVaultedCard: function() {
       return this.vaultedCard;
@@ -149,6 +164,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     * Set the field value
     * An id that will be persisted with transactions.
     *
+    * @memberof remotepay.TransactionRequest
     * @param {String} externalId 
     */
     setExternalId: function(externalId) {
@@ -158,7 +174,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     /**
     * Get the field value
     * An id that will be persisted with transactions.
-      * @return {String} 
+    * @memberof remotepay.TransactionRequest
+    * @return {String} 
     */
     getExternalId: function() {
       return this.externalId;
@@ -168,7 +185,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     * Set the field value
     * The type of the transaction.
     *
-    * @param {TransactionType} type 
+    * @memberof remotepay.TransactionRequest
+    * @param {remotepay.TransactionType} type 
     */
     setType: function(type) {
       this.type = type;
@@ -177,7 +195,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     /**
     * Get the field value
     * The type of the transaction.
-      * @return {TransactionType} 
+    * @memberof remotepay.TransactionRequest
+    * @return {remotepay.TransactionType} 
     */
     getType: function() {
       return this.type;

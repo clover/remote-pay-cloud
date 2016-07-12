@@ -12,10 +12,13 @@ var remotemessage_LogLevelEnum = require("../remotemessage/LogLevelEnum");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   LogMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.LogMessage
     * @private
     */
     initialize: function($super) {
@@ -28,7 +31,8 @@ var remotemessage_LogLevelEnum = require("../remotemessage/LogLevelEnum");
 
     /**
     * Set the field value
-    * @param {LogLevelEnum} logLevel 
+    * @memberof remotemessage.LogMessage
+    * @param {remotemessage.LogLevelEnum} logLevel 
     */
     setLogLevel: function(logLevel) {
       this.logLevel = logLevel;
@@ -36,7 +40,8 @@ var remotemessage_LogLevelEnum = require("../remotemessage/LogLevelEnum");
 
     /**
     * Get the field value
-    * @return {LogLevelEnum} 
+    * @memberof remotemessage.LogMessage
+    * @return {remotemessage.LogLevelEnum} 
     */
     getLogLevel: function() {
       return this.logLevel;
@@ -44,6 +49,7 @@ var remotemessage_LogLevelEnum = require("../remotemessage/LogLevelEnum");
 
     /**
     * Set the field value
+    * @memberof remotemessage.LogMessage
     * @param {Object.<String,String>} messages A map of <String> to <>
     */
     setMessages: function(messages) {
@@ -52,6 +58,7 @@ var remotemessage_LogLevelEnum = require("../remotemessage/LogLevelEnum");
 
     /**
     * Get the field value
+    * @memberof remotemessage.LogMessage
     * @return {Object.<String,String>} A map of <String> to <>
     */
     getMessages: function() {

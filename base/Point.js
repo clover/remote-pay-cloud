@@ -9,10 +9,12 @@ require("prototype");
 
   /**
   * @constructor
+  * @memberof base
   */
   Point = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof base.Point
     * @private
     */
     initialize: function() {
@@ -23,6 +25,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof base.Point
     * @param {Number} x must be a long integer
     */
     setX: function(x) {
@@ -31,6 +34,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof base.Point
     * @return {Number} must be a long integer
     */
     getX: function() {
@@ -39,6 +43,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof base.Point
     * @param {Number} y must be a long integer
     */
     setY: function(y) {
@@ -47,11 +52,17 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof base.Point
     * @return {Number} must be a long integer
     */
     getY: function() {
       return this.y;
     },
+
+    /**
+    * @memberof base.Point
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

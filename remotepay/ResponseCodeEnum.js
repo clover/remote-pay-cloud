@@ -10,10 +10,12 @@ var remotepay_ResponseCode = require("../remotepay/ResponseCode");
 
   /**
   * @constructor
+  * @memberof remotepay
   */
   ResponseCodeEnum = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.ResponseCodeEnum
     * @private
     */
     initialize: function() {
@@ -23,7 +25,8 @@ var remotepay_ResponseCode = require("../remotepay/ResponseCode");
 
     /**
     * Set the field value
-    * @param {ResponseCode} status 
+    * @memberof remotepay.ResponseCodeEnum
+    * @param {remotepay.ResponseCode} status 
     */
     setStatus: function(status) {
       this.status = status;
@@ -31,11 +34,17 @@ var remotepay_ResponseCode = require("../remotepay/ResponseCode");
 
     /**
     * Get the field value
-    * @return {ResponseCode} 
+    * @memberof remotepay.ResponseCodeEnum
+    * @return {remotepay.ResponseCode} 
     */
     getStatus: function() {
       return this.status;
     },
+
+    /**
+    * @memberof remotepay.ResponseCodeEnum
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

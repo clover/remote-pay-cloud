@@ -11,10 +11,12 @@ var inventory_Tag = require("../inventory/Tag");
 
   /**
   * @constructor
+  * @memberof inventory
   */
   TagItem = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof inventory.TagItem
     * @private
     */
     initialize: function() {
@@ -25,7 +27,8 @@ var inventory_Tag = require("../inventory/Tag");
 
     /**
     * Set the field value
-    * @param {Tag} tag 
+    * @memberof inventory.TagItem
+    * @param {inventory.Tag} tag 
     */
     setTag: function(tag) {
       this.tag = tag;
@@ -33,7 +36,8 @@ var inventory_Tag = require("../inventory/Tag");
 
     /**
     * Get the field value
-    * @return {Tag} 
+    * @memberof inventory.TagItem
+    * @return {inventory.Tag} 
     */
     getTag: function() {
       return this.tag;
@@ -41,7 +45,8 @@ var inventory_Tag = require("../inventory/Tag");
 
     /**
     * Set the field value
-    * @param {Item} item 
+    * @memberof inventory.TagItem
+    * @param {inventory.Item} item 
     */
     setItem: function(item) {
       this.item = item;
@@ -49,11 +54,17 @@ var inventory_Tag = require("../inventory/Tag");
 
     /**
     * Get the field value
-    * @return {Item} 
+    * @memberof inventory.TagItem
+    * @return {inventory.Item} 
     */
     getItem: function() {
       return this.item;
     },
+
+    /**
+    * @memberof inventory.TagItem
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

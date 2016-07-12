@@ -10,10 +10,12 @@ var base_ChallengeType = require("../base/ChallengeType");
 
   /**
   * @constructor
+  * @memberof base
   */
   ChallengeTypeEnum = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof base.ChallengeTypeEnum
     * @private
     */
     initialize: function() {
@@ -23,7 +25,8 @@ var base_ChallengeType = require("../base/ChallengeType");
 
     /**
     * Set the field value
-    * @param {ChallengeType} challengeType 
+    * @memberof base.ChallengeTypeEnum
+    * @param {base.ChallengeType} challengeType 
     */
     setChallengeType: function(challengeType) {
       this.challengeType = challengeType;
@@ -31,11 +34,17 @@ var base_ChallengeType = require("../base/ChallengeType");
 
     /**
     * Get the field value
-    * @return {ChallengeType} 
+    * @memberof base.ChallengeTypeEnum
+    * @return {base.ChallengeType} 
     */
     getChallengeType: function() {
       return this.challengeType;
     },
+
+    /**
+    * @memberof base.ChallengeTypeEnum
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

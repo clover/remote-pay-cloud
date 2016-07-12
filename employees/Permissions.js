@@ -10,10 +10,12 @@ var employees_Permission = require("../employees/Permission");
 
   /**
   * @constructor
+  * @memberof employees
   */
   Permissions = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof employees.Permissions
     * @private
     */
     initialize: function() {
@@ -27,6 +29,7 @@ var employees_Permission = require("../employees/Permission");
     * Set the field value
     * Unique identifier
     *
+    * @memberof employees.Permissions
     * @param {String} id 
     */
     setId: function(id) {
@@ -36,7 +39,8 @@ var employees_Permission = require("../employees/Permission");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof employees.Permissions
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -46,6 +50,7 @@ var employees_Permission = require("../employees/Permission");
     * Set the field value
     * A bitmap representing the permissions
     *
+    * @memberof employees.Permissions
     * @param {Number} bits must be a long integer
     */
     setBits: function(bits) {
@@ -55,7 +60,8 @@ var employees_Permission = require("../employees/Permission");
     /**
     * Get the field value
     * A bitmap representing the permissions
-      * @return {Number} must be a long integer
+    * @memberof employees.Permissions
+    * @return {Number} must be a long integer
     */
     getBits: function() {
       return this.bits;
@@ -65,7 +71,8 @@ var employees_Permission = require("../employees/Permission");
     * Set the field value
     * A readable list of permissions
     *
-    * @param {Array.<Permission>} readablePermissions An array of 
+    * @memberof employees.Permissions
+    * @param {Array.<employees.Permission>} readablePermissions An array of 
     */
     setReadablePermissions: function(readablePermissions) {
       this.readablePermissions = readablePermissions;
@@ -74,11 +81,17 @@ var employees_Permission = require("../employees/Permission");
     /**
     * Get the field value
     * A readable list of permissions
-      * @return {Array.<Permission>} An array of 
+    * @memberof employees.Permissions
+    * @return {Array.<employees.Permission>} An array of 
     */
     getReadablePermissions: function() {
       return this.readablePermissions;
     },
+
+    /**
+    * @memberof employees.Permissions
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

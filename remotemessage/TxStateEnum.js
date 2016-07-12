@@ -10,10 +10,12 @@ var remotemessage_TxState = require("../remotemessage/TxState");
 
   /**
   * @constructor
+  * @memberof remotemessage
   */
   TxStateEnum = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.TxStateEnum
     * @private
     */
     initialize: function() {
@@ -23,7 +25,8 @@ var remotemessage_TxState = require("../remotemessage/TxState");
 
     /**
     * Set the field value
-    * @param {TxState} txState 
+    * @memberof remotemessage.TxStateEnum
+    * @param {remotemessage.TxState} txState 
     */
     setTxState: function(txState) {
       this.txState = txState;
@@ -31,11 +34,17 @@ var remotemessage_TxState = require("../remotemessage/TxState");
 
     /**
     * Get the field value
-    * @return {TxState} 
+    * @memberof remotemessage.TxStateEnum
+    * @return {remotemessage.TxState} 
     */
     getTxState: function() {
       return this.txState;
     },
+
+    /**
+    * @memberof remotemessage.TxStateEnum
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

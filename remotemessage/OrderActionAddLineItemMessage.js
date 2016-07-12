@@ -12,10 +12,13 @@ var remotemessage_AddLineItemAction = require("../remotemessage/AddLineItemActio
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   OrderActionAddLineItemMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.OrderActionAddLineItemMessage
     * @private
     */
     initialize: function($super) {
@@ -27,7 +30,8 @@ var remotemessage_AddLineItemAction = require("../remotemessage/AddLineItemActio
 
     /**
     * Set the field value
-    * @param {AddLineItemAction} addLineItemAction 
+    * @memberof remotemessage.OrderActionAddLineItemMessage
+    * @param {remotemessage.AddLineItemAction} addLineItemAction 
     */
     setAddLineItemAction: function(addLineItemAction) {
       this.addLineItemAction = addLineItemAction;
@@ -35,7 +39,8 @@ var remotemessage_AddLineItemAction = require("../remotemessage/AddLineItemActio
 
     /**
     * Get the field value
-    * @return {AddLineItemAction} 
+    * @memberof remotemessage.OrderActionAddLineItemMessage
+    * @return {remotemessage.AddLineItemAction} 
     */
     getAddLineItemAction: function() {
       return this.addLineItemAction;

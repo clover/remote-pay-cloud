@@ -1,4 +1,7 @@
 module.exports.inventory = inventory;
+/**
+* @namespace inventory
+*/
 function inventory() {}
 
 inventory.Attribute = require("./Attribute");

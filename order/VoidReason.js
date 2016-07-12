@@ -5,7 +5,11 @@
  */
 
 
-/** Symbols beginning with USER_ or REJECT_ are user-initiated.  Others are client- or server-initiated. */
+/**
+Symbols beginning with USER_ or REJECT_ are user-initiated.  Others are client- or server-initiated.
+* @memberof order
+* @enum {string}
+*/
 VoidReason = {
   USER_CANCEL : "USER_CANCEL",
   TRANSPORT_ERROR : "TRANSPORT_ERROR",

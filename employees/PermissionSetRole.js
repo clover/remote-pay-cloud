@@ -10,10 +10,12 @@ var base_Reference = require("../base/Reference");
 
   /**
   * @constructor
+  * @memberof employees
   */
   PermissionSetRole = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof employees.PermissionSetRole
     * @private
     */
     initialize: function() {
@@ -29,6 +31,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Unique identifier
     *
+    * @memberof employees.PermissionSetRole
     * @param {String} id 
     */
     setId: function(id) {
@@ -38,7 +41,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof employees.PermissionSetRole
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -48,7 +52,8 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * The role
     *
-    * @param {Reference} role 
+    * @memberof employees.PermissionSetRole
+    * @param {base.Reference} role 
     */
     setRole: function(role) {
       this.role = role;
@@ -57,7 +62,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * The role
-      * @return {Reference} 
+    * @memberof employees.PermissionSetRole
+    * @return {base.Reference} 
     */
     getRole: function() {
       return this.role;
@@ -67,7 +73,8 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * The role
     *
-    * @param {Reference} permissionSet 
+    * @memberof employees.PermissionSetRole
+    * @param {base.Reference} permissionSet 
     */
     setPermissionSet: function(permissionSet) {
       this.permissionSet = permissionSet;
@@ -76,7 +83,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * The role
-      * @return {Reference} 
+    * @memberof employees.PermissionSetRole
+    * @return {base.Reference} 
     */
     getPermissionSet: function() {
       return this.permissionSet;
@@ -84,6 +92,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof employees.PermissionSetRole
     * @param {Number} modified_time must be a long integer
     */
     setModifiedTime: function(modified_time) {
@@ -92,6 +101,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof employees.PermissionSetRole
     * @return {Number} must be a long integer
     */
     getModifiedTime: function() {
@@ -100,6 +110,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof employees.PermissionSetRole
     * @param {Null|Number} deleted_time must be a long integer
     */
     setDeletedTime: function(deleted_time) {
@@ -108,11 +119,17 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof employees.PermissionSetRole
     * @return {Null|Number} must be a long integer
     */
     getDeletedTime: function() {
       return this.deleted_time;
     },
+
+    /**
+    * @memberof employees.PermissionSetRole
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

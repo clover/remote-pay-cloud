@@ -12,10 +12,13 @@ var remotemessage_Message = require("../remotemessage/Message");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   TxStateMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.TxStateMessage
     * @private
     */
     initialize: function($super) {
@@ -29,7 +32,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * Transaction state
     *
-    * @param {TxState} txState 
+    * @memberof remotemessage.TxStateMessage
+    * @param {remotemessage.TxState} txState 
     */
     setTxState: function(txState) {
       this.txState = txState;
@@ -38,7 +42,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * Transaction state
-      * @return {TxState} 
+    * @memberof remotemessage.TxStateMessage
+    * @return {remotemessage.TxState} 
     */
     getTxState: function() {
       return this.txState;

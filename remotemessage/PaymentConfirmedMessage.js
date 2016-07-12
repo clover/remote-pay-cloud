@@ -12,10 +12,13 @@ var payments_Payment = require("../payments/Payment");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   PaymentConfirmedMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.PaymentConfirmedMessage
     * @private
     */
     initialize: function($super) {
@@ -29,7 +32,8 @@ var payments_Payment = require("../payments/Payment");
     * Set the field value
     * A payment
     *
-    * @param {Payment} payment 
+    * @memberof remotemessage.PaymentConfirmedMessage
+    * @param {payments.Payment} payment 
     */
     setPayment: function(payment) {
       this.payment = payment;
@@ -38,7 +42,8 @@ var payments_Payment = require("../payments/Payment");
     /**
     * Get the field value
     * A payment
-      * @return {Payment} 
+    * @memberof remotemessage.PaymentConfirmedMessage
+    * @return {payments.Payment} 
     */
     getPayment: function() {
       return this.payment;

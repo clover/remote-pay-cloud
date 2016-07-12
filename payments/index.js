@@ -1,4 +1,7 @@
 module.exports.payments = payments;
+/**
+* @namespace payments
+*/
 function payments() {}
 
 payments.AVSResult = require("./AVSResult");

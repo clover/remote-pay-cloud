@@ -1,4 +1,7 @@
 module.exports.remotemessage = remotemessage;
+/**
+* @namespace remotemessage
+*/
 function remotemessage() {}
 
 remotemessage.AcknowledgementMessage = require("./AcknowledgementMessage");

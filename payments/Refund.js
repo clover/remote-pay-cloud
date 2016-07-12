@@ -13,10 +13,12 @@ var base_Tender = require("../base/Tender");
 
   /**
   * @constructor
+  * @memberof payments
   */
   Refund = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof payments.Refund
     * @private
     */
     initialize: function() {
@@ -40,6 +42,7 @@ var base_Tender = require("../base/Tender");
     * Set the field value
     * Unique identifier
     *
+    * @memberof payments.Refund
     * @param {String} id 
     */
     setId: function(id) {
@@ -49,7 +52,8 @@ var base_Tender = require("../base/Tender");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof payments.Refund
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -59,7 +63,8 @@ var base_Tender = require("../base/Tender");
     * Set the field value
     * The order with which the refund is associated
     *
-    * @param {Reference} orderRef 
+    * @memberof payments.Refund
+    * @param {base.Reference} orderRef 
     */
     setOrderRef: function(orderRef) {
       this.orderRef = orderRef;
@@ -68,7 +73,8 @@ var base_Tender = require("../base/Tender");
     /**
     * Get the field value
     * The order with which the refund is associated
-      * @return {Reference} 
+    * @memberof payments.Refund
+    * @return {base.Reference} 
     */
     getOrderRef: function() {
       return this.orderRef;
@@ -78,7 +84,8 @@ var base_Tender = require("../base/Tender");
     * Set the field value
     * Device which processed the transaction for this refund
     *
-    * @param {Reference|Null} device 
+    * @memberof payments.Refund
+    * @param {base.Reference|Null} device 
     */
     setDevice: function(device) {
       this.device = device;
@@ -87,7 +94,8 @@ var base_Tender = require("../base/Tender");
     /**
     * Get the field value
     * Device which processed the transaction for this refund
-      * @return {Reference|Null} 
+    * @memberof payments.Refund
+    * @return {base.Reference|Null} 
     */
     getDevice: function() {
       return this.device;
@@ -97,6 +105,7 @@ var base_Tender = require("../base/Tender");
     * Set the field value
     * Total amount refunded, including tax
     *
+    * @memberof payments.Refund
     * @param {Number} amount must be a long integer
     */
     setAmount: function(amount) {
@@ -106,7 +115,8 @@ var base_Tender = require("../base/Tender");
     /**
     * Get the field value
     * Total amount refunded, including tax
-      * @return {Number} must be a long integer
+    * @memberof payments.Refund
+    * @return {Number} must be a long integer
     */
     getAmount: function() {
       return this.amount;
@@ -116,6 +126,7 @@ var base_Tender = require("../base/Tender");
     * Set the field value
     * Tax amount refunded
     *
+    * @memberof payments.Refund
     * @param {Number|Null} taxAmount must be a long integer, 
     */
     setTaxAmount: function(taxAmount) {
@@ -125,7 +136,8 @@ var base_Tender = require("../base/Tender");
     /**
     * Get the field value
     * Tax amount refunded
-      * @return {Number|Null} must be a long integer, 
+    * @memberof payments.Refund
+    * @return {Number|Null} must be a long integer, 
     */
     getTaxAmount: function() {
       return this.taxAmount;
@@ -135,6 +147,7 @@ var base_Tender = require("../base/Tender");
     * Set the field value
     * The time when the refund was recorded on the server
     *
+    * @memberof payments.Refund
     * @param {Number} createdTime must be a long integer
     */
     setCreatedTime: function(createdTime) {
@@ -144,7 +157,8 @@ var base_Tender = require("../base/Tender");
     /**
     * Get the field value
     * The time when the refund was recorded on the server
-      * @return {Number} must be a long integer
+    * @memberof payments.Refund
+    * @return {Number} must be a long integer
     */
     getCreatedTime: function() {
       return this.createdTime;
@@ -154,6 +168,7 @@ var base_Tender = require("../base/Tender");
     * Set the field value
     * The time when the refund was recorded on the client
     *
+    * @memberof payments.Refund
     * @param {Number} clientCreatedTime must be a long integer
     */
     setClientCreatedTime: function(clientCreatedTime) {
@@ -163,7 +178,8 @@ var base_Tender = require("../base/Tender");
     /**
     * Get the field value
     * The time when the refund was recorded on the client
-      * @return {Number} must be a long integer
+    * @memberof payments.Refund
+    * @return {Number} must be a long integer
     */
     getClientCreatedTime: function() {
       return this.clientCreatedTime;
@@ -173,7 +189,8 @@ var base_Tender = require("../base/Tender");
     * Set the field value
     * The payment with which the refund is associated
     *
-    * @param {Reference} payment 
+    * @memberof payments.Refund
+    * @param {base.Reference} payment 
     */
     setPayment: function(payment) {
       this.payment = payment;
@@ -182,7 +199,8 @@ var base_Tender = require("../base/Tender");
     /**
     * Get the field value
     * The payment with which the refund is associated
-      * @return {Reference} 
+    * @memberof payments.Refund
+    * @return {base.Reference} 
     */
     getPayment: function() {
       return this.payment;
@@ -190,7 +208,8 @@ var base_Tender = require("../base/Tender");
 
     /**
     * Set the field value
-    * @param {Reference} employee 
+    * @memberof payments.Refund
+    * @param {base.Reference} employee 
     */
     setEmployee: function(employee) {
       this.employee = employee;
@@ -198,7 +217,8 @@ var base_Tender = require("../base/Tender");
 
     /**
     * Get the field value
-    * @return {Reference} 
+    * @memberof payments.Refund
+    * @return {base.Reference} 
     */
     getEmployee: function() {
       return this.employee;
@@ -206,7 +226,8 @@ var base_Tender = require("../base/Tender");
 
     /**
     * Set the field value
-    * @param {Array.<Reference>} lineItems An array of 
+    * @memberof payments.Refund
+    * @param {Array.<base.Reference>} lineItems An array of 
     */
     setLineItems: function(lineItems) {
       this.lineItems = lineItems;
@@ -214,7 +235,8 @@ var base_Tender = require("../base/Tender");
 
     /**
     * Get the field value
-    * @return {Array.<Reference>} An array of 
+    * @memberof payments.Refund
+    * @return {Array.<base.Reference>} An array of 
     */
     getLineItems: function() {
       return this.lineItems;
@@ -224,7 +246,8 @@ var base_Tender = require("../base/Tender");
     * Set the field value
     * The tender type associated with this payment, e.g. credit card, cash, etc.
     *
-    * @param {Tender} overrideMerchantTender 
+    * @memberof payments.Refund
+    * @param {base.Tender} overrideMerchantTender 
     */
     setOverrideMerchantTender: function(overrideMerchantTender) {
       this.overrideMerchantTender = overrideMerchantTender;
@@ -233,7 +256,8 @@ var base_Tender = require("../base/Tender");
     /**
     * Get the field value
     * The tender type associated with this payment, e.g. credit card, cash, etc.
-      * @return {Tender} 
+    * @memberof payments.Refund
+    * @return {base.Tender} 
     */
     getOverrideMerchantTender: function() {
       return this.overrideMerchantTender;
@@ -241,7 +265,8 @@ var base_Tender = require("../base/Tender");
 
     /**
     * Set the field value
-    * @param {Array.<TaxableAmountRate>} taxableAmountRates An array of 
+    * @memberof payments.Refund
+    * @param {Array.<payments.TaxableAmountRate>} taxableAmountRates An array of 
     */
     setTaxableAmountRates: function(taxableAmountRates) {
       this.taxableAmountRates = taxableAmountRates;
@@ -249,7 +274,8 @@ var base_Tender = require("../base/Tender");
 
     /**
     * Get the field value
-    * @return {Array.<TaxableAmountRate>} An array of 
+    * @memberof payments.Refund
+    * @return {Array.<payments.TaxableAmountRate>} An array of 
     */
     getTaxableAmountRates: function() {
       return this.taxableAmountRates;
@@ -257,7 +283,8 @@ var base_Tender = require("../base/Tender");
 
     /**
     * Set the field value
-    * @param {ServiceChargeAmount} serviceChargeAmount 
+    * @memberof payments.Refund
+    * @param {payments.ServiceChargeAmount} serviceChargeAmount 
     */
     setServiceChargeAmount: function(serviceChargeAmount) {
       this.serviceChargeAmount = serviceChargeAmount;
@@ -265,11 +292,17 @@ var base_Tender = require("../base/Tender");
 
     /**
     * Get the field value
-    * @return {ServiceChargeAmount} 
+    * @memberof payments.Refund
+    * @return {payments.ServiceChargeAmount} 
     */
     getServiceChargeAmount: function() {
       return this.serviceChargeAmount;
     },
+
+    /**
+    * @memberof payments.Refund
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

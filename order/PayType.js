@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof order
+* @enum {string}
+*/
 PayType = {
   SPLIT_GUEST : "SPLIT_GUEST",
   SPLIT_ITEM : "SPLIT_ITEM",

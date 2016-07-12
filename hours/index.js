@@ -1,4 +1,7 @@
 module.exports.hours = hours;
+/**
+* @namespace hours
+*/
 function hours() {}
 
 hours.HourRange = require("./HourRange");

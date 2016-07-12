@@ -1,8 +1,8 @@
-Repository for Clover's cloud connector API.  Published as an NPM package.  Intended for use in a browser environment.
+Clover's cloud connector API.  Published as an NPM package.  Intended for use in a browser environment.
 
-##At a Glance
+## At a Glance
 
-###Make a sale.
+### Make a sale.
 ```
 require("prototype");
 var $ = require('jQuery');
@@ -56,13 +56,13 @@ $(window).on('beforeunload ', function () {
 });
 ```
 
-###To make a payment using the High Level Cloud API
-####Import the libraries needed to create the clover object.
+### To make a payment using the High Level Cloud API
+#### Import the libraries needed to create the clover object.
 ```
 require("prototype");
 var clover = require("remote-pay-cloud");
 ```
-####Create the Clover Connector object.
+#### Create the Clover Connector object.
 This will require gathering the configuration information to create the connector.  In this example, the configuration is hard coded.  The creation of the connector is done using the connector factory.
 ```
 var connector = new clover.CloverConnectorFactory().createICloverConnector({
@@ -97,7 +97,7 @@ Examples of configurations that can be used when creating the Clover Connector o
 }
 ```
 
-####Define a listener that will listen for events produced byt the Clover Connector.
+#### Define a listener that will listen for events produced byt the Clover Connector.
 The functions implemented will be called as the connector encounters the events.  These functions can be found in the clover.remotepay.ICloverConnectorListener. 
 ```
 var ExampleCloverConnectorListener = Class.create( clover.remotepay.ICloverConnectorListener, {
@@ -135,14 +135,14 @@ var ExampleCloverConnectorListener = Class.create( clover.remotepay.ICloverConne
 }
 ```
 
-####Add the listener instance to the connector, and st\initialize the connection to the device.
+#### Add the listener instance to the connector, and initialize the connection to the device.
 ```
 var connectorListener = new ExampleCloverConnectorListener(connector);
 connector.addCloverConnectorListener(connectorListener);
 connector.initializeConnection();
 ```
 
-####Clean up the connection on exit of the window.  This should be done with all connectors.
+#### Clean up the connection on exit of the window.  This should be done with all connectors.
 This example uses jQuery to add a hook for the window `beforeunload` event that ensures that the connector is displosed of.
 ```
 $(window).on('beforeunload ', function () {
@@ -153,3 +153,6 @@ $(window).on('beforeunload ', function () {
     }
 });
 ```
+
+## Generate Documentation
+Documentation is generated when `npm install` is run.

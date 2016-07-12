@@ -11,10 +11,12 @@ var base_ChallengeType = require("../base/ChallengeType");
 
   /**
   * @constructor
+  * @memberof base
   */
   Challenge = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof base.Challenge
     * @private
     */
     initialize: function() {
@@ -28,7 +30,8 @@ var base_ChallengeType = require("../base/ChallengeType");
     * Set the field value
     * The type of the challenge.
     *
-    * @param {ChallengeType} type 
+    * @memberof base.Challenge
+    * @param {base.ChallengeType} type 
     */
     setType: function(type) {
       this.type = type;
@@ -37,7 +40,8 @@ var base_ChallengeType = require("../base/ChallengeType");
     /**
     * Get the field value
     * The type of the challenge.
-      * @return {ChallengeType} 
+    * @memberof base.Challenge
+    * @return {base.ChallengeType} 
     */
     getType: function() {
       return this.type;
@@ -47,7 +51,8 @@ var base_ChallengeType = require("../base/ChallengeType");
     * Set the field value
     * If the challenge is not accepted, then this reason can be used when responding.  The response could be an explicit void of the payment, or some other message, that may or may not use this reason.
     *
-    * @param {VoidReason} reason 
+    * @memberof base.Challenge
+    * @param {order.VoidReason} reason 
     */
     setReason: function(reason) {
       this.reason = reason;
@@ -56,7 +61,8 @@ var base_ChallengeType = require("../base/ChallengeType");
     /**
     * Get the field value
     * If the challenge is not accepted, then this reason can be used when responding.  The response could be an explicit void of the payment, or some other message, that may or may not use this reason.
-      * @return {VoidReason} 
+    * @memberof base.Challenge
+    * @return {order.VoidReason} 
     */
     getReason: function() {
       return this.reason;
@@ -66,6 +72,7 @@ var base_ChallengeType = require("../base/ChallengeType");
     * Set the field value
     * A default message that indicates what the challenge is in a user friendly format.
     *
+    * @memberof base.Challenge
     * @param {String} message 
     */
     setMessage: function(message) {
@@ -75,11 +82,17 @@ var base_ChallengeType = require("../base/ChallengeType");
     /**
     * Get the field value
     * A default message that indicates what the challenge is in a user friendly format.
-      * @return {String} 
+    * @memberof base.Challenge
+    * @return {String} 
     */
     getMessage: function() {
       return this.message;
     },
+
+    /**
+    * @memberof base.Challenge
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

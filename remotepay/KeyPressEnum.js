@@ -10,10 +10,12 @@ var remotepay_KeyPress = require("../remotepay/KeyPress");
 
   /**
   * @constructor
+  * @memberof remotepay
   */
   KeyPressEnum = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.KeyPressEnum
     * @private
     */
     initialize: function() {
@@ -23,7 +25,8 @@ var remotepay_KeyPress = require("../remotepay/KeyPress");
 
     /**
     * Set the field value
-    * @param {KeyPress} status 
+    * @memberof remotepay.KeyPressEnum
+    * @param {remotepay.KeyPress} status 
     */
     setStatus: function(status) {
       this.status = status;
@@ -31,11 +34,17 @@ var remotepay_KeyPress = require("../remotepay/KeyPress");
 
     /**
     * Get the field value
-    * @return {KeyPress} 
+    * @memberof remotepay.KeyPressEnum
+    * @return {remotepay.KeyPress} 
     */
     getStatus: function() {
       return this.status;
     },
+
+    /**
+    * @memberof remotepay.KeyPressEnum
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

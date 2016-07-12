@@ -11,10 +11,12 @@ var inventory_Option = require("../inventory/Option");
 
   /**
   * @constructor
+  * @memberof inventory
   */
   Attribute = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof inventory.Attribute
     * @private
     */
     initialize: function() {
@@ -29,6 +31,7 @@ var inventory_Option = require("../inventory/Option");
     * Set the field value
     * Unique identifier
     *
+    * @memberof inventory.Attribute
     * @param {String} id 
     */
     setId: function(id) {
@@ -38,7 +41,8 @@ var inventory_Option = require("../inventory/Option");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof inventory.Attribute
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -48,6 +52,7 @@ var inventory_Option = require("../inventory/Option");
     * Set the field value
     * Name of this attribute
     *
+    * @memberof inventory.Attribute
     * @param {String} name 
     */
     setName: function(name) {
@@ -57,7 +62,8 @@ var inventory_Option = require("../inventory/Option");
     /**
     * Get the field value
     * Name of this attribute
-      * @return {String} 
+    * @memberof inventory.Attribute
+    * @return {String} 
     */
     getName: function() {
       return this.name;
@@ -67,7 +73,8 @@ var inventory_Option = require("../inventory/Option");
     * Set the field value
     * The item group this attribute belongs to
     *
-    * @param {Reference} itemGroup 
+    * @memberof inventory.Attribute
+    * @param {base.Reference} itemGroup 
     */
     setItemGroup: function(itemGroup) {
       this.itemGroup = itemGroup;
@@ -76,7 +83,8 @@ var inventory_Option = require("../inventory/Option");
     /**
     * Get the field value
     * The item group this attribute belongs to
-      * @return {Reference} 
+    * @memberof inventory.Attribute
+    * @return {base.Reference} 
     */
     getItemGroup: function() {
       return this.itemGroup;
@@ -86,7 +94,8 @@ var inventory_Option = require("../inventory/Option");
     * Set the field value
     * Options associated with this attribute
     *
-    * @param {Array.<Option>} options An array of 
+    * @memberof inventory.Attribute
+    * @param {Array.<inventory.Option>} options An array of 
     */
     setOptions: function(options) {
       this.options = options;
@@ -95,11 +104,17 @@ var inventory_Option = require("../inventory/Option");
     /**
     * Get the field value
     * Options associated with this attribute
-      * @return {Array.<Option>} An array of 
+    * @memberof inventory.Attribute
+    * @return {Array.<inventory.Option>} An array of 
     */
     getOptions: function() {
       return this.options;
     },
+
+    /**
+    * @memberof inventory.Attribute
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

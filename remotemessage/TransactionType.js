@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof remotemessage
+* @enum {string}
+*/
 TransactionType = {
   PAYMENT : "PAYMENT",
   CREDIT : "CREDIT",

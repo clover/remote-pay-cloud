@@ -11,10 +11,13 @@ var remotemessage_Message = require("../remotemessage/Message");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   DiscoveryResponseMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.DiscoveryResponseMessage
     * @private
     */
     initialize: function($super) {
@@ -36,6 +39,7 @@ var remotemessage_Message = require("../remotemessage/Message");
 
     /**
     * Set the field value
+    * @memberof remotemessage.DiscoveryResponseMessage
     * @param {String} merchantId 
     */
     setMerchantId: function(merchantId) {
@@ -44,6 +48,7 @@ var remotemessage_Message = require("../remotemessage/Message");
 
     /**
     * Get the field value
+    * @memberof remotemessage.DiscoveryResponseMessage
     * @return {String} 
     */
     getMerchantId: function() {
@@ -52,6 +57,7 @@ var remotemessage_Message = require("../remotemessage/Message");
 
     /**
     * Set the field value
+    * @memberof remotemessage.DiscoveryResponseMessage
     * @param {String} merchantName 
     */
     setMerchantName: function(merchantName) {
@@ -60,6 +66,7 @@ var remotemessage_Message = require("../remotemessage/Message");
 
     /**
     * Get the field value
+    * @memberof remotemessage.DiscoveryResponseMessage
     * @return {String} 
     */
     getMerchantName: function() {
@@ -68,6 +75,7 @@ var remotemessage_Message = require("../remotemessage/Message");
 
     /**
     * Set the field value
+    * @memberof remotemessage.DiscoveryResponseMessage
     * @param {String} merchantMId 
     */
     setMerchantMId: function(merchantMId) {
@@ -76,6 +84,7 @@ var remotemessage_Message = require("../remotemessage/Message");
 
     /**
     * Get the field value
+    * @memberof remotemessage.DiscoveryResponseMessage
     * @return {String} 
     */
     getMerchantMId: function() {
@@ -84,6 +93,7 @@ var remotemessage_Message = require("../remotemessage/Message");
 
     /**
     * Set the field value
+    * @memberof remotemessage.DiscoveryResponseMessage
     * @param {String} name 
     */
     setName: function(name) {
@@ -92,6 +102,7 @@ var remotemessage_Message = require("../remotemessage/Message");
 
     /**
     * Get the field value
+    * @memberof remotemessage.DiscoveryResponseMessage
     * @return {String} 
     */
     getName: function() {
@@ -100,6 +111,7 @@ var remotemessage_Message = require("../remotemessage/Message");
 
     /**
     * Set the field value
+    * @memberof remotemessage.DiscoveryResponseMessage
     * @param {String} serial 
     */
     setSerial: function(serial) {
@@ -108,6 +120,7 @@ var remotemessage_Message = require("../remotemessage/Message");
 
     /**
     * Get the field value
+    * @memberof remotemessage.DiscoveryResponseMessage
     * @return {String} 
     */
     getSerial: function() {
@@ -116,6 +129,7 @@ var remotemessage_Message = require("../remotemessage/Message");
 
     /**
     * Set the field value
+    * @memberof remotemessage.DiscoveryResponseMessage
     * @param {String} model 
     */
     setModel: function(model) {
@@ -124,6 +138,7 @@ var remotemessage_Message = require("../remotemessage/Message");
 
     /**
     * Get the field value
+    * @memberof remotemessage.DiscoveryResponseMessage
     * @return {String} 
     */
     getModel: function() {
@@ -132,6 +147,7 @@ var remotemessage_Message = require("../remotemessage/Message");
 
     /**
     * Set the field value
+    * @memberof remotemessage.DiscoveryResponseMessage
     * @param {Boolean} ready 
     */
     setReady: function(ready) {
@@ -140,6 +156,7 @@ var remotemessage_Message = require("../remotemessage/Message");
 
     /**
     * Get the field value
+    * @memberof remotemessage.DiscoveryResponseMessage
     * @return {Boolean} 
     */
     getReady: function() {
@@ -148,6 +165,7 @@ var remotemessage_Message = require("../remotemessage/Message");
 
     /**
     * Set the field value
+    * @memberof remotemessage.DiscoveryResponseMessage
     * @param {Boolean} supportsTipAdjust 
     */
     setSupportsTipAdjust: function(supportsTipAdjust) {
@@ -156,6 +174,7 @@ var remotemessage_Message = require("../remotemessage/Message");
 
     /**
     * Get the field value
+    * @memberof remotemessage.DiscoveryResponseMessage
     * @return {Boolean} 
     */
     getSupportsTipAdjust: function() {
@@ -164,6 +183,7 @@ var remotemessage_Message = require("../remotemessage/Message");
 
     /**
     * Set the field value
+    * @memberof remotemessage.DiscoveryResponseMessage
     * @param {Boolean} supportsManualRefund 
     */
     setSupportsManualRefund: function(supportsManualRefund) {
@@ -172,6 +192,7 @@ var remotemessage_Message = require("../remotemessage/Message");
 
     /**
     * Get the field value
+    * @memberof remotemessage.DiscoveryResponseMessage
     * @return {Boolean} 
     */
     getSupportsManualRefund: function() {
@@ -180,6 +201,7 @@ var remotemessage_Message = require("../remotemessage/Message");
 
     /**
     * Set the field value
+    * @memberof remotemessage.DiscoveryResponseMessage
     * @param {Boolean} supportsMultiPayToken 
     */
     setSupportsMultiPayToken: function(supportsMultiPayToken) {
@@ -188,6 +210,7 @@ var remotemessage_Message = require("../remotemessage/Message");
 
     /**
     * Get the field value
+    * @memberof remotemessage.DiscoveryResponseMessage
     * @return {Boolean} 
     */
     getSupportsMultiPayToken: function() {
@@ -196,6 +219,7 @@ var remotemessage_Message = require("../remotemessage/Message");
 
     /**
     * Set the field value
+    * @memberof remotemessage.DiscoveryResponseMessage
     * @param {Boolean} supportsAcknowledgement 
     */
     setSupportsAcknowledgement: function(supportsAcknowledgement) {
@@ -204,6 +228,7 @@ var remotemessage_Message = require("../remotemessage/Message");
 
     /**
     * Get the field value
+    * @memberof remotemessage.DiscoveryResponseMessage
     * @return {Boolean} 
     */
     getSupportsAcknowledgement: function() {

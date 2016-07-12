@@ -9,10 +9,12 @@ require("prototype");
 
   /**
   * @constructor
+  * @memberof remotemessage
   */
   RemoveLineItemAction = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.RemoveLineItemAction
     * @private
     */
     initialize: function() {
@@ -22,6 +24,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof remotemessage.RemoveLineItemAction
     * @param {String} lineItemId 
     */
     setLineItemId: function(lineItemId) {
@@ -30,11 +33,17 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof remotemessage.RemoveLineItemAction
     * @return {String} 
     */
     getLineItemId: function() {
       return this.lineItemId;
     },
+
+    /**
+    * @memberof remotemessage.RemoveLineItemAction
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

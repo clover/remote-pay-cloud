@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof remotemessage
+* @enum {string}
+*/
 UiDirection = {
   ENTER : "ENTER",
   EXIT : "EXIT"

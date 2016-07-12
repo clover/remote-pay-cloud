@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof device
+* @enum {string}
+*/
 DeviceProvisionState = {
   NOT_ASSOCIATED : "NOT_ASSOCIATED",
   DISASSOCIATED : "DISASSOCIATED",

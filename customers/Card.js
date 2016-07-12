@@ -9,10 +9,12 @@ require("prototype");
 
   /**
   * @constructor
+  * @memberof customers
   */
   Card = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof customers.Card
     * @private
     */
     initialize: function() {
@@ -29,6 +31,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof customers.Card
     * @param {String} id 
     */
     setId: function(id) {
@@ -37,6 +40,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof customers.Card
     * @return {String} 
     */
     getId: function() {
@@ -45,6 +49,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof customers.Card
     * @param {String} first6 
     */
     setFirst6: function(first6) {
@@ -53,6 +58,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof customers.Card
     * @return {String} 
     */
     getFirst6: function() {
@@ -61,6 +67,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof customers.Card
     * @param {String} last4 
     */
     setLast4: function(last4) {
@@ -69,6 +76,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof customers.Card
     * @return {String} 
     */
     getLast4: function() {
@@ -77,6 +85,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof customers.Card
     * @param {String} firstName 
     */
     setFirstName: function(firstName) {
@@ -85,6 +94,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof customers.Card
     * @return {String} 
     */
     getFirstName: function() {
@@ -93,6 +103,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof customers.Card
     * @param {String} lastName 
     */
     setLastName: function(lastName) {
@@ -101,6 +112,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof customers.Card
     * @return {String} 
     */
     getLastName: function() {
@@ -109,6 +121,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof customers.Card
     * @param {String} expirationDate 
     */
     setExpirationDate: function(expirationDate) {
@@ -117,6 +130,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof customers.Card
     * @return {String} 
     */
     getExpirationDate: function() {
@@ -125,6 +139,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof customers.Card
     * @param {String} cardType 
     */
     setCardType: function(cardType) {
@@ -133,6 +148,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof customers.Card
     * @return {String} 
     */
     getCardType: function() {
@@ -141,6 +157,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof customers.Card
     * @param {String} token 
     */
     setToken: function(token) {
@@ -149,11 +166,17 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof customers.Card
     * @return {String} 
     */
     getToken: function() {
       return this.token;
     },
+
+    /**
+    * @memberof customers.Card
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

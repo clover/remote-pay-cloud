@@ -11,10 +11,13 @@ var remotemessage_Message = require("../remotemessage/Message");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   TipAddedMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.TipAddedMessage
     * @private
     */
     initialize: function($super) {
@@ -28,6 +31,7 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * Amount paid in tips
     *
+    * @memberof remotemessage.TipAddedMessage
     * @param {Number} tipAmount must be a long integer
     */
     setTipAmount: function(tipAmount) {
@@ -37,7 +41,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * Amount paid in tips
-      * @return {Number} must be a long integer
+    * @memberof remotemessage.TipAddedMessage
+    * @return {Number} must be a long integer
     */
     getTipAmount: function() {
       return this.tipAmount;

@@ -11,10 +11,12 @@ var remotepay_DeviceEventState = require("../remotepay/DeviceEventState");
 
   /**
   * @constructor
+  * @memberof remotepay
   */
   DeviceEventEnum = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.DeviceEventEnum
     * @private
     */
     initialize: function() {
@@ -25,7 +27,8 @@ var remotepay_DeviceEventState = require("../remotepay/DeviceEventState");
 
     /**
     * Set the field value
-    * @param {DeviceErrorEventCode} deviceErrorEventCode 
+    * @memberof remotepay.DeviceEventEnum
+    * @param {remotepay.DeviceErrorEventCode} deviceErrorEventCode 
     */
     setDeviceErrorEventCode: function(deviceErrorEventCode) {
       this.deviceErrorEventCode = deviceErrorEventCode;
@@ -33,7 +36,8 @@ var remotepay_DeviceEventState = require("../remotepay/DeviceEventState");
 
     /**
     * Get the field value
-    * @return {DeviceErrorEventCode} 
+    * @memberof remotepay.DeviceEventEnum
+    * @return {remotepay.DeviceErrorEventCode} 
     */
     getDeviceErrorEventCode: function() {
       return this.deviceErrorEventCode;
@@ -41,7 +45,8 @@ var remotepay_DeviceEventState = require("../remotepay/DeviceEventState");
 
     /**
     * Set the field value
-    * @param {DeviceEventState} deviceEventState 
+    * @memberof remotepay.DeviceEventEnum
+    * @param {remotepay.DeviceEventState} deviceEventState 
     */
     setDeviceEventState: function(deviceEventState) {
       this.deviceEventState = deviceEventState;
@@ -49,11 +54,17 @@ var remotepay_DeviceEventState = require("../remotepay/DeviceEventState");
 
     /**
     * Get the field value
-    * @return {DeviceEventState} 
+    * @memberof remotepay.DeviceEventEnum
+    * @return {remotepay.DeviceEventState} 
     */
     getDeviceEventState: function() {
       return this.deviceEventState;
     },
+
+    /**
+    * @memberof remotepay.DeviceEventEnum
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

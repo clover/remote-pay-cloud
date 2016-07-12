@@ -9,10 +9,12 @@ require("prototype");
 
   /**
   * @constructor
+  * @memberof payments
   */
   GiftCard = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof payments.GiftCard
     * @private
     */
     initialize: function() {
@@ -27,6 +29,7 @@ require("prototype");
     * Set the field value
     * Track 2 Card Data
     *
+    * @memberof payments.GiftCard
     * @param {String} track2 
     */
     setTrack2: function(track2) {
@@ -36,7 +39,8 @@ require("prototype");
     /**
     * Get the field value
     * Track 2 Card Data
-      * @return {String} 
+    * @memberof payments.GiftCard
+    * @return {String} 
     */
     getTrack2: function() {
       return this.track2;
@@ -46,6 +50,7 @@ require("prototype");
     * Set the field value
     * Embossed Card Number
     *
+    * @memberof payments.GiftCard
     * @param {String} cardNumber 
     */
     setCardNumber: function(cardNumber) {
@@ -55,7 +60,8 @@ require("prototype");
     /**
     * Get the field value
     * Embossed Card Number
-      * @return {String} 
+    * @memberof payments.GiftCard
+    * @return {String} 
     */
     getCardNumber: function() {
       return this.cardNumber;
@@ -65,6 +71,7 @@ require("prototype");
     * Set the field value
     * Was Account Number Manually Entered
     *
+    * @memberof payments.GiftCard
     * @param {Boolean} isManuallyEntered 
     */
     setIsManuallyEntered: function(isManuallyEntered) {
@@ -74,7 +81,8 @@ require("prototype");
     /**
     * Get the field value
     * Was Account Number Manually Entered
-      * @return {Boolean} 
+    * @memberof payments.GiftCard
+    * @return {Boolean} 
     */
     getIsManuallyEntered: function() {
       return this.isManuallyEntered;
@@ -82,6 +90,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof payments.GiftCard
     * @param {String} deviceSerial 
     */
     setDeviceSerial: function(deviceSerial) {
@@ -90,11 +99,17 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof payments.GiftCard
     * @return {String} 
     */
     getDeviceSerial: function() {
       return this.deviceSerial;
     },
+
+    /**
+    * @memberof payments.GiftCard
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

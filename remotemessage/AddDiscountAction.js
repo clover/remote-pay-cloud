@@ -10,10 +10,12 @@ var order_DisplayDiscount = require("../order/DisplayDiscount");
 
   /**
   * @constructor
+  * @memberof remotemessage
   */
   AddDiscountAction = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.AddDiscountAction
     * @private
     */
     initialize: function() {
@@ -23,7 +25,8 @@ var order_DisplayDiscount = require("../order/DisplayDiscount");
 
     /**
     * Set the field value
-    * @param {DisplayDiscount} discount 
+    * @memberof remotemessage.AddDiscountAction
+    * @param {order.DisplayDiscount} discount 
     */
     setDiscount: function(discount) {
       this.discount = discount;
@@ -31,11 +34,17 @@ var order_DisplayDiscount = require("../order/DisplayDiscount");
 
     /**
     * Get the field value
-    * @return {DisplayDiscount} 
+    * @memberof remotemessage.AddDiscountAction
+    * @return {order.DisplayDiscount} 
     */
     getDiscount: function() {
       return this.discount;
     },
+
+    /**
+    * @memberof remotemessage.AddDiscountAction
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

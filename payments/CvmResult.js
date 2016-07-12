@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof payments
+* @enum {string}
+*/
 CvmResult = {
   NO_CVM_REQUIRED : "NO_CVM_REQUIRED",
   SIGNATURE : "SIGNATURE",

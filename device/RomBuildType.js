@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof device
+* @enum {string}
+*/
 RomBuildType = {
   ENG : "ENG",
   USER : "USER"

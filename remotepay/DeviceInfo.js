@@ -9,10 +9,12 @@ require("prototype");
 
   /**
   * @constructor
+  * @memberof remotepay
   */
   DeviceInfo = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.DeviceInfo
     * @private
     */
     initialize: function() {
@@ -26,6 +28,7 @@ require("prototype");
     * Set the field value
     * Name of the device (if entered)
     *
+    * @memberof remotepay.DeviceInfo
     * @param {String} name 
     */
     setName: function(name) {
@@ -35,7 +38,8 @@ require("prototype");
     /**
     * Get the field value
     * Name of the device (if entered)
-      * @return {String} 
+    * @memberof remotepay.DeviceInfo
+    * @return {String} 
     */
     getName: function() {
       return this.name;
@@ -43,6 +47,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof remotepay.DeviceInfo
     * @param {String} model 
     */
     setModel: function(model) {
@@ -51,6 +56,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof remotepay.DeviceInfo
     * @return {String} 
     */
     getModel: function() {
@@ -59,6 +65,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof remotepay.DeviceInfo
     * @param {String} serial 
     */
     setSerial: function(serial) {
@@ -67,11 +74,17 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof remotepay.DeviceInfo
     * @return {String} 
     */
     getSerial: function() {
       return this.serial;
     },
+
+    /**
+    * @memberof remotepay.DeviceInfo
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

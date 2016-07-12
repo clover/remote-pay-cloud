@@ -10,10 +10,12 @@ var remotemessage_KeyPress = require("../remotemessage/KeyPress");
 
   /**
   * @constructor
+  * @memberof remotemessage
   */
   KeyPressEnum = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.KeyPressEnum
     * @private
     */
     initialize: function() {
@@ -23,7 +25,8 @@ var remotemessage_KeyPress = require("../remotemessage/KeyPress");
 
     /**
     * Set the field value
-    * @param {KeyPress} status 
+    * @memberof remotemessage.KeyPressEnum
+    * @param {remotemessage.KeyPress} status 
     */
     setStatus: function(status) {
       this.status = status;
@@ -31,11 +34,17 @@ var remotemessage_KeyPress = require("../remotemessage/KeyPress");
 
     /**
     * Get the field value
-    * @return {KeyPress} 
+    * @memberof remotemessage.KeyPressEnum
+    * @return {remotemessage.KeyPress} 
     */
     getStatus: function() {
       return this.status;
     },
+
+    /**
+    * @memberof remotemessage.KeyPressEnum
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

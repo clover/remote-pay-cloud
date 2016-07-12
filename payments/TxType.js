@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof payments
+* @enum {string}
+*/
 TxType = {
   AUTH : "AUTH",
   PREAUTH : "PREAUTH",

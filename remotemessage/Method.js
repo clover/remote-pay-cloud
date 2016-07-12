@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof remotemessage
+* @enum {string}
+*/
 Method = {
   ACK : "ACK",
   CLOSEOUT_RESPONSE : "CLOSEOUT_RESPONSE",

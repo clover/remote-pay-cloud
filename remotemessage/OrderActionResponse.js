@@ -9,10 +9,12 @@ require("prototype");
 
   /**
   * @constructor
+  * @memberof remotemessage
   */
   OrderActionResponse = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.OrderActionResponse
     * @private
     */
     initialize: function() {
@@ -23,6 +25,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof remotemessage.OrderActionResponse
     * @param {Boolean} accepted 
     */
     setAccepted: function(accepted) {
@@ -31,6 +34,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof remotemessage.OrderActionResponse
     * @return {Boolean} 
     */
     getAccepted: function() {
@@ -39,6 +43,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof remotemessage.OrderActionResponse
     * @param {String} id 
     */
     setId: function(id) {
@@ -47,11 +52,17 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof remotemessage.OrderActionResponse
     * @return {String} 
     */
     getId: function() {
       return this.id;
     },
+
+    /**
+    * @memberof remotemessage.OrderActionResponse
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof payments
+* @enum {string}
+*/
 ParamType = {
   TAG_32_16 : "TAG_32_16",
   TAG_16_8 : "TAG_16_8",

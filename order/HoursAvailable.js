@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof order
+* @enum {string}
+*/
 HoursAvailable = {
   ALL : "ALL",
   BUSINESS : "BUSINESS",

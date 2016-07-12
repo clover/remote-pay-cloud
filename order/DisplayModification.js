@@ -10,10 +10,12 @@ require("prototype");
 /** Snapshot of a line item modifier at the time that the order was placed. */
   /**
   * @constructor
+  * @memberof order
   */
   DisplayModification = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof order.DisplayModification
     * @private
     */
     initialize: function() {
@@ -25,6 +27,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof order.DisplayModification
     * @param {String} id 
     */
     setId: function(id) {
@@ -33,6 +36,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof order.DisplayModification
     * @return {String} 
     */
     getId: function() {
@@ -41,6 +45,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof order.DisplayModification
     * @param {String} name 
     */
     setName: function(name) {
@@ -49,6 +54,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof order.DisplayModification
     * @return {String} 
     */
     getName: function() {
@@ -57,6 +63,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof order.DisplayModification
     * @param {String} amount 
     */
     setAmount: function(amount) {
@@ -65,11 +72,17 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof order.DisplayModification
     * @return {String} 
     */
     getAmount: function() {
       return this.amount;
     },
+
+    /**
+    * @memberof order.DisplayModification
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

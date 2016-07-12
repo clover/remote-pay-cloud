@@ -13,10 +13,13 @@ var payments_Payment = require("../payments/Payment");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   VoidPaymentMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.VoidPaymentMessage
     * @private
     */
     initialize: function($super) {
@@ -31,7 +34,8 @@ var payments_Payment = require("../payments/Payment");
     * Set the field value
     * A payment
     *
-    * @param {Payment} payment 
+    * @memberof remotemessage.VoidPaymentMessage
+    * @param {payments.Payment} payment 
     */
     setPayment: function(payment) {
       this.payment = payment;
@@ -40,7 +44,8 @@ var payments_Payment = require("../payments/Payment");
     /**
     * Get the field value
     * A payment
-      * @return {Payment} 
+    * @memberof remotemessage.VoidPaymentMessage
+    * @return {payments.Payment} 
     */
     getPayment: function() {
       return this.payment;
@@ -48,7 +53,8 @@ var payments_Payment = require("../payments/Payment");
 
     /**
     * Set the field value
-    * @param {VoidReason} voidReason 
+    * @memberof remotemessage.VoidPaymentMessage
+    * @param {order.VoidReason} voidReason 
     */
     setVoidReason: function(voidReason) {
       this.voidReason = voidReason;
@@ -56,7 +62,8 @@ var payments_Payment = require("../payments/Payment");
 
     /**
     * Get the field value
-    * @return {VoidReason} 
+    * @memberof remotemessage.VoidPaymentMessage
+    * @return {order.VoidReason} 
     */
     getVoidReason: function() {
       return this.voidReason;

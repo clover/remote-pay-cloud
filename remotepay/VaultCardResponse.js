@@ -11,10 +11,13 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
   /**
   * @constructor
+  * @augments remotepay.BaseResponse
+  * @memberof remotepay
   */
   VaultCardResponse = Class.create(remotepay_BaseResponse, {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.VaultCardResponse
     * @private
     */
     initialize: function($super) {
@@ -27,7 +30,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     * Set the field value
     * The card that was vaulted.
     *
-    * @param {VaultedCard} card 
+    * @memberof remotepay.VaultCardResponse
+    * @param {payments.VaultedCard} card 
     */
     setCard: function(card) {
       this.card = card;
@@ -36,7 +40,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     /**
     * Get the field value
     * The card that was vaulted.
-      * @return {VaultedCard} 
+    * @memberof remotepay.VaultCardResponse
+    * @return {payments.VaultedCard} 
     */
     getCard: function() {
       return this.card;

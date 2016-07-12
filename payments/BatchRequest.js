@@ -9,10 +9,12 @@ require("prototype");
 
   /**
   * @constructor
+  * @memberof payments
   */
   BatchRequest = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof payments.BatchRequest
     * @private
     */
     initialize: function() {
@@ -22,6 +24,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof payments.BatchRequest
     * @param {Array.<String>} devices An array of 
     */
     setDevices: function(devices) {
@@ -30,11 +33,17 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof payments.BatchRequest
     * @return {Array.<String>} An array of 
     */
     getDevices: function() {
       return this.devices;
     },
+
+    /**
+    * @memberof payments.BatchRequest
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

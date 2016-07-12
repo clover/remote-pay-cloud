@@ -10,10 +10,13 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
 
   /**
   * @constructor
+  * @augments remotepay.BaseRequest
+  * @memberof remotepay
   */
   CardInfoRequest = Class.create(remotepay_BaseRequest, {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.CardInfoRequest
     * @private
     */
     initialize: function($super) {
@@ -26,6 +29,7 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     * Set the field value
     * Allowed entry methods
     *
+    * @memberof remotepay.CardInfoRequest
     * @param {Number} cardEntryMethods must be an integer
     */
     setCardEntryMethods: function(cardEntryMethods) {
@@ -35,7 +39,8 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     /**
     * Get the field value
     * Allowed entry methods
-      * @return {Number} must be an integer
+    * @memberof remotepay.CardInfoRequest
+    * @return {Number} must be an integer
     */
     getCardEntryMethods: function() {
       return this.cardEntryMethods;

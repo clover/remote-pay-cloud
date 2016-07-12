@@ -13,10 +13,13 @@ var order_Order = require("../order/Order");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   TxStartResponseMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.TxStartResponseMessage
     * @private
     */
     initialize: function($super) {
@@ -33,6 +36,7 @@ var order_Order = require("../order/Order");
     * Set the field value
     * Deprecated
     *
+    * @memberof remotemessage.TxStartResponseMessage
     * @param {Boolean} success 
     */
     setSuccess: function(success) {
@@ -42,7 +46,8 @@ var order_Order = require("../order/Order");
     /**
     * Get the field value
     * Deprecated
-      * @return {Boolean} 
+    * @memberof remotemessage.TxStartResponseMessage
+    * @return {Boolean} 
     */
     getSuccess: function() {
       return this.success;
@@ -52,7 +57,8 @@ var order_Order = require("../order/Order");
     * Set the field value
     * The order
     *
-    * @param {Order} order 
+    * @memberof remotemessage.TxStartResponseMessage
+    * @param {order.Order} order 
     */
     setOrder: function(order) {
       this.order = order;
@@ -61,7 +67,8 @@ var order_Order = require("../order/Order");
     /**
     * Get the field value
     * The order
-      * @return {Order} 
+    * @memberof remotemessage.TxStartResponseMessage
+    * @return {order.Order} 
     */
     getOrder: function() {
       return this.order;
@@ -71,6 +78,7 @@ var order_Order = require("../order/Order");
     * Set the field value
     * The external id provided in the initiating pay intent
     *
+    * @memberof remotemessage.TxStartResponseMessage
     * @param {String} externalPaymentId 
     */
     setExternalPaymentId: function(externalPaymentId) {
@@ -80,7 +88,8 @@ var order_Order = require("../order/Order");
     /**
     * Get the field value
     * The external id provided in the initiating pay intent
-      * @return {String} 
+    * @memberof remotemessage.TxStartResponseMessage
+    * @return {String} 
     */
     getExternalPaymentId: function() {
       return this.externalPaymentId;
@@ -88,7 +97,8 @@ var order_Order = require("../order/Order");
 
     /**
     * Set the field value
-    * @param {TxStartResponseResult} result 
+    * @memberof remotemessage.TxStartResponseMessage
+    * @param {remotemessage.TxStartResponseResult} result 
     */
     setResult: function(result) {
       this.result = result;
@@ -96,7 +106,8 @@ var order_Order = require("../order/Order");
 
     /**
     * Get the field value
-    * @return {TxStartResponseResult} 
+    * @memberof remotemessage.TxStartResponseMessage
+    * @return {remotemessage.TxStartResponseResult} 
     */
     getResult: function() {
       return this.result;

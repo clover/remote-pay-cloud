@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof payments
+* @enum {string}
+*/
 OverrideType = {
   RESELLER : "RESELLER",
   MERCHANT_GROUP : "MERCHANT_GROUP"

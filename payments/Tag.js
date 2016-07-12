@@ -9,10 +9,12 @@ require("prototype");
 
   /**
   * @constructor
+  * @memberof payments
   */
   Tag = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof payments.Tag
     * @private
     */
     initialize: function() {
@@ -27,6 +29,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof payments.Tag
     * @param {String} tag 
     */
     setTag: function(tag) {
@@ -35,6 +38,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof payments.Tag
     * @return {String} 
     */
     getTag: function() {
@@ -43,6 +47,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof payments.Tag
     * @param {String} length 
     */
     setLength: function(length) {
@@ -51,6 +56,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof payments.Tag
     * @return {String} 
     */
     getLength: function() {
@@ -59,6 +65,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof payments.Tag
     * @param {String} value 
     */
     setValue: function(value) {
@@ -67,6 +74,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof payments.Tag
     * @return {String} 
     */
     getValue: function() {
@@ -75,6 +83,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof payments.Tag
     * @param {String} description 
     */
     setDescription: function(description) {
@@ -83,6 +92,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof payments.Tag
     * @return {String} 
     */
     getDescription: function() {
@@ -91,6 +101,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof payments.Tag
     * @param {String} optional 
     */
     setOptional: function(optional) {
@@ -99,6 +110,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof payments.Tag
     * @return {String} 
     */
     getOptional: function() {
@@ -107,6 +119,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof payments.Tag
     * @param {String} filter 
     */
     setFilter: function(filter) {
@@ -115,11 +128,17 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof payments.Tag
     * @return {String} 
     */
     getFilter: function() {
       return this.filter;
     },
+
+    /**
+    * @memberof payments.Tag
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

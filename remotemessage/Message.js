@@ -10,10 +10,12 @@ var remotemessage_Method = require("../remotemessage/Method");
 
   /**
   * @constructor
+  * @memberof remotemessage
   */
   Message = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.Message
     * @private
     */
     initialize: function() {
@@ -26,7 +28,8 @@ var remotemessage_Method = require("../remotemessage/Method");
     * Set the field value
     * The list of message type
     *
-    * @param {Method} method 
+    * @memberof remotemessage.Message
+    * @param {remotemessage.Method} method 
     */
     setMethod: function(method) {
       this.method = method;
@@ -35,7 +38,8 @@ var remotemessage_Method = require("../remotemessage/Method");
     /**
     * Get the field value
     * The list of message type
-      * @return {Method} 
+    * @memberof remotemessage.Message
+    * @return {remotemessage.Method} 
     */
     getMethod: function() {
       return this.method;
@@ -45,6 +49,7 @@ var remotemessage_Method = require("../remotemessage/Method");
     * Set the field value
     * The version of this message
     *
+    * @memberof remotemessage.Message
     * @param {Number|Null} version must be an integer, 
     */
     setVersion: function(version) {
@@ -54,11 +59,17 @@ var remotemessage_Method = require("../remotemessage/Method");
     /**
     * Get the field value
     * The version of this message
-      * @return {Number|Null} must be an integer, 
+    * @memberof remotemessage.Message
+    * @return {Number|Null} must be an integer, 
     */
     getVersion: function() {
       return this.version;
     },
+
+    /**
+    * @memberof remotemessage.Message
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof inventory
+* @enum {string}
+*/
 PriceType = {
   FIXED : "FIXED",
   VARIABLE : "VARIABLE",

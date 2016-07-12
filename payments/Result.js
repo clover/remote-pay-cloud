@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof payments
+* @enum {string}
+*/
 Result = {
   SUCCESS : "SUCCESS",
   FAIL : "FAIL",

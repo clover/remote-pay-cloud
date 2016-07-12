@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof remotemessage
+* @enum {string}
+*/
 LogLevelEnum = {
   VERBOSE : "VERBOSE",
   DEBUG : "DEBUG",

@@ -10,10 +10,13 @@ var remotepay_BaseResponse = require("../remotepay/BaseResponse");
 
   /**
   * @constructor
+  * @augments remotepay.BaseResponse
+  * @memberof remotepay
   */
   VoidPaymentResponse = Class.create(remotepay_BaseResponse, {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.VoidPaymentResponse
     * @private
     */
     initialize: function($super) {
@@ -26,6 +29,7 @@ var remotepay_BaseResponse = require("../remotepay/BaseResponse");
     * Set the field value
     * The id of the payment voided
     *
+    * @memberof remotepay.VoidPaymentResponse
     * @param {String} paymentId 
     */
     setPaymentId: function(paymentId) {
@@ -35,7 +39,8 @@ var remotepay_BaseResponse = require("../remotepay/BaseResponse");
     /**
     * Get the field value
     * The id of the payment voided
-      * @return {String} 
+    * @memberof remotepay.VoidPaymentResponse
+    * @return {String} 
     */
     getPaymentId: function() {
       return this.paymentId;

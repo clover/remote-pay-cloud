@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof payments
+* @enum {string}
+*/
 Currency = {
   USD : "USD",
   GBP : "GBP",

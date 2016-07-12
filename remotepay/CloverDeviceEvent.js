@@ -11,10 +11,12 @@ var remotepay_InputOption = require("../remotepay/InputOption");
 
   /**
   * @constructor
+  * @memberof remotepay
   */
   CloverDeviceEvent = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.CloverDeviceEvent
     * @private
     */
     initialize: function() {
@@ -29,6 +31,7 @@ var remotepay_InputOption = require("../remotepay/InputOption");
     * Set the field value
     * Identifier for the request
     *
+    * @memberof remotepay.CloverDeviceEvent
     * @param {String} message 
     */
     setMessage: function(message) {
@@ -38,7 +41,8 @@ var remotepay_InputOption = require("../remotepay/InputOption");
     /**
     * Get the field value
     * Identifier for the request
-      * @return {String} 
+    * @memberof remotepay.CloverDeviceEvent
+    * @return {String} 
     */
     getMessage: function() {
       return this.message;
@@ -46,6 +50,7 @@ var remotepay_InputOption = require("../remotepay/InputOption");
 
     /**
     * Set the field value
+    * @memberof remotepay.CloverDeviceEvent
     * @param {Number} code must be an integer
     */
     setCode: function(code) {
@@ -54,6 +59,7 @@ var remotepay_InputOption = require("../remotepay/InputOption");
 
     /**
     * Get the field value
+    * @memberof remotepay.CloverDeviceEvent
     * @return {Number} must be an integer
     */
     getCode: function() {
@@ -64,7 +70,8 @@ var remotepay_InputOption = require("../remotepay/InputOption");
     * Set the field value
     * The event state
     *
-    * @param {DeviceEventState} eventState 
+    * @memberof remotepay.CloverDeviceEvent
+    * @param {remotepay.DeviceEventState} eventState 
     */
     setEventState: function(eventState) {
       this.eventState = eventState;
@@ -73,7 +80,8 @@ var remotepay_InputOption = require("../remotepay/InputOption");
     /**
     * Get the field value
     * The event state
-      * @return {DeviceEventState} 
+    * @memberof remotepay.CloverDeviceEvent
+    * @return {remotepay.DeviceEventState} 
     */
     getEventState: function() {
       return this.eventState;
@@ -83,7 +91,8 @@ var remotepay_InputOption = require("../remotepay/InputOption");
     * Set the field value
     * Available input options
     *
-    * @param {Array.<InputOption>} inputOptions An array of 
+    * @memberof remotepay.CloverDeviceEvent
+    * @param {Array.<remotepay.InputOption>} inputOptions An array of 
     */
     setInputOptions: function(inputOptions) {
       this.inputOptions = inputOptions;
@@ -92,11 +101,17 @@ var remotepay_InputOption = require("../remotepay/InputOption");
     /**
     * Get the field value
     * Available input options
-      * @return {Array.<InputOption>} An array of 
+    * @memberof remotepay.CloverDeviceEvent
+    * @return {Array.<remotepay.InputOption>} An array of 
     */
     getInputOptions: function() {
       return this.inputOptions;
     },
+
+    /**
+    * @memberof remotepay.CloverDeviceEvent
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

@@ -11,10 +11,12 @@ var base_Reference = require("../base/Reference");
 
   /**
   * @constructor
+  * @memberof employees
   */
   Employee = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof employees.Employee
     * @private
     */
     initialize: function() {
@@ -41,6 +43,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Unique identifier
     *
+    * @memberof employees.Employee
     * @param {String} id 
     */
     setId: function(id) {
@@ -50,7 +53,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof employees.Employee
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -60,6 +64,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Full name of the employee
     *
+    * @memberof employees.Employee
     * @param {String} name 
     */
     setName: function(name) {
@@ -69,7 +74,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Full name of the employee
-      * @return {String} 
+    * @memberof employees.Employee
+    * @return {String} 
     */
     getName: function() {
       return this.name;
@@ -79,6 +85,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Nickname of the employee (shows up on receipts)
     *
+    * @memberof employees.Employee
     * @param {Null|String} nickname 
     */
     setNickname: function(nickname) {
@@ -88,7 +95,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Nickname of the employee (shows up on receipts)
-      * @return {Null|String} 
+    * @memberof employees.Employee
+    * @return {Null|String} 
     */
     getNickname: function() {
       return this.nickname;
@@ -98,6 +106,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Custom ID of the employee
     *
+    * @memberof employees.Employee
     * @param {Null|String} customId 
     */
     setCustomId: function(customId) {
@@ -107,7 +116,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Custom ID of the employee
-      * @return {Null|String} 
+    * @memberof employees.Employee
+    * @return {Null|String} 
     */
     getCustomId: function() {
       return this.customId;
@@ -117,6 +127,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Email of the employee (optional)
     *
+    * @memberof employees.Employee
     * @param {Null|String} email 
     */
     setEmail: function(email) {
@@ -126,7 +137,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Email of the employee (optional)
-      * @return {Null|String} 
+    * @memberof employees.Employee
+    * @return {Null|String} 
     */
     getEmail: function() {
       return this.email;
@@ -136,6 +148,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Returns true if this employee was sent an invite to activate their account
     *
+    * @memberof employees.Employee
     * @param {Boolean} inviteSent 
     */
     setInviteSent: function(inviteSent) {
@@ -145,7 +158,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Returns true if this employee was sent an invite to activate their account
-      * @return {Boolean} 
+    * @memberof employees.Employee
+    * @return {Boolean} 
     */
     getInviteSent: function() {
       return this.inviteSent;
@@ -155,6 +169,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Timestamp of when this employee claimed their account
     *
+    * @memberof employees.Employee
     * @param {Number} claimedTime must be a long integer
     */
     setClaimedTime: function(claimedTime) {
@@ -164,7 +179,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Timestamp of when this employee claimed their account
-      * @return {Number} must be a long integer
+    * @memberof employees.Employee
+    * @return {Number} must be a long integer
     */
     getClaimedTime: function() {
       return this.claimedTime;
@@ -174,6 +190,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Timestamp of when this employee was deleted
     *
+    * @memberof employees.Employee
     * @param {Number} deletedTime must be a long integer
     */
     setDeletedTime: function(deletedTime) {
@@ -183,7 +200,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Timestamp of when this employee was deleted
-      * @return {Number} must be a long integer
+    * @memberof employees.Employee
+    * @return {Number} must be a long integer
     */
     getDeletedTime: function() {
       return this.deletedTime;
@@ -193,6 +211,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Employee PIN (hashed)
     *
+    * @memberof employees.Employee
     * @param {String} pin 
     */
     setPin: function(pin) {
@@ -202,7 +221,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Employee PIN (hashed)
-      * @return {String} 
+    * @memberof employees.Employee
+    * @return {String} 
     */
     getPin: function() {
       return this.pin;
@@ -212,6 +232,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Employee PIN
     *
+    * @memberof employees.Employee
     * @param {String} unhashedPin 
     */
     setUnhashedPin: function(unhashedPin) {
@@ -221,7 +242,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Employee PIN
-      * @return {String} 
+    * @memberof employees.Employee
+    * @return {String} 
     */
     getUnhashedPin: function() {
       return this.unhashedPin;
@@ -231,7 +253,8 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Employee System Role
     *
-    * @param {AccountRole} role 
+    * @memberof employees.Employee
+    * @param {employees.AccountRole} role 
     */
     setRole: function(role) {
       this.role = role;
@@ -240,7 +263,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Employee System Role
-      * @return {AccountRole} 
+    * @memberof employees.Employee
+    * @return {employees.AccountRole} 
     */
     getRole: function() {
       return this.role;
@@ -248,7 +272,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
-    * @param {Array.<Reference>} roles An array of 
+    * @memberof employees.Employee
+    * @param {Array.<base.Reference>} roles An array of 
     */
     setRoles: function(roles) {
       this.roles = roles;
@@ -256,7 +281,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * @return {Array.<Reference>} An array of 
+    * @memberof employees.Employee
+    * @return {Array.<base.Reference>} An array of 
     */
     getRoles: function() {
       return this.roles;
@@ -266,6 +292,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Returns true if this employee is the owner account for this merchant
     *
+    * @memberof employees.Employee
     * @param {Boolean} isOwner 
     */
     setIsOwner: function(isOwner) {
@@ -275,7 +302,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Returns true if this employee is the owner account for this merchant
-      * @return {Boolean} 
+    * @memberof employees.Employee
+    * @return {Boolean} 
     */
     getIsOwner: function() {
       return this.isOwner;
@@ -285,7 +313,8 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * This employee's shifts
     *
-    * @param {Array.<Reference>} shifts An array of 
+    * @memberof employees.Employee
+    * @param {Array.<base.Reference>} shifts An array of 
     */
     setShifts: function(shifts) {
       this.shifts = shifts;
@@ -294,7 +323,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * This employee's shifts
-      * @return {Array.<Reference>} An array of 
+    * @memberof employees.Employee
+    * @return {Array.<base.Reference>} An array of 
     */
     getShifts: function() {
       return this.shifts;
@@ -304,7 +334,8 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * This employee's payments
     *
-    * @param {Array.<Reference>} payments An array of 
+    * @memberof employees.Employee
+    * @param {Array.<base.Reference>} payments An array of 
     */
     setPayments: function(payments) {
       this.payments = payments;
@@ -313,7 +344,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * This employee's payments
-      * @return {Array.<Reference>} An array of 
+    * @memberof employees.Employee
+    * @return {Array.<base.Reference>} An array of 
     */
     getPayments: function() {
       return this.payments;
@@ -323,7 +355,8 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * This employee's orders
     *
-    * @param {Array.<Reference>} orders An array of 
+    * @memberof employees.Employee
+    * @param {Array.<base.Reference>} orders An array of 
     */
     setOrders: function(orders) {
       this.orders = orders;
@@ -332,11 +365,17 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * This employee's orders
-      * @return {Array.<Reference>} An array of 
+    * @memberof employees.Employee
+    * @return {Array.<base.Reference>} An array of 
     */
     getOrders: function() {
       return this.orders;
     },
+
+    /**
+    * @memberof employees.Employee
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {
