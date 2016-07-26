@@ -3,7 +3,7 @@ echo '* NPM Post version script that replaces version information'
 echo '* in library files, and in documentation.'
 echo '* This script will run after the the version of the library is changed via'
 echo '* the "npm version *" command is run against this repo in preparation to publish the'
-echo '* module to npm.
+echo '* module to npm.'
 echo "-  Replacing versioning information on files.  Version is now" $1
 echo "--   Replacing versioning information on Clover.js..."
 sed -i -e 's/CLOVER_CLOUD_SDK_VERSION.*\"/CLOVER_CLOUD_SDK_VERSION = \"'$1'\"/g' Clover.js
