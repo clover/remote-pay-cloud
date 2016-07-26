@@ -1,0 +1,68 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/Users/michaelhampton/.nvm/versions/node/v5.0.0/bin/node',
+1 verbose cli   '/Users/michaelhampton/.nvm/versions/node/v5.0.0/bin/npm',
+1 verbose cli   '--no-git-tag-version',
+1 verbose cli   'version',
+1 verbose cli   'major' ]
+2 info using npm@3.3.6
+3 info using node@v5.0.0
+4 verbose version not tagging in git
+5 info lifecycle remote-pay-cloud@1.0.0~preversion: remote-pay-cloud@1.0.0
+6 silly lifecycle remote-pay-cloud@1.0.0~preversion: no script for preversion, continuing
+7 verbose version.write data { name: 'remote-pay-cloud',
+7 verbose version.write   version: '1.0.0',
+7 verbose version.write   description: 'Access Clover devices through the cloud.',
+7 verbose version.write   keywords: [ 'clover', 'remotepay', 'POS', 'websocket', 'payment' ],
+7 verbose version.write   bugs: { url: 'https://github.com/clover/remote-pay-cloud-npm/issues' },
+7 verbose version.write   license: 'ISC',
+7 verbose version.write   author:
+7 verbose version.write    { name: 'clover-sdk',
+7 verbose version.write      email: 'sdk@clover.com',
+7 verbose version.write      url: 'http://www.clover.com' },
+7 verbose version.write   main: 'index.js',
+7 verbose version.write   repository:
+7 verbose version.write    { type: 'git',
+7 verbose version.write      url: 'https://github.com/clover/remote-pay-cloud-npm' },
+7 verbose version.write   scripts:
+7 verbose version.write    { test: 'echo "Error: no test specified, "$npm_package_version && exit 1',
+7 verbose version.write      postversion: 'scripts/postversion.sh "$npm_package_version"',
+7 verbose version.write      preinstall: 'scripts/generateDocs.sh' },
+7 verbose version.write   dependencies: { prototype: '*', eventemitter3: '~1.1.1' },
+7 verbose version.write   devDependencies: { jsdoc: '*' } } to package.json
+8 info lifecycle remote-pay-cloud@1.0.0~version: remote-pay-cloud@1.0.0
+9 silly lifecycle remote-pay-cloud@1.0.0~version: no script for version, continuing
+10 info lifecycle remote-pay-cloud@1.0.0~postversion: remote-pay-cloud@1.0.0
+11 verbose lifecycle remote-pay-cloud@1.0.0~postversion: unsafe-perm in lifecycle true
+12 verbose lifecycle remote-pay-cloud@1.0.0~postversion: PATH: /Users/michaelhampton/.nvm/versions/node/v5.0.0/lib/node_modules/npm/bin/node-gyp-bin:/Users/michaelhampton/sources/Clover-src/remote-pay-cloud-npm/node_modules/.bin:/Users/michaelhampton/devtools/arcanist/bin:/Users/michaelhampton/bin:/Users/michaelhampton/gradle-2.3/bin:/Users/michaelhampton/.nvm/versions/node/v5.0.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Users/michaelhampton/android-sdk/tools:/Users/michaelhampton/android-sdk/platform-tools
+13 verbose lifecycle remote-pay-cloud@1.0.0~postversion: CWD: /Users/michaelhampton/sources/Clover-src/remote-pay-cloud-npm
+14 silly lifecycle remote-pay-cloud@1.0.0~postversion: Args: [ '-c', 'scripts/postversion.sh "$npm_package_version"' ]
+15 silly lifecycle remote-pay-cloud@1.0.0~postversion: Returned: code: 2  signal: null
+16 info lifecycle remote-pay-cloud@1.0.0~postversion: Failed to exec postversion script
+17 verbose stack Error: remote-pay-cloud@1.0.0 postversion: `scripts/postversion.sh "$npm_package_version"`
+17 verbose stack Exit status 2
+17 verbose stack     at EventEmitter.<anonymous> (/Users/michaelhampton/.nvm/versions/node/v5.0.0/lib/node_modules/npm/lib/utils/lifecycle.js:233:16)
+17 verbose stack     at emitTwo (events.js:87:13)
+17 verbose stack     at EventEmitter.emit (events.js:172:7)
+17 verbose stack     at ChildProcess.<anonymous> (/Users/michaelhampton/.nvm/versions/node/v5.0.0/lib/node_modules/npm/lib/utils/spawn.js:24:14)
+17 verbose stack     at emitTwo (events.js:87:13)
+17 verbose stack     at ChildProcess.emit (events.js:172:7)
+17 verbose stack     at maybeClose (internal/child_process.js:818:16)
+17 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:211:5)
+18 verbose pkgid remote-pay-cloud@1.0.0
+19 verbose cwd /Users/michaelhampton/sources/Clover-src/remote-pay-cloud-npm
+20 error Darwin 15.6.0
+21 error argv "/Users/michaelhampton/.nvm/versions/node/v5.0.0/bin/node" "/Users/michaelhampton/.nvm/versions/node/v5.0.0/bin/npm" "--no-git-tag-version" "version" "major"
+22 error node v5.0.0
+23 error npm  v3.3.6
+24 error code ELIFECYCLE
+25 error remote-pay-cloud@1.0.0 postversion: `scripts/postversion.sh "$npm_package_version"`
+25 error Exit status 2
+26 error Failed at the remote-pay-cloud@1.0.0 postversion script 'scripts/postversion.sh "$npm_package_version"'.
+26 error This is most likely a problem with the remote-pay-cloud package,
+26 error not with npm itself.
+26 error Tell the author that this fails on your system:
+26 error     scripts/postversion.sh "$npm_package_version"
+26 error You can get their info via:
+26 error     npm owner ls remote-pay-cloud
+26 error There is likely additional logging output above.
+27 verbose exit [ 1, true ]

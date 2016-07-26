@@ -1,6 +1,6 @@
 # Clover SDK for Javascript Integration
 
-Current version: 0.0.14
+Current version: 1.0.0
 
 ## Overview
 
