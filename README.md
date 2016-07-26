@@ -1,3 +1,37 @@
+# Clover SDK for Javascript Integration
+
+<!--- 48e3d6f7-4171-4cbc-8d5c-152b4a3a67bc --->Current version: 1.0.0
+
+## Overview
+
+This SDK provides an API to allow your web application using Javascript to interface with a Clover® Mini device (https://www.clover.com/pos-hardware/mini)
+
+The API is available on [GitHub](https://github.com/clover/remote-pay-cloud-npm) for download, and can be used in conjunction with the proper browser framework from a NodeJS `require` directive, [hosted on NPM](https://www.npmjs.com/package/remote-pay-cloud)
+
+1. The remotepay/ICloverConnector is the high-level API with methods like `Sale()`, `VoidTransaction()`, `ManualRefund()`, etc.
+2. The remotepay/ICloverConnectorListener is the high-level listener API that defines callback methods like `onSaleResponse`, `onRefundPaymentResponse`, etc.
+3. Tne API includes objects that map to standard Clover objects such as `Payment`, `CardTransaction`, `Order`, etc.  These objects will match those defined in  [clover-android-sdk](https://github.com/clover/clover-android-sdk)
+
+The library requires the browser you use to support WebSockets. See [WebSocket Browser Support](http://caniuse.com/#feat=websockets).
+
+An example project [Clover Cloud Connector Example](https://github.com/clover/clover-cloud-connector-example) is available for download and deployment, or direct deployment to a Heroku server.
+
+Please report back to us any questions/comments/concerns, by emailing semi-integrations@clover.com.
+
+## Release Notes
+
+### Version 1.0.0.0
+
+A deprecated beta version of the Connector (Clover.js) is included in this version with `require` directive syntax, but will removed in the future.
+
+### Version [BETA](https://github.com/clover/remote-pay-cloud/tree/v0.0.1-beta) 
+
+The beta version includes the earliest library as well as a server with examples of the functions. 
+
+---
+
+# Quickstart
+
 Clover's cloud connector API.  Published as an NPM package.  Intended for use in a browser environment.
 
 ## At a Glance
@@ -155,4 +189,4 @@ $(window).on('beforeunload ', function () {
 ```
 
 ## Generate Documentation
-Documentation is generated when `npm install` is run.
+API documentation is generated when `npm install` is run.

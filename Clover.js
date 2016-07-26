@@ -22,6 +22,7 @@ CLOVER_CLOUD_SDK_VERSION = "0.0.14";
 /**
  * Clover API for external Systems
  *
+ * @deprecated - use the {remotepay.ICloverConnector} and {remotepay.ICloverConnectorListener} instead
  * @param {CloverConfig} [configurationIN] - the device that sends and receives messages
  * @constructor
  */

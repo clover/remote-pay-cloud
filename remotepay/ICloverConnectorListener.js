@@ -165,7 +165,7 @@ require("prototype");
     * @param {remotepay.RefundPaymentResponse} response 
     * @return void
     */
-    onRefundPaymentResponse: function(response) {
+        onRefundPaymentResponse: function(response) {
     },
 
     /**
