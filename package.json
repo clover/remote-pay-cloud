@@ -10,7 +10,7 @@
     "payment"
   ],
   "bugs": {
-    "url": "https://github.com/clover/remote-pay-cloud-npm/issues"
+    "url": "https://github.com/clover/remote-pay-cloud/issues"
   },
   "license": "ISC",
   "author": {
@@ -21,7 +21,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/clover/remote-pay-cloud-npm"
+    "url": "https://github.com/clover/remote-pay-cloud"
   },
   "scripts": {
     "test": "echo \"Error: no test specified, \"$npm_package_version && exit 1",

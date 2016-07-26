@@ -11,7 +11,7 @@ Current version: 1.0.0
 
 This SDK provides an API to allow your web application using Javascript to interface with a Clover® Mini device (https://www.clover.com/pos-hardware/mini)
 
-The API is available on [GitHub](https://github.com/clover/remote-pay-cloud-npm) for download, and can be used in conjunction with the proper browser framework from a NodeJS `require` directive, [hosted on NPM](https://www.npmjs.com/package/remote-pay-cloud)
+The API is available on [GitHub](https://github.com/clover/remote-pay-cloud) for download, and can be used in conjunction with the proper browser framework from a NodeJS `require` directive, [hosted on NPM](https://www.npmjs.com/package/remote-pay-cloud)
 
 1. The remotepay/ICloverConnector is the high-level API with methods like `Sale()`, `VoidTransaction()`, `ManualRefund()`, etc.
 2. The remotepay/ICloverConnectorListener is the high-level listener API that defines callback methods like `onSaleResponse`, `onRefundPaymentResponse`, etc.
@@ -29,7 +29,7 @@ Please report back to us any questions/comments/concerns, by emailing semi-integ
 
 A deprecated beta version of the Connector (Clover.js) is included in this version with `require` directive syntax, but will removed in the future.
 
-### Version [BETA](https://github.com/clover/remote-pay-cloud/tree/v0.0.1-beta) 
+### Version [BETA](https://github.com/clover/remote-pay-cloud-BETA/tree/BETA_Final) 
 
 The beta version includes the earliest library as well as a server with examples of the functions. 
 
