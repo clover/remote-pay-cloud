@@ -196,12 +196,27 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
         this.mapLastMessageResponse();
         this.mapFinishOk();
         this.mapFinishCancel();
+        this.mapRetrievePendingPayments();
+        //onRetrievePendingPaymentsResponse: function(retrievePendingPaymentResponse) {
+
+    },
+
+    /**
+     * @private
+     */
+    mapRetrievePendingPayments: function() {
+        this.device.on(remotemessage.Method.RETRIEVE_PENDING_PAYMENTS_RESPONSE,
+          function (message) {
+            this.processRetrievePendingPayments(message);
+        }.bind(this));
     },
 
     /**
      * This is a work in progress to generically extract a RemoteMessage from a json
      * in a generic way.  It seems to work for the cases where the mapping is correct
      * in MethodToMessage.
+     *
+     * @private
      *
      * @param remoteMessageJson
      */
@@ -665,6 +680,27 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
         verifySignatureRequest.setSignature(verifySignature.getSignature());
 
         this.delegateCloverConnectorListener.onVerifySignatureRequest(verifySignatureRequest);
+    },
+
+    /**
+     * @private
+     * @param message
+     */
+    processRetrievePendingPayments: function(message) {
+        // var retrievePendingPaymentsMessage = this.extractPayloadFromRemoteMessageJson(message);
+        var retrievePendingPaymentsMessage = new remotemessage.RetrievePendingPaymentsResponseMessage();
+        this.remoteMessageParser.parseMessage(message, retrievePendingPaymentsMessage);
+
+        var apiMessage = new remotepay.RetrievePendingPaymentsResponse();
+        apiMessage.setSuccess(retrievePendingPaymentsMessage.getStatus() == remotemessage.ResultStatus.SUCCESS);
+        apiMessage.setResult(retrievePendingPaymentsMessage.getStatus() == remotemessage.ResultStatus.SUCCESS ?
+          remotepay.ResponseCode.SUCCESS : message.getCode() == remotemessage.ResultStatus.FAIL ?
+          remotepay.ResponseCode.FAIL : remotepay.ResponseCode.ERROR );
+        apiMessage.setReason(message.getReason());
+
+        apiMessage.setPendingPaymentEntries(retrievePendingPaymentsMessage.getPendingPaymentEntries());
+
+        this.delegateCloverConnectorListener.onRetrievePendingPaymentsResponse(apiMessage);
     },
 
     /**
@@ -1621,7 +1657,14 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
         logMessage.setLogLevel(logLevel);
         logMessage.setMessages(messages);
         this.sendMessage(this.messageBuilder.buildRemoteMessageObject(logMessage));
+    },
+
+    retrievePendingPayments: function() {
+        return null;
+        var retrievePendingPaymentsMessage = new remotemessage.RetrievePendingPaymentsMessage();
+        this.sendMessage(this.messageBuilder.buildRemoteMessageObject(retrievePendingPaymentsMessage));
     }
+
 });
 
 /**

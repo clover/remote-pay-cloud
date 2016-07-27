@@ -11,6 +11,7 @@ base.Challenge = require("./Challenge");
 base.ChallengeType = require("./ChallengeType");
 base.ChallengeTypeEnum = require("./ChallengeTypeEnum");
 base.CountryInfo = require("./CountryInfo");
+base.PendingPaymentEntry = require("./PendingPaymentEntry");
 base.Point = require("./Point");
 base.Points = require("./Points");
 base.Reference = require("./Reference");
