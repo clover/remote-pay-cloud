@@ -199,4 +199,5 @@ $(window).on('beforeunload ', function () {
 ```
 
 ## Generate Documentation
-API documentation is generated when `npm install` is run.
+API documentation is generated when `npm install` is run. 
+[Online Docs](http://clover.github.io/remote-pay-cloud/1.0.0-RC1/)
