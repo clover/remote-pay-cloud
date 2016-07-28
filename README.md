@@ -15,11 +15,16 @@ The API is available on [GitHub](https://github.com/clover/remote-pay-cloud) for
 
 1. The remotepay/ICloverConnector is the high-level API with methods like `Sale()`, `VoidTransaction()`, `ManualRefund()`, etc.
 2. The remotepay/ICloverConnectorListener is the high-level listener API that defines callback methods like `onSaleResponse`, `onRefundPaymentResponse`, etc.
-3. Tne API includes objects that map to standard Clover objects such as `Payment`, `CardTransaction`, `Order`, etc.  These objects will match those defined in  [clover-android-sdk](https://github.com/clover/clover-android-sdk)
+3. The API includes objects that map to standard Clover objects such as `Payment`, `CardTransaction`, `Order`, etc.  These objects will match those defined in  [clover-android-sdk](https://github.com/clover/clover-android-sdk)
 
 The library requires the browser you use to support WebSockets. See [WebSocket Browser Support](http://caniuse.com/#feat=websockets).
 
-An example project [Clover Cloud Connector Example](https://github.com/clover/clover-cloud-connector-example) is available for download and deployment, or direct deployment to a Heroku server.
+### Examples
+#### Application
+A sale/refund UI example project [Clover Cloud Connector Example](https://github.com/clover/clover-cloud-connector-example) is available for download and deployment, or direct deployment to a Heroku server.
+
+#### Example Framework
+A example project composed of small examples [Clover Cloud Connector Unit Examples](https://github.com/clover/clover-cloud-connector-unit-examples) is available for download and deployment, or direct deployment to a Heroku server.
 
 Please report back to us any questions/comments/concerns, by emailing semi-integrations@clover.com.
 
