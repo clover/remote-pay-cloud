@@ -32,7 +32,6 @@ var CloudMethod = require("./CloudMethod.js");
 // See the package.json postversion script, which maps to scripts/postversion.sh
 // Do not change this or the versioning may not reflect the npm version correctly.
 CLOVER_CLOUD_SDK_VERSION = "1.0.0-RC1";
-CLOVER_CLOUD_SDK_RELEASE_CANDIDATE_VERSION = "";
 
 /**
  *  Interface to the Clover remote-pay API.
@@ -1596,8 +1595,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
      */
     SDKInfo: function() {
         var sdkInfo = CloverConnectorImpl.RemoteSourceSDK + ":" +
-          CLOVER_CLOUD_SDK_VERSION +
-          CLOVER_CLOUD_SDK_RELEASE_CANDIDATE_VERSION;
+          CLOVER_CLOUD_SDK_VERSION;
         return sdkInfo;
     },
 

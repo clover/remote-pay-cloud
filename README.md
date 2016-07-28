@@ -25,7 +25,7 @@ Please report back to us any questions/comments/concerns, by emailing semi-integ
 
 ## Release Notes
 
-### Version 1.0.0.0
+### Version 1.0.0-RC1
 
 A deprecated beta version of the Connector (Clover.js) is included in this version with `require` directive syntax, but will removed in the future.
 

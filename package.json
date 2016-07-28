@@ -30,9 +30,9 @@
   },
   "dependencies": {
     "prototype": "*",
-    "eventemitter3": "~1.1.1"
+    "eventemitter3": "~1.1.1",
+    "jsdoc": "*"
   },
   "devDependencies": {
-    "jsdoc": "*"
   }
 }
