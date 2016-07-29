@@ -158,6 +158,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
             }
         } catch(e) {
             var errorEvent = new remotepay.CloverDeviceErrorEvent();
+            errorEvent.setType(remotepay.ErrorType.COMMUNICATION);
             errorEvent.setCode(remotepay.DeviceErrorEventCode.UnknownError);
             try {
                 if (e && e.message) {
@@ -196,6 +197,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
         this.mapLastMessageResponse();
         this.mapFinishOk();
         this.mapFinishCancel();
+        this.mapTxStartResponse();
     },
 
     /**
@@ -295,9 +297,10 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
             this.delegateCloverConnectorListener.onDisconnected();
         }.bind(this));
         this.device.on(WebSocketDevice.DEVICE_ERROR, function (event) {
-            // todo: Will figure out error codes later
+            // Will figure out error codes later
             log.debug(event);
             var deviceErrorEvent = new remotepay.CloverDeviceErrorEvent();
+            deviceErrorEvent.setType(ErrorType.COMMUNICATION);
             //deviceErrorEvent.setCode(DeviceErrorEventCode.AccessDenied);
             this.delegateCloverConnectorListener.onDeviceError(deviceErrorEvent);
         }.bind(this));
@@ -311,16 +314,16 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
             // Will figure out error codes later
             log.debug(event);
             var deviceErrorEvent = new remotepay.CloverDeviceErrorEvent();
+            deviceErrorEvent.setType(remotepay.ErrorType.EXCEPTION);
             //deviceErrorEvent.setCode(DeviceErrorEventCode.AccessDenied);
-            deviceErrorEvent.setMessage(JSON.stringify(event));
             this.delegateCloverConnectorListener.onDeviceError(deviceErrorEvent);
         }.bind(this));
         this.device.on(WebSocketDevice.CONNECTION_ERROR, function (message) {
             // Will figure out error codes later
             log.debug(message);
             var deviceErrorEvent = new remotepay.CloverDeviceErrorEvent();
+            deviceErrorEvent.setType(remotepayErrorType.COMMUNICATION);
             //deviceErrorEvent.setCode(DeviceErrorEventCode.AccessDenied);
-            deviceErrorEvent.setMessage(message);
             this.delegateCloverConnectorListener.onDeviceError(deviceErrorEvent);
         }.bind(this));
         this.device.on(WebSocketDevice.CONNECTION_STOLEN, function (message) {
@@ -333,9 +336,9 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
             log.debug(message);
             // Will figure out error codes later
             var deviceErrorEvent = new remotepay.CloverDeviceErrorEvent();
+            deviceErrorEvent.setType(remotepay.ErrorType.COMMUNICATION);
             deviceErrorEvent.setMessage(message);
             deviceErrorEvent.setCode(remotepay.DeviceErrorEventCode.AccessDenied);
-            deviceErrorEvent.setType(remotepay.ErrorType.COMMUNICATION);
             this.delegateCloverConnectorListener.onDeviceError(deviceErrorEvent);
         }.bind(this));
     },
@@ -559,6 +562,52 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
     /**
      * @private
      */
+    mapTxStartResponse: function() {
+        this.device.on(remotemessage.Method.TX_START_RESPONSE, function (message) {
+            log.debug(message);
+            var txStartResponseMessage = new remotemessage.TxStartResponseMessage();
+            this.remoteMessageParser.parseMessage(message, txStartResponseMessage);
+
+            if(!txStartResponseMessage.getSuccess()) {
+                if (this.lastRequest instanceof remotepay.PreAuthRequest) {
+                    var preAuthResponse = new remotepay.PreAuthResponse();
+                    this.populateTxStartResponseToBaseResponse(txStartResponseMessage, preAuthResponse);
+                    this.delegateCloverConnectorListener.onPreAuthResponse(preAuthResponse);
+                } else if (this.lastRequest instanceof remotepay.AuthRequest) {
+                    var authResponse = new remotepay.AuthResponse();
+                    this.populateTxStartResponseToBaseResponse(txStartResponseMessage, authResponse);
+                    this.delegateCloverConnectorListener.onAuthResponse(authResponse);
+                } else if (this.lastRequest instanceof remotepay.SaleRequest) {
+                    var saleResponse = new remotepay.SaleResponse();
+                    this.populateTxStartResponseToBaseResponse(txStartResponseMessage, saleResponse);
+                    this.delegateCloverConnectorListener.onSaleResponse(saleResponse);
+                } else if (this.lastRequest instanceof remotepay.ManualRefundRequest) {
+                    var manualRefundResponse = new remotepay.ManualRefundResponse();
+                    this.populateTxStartResponseToBaseResponse(txStartResponseMessage, manualRefundResponse);
+                    this.delegateCloverConnectorListener.onManualRefundResponse(manualRefundResponse);
+                }
+                this.lastRequest = null;
+                this.endOfOperationCancel();
+            }
+        }.bind(this));
+    },
+
+    /**
+     * @private
+     * @param {TxStartResponseMessage} txStartResponseMessage
+     * @param {BaseResponse} response
+     */
+    populateTxStartResponseToBaseResponse: function(txStartResponseMessage, response) {
+        response.setSuccess(txStartResponseMessage.getSuccess());
+        var result = remotepay.ResponseCode[txStartResponseMessage.getResult()];
+        if(!result)result = remotepay.ResponseCode.FAIL;
+        response.setResult(result);
+        response.setReason(txStartResponseMessage.getExternalPaymentId());
+    },
+
+    /**
+     * @private
+     */
     mapFinishOk: function() {
         this.device.on(remotemessage.Method.FINISH_OK, function (message) {
             log.debug(message);
@@ -622,7 +671,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
     mapFinishCancel: function() {
         this.device.on(remotemessage.Method.FINISH_CANCEL, function (message) {
             log.debug(message);
-            /**
+            /*
              * This goes in a deserialization class
              * It will be the RemoteMessageParser
              */
@@ -650,7 +699,6 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
             this.endOfOperationCancel();
         }.bind(this));
     },
-
 
     /**
      * @private
@@ -748,7 +796,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
      */
     populateCancelResponse: function(response) {
         response.setSuccess(false);
-        response.setResult(ResponseCode.CANCEL);
+        response.setResult(remotepay.ResponseCode.CANCEL);
     },
 
     /**
@@ -757,12 +805,19 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
     initializeConnection: function() {
         if (this.configuration.oauthToken) {
             if(!this.configuration.merchantId) {
-                this.configuration.merchantId = this.cloverOAuth.getURLParams()["merchant_id"];
+                if(!this.cloverOAuth) {
+                    // We must have the merchant id.  This will make the merchant log in again.
+                    this.configuration.oauthToken = this.getAuthToken(); // calls initializeConnection
+                    return;
+                } else {
+                    this.configuration.merchantId = this.cloverOAuth.getURLParams()["merchant_id"];
+                }
             }
             if(!this.configuration.merchantId) {
                 // could not connect, not enough info
                 var errorResponse1 = new remotepay.CloverDeviceErrorEvent();
-                errorResponse1.setCode(DeviceErrorEventCode.InvalidConfig);
+                errorResponse1.setCode(remotepay.DeviceErrorEventCode.InvalidConfig);
+                errorResponse1.setType(remotepay.ErrorType.VALIDATION);
                 errorResponse1.setMessage("Cannot determine merchant to use.  " +
                   "Configuration is missing merchant id (merchantId)");
                 this.delegateCloverConnectorListener.onDeviceError(errorResponse1);
@@ -778,7 +833,8 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
             } else {
                 // Note: Could default to www.clover.com here
                 var errorResponse2 = new remotepay.CloverDeviceErrorEvent();
-                errorResponse2.setCode(DeviceErrorEventCode.InvalidConfig);
+                errorResponse2.setCode(remotepay.DeviceErrorEventCode.InvalidConfig);
+                errorResponse2.setType(remotepay.ErrorType.VALIDATION);
                 errorResponse2.setMessage("Cannot determine domain to use.  " +
                   "Configuration is missing domain (domain)");
                 this.delegateCloverConnectorListener.onDeviceError(errorResponse2);
@@ -787,7 +843,8 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
             this.configuration.oauthToken = this.getAuthToken(); // calls initializeConnection
         } else {
             var errorResponse = new remotepay.CloverDeviceErrorEvent();
-            errorResponse.setCode(DeviceErrorEventCode.InvalidConfig);
+            errorResponse.setCode(remotepay.DeviceErrorEventCode.InvalidConfig);
+            errorResponse2.setType(remotepay.ErrorType.VALIDATION);
             errorResponse.setMessage("Cannot determine client id or domain to use.  " +
               "Configuration is missing domain (domain), or client id (clientId)");
             this.delegateCloverConnectorListener.onDeviceError(errorResponse);
@@ -813,7 +870,8 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
                   }.bind(this),
                   function (error) {
                       var errorResponse1 = new remotepay.CloverDeviceErrorEvent();
-                      errorResponse1.setCode(DeviceErrorEventCode.UnknownError);
+                      errorResponse1.setType(remotepay.ErrorType.COMMUNICATION);
+                      errorResponse1.setCode(remotepay.DeviceErrorEventCode.UnknownError);
                       errorResponse1.setMessage(error);
                       this.delegateCloverConnectorListener.onDeviceError(errorResponse1)
                   }.bind(this)
@@ -824,7 +882,8 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
         } else {
             // could not connect, not enough info
             var errorResponse = new remotepay.CloverDeviceErrorEvent();
-            errorResponse.setCode(DeviceErrorEventCode.InvalidConfig);
+            errorResponse.setCode(remotepay.DeviceErrorEventCode.InvalidConfig);
+            errorResponse.setType(remotepay.ErrorType.VALIDATION);
             errorResponse.setMessage("Cannot determine device to use.  " +
               "Configuration is missing device serial id (deviceSerialId)");
             this.delegateCloverConnectorListener.onDeviceError(errorResponse);
@@ -840,7 +899,8 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
         var myDevice = devices[this.configuration.deviceSerialId];
         if (null == myDevice) {
             var errorResponse = new remotepay.CloverDeviceErrorEvent();
-            errorResponse.setCode(DeviceErrorEventCode.InvalidConfig);
+            errorResponse.setType(remotepay.ErrorType.VALIDATION);
+            errorResponse.setCode(remotepay.DeviceErrorEventCode.InvalidConfig);
             errorResponse.setMessage("Cannot determine device to use.  " +
               "Device " + this.configuration.deviceSerialId + " not in set returned.");
             this.delegateCloverConnectorListener.onDeviceError(errorResponse);
@@ -913,7 +973,8 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
           function(data) { this.deviceNotificationSent(endpoints, deviceContactInfo, data);}.bind(this),
           function(error) {
               var errorResponse = new remotepay.CloverDeviceErrorEvent();
-              errorResponse.setCode(DeviceErrorEventCode.SendNotificationFailure);
+              errorResponse.setType(remotepay.ErrorType.COMMUNICATION);
+              errorResponse.setCode(remotepay.DeviceErrorEventCode.SendNotificationFailure);
               errorResponse.setMessage("Error sending alert to device." + error);
               this.delegateCloverConnectorListener.onDeviceError(errorResponse);
           }.bind(this),
@@ -961,7 +1022,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
             this.device.contactDevice(this.configuration.deviceURL);
         } else {
             var errorResponse = new remotepay.CloverDeviceErrorEvent();
-            errorResponse.setCode(DeviceErrorEventCode.SendNotificationFailure);
+            errorResponse.setCode(remotepay.DeviceErrorEventCode.SendNotificationFailure);
             errorResponse.setMessage("Error sending alert to device. Device is not connected to server.");
             this.delegateCloverConnectorListener.onDeviceError(errorResponse);
         }
