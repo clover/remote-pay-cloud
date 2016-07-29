@@ -48,7 +48,14 @@ JSONToCustomObject = Class.create({
                         } else if(this.isArray(metaInfo)) {
                             var elementType = this.getArrayType(metaInfo);
                             var jsonArray = jsonobject[key];
-                            // This must be an array
+                            // This must be an array.
+
+                            // The json from remote-pay has this structure for arrays:
+                            // foo: { elements : [ element ] }
+                            // handle this here
+                            if(jsonArray.hasOwnProperty("elements")) {
+                                jsonArray = jsonArray.elements;
+                            }
                             if(Array.isArray(jsonArray)) {
                                 customobject[key] = [];
                                 for (var count = 0; count < jsonArray.length; count++) {
@@ -61,7 +68,7 @@ JSONToCustomObject = Class.create({
                             } else {
                                 // Warn.  We will be tolerant...
                                 log.warn("Passed json contains field " + key + " of type " + typeof jsonArray  +
-                                  ".  The field on the object is of type array.  No assignment will be made");
+                                  ".  The field on the object is of type array.  No assignment will be made", jsonArray, jsonobject);
                                 if(attachUnknownProperties) {
                                     customobject["x_" + key] = jsonArray;
                                 }
