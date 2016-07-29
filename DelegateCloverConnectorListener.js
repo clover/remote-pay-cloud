@@ -298,6 +298,22 @@ DelegateCloverConnectorListener = Class.create(ICloverConnectorListener, {
     },
 
     /**
+     * Called in response to a retrievePendingPayment(...) request.
+     *
+     * @param {remotepay.RetrievePendingPaymentsResponse} response
+     * @return void
+     */
+    onRetrievePendingPaymentsResponse: function(response) {
+        this.listenersource.getListeners().forEach(function (element) {
+            try {
+                element.onRetrievePendingPaymentsResponse(response);
+            } catch (error) {
+                this.handleError("onRetrievePendingPaymentsResponse", element, error);
+            }
+        }.bind(this));
+    },
+
+    /**
      * 
      * @param functionName
      * @param listener

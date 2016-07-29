@@ -41,6 +41,7 @@ remotepay.ResponseCode = require("./ResponseCode");
 remotepay.ResponseCodeEnum = require("./ResponseCodeEnum");
 remotepay.ResultStatus = require("./ResultStatus");
 remotepay.ResultStatusEnum = require("./ResultStatusEnum");
+remotepay.RetrievePendingPaymentsResponse = require("./RetrievePendingPaymentsResponse");
 remotepay.SaleRequest = require("./SaleRequest");
 remotepay.SaleResponse = require("./SaleResponse");
 remotepay.TipAdded = require("./TipAdded");

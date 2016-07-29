@@ -208,6 +208,16 @@ require("prototype");
     * @return void
     */
     onPreAuthResponse: function(response) {
+    },
+
+    /**
+    * Called in response to a retrievePendingPayment(...) request.
+    * @memberof remotepay.ICloverConnectorListener
+    *
+    * @param {remotepay.RetrievePendingPaymentsResponse} response
+    * @return void
+    */
+    onRetrievePendingPaymentsResponse: function(response) {
     }
   });
 

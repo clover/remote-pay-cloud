@@ -54,6 +54,8 @@ MethodToMessage[remotemessage.Method.ORDER_ACTION_REMOVE_LINE_ITEM] = OrderActio
 MethodToMessage[remotemessage.Method.ORDER_ACTION_RESPONSE] = OrderActionResponseMessage;
 MethodToMessage[remotemessage.Method.VAULT_CARD] = VaultCardMessage;
 MethodToMessage[remotemessage.Method.VAULT_CARD_RESPONSE] = VaultCardResponseMessage;
+MethodToMessage[remotemessage.Method.RETRIEVE_PENDING_PAYMENTS] = RetrievePendingPaymentsMessage;
+MethodToMessage[remotemessage.Method.RETRIEVE_PENDING_PAYMENTS_RESPONSE] = RetrievePendingPaymentsResponseMessage;
 
 //
 // Expose the module.

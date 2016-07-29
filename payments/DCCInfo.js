@@ -6,6 +6,7 @@
 
 // Prototype.js required
 require("prototype");
+var base_Reference = require("../base/Reference");
 
   /**
   * @constructor
@@ -26,6 +27,8 @@ require("prototype");
       this.exchangeRate = undefined;
       this.marginRatePercentage = undefined;
       this.exchangeRateSourceName = undefined;
+      this.exchangeRateSourceTimeStamp = undefined;
+      this.paymentRef = undefined;
     },
 
     /**
@@ -176,6 +179,48 @@ require("prototype");
     },
 
     /**
+    * Set the field value
+    * Exchange Rate Source Timestamp
+    *
+    * @memberof payments.DCCInfo
+    * @param {String} exchangeRateSourceTimeStamp 
+    */
+    setExchangeRateSourceTimeStamp: function(exchangeRateSourceTimeStamp) {
+      this.exchangeRateSourceTimeStamp = exchangeRateSourceTimeStamp;
+    },
+
+    /**
+    * Get the field value
+    * Exchange Rate Source Timestamp
+    * @memberof payments.DCCInfo
+    * @return {String} 
+    */
+    getExchangeRateSourceTimeStamp: function() {
+      return this.exchangeRateSourceTimeStamp;
+    },
+
+    /**
+    * Set the field value
+    * The payment with which this DCC info is associated
+    *
+    * @memberof payments.DCCInfo
+    * @param {base.Reference} paymentRef 
+    */
+    setPaymentRef: function(paymentRef) {
+      this.paymentRef = paymentRef;
+    },
+
+    /**
+    * Get the field value
+    * The payment with which this DCC info is associated
+    * @memberof payments.DCCInfo
+    * @return {base.Reference} 
+    */
+    getPaymentRef: function() {
+      return this.paymentRef;
+    },
+
+    /**
     * @memberof payments.DCCInfo
     * @private
     */
@@ -212,6 +257,10 @@ DCCInfo._meta_.fields["marginRatePercentage"] = {};
 DCCInfo._meta_.fields["marginRatePercentage"].type = String;
 DCCInfo._meta_.fields["exchangeRateSourceName"] = {};
 DCCInfo._meta_.fields["exchangeRateSourceName"].type = String;
+DCCInfo._meta_.fields["exchangeRateSourceTimeStamp"] = {};
+DCCInfo._meta_.fields["exchangeRateSourceTimeStamp"].type = String;
+DCCInfo._meta_.fields["paymentRef"] = {};
+DCCInfo._meta_.fields["paymentRef"].type = base_Reference;
 
 //
 // Expose the module.

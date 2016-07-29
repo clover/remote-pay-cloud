@@ -356,6 +356,16 @@ require("prototype");
     * @return void
     */
     initializeConnection: function() {
+    },
+
+    /**
+    * Used to request a list of pending payments that have been taken offline, but
+  * haven't processed yet. will trigger an onRetrievePendingPaymentsResponse callback
+    * @memberof remotepay.ICloverConnector
+    *
+    * @return {Null} 
+    */
+    retrievePendingPayments: function() {
     }
   });
 

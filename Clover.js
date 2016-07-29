@@ -17,11 +17,12 @@ var log = require('./Logger.js').create();
 // !!NOTE!!  The following is automatically updated to reflect the npm version.
 // See the package.json postversion script, which maps to scripts/postversion.sh
 // Do not change this or the versioning may not reflect the npm version correctly.
-CLOVER_CLOUD_SDK_VERSION = "0.0.14";
+CLOVER_CLOUD_SDK_VERSION = "1.1.0-RC1";
 
 /**
  * Clover API for external Systems
  *
+ * @deprecated - use the {remotepay.ICloverConnector} and {remotepay.ICloverConnectorListener} instead
  * @param {CloverConfig} [configurationIN] - the device that sends and receives messages
  * @constructor
  */
