@@ -15,4 +15,4 @@ sed -i -e 's/Current version.*$/Current version: '$1'/g' README.md
 # gh-pages branch and adding a directory that corresponds to your version, with the docs for the version.
 sed -i -e 's/clover\.github\.io\/remote-pay-cloud\/.*\//clover\.github\.io\/remote-pay-cloud\/'$1'\//g' README.md
 echo "- Committing changes to versions..."
-#git add -A && git commit -m "$1"
+git add -A && git commit -m "$1"
