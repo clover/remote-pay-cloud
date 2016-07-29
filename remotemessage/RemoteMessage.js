@@ -11,10 +11,12 @@ var remotemessage_RemoteMessageType = require("../remotemessage/RemoteMessageTyp
 
   /**
   * @constructor
+  * @memberof remotemessage
   */
   RemoteMessage = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.RemoteMessage
     * @private
     */
     initialize: function() {
@@ -32,6 +34,7 @@ var remotemessage_RemoteMessageType = require("../remotemessage/RemoteMessageTyp
     * Set the field value
     * Identifier for the message
     *
+    * @memberof remotemessage.RemoteMessage
     * @param {String} id 
     */
     setId: function(id) {
@@ -41,7 +44,8 @@ var remotemessage_RemoteMessageType = require("../remotemessage/RemoteMessageTyp
     /**
     * Get the field value
     * Identifier for the message
-      * @return {String} 
+    * @memberof remotemessage.RemoteMessage
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -49,7 +53,8 @@ var remotemessage_RemoteMessageType = require("../remotemessage/RemoteMessageTyp
 
     /**
     * Set the field value
-    * @param {RemoteMessageType} type 
+    * @memberof remotemessage.RemoteMessage
+    * @param {remotemessage.RemoteMessageType} type 
     */
     setType: function(type) {
       this.type = type;
@@ -57,7 +62,8 @@ var remotemessage_RemoteMessageType = require("../remotemessage/RemoteMessageTyp
 
     /**
     * Get the field value
-    * @return {RemoteMessageType} 
+    * @memberof remotemessage.RemoteMessage
+    * @return {remotemessage.RemoteMessageType} 
     */
     getType: function() {
       return this.type;
@@ -67,6 +73,7 @@ var remotemessage_RemoteMessageType = require("../remotemessage/RemoteMessageTyp
     * Set the field value
     * The package name of the sending Clover api
     *
+    * @memberof remotemessage.RemoteMessage
     * @param {String} packageName 
     */
     setPackageName: function(packageName) {
@@ -76,7 +83,8 @@ var remotemessage_RemoteMessageType = require("../remotemessage/RemoteMessageTyp
     /**
     * Get the field value
     * The package name of the sending Clover api
-      * @return {String} 
+    * @memberof remotemessage.RemoteMessage
+    * @return {String} 
     */
     getPackageName: function() {
       return this.packageName;
@@ -86,7 +94,8 @@ var remotemessage_RemoteMessageType = require("../remotemessage/RemoteMessageTyp
     * Set the field value
     * The name of the business message being sent
     *
-    * @param {Method} method 
+    * @memberof remotemessage.RemoteMessage
+    * @param {remotemessage.Method} method 
     */
     setMethod: function(method) {
       this.method = method;
@@ -95,7 +104,8 @@ var remotemessage_RemoteMessageType = require("../remotemessage/RemoteMessageTyp
     /**
     * Get the field value
     * The name of the business message being sent
-      * @return {Method} 
+    * @memberof remotemessage.RemoteMessage
+    * @return {remotemessage.Method} 
     */
     getMethod: function() {
       return this.method;
@@ -105,6 +115,7 @@ var remotemessage_RemoteMessageType = require("../remotemessage/RemoteMessageTyp
     * Set the field value
     * The payload message being sent.  Interpreted based on the method.
     *
+    * @memberof remotemessage.RemoteMessage
     * @param {String} payload 
     */
     setPayload: function(payload) {
@@ -114,7 +125,8 @@ var remotemessage_RemoteMessageType = require("../remotemessage/RemoteMessageTyp
     /**
     * Get the field value
     * The payload message being sent.  Interpreted based on the method.
-      * @return {String} 
+    * @memberof remotemessage.RemoteMessage
+    * @return {String} 
     */
     getPayload: function() {
       return this.payload;
@@ -124,6 +136,7 @@ var remotemessage_RemoteMessageType = require("../remotemessage/RemoteMessageTyp
     * Set the field value
     * The identifier for the source SDK.  This identifies the connector.
     *
+    * @memberof remotemessage.RemoteMessage
     * @param {String} remoteSourceSDK 
     */
     setRemoteSourceSDK: function(remoteSourceSDK) {
@@ -133,7 +146,8 @@ var remotemessage_RemoteMessageType = require("../remotemessage/RemoteMessageTyp
     /**
     * Get the field value
     * The identifier for the source SDK.  This identifies the connector.
-      * @return {String} 
+    * @memberof remotemessage.RemoteMessage
+    * @return {String} 
     */
     getRemoteSourceSDK: function() {
       return this.remoteSourceSDK;
@@ -143,6 +157,7 @@ var remotemessage_RemoteMessageType = require("../remotemessage/RemoteMessageTyp
     * Set the field value
     * The identifier for the sending application.  This identifies the app.
     *
+    * @memberof remotemessage.RemoteMessage
     * @param {String} remoteApplicationID 
     */
     setRemoteApplicationID: function(remoteApplicationID) {
@@ -152,11 +167,17 @@ var remotemessage_RemoteMessageType = require("../remotemessage/RemoteMessageTyp
     /**
     * Get the field value
     * The identifier for the sending application.  This identifies the app.
-      * @return {String} 
+    * @memberof remotemessage.RemoteMessage
+    * @return {String} 
     */
     getRemoteApplicationID: function() {
       return this.remoteApplicationID;
     },
+
+    /**
+    * @memberof remotemessage.RemoteMessage
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

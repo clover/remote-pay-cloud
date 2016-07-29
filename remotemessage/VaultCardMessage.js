@@ -11,10 +11,13 @@ var remotemessage_Message = require("../remotemessage/Message");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   VaultCardMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.VaultCardMessage
     * @private
     */
     initialize: function($super) {
@@ -28,6 +31,7 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * Allowed entry methods
     *
+    * @memberof remotemessage.VaultCardMessage
     * @param {Number} cardEntryMethods must be an integer
     */
     setCardEntryMethods: function(cardEntryMethods) {
@@ -37,7 +41,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * Allowed entry methods
-      * @return {Number} must be an integer
+    * @memberof remotemessage.VaultCardMessage
+    * @return {Number} must be an integer
     */
     getCardEntryMethods: function() {
       return this.cardEntryMethods;

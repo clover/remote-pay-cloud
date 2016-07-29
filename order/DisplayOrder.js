@@ -12,10 +12,12 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
 
   /**
   * @constructor
+  * @memberof order
   */
   DisplayOrder = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof order.DisplayOrder
     * @private
     */
     initialize: function() {
@@ -40,6 +42,7 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
     * Set the field value
     * Unique identifier
     *
+    * @memberof order.DisplayOrder
     * @param {String} id 
     */
     setId: function(id) {
@@ -49,7 +52,8 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof order.DisplayOrder
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -59,6 +63,7 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
     * Set the field value
     * Currency of this order
     *
+    * @memberof order.DisplayOrder
     * @param {String} currency 
     */
     setCurrency: function(currency) {
@@ -68,7 +73,8 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
     /**
     * Get the field value
     * Currency of this order
-      * @return {String} 
+    * @memberof order.DisplayOrder
+    * @return {String} 
     */
     getCurrency: function() {
       return this.currency;
@@ -78,6 +84,7 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
     * Set the field value
     * The employee associated with this order
     *
+    * @memberof order.DisplayOrder
     * @param {String} employee 
     */
     setEmployee: function(employee) {
@@ -87,7 +94,8 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
     /**
     * Get the field value
     * The employee associated with this order
-      * @return {String} 
+    * @memberof order.DisplayOrder
+    * @return {String} 
     */
     getEmployee: function() {
       return this.employee;
@@ -97,6 +105,7 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
     * Set the field value
     * Formatted subtotal of the order
     *
+    * @memberof order.DisplayOrder
     * @param {String} subtotal 
     */
     setSubtotal: function(subtotal) {
@@ -106,7 +115,8 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
     /**
     * Get the field value
     * Formatted subtotal of the order
-      * @return {String} 
+    * @memberof order.DisplayOrder
+    * @return {String} 
     */
     getSubtotal: function() {
       return this.subtotal;
@@ -116,6 +126,7 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
     * Set the field value
     * Formatted tax of the order
     *
+    * @memberof order.DisplayOrder
     * @param {String} tax 
     */
     setTax: function(tax) {
@@ -125,7 +136,8 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
     /**
     * Get the field value
     * Formatted tax of the order
-      * @return {String} 
+    * @memberof order.DisplayOrder
+    * @return {String} 
     */
     getTax: function() {
       return this.tax;
@@ -135,6 +147,7 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
     * Set the field value
     * Formatted total of the order
     *
+    * @memberof order.DisplayOrder
     * @param {String} total 
     */
     setTotal: function(total) {
@@ -144,7 +157,8 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
     /**
     * Get the field value
     * Formatted total of the order
-      * @return {String} 
+    * @memberof order.DisplayOrder
+    * @return {String} 
     */
     getTotal: function() {
       return this.total;
@@ -152,6 +166,7 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
 
     /**
     * Set the field value
+    * @memberof order.DisplayOrder
     * @param {Null|String} title 
     */
     setTitle: function(title) {
@@ -160,6 +175,7 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
 
     /**
     * Get the field value
+    * @memberof order.DisplayOrder
     * @return {Null|String} 
     */
     getTitle: function() {
@@ -168,6 +184,7 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
 
     /**
     * Set the field value
+    * @memberof order.DisplayOrder
     * @param {Null|String} note 
     */
     setNote: function(note) {
@@ -176,6 +193,7 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
 
     /**
     * Get the field value
+    * @memberof order.DisplayOrder
     * @return {Null|String} 
     */
     getNote: function() {
@@ -186,6 +204,7 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
     * Set the field value
     * Optional service charge name (gratuity) applied to this order
     *
+    * @memberof order.DisplayOrder
     * @param {Null|String} serviceChargeName 
     */
     setServiceChargeName: function(serviceChargeName) {
@@ -195,7 +214,8 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
     /**
     * Get the field value
     * Optional service charge name (gratuity) applied to this order
-      * @return {Null|String} 
+    * @memberof order.DisplayOrder
+    * @return {Null|String} 
     */
     getServiceChargeName: function() {
       return this.serviceChargeName;
@@ -205,6 +225,7 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
     * Set the field value
     * Optional service charge amount (gratuity) applied to this order
     *
+    * @memberof order.DisplayOrder
     * @param {Null|String} serviceChargeAmount 
     */
     setServiceChargeAmount: function(serviceChargeAmount) {
@@ -214,7 +235,8 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
     /**
     * Get the field value
     * Optional service charge amount (gratuity) applied to this order
-      * @return {Null|String} 
+    * @memberof order.DisplayOrder
+    * @return {Null|String} 
     */
     getServiceChargeAmount: function() {
       return this.serviceChargeAmount;
@@ -222,7 +244,8 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
 
     /**
     * Set the field value
-    * @param {Array.<DisplayDiscount>} discounts An array of 
+    * @memberof order.DisplayOrder
+    * @param {Array.<order.DisplayDiscount>} discounts An array of 
     */
     setDiscounts: function(discounts) {
       this.discounts = discounts;
@@ -230,7 +253,8 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
 
     /**
     * Get the field value
-    * @return {Array.<DisplayDiscount>} An array of 
+    * @memberof order.DisplayOrder
+    * @return {Array.<order.DisplayDiscount>} An array of 
     */
     getDiscounts: function() {
       return this.discounts;
@@ -238,7 +262,8 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
 
     /**
     * Set the field value
-    * @param {Array.<DisplayLineItem>} lineItems An array of 
+    * @memberof order.DisplayOrder
+    * @param {Array.<order.DisplayLineItem>} lineItems An array of 
     */
     setLineItems: function(lineItems) {
       this.lineItems = lineItems;
@@ -246,7 +271,8 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
 
     /**
     * Get the field value
-    * @return {Array.<DisplayLineItem>} An array of 
+    * @memberof order.DisplayOrder
+    * @return {Array.<order.DisplayLineItem>} An array of 
     */
     getLineItems: function() {
       return this.lineItems;
@@ -256,6 +282,7 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
     * Set the field value
     * Formatted amount remaining
     *
+    * @memberof order.DisplayOrder
     * @param {String} amountRemaining 
     */
     setAmountRemaining: function(amountRemaining) {
@@ -265,7 +292,8 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
     /**
     * Get the field value
     * Formatted amount remaining
-      * @return {String} 
+    * @memberof order.DisplayOrder
+    * @return {String} 
     */
     getAmountRemaining: function() {
       return this.amountRemaining;
@@ -275,7 +303,8 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
     * Set the field value
     * Payments that were made for this order
     *
-    * @param {Array.<DisplayPayment>} payments An array of 
+    * @memberof order.DisplayOrder
+    * @param {Array.<order.DisplayPayment>} payments An array of 
     */
     setPayments: function(payments) {
       this.payments = payments;
@@ -284,11 +313,17 @@ var order_DisplayLineItem = require("../order/DisplayLineItem");
     /**
     * Get the field value
     * Payments that were made for this order
-      * @return {Array.<DisplayPayment>} An array of 
+    * @memberof order.DisplayOrder
+    * @return {Array.<order.DisplayPayment>} An array of 
     */
     getPayments: function() {
       return this.payments;
     },
+
+    /**
+    * @memberof order.DisplayOrder
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

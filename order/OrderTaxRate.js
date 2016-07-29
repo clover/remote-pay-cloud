@@ -9,10 +9,12 @@ require("prototype");
 
   /**
   * @constructor
+  * @memberof order
   */
   OrderTaxRate = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof order.OrderTaxRate
     * @private
     */
     initialize: function() {
@@ -24,6 +26,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof order.OrderTaxRate
     * @param {String} id 
     */
     setId: function(id) {
@@ -32,6 +35,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof order.OrderTaxRate
     * @return {String} 
     */
     getId: function() {
@@ -40,6 +44,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof order.OrderTaxRate
     * @param {String} name 
     */
     setName: function(name) {
@@ -48,6 +53,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof order.OrderTaxRate
     * @return {String} 
     */
     getName: function() {
@@ -56,6 +62,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof order.OrderTaxRate
     * @param {Number} amount must be a long integer
     */
     setAmount: function(amount) {
@@ -64,11 +71,17 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof order.OrderTaxRate
     * @return {Number} must be a long integer
     */
     getAmount: function() {
       return this.amount;
     },
+
+    /**
+    * @memberof order.OrderTaxRate
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

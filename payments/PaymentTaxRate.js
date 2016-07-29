@@ -10,10 +10,12 @@ var base_Reference = require("../base/Reference");
 
   /**
   * @constructor
+  * @memberof payments
   */
   PaymentTaxRate = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof payments.PaymentTaxRate
     * @private
     */
     initialize: function() {
@@ -28,6 +30,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof payments.PaymentTaxRate
     * @param {String} id 
     */
     setId: function(id) {
@@ -36,6 +39,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof payments.PaymentTaxRate
     * @return {String} 
     */
     getId: function() {
@@ -46,7 +50,8 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * The payment with which the payment tax rate is associated
     *
-    * @param {Reference} paymentRef 
+    * @memberof payments.PaymentTaxRate
+    * @param {base.Reference} paymentRef 
     */
     setPaymentRef: function(paymentRef) {
       this.paymentRef = paymentRef;
@@ -55,7 +60,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * The payment with which the payment tax rate is associated
-      * @return {Reference} 
+    * @memberof payments.PaymentTaxRate
+    * @return {base.Reference} 
     */
     getPaymentRef: function() {
       return this.paymentRef;
@@ -63,6 +69,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof payments.PaymentTaxRate
     * @param {String} name 
     */
     setName: function(name) {
@@ -71,6 +78,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof payments.PaymentTaxRate
     * @return {String} 
     */
     getName: function() {
@@ -79,6 +87,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof payments.PaymentTaxRate
     * @param {Number} rate must be a long integer
     */
     setRate: function(rate) {
@@ -87,6 +96,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof payments.PaymentTaxRate
     * @return {Number} must be a long integer
     */
     getRate: function() {
@@ -95,6 +105,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof payments.PaymentTaxRate
     * @param {Boolean} isDefault 
     */
     setIsDefault: function(isDefault) {
@@ -103,6 +114,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof payments.PaymentTaxRate
     * @return {Boolean} 
     */
     getIsDefault: function() {
@@ -111,6 +123,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof payments.PaymentTaxRate
     * @param {Number} taxableAmount must be a long integer
     */
     setTaxableAmount: function(taxableAmount) {
@@ -119,11 +132,17 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof payments.PaymentTaxRate
     * @return {Number} must be a long integer
     */
     getTaxableAmount: function() {
       return this.taxableAmount;
     },
+
+    /**
+    * @memberof payments.PaymentTaxRate
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

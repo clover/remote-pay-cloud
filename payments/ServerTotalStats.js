@@ -10,10 +10,12 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
   /**
   * @constructor
+  * @memberof payments
   */
   ServerTotalStats = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof payments.ServerTotalStats
     * @private
     */
     initialize: function() {
@@ -33,6 +35,7 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
     * Set the field value
     * Employee corresponding to these stats
     *
+    * @memberof payments.ServerTotalStats
     * @param {String} employeeId 
     */
     setEmployeeId: function(employeeId) {
@@ -42,7 +45,8 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
     /**
     * Get the field value
     * Employee corresponding to these stats
-      * @return {String} 
+    * @memberof payments.ServerTotalStats
+    * @return {String} 
     */
     getEmployeeId: function() {
       return this.employeeId;
@@ -50,6 +54,7 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
     /**
     * Set the field value
+    * @memberof payments.ServerTotalStats
     * @param {String} employeeName 
     */
     setEmployeeName: function(employeeName) {
@@ -58,6 +63,7 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
     /**
     * Get the field value
+    * @memberof payments.ServerTotalStats
     * @return {String} 
     */
     getEmployeeName: function() {
@@ -66,7 +72,8 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
     /**
     * Set the field value
-    * @param {BatchTotalType} sales 
+    * @memberof payments.ServerTotalStats
+    * @param {payments.BatchTotalType} sales 
     */
     setSales: function(sales) {
       this.sales = sales;
@@ -74,7 +81,8 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
     /**
     * Get the field value
-    * @return {BatchTotalType} 
+    * @memberof payments.ServerTotalStats
+    * @return {payments.BatchTotalType} 
     */
     getSales: function() {
       return this.sales;
@@ -82,7 +90,8 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
     /**
     * Set the field value
-    * @param {BatchTotalType} refunds 
+    * @memberof payments.ServerTotalStats
+    * @param {payments.BatchTotalType} refunds 
     */
     setRefunds: function(refunds) {
       this.refunds = refunds;
@@ -90,7 +99,8 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
     /**
     * Get the field value
-    * @return {BatchTotalType} 
+    * @memberof payments.ServerTotalStats
+    * @return {payments.BatchTotalType} 
     */
     getRefunds: function() {
       return this.refunds;
@@ -98,7 +108,8 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
     /**
     * Set the field value
-    * @param {BatchTotalType} net 
+    * @memberof payments.ServerTotalStats
+    * @param {payments.BatchTotalType} net 
     */
     setNet: function(net) {
       this.net = net;
@@ -106,7 +117,8 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
     /**
     * Get the field value
-    * @return {BatchTotalType} 
+    * @memberof payments.ServerTotalStats
+    * @return {payments.BatchTotalType} 
     */
     getNet: function() {
       return this.net;
@@ -114,7 +126,8 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
     /**
     * Set the field value
-    * @param {BatchTotalType} giftCardLoads 
+    * @memberof payments.ServerTotalStats
+    * @param {payments.BatchTotalType} giftCardLoads 
     */
     setGiftCardLoads: function(giftCardLoads) {
       this.giftCardLoads = giftCardLoads;
@@ -122,7 +135,8 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
     /**
     * Get the field value
-    * @return {BatchTotalType} 
+    * @memberof payments.ServerTotalStats
+    * @return {payments.BatchTotalType} 
     */
     getGiftCardLoads: function() {
       return this.giftCardLoads;
@@ -130,7 +144,8 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
     /**
     * Set the field value
-    * @param {BatchTotalType} giftCardCashOuts 
+    * @memberof payments.ServerTotalStats
+    * @param {payments.BatchTotalType} giftCardCashOuts 
     */
     setGiftCardCashOuts: function(giftCardCashOuts) {
       this.giftCardCashOuts = giftCardCashOuts;
@@ -138,7 +153,8 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
     /**
     * Get the field value
-    * @return {BatchTotalType} 
+    * @memberof payments.ServerTotalStats
+    * @return {payments.BatchTotalType} 
     */
     getGiftCardCashOuts: function() {
       return this.giftCardCashOuts;
@@ -146,7 +162,8 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
     /**
     * Set the field value
-    * @param {BatchTotalType} tax 
+    * @memberof payments.ServerTotalStats
+    * @param {payments.BatchTotalType} tax 
     */
     setTax: function(tax) {
       this.tax = tax;
@@ -154,7 +171,8 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
     /**
     * Get the field value
-    * @return {BatchTotalType} 
+    * @memberof payments.ServerTotalStats
+    * @return {payments.BatchTotalType} 
     */
     getTax: function() {
       return this.tax;
@@ -162,7 +180,8 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
     /**
     * Set the field value
-    * @param {BatchTotalType} tips 
+    * @memberof payments.ServerTotalStats
+    * @param {payments.BatchTotalType} tips 
     */
     setTips: function(tips) {
       this.tips = tips;
@@ -170,11 +189,17 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
     /**
     * Get the field value
-    * @return {BatchTotalType} 
+    * @memberof payments.ServerTotalStats
+    * @return {payments.BatchTotalType} 
     */
     getTips: function() {
       return this.tips;
     },
+
+    /**
+    * @memberof payments.ServerTotalStats
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

@@ -10,10 +10,13 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
 
   /**
   * @constructor
+  * @augments remotepay.BaseRequest
+  * @memberof remotepay
   */
   TipAdjustAuthRequest = Class.create(remotepay_BaseRequest, {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.TipAdjustAuthRequest
     * @private
     */
     initialize: function($super) {
@@ -28,6 +31,7 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     * Set the field value
     * Amount paid in tips
     *
+    * @memberof remotepay.TipAdjustAuthRequest
     * @param {Number} tipAmount must be a long integer
     */
     setTipAmount: function(tipAmount) {
@@ -37,7 +41,8 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     /**
     * Get the field value
     * Amount paid in tips
-      * @return {Number} must be a long integer
+    * @memberof remotepay.TipAdjustAuthRequest
+    * @return {Number} must be a long integer
     */
     getTipAmount: function() {
       return this.tipAmount;
@@ -47,6 +52,7 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     * Set the field value
     * Unique identifier
     *
+    * @memberof remotepay.TipAdjustAuthRequest
     * @param {String} orderId 
     */
     setOrderId: function(orderId) {
@@ -56,7 +62,8 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof remotepay.TipAdjustAuthRequest
+    * @return {String} 
     */
     getOrderId: function() {
       return this.orderId;
@@ -66,6 +73,7 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     * Set the field value
     * Unique identifier
     *
+    * @memberof remotepay.TipAdjustAuthRequest
     * @param {String} paymentId 
     */
     setPaymentId: function(paymentId) {
@@ -75,7 +83,8 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof remotepay.TipAdjustAuthRequest
+    * @return {String} 
     */
     getPaymentId: function() {
       return this.paymentId;

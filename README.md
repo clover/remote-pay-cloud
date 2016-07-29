@@ -1,8 +1,8 @@
-Repository for Clover's cloud connector API.  Published as an NPM package.  Intended for use in a browser environment.
+Clover's cloud connector API.  Published as an NPM package.  Intended for use in a browser environment.
 
-##At a Glance 
-Make a sale.
+## At a Glance
 
+### Make a sale.
 ```
 require("prototype");
 var $ = require('jQuery');
@@ -11,10 +11,10 @@ var clover = require("remote-pay-cloud");
 var log = clover.Logger.create();
 
 var connector = new clover.CloverConnectorFactory().createICloverConnector({
-    "oauthToken": "1e7a9007-141a-293d-f41d-f603f0842138",
-    "merchantId": "BBFF8NBCXEMDT",
-    "clientId": "3RPTN642FHXTC",
-    "deviceSerialId": "C031UQ52340045",
+    "oauthToken": "1e7a9007-141a-293d-f41d-f603f0842139",
+    "merchantId": "BBFF8NBCXEMDV",
+    "clientId": "3RPTN642FHXTX",
+    "deviceSerialId": "C031UQ52340015",
     "domain": "https://dev1.dev.clover.com/"
 });
 
@@ -56,71 +56,74 @@ $(window).on('beforeunload ', function () {
 });
 ```
 
-###To make a payment using the Clover Cloud Connector API
-####Create the Clover object.
-Import the protoype library and the Clover Cloud Connector library.
+### To make a payment using the High Level Cloud API
+#### Import the libraries needed to create the clover object.
 ```
 require("prototype");
 var clover = require("remote-pay-cloud");
 ```
-The connector can be configured in different ways, but some values are required.
-
-#####Examples of configurations for the Connector object:
-
-* With a clientID, the device serial id, and the domain
+#### Create the Clover Connector object.
+This will require gathering the configuration information to create the connector.  In this example, the configuration is hard coded.  The creation of the connector is done using the connector factory.
 ```
-{
+var connector = new clover.CloverConnectorFactory().createICloverConnector({
+    "merchantId": "BBFF8NBCXEMDT",
     "clientId": "3RPTN642FHXTC",
     "deviceSerialId": "C031UQ52340045",
-    "domain": "https://sandbox.dev.clover.com/"
+    "domain": "https://dev1.dev.clover.com/"
+});
+```
+
+There are several ways the Clover Connector object can be configured.
+
+Examples of configurations that can be used when creating the Clover Connector object:
+
+1. With a clientID, domain, merchantId, deviceSerialId
+```
+{
+  "clientId" : "3BZPZ6A6FQ8ZM",
+  "domain" : "https://sandbox.dev.clover.com/",
+  "merchantId" : "VKYQ0RVGMYHRS",
+  "deviceSerialId" : "C021UQ52341078"
 }
 ```
-The application page will be redirected to the domain, where the merchant will be prompted to log in.  If the application (represented by the clientId) is not installed, the merchant will be presented with the application page, and prompted to install it.  After the installation, the merchant will be directed to the application page. 
-
-* With a oauthToken (an authentication token), merchantId, clientId, deviceSerialId and domain
+1. With a oauthToken, domain, merchantId, clientId, deviceSerialId
 ```
 {
   "oauthToken" : "6e6313e8-fe33-8662-7ff2-3a6690e0ff14",
+  "domain" : "https://sandbox.dev.clover.com/",
   "merchantId" : "VKYQ0RVGMYHRS",
-  "clientId": "3RPTN642FHXTC",
-  "deviceSerialId" : "C021UQ52341078",
-  "domain" : "https://sandbox.dev.clover.com/"
+  "clientId" : "3BZPZ6A6FQ8ZM",
+  "deviceSerialId" : "C021UQ52341078"
 }
 ```
-The application will launch directly without a redirect.
 
-####Define the listener
-* In this example, we define a custom ICloverConnectorListener that accepts a connector instance.
+#### Define a listener that will listen for events produced byt the Clover Connector.
+The functions implemented will be called as the connector encounters the events.  These functions can be found in the clover.remotepay.ICloverConnectorListener. 
 ```
 var ExampleCloverConnectorListener = Class.create( clover.remotepay.ICloverConnectorListener, {
+    // This function overrides the basic prototype.js initialization function.  This example
+    // expects that a coler connector implementation instance is passed to the created listener.
     initialize: function (cloverConnector) {
         this.cloverConnector = cloverConnector;
     },
-    ...
-```
-* The listener waits to be told that the connection is ready, then begins a sale by creating the request for $100
-```
-    ...
+    // The ICloverConnectorListener function that is called when the device is ready to be used.
+    // This example starts up a sale for $100
     onReady: function (merchantInfo) {
         var saleRequest = new clover.remotepay.SaleRequest();
         saleRequest.setExternalId(clover.CloverID.getNewId());
         saleRequest.setAmount(10000);
         this.cloverConnector.sale(saleRequest);
     },
-    ...
-```
-* If the sale involves collecting a signature for verification, the listener just automatically accepts it.
-```
-    ...
+    // The ICloverConnectorListener function that is called when the device needs to have a signature
+    // accepted, or rejected.
+    // This example accepts the signature, sight unseen
     onVerifySignatureRequest: function (request) {
         log.info(request);
         this.cloverConnector.acceptSignature(request);
     },
-    ...
-```
-* When the sale is complete, the listener is notified with the sale response. 
-```
-    ...
+    // The ICloverConnectorListener function that is called when a sale request is completed.
+    // This example logs the response, and disposes of the connector.  If the response is not an expected 
+    // type, it will log an error.
     onSaleResponse: function (response) {
         log.info(response);
         connector.dispose();
@@ -129,22 +132,19 @@ var ExampleCloverConnectorListener = Class.create( clover.remotepay.ICloverConne
             console.error(response);
         }
     }
-    ...
+}
 ```
-The listener definition is complete. 
-####Create the instance, link it to the connector, and initiate the connection
-* Create an instance of the listener and add it to the connector.  Then initialize the connector which makes it initiate the process to contact the device.  It is at this point that the oauth process begins, and the page may redirect to allow the merchant to login.
+
+#### Add the listener instance to the connector, and initialize the connection to the device.
 ```
-    ...
-    var connectorListener = new ExampleCloverConnectorListener(connector);
-    connector.addCloverConnectorListener(connectorListener);
-    connector.initializeConnection();
-    ...
+var connectorListener = new ExampleCloverConnectorListener(connector);
+connector.addCloverConnectorListener(connectorListener);
+connector.initializeConnection();
 ```
-####Properly close the connector if the browser window is closed
-* Add a hook to properly close the connector if the browser window is closed.  If the connector is not closed properly, the device will remain paired until it times out.  Note that this implementation uses JQuery to attach the shutdown hook.
+
+#### Clean up the connection on exit of the window.  This should be done with all connectors.
+This example uses jQuery to add a hook for the window `beforeunload` event that ensures that the connector is displosed of.
 ```
-...
 $(window).on('beforeunload ', function () {
     try {
         connector.dispose();
@@ -152,8 +152,7 @@ $(window).on('beforeunload ', function () {
         console.log(e);
     }
 });
-...
 ```
-####Disclaimer
-This is a beta release and will not be supported long term. There may be a few incompatible changes in the general 
-release, which is coming soon.
+
+## Generate Documentation
+Documentation is generated when `npm install` is run.

@@ -12,10 +12,13 @@ var remotepay_TransactionRequest = require("../remotepay/TransactionRequest");
 /** A authorization request */
   /**
   * @constructor
+  * @augments remotepay.TransactionRequest
+  * @memberof remotepay
   */
   AuthRequest = Class.create(remotepay_TransactionRequest, {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.AuthRequest
     * @private
     */
     initialize: function($super) {
@@ -32,6 +35,7 @@ var remotepay_TransactionRequest = require("../remotepay/TransactionRequest");
     * Set the field value
     * Do not allow cash back
     *
+    * @memberof remotepay.AuthRequest
     * @param {Boolean|Null} disableCashback 
     */
     setDisableCashback: function(disableCashback) {
@@ -41,7 +45,8 @@ var remotepay_TransactionRequest = require("../remotepay/TransactionRequest");
     /**
     * Get the field value
     * Do not allow cash back
-      * @return {Boolean|Null} 
+    * @memberof remotepay.AuthRequest
+    * @return {Boolean|Null} 
     */
     getDisableCashback: function() {
       return this.disableCashback;
@@ -51,6 +56,7 @@ var remotepay_TransactionRequest = require("../remotepay/TransactionRequest");
     * Set the field value
     * Amount paid in tips
     *
+    * @memberof remotepay.AuthRequest
     * @param {Number|Null} taxAmount must be a long integer, 
     */
     setTaxAmount: function(taxAmount) {
@@ -60,7 +66,8 @@ var remotepay_TransactionRequest = require("../remotepay/TransactionRequest");
     /**
     * Get the field value
     * Amount paid in tips
-      * @return {Number|Null} must be a long integer, 
+    * @memberof remotepay.AuthRequest
+    * @return {Number|Null} must be a long integer, 
     */
     getTaxAmount: function() {
       return this.taxAmount;
@@ -70,6 +77,7 @@ var remotepay_TransactionRequest = require("../remotepay/TransactionRequest");
     * Set the field value
     * If true then offline payments can be accepted
     *
+    * @memberof remotepay.AuthRequest
     * @param {Boolean|Null} allowOfflinePayment 
     */
     setAllowOfflinePayment: function(allowOfflinePayment) {
@@ -79,7 +87,8 @@ var remotepay_TransactionRequest = require("../remotepay/TransactionRequest");
     /**
     * Get the field value
     * If true then offline payments can be accepted
-      * @return {Boolean|Null} 
+    * @memberof remotepay.AuthRequest
+    * @return {Boolean|Null} 
     */
     getAllowOfflinePayment: function() {
       return this.allowOfflinePayment;
@@ -89,6 +98,7 @@ var remotepay_TransactionRequest = require("../remotepay/TransactionRequest");
     * Set the field value
     * If true then offline payments will be approved without a prompt.  Currently must be true.
     *
+    * @memberof remotepay.AuthRequest
     * @param {Boolean|Null} approveOfflinePaymentWithoutPrompt 
     */
     setApproveOfflinePaymentWithoutPrompt: function(approveOfflinePaymentWithoutPrompt) {
@@ -98,7 +108,8 @@ var remotepay_TransactionRequest = require("../remotepay/TransactionRequest");
     /**
     * Get the field value
     * If true then offline payments will be approved without a prompt.  Currently must be true.
-      * @return {Boolean|Null} 
+    * @memberof remotepay.AuthRequest
+    * @return {Boolean|Null} 
     */
     getApproveOfflinePaymentWithoutPrompt: function() {
       return this.approveOfflinePaymentWithoutPrompt;

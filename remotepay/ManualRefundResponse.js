@@ -11,10 +11,13 @@ var payments_Credit = require("../payments/Credit");
 
   /**
   * @constructor
+  * @augments remotepay.BaseResponse
+  * @memberof remotepay
   */
   ManualRefundResponse = Class.create(remotepay_BaseResponse, {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.ManualRefundResponse
     * @private
     */
     initialize: function($super) {
@@ -27,7 +30,8 @@ var payments_Credit = require("../payments/Credit");
     * Set the field value
     * The credit that resulted from the request
     *
-    * @param {Credit} credit 
+    * @memberof remotepay.ManualRefundResponse
+    * @param {payments.Credit} credit 
     */
     setCredit: function(credit) {
       this.credit = credit;
@@ -36,7 +40,8 @@ var payments_Credit = require("../payments/Credit");
     /**
     * Get the field value
     * The credit that resulted from the request
-      * @return {Credit} 
+    * @memberof remotepay.ManualRefundResponse
+    * @return {payments.Credit} 
     */
     getCredit: function() {
       return this.credit;

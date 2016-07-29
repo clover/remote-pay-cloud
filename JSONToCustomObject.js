@@ -73,6 +73,13 @@ JSONToCustomObject = Class.create({
                                     customobject["x_" + key] = jsonArray;
                                 }
                             }
+                        } else if(this.isObject(metaInfo)) {
+                            // This is a base object.
+                            customobject[key] = {};
+                            var copied = this.transfertoObject(jsonobject[key], customobject[key], true);
+                            if (copied) {
+                                customobject[key] = copied;
+                            }
                         } else {
                             var fieldType = metaInfo.type;
                             // Might be an enum.  Check here.
@@ -89,7 +96,7 @@ JSONToCustomObject = Class.create({
                                 }
                                 var copied = this.transfertoObject(jsonobject[key], customobject[key], attachUnknownProperties);
                                 if (copied) {
-                                    customobject[key][count] = copied;
+                                    customobject[key] = copied;
                                 }
                             }
                         }
@@ -116,6 +123,11 @@ JSONToCustomObject = Class.create({
     isArray: function(metaInfo) {
         var variableType = metaInfo.type;
         return ( variableType ===  Array );
+    },
+
+    isObject: function(metaInfo){
+        var variableType = metaInfo.type;
+        return ( variableType ===  Object );
     },
 
     getArrayType: function(metaInfo) {

@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof payments
+* @enum {string}
+*/
 CVVResult = {
   SUCCESS : "SUCCESS",
   FAILURE : "FAILURE",

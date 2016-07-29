@@ -11,10 +11,13 @@ var remotemessage_Message = require("../remotemessage/Message");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   OpenCashDrawerMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.OpenCashDrawerMessage
     * @private
     */
     initialize: function($super) {
@@ -28,6 +31,7 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * The reason the cash drawer was opened.
     *
+    * @memberof remotemessage.OpenCashDrawerMessage
     * @param {String} reason 
     */
     setReason: function(reason) {
@@ -37,7 +41,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * The reason the cash drawer was opened.
-      * @return {String} 
+    * @memberof remotemessage.OpenCashDrawerMessage
+    * @return {String} 
     */
     getReason: function() {
       return this.reason;

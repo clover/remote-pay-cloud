@@ -13,10 +13,13 @@ var order_Order = require("../order/Order");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   TxStartRequestMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.TxStartRequestMessage
     * @private
     */
     initialize: function($super) {
@@ -32,6 +35,7 @@ var order_Order = require("../order/Order");
     * Set the field value
     * If true, then tips on the screen should not be displayed.
     *
+    * @memberof remotemessage.TxStartRequestMessage
     * @param {Boolean} suppressOnScreenTips 
     */
     setSuppressOnScreenTips: function(suppressOnScreenTips) {
@@ -41,7 +45,8 @@ var order_Order = require("../order/Order");
     /**
     * Get the field value
     * If true, then tips on the screen should not be displayed.
-      * @return {Boolean} 
+    * @memberof remotemessage.TxStartRequestMessage
+    * @return {Boolean} 
     */
     getSuppressOnScreenTips: function() {
       return this.suppressOnScreenTips;
@@ -51,7 +56,8 @@ var order_Order = require("../order/Order");
     * Set the field value
     * The order
     *
-    * @param {Order} order 
+    * @memberof remotemessage.TxStartRequestMessage
+    * @param {order.Order} order 
     */
     setOrder: function(order) {
       this.order = order;
@@ -60,7 +66,8 @@ var order_Order = require("../order/Order");
     /**
     * Get the field value
     * The order
-      * @return {Order} 
+    * @memberof remotemessage.TxStartRequestMessage
+    * @return {order.Order} 
     */
     getOrder: function() {
       return this.order;
@@ -70,7 +77,8 @@ var order_Order = require("../order/Order");
     * Set the field value
     * The payIntent
     *
-    * @param {PayIntent} payIntent 
+    * @memberof remotemessage.TxStartRequestMessage
+    * @param {remotemessage.PayIntent} payIntent 
     */
     setPayIntent: function(payIntent) {
       this.payIntent = payIntent;
@@ -79,7 +87,8 @@ var order_Order = require("../order/Order");
     /**
     * Get the field value
     * The payIntent
-      * @return {PayIntent} 
+    * @memberof remotemessage.TxStartRequestMessage
+    * @return {remotemessage.PayIntent} 
     */
     getPayIntent: function() {
       return this.payIntent;

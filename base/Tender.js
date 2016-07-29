@@ -9,10 +9,12 @@ require("prototype");
 
   /**
   * @constructor
+  * @memberof base
   */
   Tender = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof base.Tender
     * @private
     */
     initialize: function() {
@@ -32,6 +34,7 @@ require("prototype");
     * Set the field value
     * Unique identifier
     *
+    * @memberof base.Tender
     * @param {String} id 
     */
     setId: function(id) {
@@ -41,7 +44,8 @@ require("prototype");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof base.Tender
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -51,6 +55,7 @@ require("prototype");
     * Set the field value
     * If this merchant tender is editable
     *
+    * @memberof base.Tender
     * @param {Boolean} editable 
     */
     setEditable: function(editable) {
@@ -60,7 +65,8 @@ require("prototype");
     /**
     * Get the field value
     * If this merchant tender is editable
-      * @return {Boolean} 
+    * @memberof base.Tender
+    * @return {Boolean} 
     */
     getEditable: function() {
       return this.editable;
@@ -70,6 +76,7 @@ require("prototype");
     * Set the field value
     * Label Key
     *
+    * @memberof base.Tender
     * @param {String} labelKey 
     */
     setLabelKey: function(labelKey) {
@@ -79,7 +86,8 @@ require("prototype");
     /**
     * Get the field value
     * Label Key
-      * @return {String} 
+    * @memberof base.Tender
+    * @return {String} 
     */
     getLabelKey: function() {
       return this.labelKey;
@@ -89,6 +97,7 @@ require("prototype");
     * Set the field value
     * Label Key
     *
+    * @memberof base.Tender
     * @param {String} label 
     */
     setLabel: function(label) {
@@ -98,7 +107,8 @@ require("prototype");
     /**
     * Get the field value
     * Label Key
-      * @return {String} 
+    * @memberof base.Tender
+    * @return {String} 
     */
     getLabel: function() {
       return this.label;
@@ -108,6 +118,7 @@ require("prototype");
     * Set the field value
     * If this tender opens the cash drawer
     *
+    * @memberof base.Tender
     * @param {Boolean} opensCashDrawer 
     */
     setOpensCashDrawer: function(opensCashDrawer) {
@@ -117,7 +128,8 @@ require("prototype");
     /**
     * Get the field value
     * If this tender opens the cash drawer
-      * @return {Boolean} 
+    * @memberof base.Tender
+    * @return {Boolean} 
     */
     getOpensCashDrawer: function() {
       return this.opensCashDrawer;
@@ -127,6 +139,7 @@ require("prototype");
     * Set the field value
     * Allow tipping on payment from tender
     *
+    * @memberof base.Tender
     * @param {Boolean} supportsTipping 
     */
     setSupportsTipping: function(supportsTipping) {
@@ -136,7 +149,8 @@ require("prototype");
     /**
     * Get the field value
     * Allow tipping on payment from tender
-      * @return {Boolean} 
+    * @memberof base.Tender
+    * @return {Boolean} 
     */
     getSupportsTipping: function() {
       return this.supportsTipping;
@@ -146,6 +160,7 @@ require("prototype");
     * Set the field value
     * If this merchant tender is enabled
     *
+    * @memberof base.Tender
     * @param {Boolean} enabled 
     */
     setEnabled: function(enabled) {
@@ -155,7 +170,8 @@ require("prototype");
     /**
     * Get the field value
     * If this merchant tender is enabled
-      * @return {Boolean} 
+    * @memberof base.Tender
+    * @return {Boolean} 
     */
     getEnabled: function() {
       return this.enabled;
@@ -165,6 +181,7 @@ require("prototype");
     * Set the field value
     * If this merchant tender is visible
     *
+    * @memberof base.Tender
     * @param {Boolean} visible 
     */
     setVisible: function(visible) {
@@ -174,7 +191,8 @@ require("prototype");
     /**
     * Get the field value
     * If this merchant tender is visible
-      * @return {Boolean} 
+    * @memberof base.Tender
+    * @return {Boolean} 
     */
     getVisible: function() {
       return this.visible;
@@ -184,6 +202,7 @@ require("prototype");
     * Set the field value
     * Label Key
     *
+    * @memberof base.Tender
     * @param {String} instructions 
     */
     setInstructions: function(instructions) {
@@ -193,11 +212,17 @@ require("prototype");
     /**
     * Get the field value
     * Label Key
-      * @return {String} 
+    * @memberof base.Tender
+    * @return {String} 
     */
     getInstructions: function() {
       return this.instructions;
     },
+
+    /**
+    * @memberof base.Tender
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

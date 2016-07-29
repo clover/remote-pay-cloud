@@ -10,10 +10,12 @@ var base_Reference = require("../base/Reference");
 
   /**
   * @constructor
+  * @memberof base
   */
   ServiceCharge = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof base.ServiceCharge
     * @private
     */
     initialize: function() {
@@ -30,6 +32,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Unique identifier
     *
+    * @memberof base.ServiceCharge
     * @param {String} id 
     */
     setId: function(id) {
@@ -39,7 +42,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof base.ServiceCharge
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -49,7 +53,8 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * The order with which the service charge is associated
     *
-    * @param {Reference} orderRef 
+    * @memberof base.ServiceCharge
+    * @param {base.Reference} orderRef 
     */
     setOrderRef: function(orderRef) {
       this.orderRef = orderRef;
@@ -58,7 +63,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * The order with which the service charge is associated
-      * @return {Reference} 
+    * @memberof base.ServiceCharge
+    * @return {base.Reference} 
     */
     getOrderRef: function() {
       return this.orderRef;
@@ -68,6 +74,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Service charge name
     *
+    * @memberof base.ServiceCharge
     * @param {String} name 
     */
     setName: function(name) {
@@ -77,7 +84,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Service charge name
-      * @return {String} 
+    * @memberof base.ServiceCharge
+    * @return {String} 
     */
     getName: function() {
       return this.name;
@@ -87,6 +95,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * If this service charge is enabled
     *
+    * @memberof base.ServiceCharge
     * @param {Boolean} enabled 
     */
     setEnabled: function(enabled) {
@@ -96,7 +105,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * If this service charge is enabled
-      * @return {Boolean} 
+    * @memberof base.ServiceCharge
+    * @return {Boolean} 
     */
     getEnabled: function() {
       return this.enabled;
@@ -106,6 +116,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * DEPRECATED
     *
+    * @memberof base.ServiceCharge
     * @param {Number} percentage must be a long integer
     */
     setPercentage: function(percentage) {
@@ -115,7 +126,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * DEPRECATED
-      * @return {Number} must be a long integer
+    * @memberof base.ServiceCharge
+    * @return {Number} must be a long integer
     */
     getPercentage: function() {
       return this.percentage;
@@ -125,6 +137,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Percent to charge times 10000, e.g. 12.5% will be 125000
     *
+    * @memberof base.ServiceCharge
     * @param {Number} percentageDecimal must be a long integer
     */
     setPercentageDecimal: function(percentageDecimal) {
@@ -134,11 +147,17 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Percent to charge times 10000, e.g. 12.5% will be 125000
-      * @return {Number} must be a long integer
+    * @memberof base.ServiceCharge
+    * @return {Number} must be a long integer
     */
     getPercentageDecimal: function() {
       return this.percentageDecimal;
     },
+
+    /**
+    * @memberof base.ServiceCharge
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

@@ -10,10 +10,12 @@ var base_Point = require("../base/Point");
 
   /**
   * @constructor
+  * @memberof base
   */
   Points = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof base.Points
     * @private
     */
     initialize: function() {
@@ -23,7 +25,8 @@ var base_Point = require("../base/Point");
 
     /**
     * Set the field value
-    * @param {Array.<Point>} points An array of 
+    * @memberof base.Points
+    * @param {Array.<base.Point>} points An array of 
     */
     setPoints: function(points) {
       this.points = points;
@@ -31,11 +34,17 @@ var base_Point = require("../base/Point");
 
     /**
     * Get the field value
-    * @return {Array.<Point>} An array of 
+    * @memberof base.Points
+    * @return {Array.<base.Point>} An array of 
     */
     getPoints: function() {
       return this.points;
     },
+
+    /**
+    * @memberof base.Points
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

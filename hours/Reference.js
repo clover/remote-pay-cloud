@@ -10,10 +10,12 @@ var hours_ReferenceType = require("../hours/ReferenceType");
 
   /**
   * @constructor
+  * @memberof hours
   */
   Reference = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof hours.Reference
     * @private
     */
     initialize: function() {
@@ -26,6 +28,7 @@ var hours_ReferenceType = require("../hours/ReferenceType");
     * Set the field value
     * ID of the reference that uses this set of hours
     *
+    * @memberof hours.Reference
     * @param {String} id 
     */
     setId: function(id) {
@@ -35,7 +38,8 @@ var hours_ReferenceType = require("../hours/ReferenceType");
     /**
     * Get the field value
     * ID of the reference that uses this set of hours
-      * @return {String} 
+    * @memberof hours.Reference
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -45,7 +49,8 @@ var hours_ReferenceType = require("../hours/ReferenceType");
     * Set the field value
     * External type that these hours reference
     *
-    * @param {ReferenceType} type 
+    * @memberof hours.Reference
+    * @param {hours.ReferenceType} type 
     */
     setType: function(type) {
       this.type = type;
@@ -54,11 +59,17 @@ var hours_ReferenceType = require("../hours/ReferenceType");
     /**
     * Get the field value
     * External type that these hours reference
-      * @return {ReferenceType} 
+    * @memberof hours.Reference
+    * @return {hours.ReferenceType} 
     */
     getType: function() {
       return this.type;
     },
+
+    /**
+    * @memberof hours.Reference
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

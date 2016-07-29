@@ -10,10 +10,12 @@ var device_RomBuildType = require("../device/RomBuildType");
 
   /**
   * @constructor
+  * @memberof device
   */
   Rom = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof device.Rom
     * @private
     */
     initialize: function() {
@@ -33,6 +35,7 @@ var device_RomBuildType = require("../device/RomBuildType");
     * Set the field value
     * Unique identifier
     *
+    * @memberof device.Rom
     * @param {String} id 
     */
     setId: function(id) {
@@ -42,7 +45,8 @@ var device_RomBuildType = require("../device/RomBuildType");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof device.Rom
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -52,6 +56,7 @@ var device_RomBuildType = require("../device/RomBuildType");
     * Set the field value
     * When the ROM was created
     *
+    * @memberof device.Rom
     * @param {Number} createdAt must be a long integer
     */
     setCreatedAt: function(createdAt) {
@@ -61,7 +66,8 @@ var device_RomBuildType = require("../device/RomBuildType");
     /**
     * Get the field value
     * When the ROM was created
-      * @return {Number} must be a long integer
+    * @memberof device.Rom
+    * @return {Number} must be a long integer
     */
     getCreatedAt: function() {
       return this.createdAt;
@@ -69,6 +75,7 @@ var device_RomBuildType = require("../device/RomBuildType");
 
     /**
     * Set the field value
+    * @memberof device.Rom
     * @param {Number} version must be a long integer
     */
     setVersion: function(version) {
@@ -77,6 +84,7 @@ var device_RomBuildType = require("../device/RomBuildType");
 
     /**
     * Get the field value
+    * @memberof device.Rom
     * @return {Number} must be a long integer
     */
     getVersion: function() {
@@ -85,6 +93,7 @@ var device_RomBuildType = require("../device/RomBuildType");
 
     /**
     * Set the field value
+    * @memberof device.Rom
     * @param {String} versionName 
     */
     setVersionName: function(versionName) {
@@ -93,6 +102,7 @@ var device_RomBuildType = require("../device/RomBuildType");
 
     /**
     * Get the field value
+    * @memberof device.Rom
     * @return {String} 
     */
     getVersionName: function() {
@@ -101,6 +111,7 @@ var device_RomBuildType = require("../device/RomBuildType");
 
     /**
     * Set the field value
+    * @memberof device.Rom
     * @param {String} description 
     */
     setDescription: function(description) {
@@ -109,6 +120,7 @@ var device_RomBuildType = require("../device/RomBuildType");
 
     /**
     * Get the field value
+    * @memberof device.Rom
     * @return {String} 
     */
     getDescription: function() {
@@ -117,7 +129,8 @@ var device_RomBuildType = require("../device/RomBuildType");
 
     /**
     * Set the field value
-    * @param {RomBuildType} buildType 
+    * @memberof device.Rom
+    * @param {device.RomBuildType} buildType 
     */
     setBuildType: function(buildType) {
       this.buildType = buildType;
@@ -125,7 +138,8 @@ var device_RomBuildType = require("../device/RomBuildType");
 
     /**
     * Get the field value
-    * @return {RomBuildType} 
+    * @memberof device.Rom
+    * @return {device.RomBuildType} 
     */
     getBuildType: function() {
       return this.buildType;
@@ -133,6 +147,7 @@ var device_RomBuildType = require("../device/RomBuildType");
 
     /**
     * Set the field value
+    * @memberof device.Rom
     * @param {Boolean} isCritical 
     */
     setIsCritical: function(isCritical) {
@@ -141,6 +156,7 @@ var device_RomBuildType = require("../device/RomBuildType");
 
     /**
     * Get the field value
+    * @memberof device.Rom
     * @return {Boolean} 
     */
     getIsCritical: function() {
@@ -149,6 +165,7 @@ var device_RomBuildType = require("../device/RomBuildType");
 
     /**
     * Set the field value
+    * @memberof device.Rom
     * @param {Boolean} published 
     */
     setPublished: function(published) {
@@ -157,6 +174,7 @@ var device_RomBuildType = require("../device/RomBuildType");
 
     /**
     * Get the field value
+    * @memberof device.Rom
     * @return {Boolean} 
     */
     getPublished: function() {
@@ -165,6 +183,7 @@ var device_RomBuildType = require("../device/RomBuildType");
 
     /**
     * Set the field value
+    * @memberof device.Rom
     * @param {Boolean} enabled 
     */
     setEnabled: function(enabled) {
@@ -173,11 +192,17 @@ var device_RomBuildType = require("../device/RomBuildType");
 
     /**
     * Get the field value
+    * @memberof device.Rom
     * @return {Boolean} 
     */
     getEnabled: function() {
       return this.enabled;
     },
+
+    /**
+    * @memberof device.Rom
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

@@ -9,10 +9,12 @@ require("prototype");
 
   /**
   * @constructor
+  * @memberof remotepay
   */
   DisplayReceiptOptionsRequest = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.DisplayReceiptOptionsRequest
     * @private
     */
     initialize: function() {
@@ -25,6 +27,7 @@ require("prototype");
     * Set the field value
     * Unique identifier
     *
+    * @memberof remotepay.DisplayReceiptOptionsRequest
     * @param {String} orderId 
     */
     setOrderId: function(orderId) {
@@ -34,7 +37,8 @@ require("prototype");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof remotepay.DisplayReceiptOptionsRequest
+    * @return {String} 
     */
     getOrderId: function() {
       return this.orderId;
@@ -44,6 +48,7 @@ require("prototype");
     * Set the field value
     * Unique identifier
     *
+    * @memberof remotepay.DisplayReceiptOptionsRequest
     * @param {String} paymentId 
     */
     setPaymentId: function(paymentId) {
@@ -53,11 +58,17 @@ require("prototype");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof remotepay.DisplayReceiptOptionsRequest
+    * @return {String} 
     */
     getPaymentId: function() {
       return this.paymentId;
     },
+
+    /**
+    * @memberof remotepay.DisplayReceiptOptionsRequest
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

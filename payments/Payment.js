@@ -12,16 +12,19 @@ var order_VoidReason = require("../order/VoidReason");
 var payments_Result = require("../payments/Result");
 var payments_ServiceChargeAmount = require("../payments/ServiceChargeAmount");
 var payments_PaymentTaxRate = require("../payments/PaymentTaxRate");
+var payments_DCCInfo = require("../payments/DCCInfo");
 var base_Reference = require("../base/Reference");
 var base_Tender = require("../base/Tender");
 var payments_Refund = require("../payments/Refund");
 
   /**
   * @constructor
+  * @memberof payments
   */
   Payment = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof payments.Payment
     * @private
     */
     initialize: function() {
@@ -49,12 +52,14 @@ var payments_Refund = require("../payments/Refund");
       this.note = undefined;
       this.lineItemPayments = undefined;
       this.voidReason = undefined;
+      this.dccInfo = undefined;
     },
 
     /**
     * Set the field value
     * Unique identifier
     *
+    * @memberof payments.Payment
     * @param {String} id 
     */
     setId: function(id) {
@@ -64,7 +69,8 @@ var payments_Refund = require("../payments/Refund");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof payments.Payment
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -74,7 +80,8 @@ var payments_Refund = require("../payments/Refund");
     * Set the field value
     * The order with which the payment is associated
     *
-    * @param {Reference} order 
+    * @memberof payments.Payment
+    * @param {base.Reference} order 
     */
     setOrder: function(order) {
       this.order = order;
@@ -83,7 +90,8 @@ var payments_Refund = require("../payments/Refund");
     /**
     * Get the field value
     * The order with which the payment is associated
-      * @return {Reference} 
+    * @memberof payments.Payment
+    * @return {base.Reference} 
     */
     getOrder: function() {
       return this.order;
@@ -93,7 +101,8 @@ var payments_Refund = require("../payments/Refund");
     * Set the field value
     * Device which processed the transaction for this payment
     *
-    * @param {Reference|Null} device 
+    * @memberof payments.Payment
+    * @param {base.Reference|Null} device 
     */
     setDevice: function(device) {
       this.device = device;
@@ -102,7 +111,8 @@ var payments_Refund = require("../payments/Refund");
     /**
     * Get the field value
     * Device which processed the transaction for this payment
-      * @return {Reference|Null} 
+    * @memberof payments.Payment
+    * @return {base.Reference|Null} 
     */
     getDevice: function() {
       return this.device;
@@ -112,7 +122,8 @@ var payments_Refund = require("../payments/Refund");
     * Set the field value
     * The tender type associated with this payment, e.g. credit card, cash, etc.
     *
-    * @param {Tender} tender 
+    * @memberof payments.Payment
+    * @param {base.Tender} tender 
     */
     setTender: function(tender) {
       this.tender = tender;
@@ -121,7 +132,8 @@ var payments_Refund = require("../payments/Refund");
     /**
     * Get the field value
     * The tender type associated with this payment, e.g. credit card, cash, etc.
-      * @return {Tender} 
+    * @memberof payments.Payment
+    * @return {base.Tender} 
     */
     getTender: function() {
       return this.tender;
@@ -131,6 +143,7 @@ var payments_Refund = require("../payments/Refund");
     * Set the field value
     * Total amount paid
     *
+    * @memberof payments.Payment
     * @param {Number} amount must be a long integer
     */
     setAmount: function(amount) {
@@ -140,7 +153,8 @@ var payments_Refund = require("../payments/Refund");
     /**
     * Get the field value
     * Total amount paid
-      * @return {Number} must be a long integer
+    * @memberof payments.Payment
+    * @return {Number} must be a long integer
     */
     getAmount: function() {
       return this.amount;
@@ -150,6 +164,7 @@ var payments_Refund = require("../payments/Refund");
     * Set the field value
     * Amount paid in tips
     *
+    * @memberof payments.Payment
     * @param {Number|Null} tipAmount must be a long integer, 
     */
     setTipAmount: function(tipAmount) {
@@ -159,7 +174,8 @@ var payments_Refund = require("../payments/Refund");
     /**
     * Get the field value
     * Amount paid in tips
-      * @return {Number|Null} must be a long integer, 
+    * @memberof payments.Payment
+    * @return {Number|Null} must be a long integer, 
     */
     getTipAmount: function() {
       return this.tipAmount;
@@ -169,6 +185,7 @@ var payments_Refund = require("../payments/Refund");
     * Set the field value
     * Amount paid in tax
     *
+    * @memberof payments.Payment
     * @param {Number|Null} taxAmount must be a long integer, 
     */
     setTaxAmount: function(taxAmount) {
@@ -178,7 +195,8 @@ var payments_Refund = require("../payments/Refund");
     /**
     * Get the field value
     * Amount paid in tax
-      * @return {Number|Null} must be a long integer, 
+    * @memberof payments.Payment
+    * @return {Number|Null} must be a long integer, 
     */
     getTaxAmount: function() {
       return this.taxAmount;
@@ -188,6 +206,7 @@ var payments_Refund = require("../payments/Refund");
     * Set the field value
     * Amount given back in a cash back transaction
     *
+    * @memberof payments.Payment
     * @param {Number|Null} cashbackAmount must be a long integer, 
     */
     setCashbackAmount: function(cashbackAmount) {
@@ -197,7 +216,8 @@ var payments_Refund = require("../payments/Refund");
     /**
     * Get the field value
     * Amount given back in a cash back transaction
-      * @return {Number|Null} must be a long integer, 
+    * @memberof payments.Payment
+    * @return {Number|Null} must be a long integer, 
     */
     getCashbackAmount: function() {
       return this.cashbackAmount;
@@ -207,6 +227,7 @@ var payments_Refund = require("../payments/Refund");
     * Set the field value
     * Amount of cash given by the customer
     *
+    * @memberof payments.Payment
     * @param {Number|Null} cashTendered must be a long integer, 
     */
     setCashTendered: function(cashTendered) {
@@ -216,7 +237,8 @@ var payments_Refund = require("../payments/Refund");
     /**
     * Get the field value
     * Amount of cash given by the customer
-      * @return {Number|Null} must be a long integer, 
+    * @memberof payments.Payment
+    * @return {Number|Null} must be a long integer, 
     */
     getCashTendered: function() {
       return this.cashTendered;
@@ -224,6 +246,7 @@ var payments_Refund = require("../payments/Refund");
 
     /**
     * Set the field value
+    * @memberof payments.Payment
     * @param {String} externalPaymentId 
     */
     setExternalPaymentId: function(externalPaymentId) {
@@ -232,6 +255,7 @@ var payments_Refund = require("../payments/Refund");
 
     /**
     * Get the field value
+    * @memberof payments.Payment
     * @return {String} 
     */
     getExternalPaymentId: function() {
@@ -242,7 +266,8 @@ var payments_Refund = require("../payments/Refund");
     * Set the field value
     * The employee who processed the payment
     *
-    * @param {Reference} employee 
+    * @memberof payments.Payment
+    * @param {base.Reference} employee 
     */
     setEmployee: function(employee) {
       this.employee = employee;
@@ -251,7 +276,8 @@ var payments_Refund = require("../payments/Refund");
     /**
     * Get the field value
     * The employee who processed the payment
-      * @return {Reference} 
+    * @memberof payments.Payment
+    * @return {base.Reference} 
     */
     getEmployee: function() {
       return this.employee;
@@ -261,6 +287,7 @@ var payments_Refund = require("../payments/Refund");
     * Set the field value
     * Time payment was recorded on server
     *
+    * @memberof payments.Payment
     * @param {Number} createdTime must be a long integer
     */
     setCreatedTime: function(createdTime) {
@@ -270,7 +297,8 @@ var payments_Refund = require("../payments/Refund");
     /**
     * Get the field value
     * Time payment was recorded on server
-      * @return {Number} must be a long integer
+    * @memberof payments.Payment
+    * @return {Number} must be a long integer
     */
     getCreatedTime: function() {
       return this.createdTime;
@@ -278,6 +306,7 @@ var payments_Refund = require("../payments/Refund");
 
     /**
     * Set the field value
+    * @memberof payments.Payment
     * @param {Number} clientCreatedTime must be a long integer
     */
     setClientCreatedTime: function(clientCreatedTime) {
@@ -286,6 +315,7 @@ var payments_Refund = require("../payments/Refund");
 
     /**
     * Get the field value
+    * @memberof payments.Payment
     * @return {Number} must be a long integer
     */
     getClientCreatedTime: function() {
@@ -296,6 +326,7 @@ var payments_Refund = require("../payments/Refund");
     * Set the field value
     * Last modified time of the payment
     *
+    * @memberof payments.Payment
     * @param {Number} modifiedTime must be a long integer
     */
     setModifiedTime: function(modifiedTime) {
@@ -305,7 +336,8 @@ var payments_Refund = require("../payments/Refund");
     /**
     * Get the field value
     * Last modified time of the payment
-      * @return {Number} must be a long integer
+    * @memberof payments.Payment
+    * @return {Number} must be a long integer
     */
     getModifiedTime: function() {
       return this.modifiedTime;
@@ -313,6 +345,7 @@ var payments_Refund = require("../payments/Refund");
 
     /**
     * Set the field value
+    * @memberof payments.Payment
     * @param {Boolean} offline 
     */
     setOffline: function(offline) {
@@ -321,6 +354,7 @@ var payments_Refund = require("../payments/Refund");
 
     /**
     * Get the field value
+    * @memberof payments.Payment
     * @return {Boolean} 
     */
     getOffline: function() {
@@ -329,7 +363,8 @@ var payments_Refund = require("../payments/Refund");
 
     /**
     * Set the field value
-    * @param {Result} result 
+    * @memberof payments.Payment
+    * @param {payments.Result} result 
     */
     setResult: function(result) {
       this.result = result;
@@ -337,7 +372,8 @@ var payments_Refund = require("../payments/Refund");
 
     /**
     * Get the field value
-    * @return {Result} 
+    * @memberof payments.Payment
+    * @return {payments.Result} 
     */
     getResult: function() {
       return this.result;
@@ -347,7 +383,8 @@ var payments_Refund = require("../payments/Refund");
     * Set the field value
     * Information about the card used for credit/debit card payments
     *
-    * @param {CardTransaction} cardTransaction 
+    * @memberof payments.Payment
+    * @param {payments.CardTransaction} cardTransaction 
     */
     setCardTransaction: function(cardTransaction) {
       this.cardTransaction = cardTransaction;
@@ -356,7 +393,8 @@ var payments_Refund = require("../payments/Refund");
     /**
     * Get the field value
     * Information about the card used for credit/debit card payments
-      * @return {CardTransaction} 
+    * @memberof payments.Payment
+    * @return {payments.CardTransaction} 
     */
     getCardTransaction: function() {
       return this.cardTransaction;
@@ -366,7 +404,8 @@ var payments_Refund = require("../payments/Refund");
     * Set the field value
     * Amount record as a service charge
     *
-    * @param {ServiceChargeAmount} serviceCharge 
+    * @memberof payments.Payment
+    * @param {payments.ServiceChargeAmount} serviceCharge 
     */
     setServiceCharge: function(serviceCharge) {
       this.serviceCharge = serviceCharge;
@@ -375,7 +414,8 @@ var payments_Refund = require("../payments/Refund");
     /**
     * Get the field value
     * Amount record as a service charge
-      * @return {ServiceChargeAmount} 
+    * @memberof payments.Payment
+    * @return {payments.ServiceChargeAmount} 
     */
     getServiceCharge: function() {
       return this.serviceCharge;
@@ -383,7 +423,8 @@ var payments_Refund = require("../payments/Refund");
 
     /**
     * Set the field value
-    * @param {Array.<PaymentTaxRate>} taxRates An array of 
+    * @memberof payments.Payment
+    * @param {Array.<payments.PaymentTaxRate>} taxRates An array of 
     */
     setTaxRates: function(taxRates) {
       this.taxRates = taxRates;
@@ -391,7 +432,8 @@ var payments_Refund = require("../payments/Refund");
 
     /**
     * Get the field value
-    * @return {Array.<PaymentTaxRate>} An array of 
+    * @memberof payments.Payment
+    * @return {Array.<payments.PaymentTaxRate>} An array of 
     */
     getTaxRates: function() {
       return this.taxRates;
@@ -399,7 +441,8 @@ var payments_Refund = require("../payments/Refund");
 
     /**
     * Set the field value
-    * @param {Array.<Refund>} refunds An array of 
+    * @memberof payments.Payment
+    * @param {Array.<payments.Refund>} refunds An array of 
     */
     setRefunds: function(refunds) {
       this.refunds = refunds;
@@ -407,7 +450,8 @@ var payments_Refund = require("../payments/Refund");
 
     /**
     * Get the field value
-    * @return {Array.<Refund>} An array of 
+    * @memberof payments.Payment
+    * @return {Array.<payments.Refund>} An array of 
     */
     getRefunds: function() {
       return this.refunds;
@@ -415,6 +459,7 @@ var payments_Refund = require("../payments/Refund");
 
     /**
     * Set the field value
+    * @memberof payments.Payment
     * @param {String} note 
     */
     setNote: function(note) {
@@ -423,6 +468,7 @@ var payments_Refund = require("../payments/Refund");
 
     /**
     * Get the field value
+    * @memberof payments.Payment
     * @return {String} 
     */
     getNote: function() {
@@ -431,7 +477,8 @@ var payments_Refund = require("../payments/Refund");
 
     /**
     * Set the field value
-    * @param {Array.<LineItemPayment>} lineItemPayments An array of 
+    * @memberof payments.Payment
+    * @param {Array.<payments.LineItemPayment>} lineItemPayments An array of 
     */
     setLineItemPayments: function(lineItemPayments) {
       this.lineItemPayments = lineItemPayments;
@@ -439,7 +486,8 @@ var payments_Refund = require("../payments/Refund");
 
     /**
     * Get the field value
-    * @return {Array.<LineItemPayment>} An array of 
+    * @memberof payments.Payment
+    * @return {Array.<payments.LineItemPayment>} An array of 
     */
     getLineItemPayments: function() {
       return this.lineItemPayments;
@@ -449,7 +497,8 @@ var payments_Refund = require("../payments/Refund");
     * Set the field value
     * If voided, the reason why (when available)
     *
-    * @param {VoidReason} voidReason 
+    * @memberof payments.Payment
+    * @param {order.VoidReason} voidReason 
     */
     setVoidReason: function(voidReason) {
       this.voidReason = voidReason;
@@ -458,11 +507,38 @@ var payments_Refund = require("../payments/Refund");
     /**
     * Get the field value
     * If voided, the reason why (when available)
-      * @return {VoidReason} 
+    * @memberof payments.Payment
+    * @return {order.VoidReason} 
     */
     getVoidReason: function() {
       return this.voidReason;
     },
+
+    /**
+    * Set the field value
+    * Dynamic Currency Conversion information
+    *
+    * @memberof payments.Payment
+    * @param {payments.DCCInfo|Null} dccInfo 
+    */
+    setDccInfo: function(dccInfo) {
+      this.dccInfo = dccInfo;
+    },
+
+    /**
+    * Get the field value
+    * Dynamic Currency Conversion information
+    * @memberof payments.Payment
+    * @return {payments.DCCInfo|Null} 
+    */
+    getDccInfo: function() {
+      return this.dccInfo;
+    },
+
+    /**
+    * @memberof payments.Payment
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {
@@ -531,6 +607,8 @@ Payment._meta_.fields["lineItemPayments"].type = Array;
 Payment._meta_.fields["lineItemPayments"].elementType = payments_LineItemPayment;
 Payment._meta_.fields["voidReason"] = {};
 Payment._meta_.fields["voidReason"].type = order_VoidReason;
+Payment._meta_.fields["dccInfo"] = {};
+Payment._meta_.fields["dccInfo"].type = payments_DCCInfo;
 
 //
 // Expose the module.

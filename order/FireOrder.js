@@ -9,10 +9,12 @@ require("prototype");
 
   /**
   * @constructor
+  * @memberof order
   */
   FireOrder = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof order.FireOrder
     * @private
     */
     initialize: function() {
@@ -26,6 +28,7 @@ require("prototype");
     * Set the field value
     * Unique identifier
     *
+    * @memberof order.FireOrder
     * @param {String} id 
     */
     setId: function(id) {
@@ -35,7 +38,8 @@ require("prototype");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof order.FireOrder
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -45,6 +49,7 @@ require("prototype");
     * Set the field value
     * The id of the order to fire.
     *
+    * @memberof order.FireOrder
     * @param {String} orderId 
     */
     setOrderId: function(orderId) {
@@ -54,7 +59,8 @@ require("prototype");
     /**
     * Get the field value
     * The id of the order to fire.
-      * @return {String} 
+    * @memberof order.FireOrder
+    * @return {String} 
     */
     getOrderId: function() {
       return this.orderId;
@@ -64,6 +70,7 @@ require("prototype");
     * Set the field value
     * How long in seconds to wait before calling fire.
     *
+    * @memberof order.FireOrder
     * @param {Number} delay must be a long integer
     */
     setDelay: function(delay) {
@@ -73,11 +80,17 @@ require("prototype");
     /**
     * Get the field value
     * How long in seconds to wait before calling fire.
-      * @return {Number} must be a long integer
+    * @memberof order.FireOrder
+    * @return {Number} must be a long integer
     */
     getDelay: function() {
       return this.delay;
     },
+
+    /**
+    * @memberof order.FireOrder
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

@@ -10,10 +10,12 @@ var base_Reference = require("../base/Reference");
 
   /**
   * @constructor
+  * @memberof inventory
   */
   Tag = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof inventory.Tag
     * @private
     */
     initialize: function() {
@@ -28,6 +30,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Unique identifier
     *
+    * @memberof inventory.Tag
     * @param {String} id 
     */
     setId: function(id) {
@@ -37,7 +40,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof inventory.Tag
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -47,6 +51,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Tag name
     *
+    * @memberof inventory.Tag
     * @param {String} name 
     */
     setName: function(name) {
@@ -56,7 +61,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Tag name
-      * @return {String} 
+    * @memberof inventory.Tag
+    * @return {String} 
     */
     getName: function() {
       return this.name;
@@ -66,7 +72,8 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Items associated with this tag
     *
-    * @param {Array.<Reference>} items An array of 
+    * @memberof inventory.Tag
+    * @param {Array.<base.Reference>} items An array of 
     */
     setItems: function(items) {
       this.items = items;
@@ -75,7 +82,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Items associated with this tag
-      * @return {Array.<Reference>} An array of 
+    * @memberof inventory.Tag
+    * @return {Array.<base.Reference>} An array of 
     */
     getItems: function() {
       return this.items;
@@ -85,7 +93,8 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Printers associated with this tag
     *
-    * @param {Array.<Reference>} printers An array of 
+    * @memberof inventory.Tag
+    * @param {Array.<base.Reference>} printers An array of 
     */
     setPrinters: function(printers) {
       this.printers = printers;
@@ -94,11 +103,17 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Printers associated with this tag
-      * @return {Array.<Reference>} An array of 
+    * @memberof inventory.Tag
+    * @return {Array.<base.Reference>} An array of 
     */
     getPrinters: function() {
       return this.printers;
     },
+
+    /**
+    * @memberof inventory.Tag
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

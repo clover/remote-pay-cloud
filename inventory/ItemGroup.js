@@ -10,10 +10,12 @@ var base_Reference = require("../base/Reference");
 
   /**
   * @constructor
+  * @memberof inventory
   */
   ItemGroup = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof inventory.ItemGroup
     * @private
     */
     initialize: function() {
@@ -28,6 +30,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Unique identifier
     *
+    * @memberof inventory.ItemGroup
     * @param {String} id 
     */
     setId: function(id) {
@@ -37,7 +40,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof inventory.ItemGroup
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -47,6 +51,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Name of the option
     *
+    * @memberof inventory.ItemGroup
     * @param {String} name 
     */
     setName: function(name) {
@@ -56,7 +61,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Name of the option
-      * @return {String} 
+    * @memberof inventory.ItemGroup
+    * @return {String} 
     */
     getName: function() {
       return this.name;
@@ -66,7 +72,8 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Items that are members of this group
     *
-    * @param {Array.<Reference>} items An array of 
+    * @memberof inventory.ItemGroup
+    * @param {Array.<base.Reference>} items An array of 
     */
     setItems: function(items) {
       this.items = items;
@@ -75,7 +82,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Items that are members of this group
-      * @return {Array.<Reference>} An array of 
+    * @memberof inventory.ItemGroup
+    * @return {Array.<base.Reference>} An array of 
     */
     getItems: function() {
       return this.items;
@@ -85,7 +93,8 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Attributes that belong to this group
     *
-    * @param {Array.<Reference>} attributes An array of 
+    * @memberof inventory.ItemGroup
+    * @param {Array.<base.Reference>} attributes An array of 
     */
     setAttributes: function(attributes) {
       this.attributes = attributes;
@@ -94,11 +103,17 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Attributes that belong to this group
-      * @return {Array.<Reference>} An array of 
+    * @memberof inventory.ItemGroup
+    * @return {Array.<base.Reference>} An array of 
     */
     getAttributes: function() {
       return this.attributes;
     },
+
+    /**
+    * @memberof inventory.ItemGroup
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

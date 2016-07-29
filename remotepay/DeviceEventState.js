@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof remotepay
+* @enum {string}
+*/
 DeviceEventState = {
   START : "START",
   FAILED : "FAILED",

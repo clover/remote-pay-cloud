@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof remotepay
+* @enum {string}
+*/
 ResponseCode = {
   SUCCESS : "SUCCESS",
   FAIL : "FAIL",

@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof payments
+* @enum {string}
+*/
 CardTransactionType = {
   AUTH : "AUTH",
   PREAUTH : "PREAUTH",

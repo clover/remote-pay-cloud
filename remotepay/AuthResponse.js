@@ -11,10 +11,13 @@ var remotepay_PaymentResponse = require("../remotepay/PaymentResponse");
 /** The response to an authorization request */
   /**
   * @constructor
+  * @augments remotepay.PaymentResponse
+  * @memberof remotepay
   */
   AuthResponse = Class.create(remotepay_PaymentResponse, {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.AuthResponse
     * @private
     */
     initialize: function($super) {

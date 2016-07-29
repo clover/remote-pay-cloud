@@ -12,10 +12,12 @@ var payments_TxType = require("../payments/TxType");
 
   /**
   * @constructor
+  * @memberof payments
   */
   GiftCardResponse = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof payments.GiftCardResponse
     * @private
     */
     initialize: function() {
@@ -38,7 +40,8 @@ var payments_TxType = require("../payments/TxType");
 
     /**
     * Set the field value
-    * @param {TxType} txType 
+    * @memberof payments.GiftCardResponse
+    * @param {payments.TxType} txType 
     */
     setTxType: function(txType) {
       this.txType = txType;
@@ -46,7 +49,8 @@ var payments_TxType = require("../payments/TxType");
 
     /**
     * Get the field value
-    * @return {TxType} 
+    * @memberof payments.GiftCardResponse
+    * @return {payments.TxType} 
     */
     getTxType: function() {
       return this.txType;
@@ -54,7 +58,8 @@ var payments_TxType = require("../payments/TxType");
 
     /**
     * Set the field value
-    * @param {GiftCardState} state 
+    * @memberof payments.GiftCardResponse
+    * @param {payments.GiftCardState} state 
     */
     setState: function(state) {
       this.state = state;
@@ -62,7 +67,8 @@ var payments_TxType = require("../payments/TxType");
 
     /**
     * Get the field value
-    * @return {GiftCardState} 
+    * @memberof payments.GiftCardResponse
+    * @return {payments.GiftCardState} 
     */
     getState: function() {
       return this.state;
@@ -72,6 +78,7 @@ var payments_TxType = require("../payments/TxType");
     * Set the field value
     * Transaction Amount
     *
+    * @memberof payments.GiftCardResponse
     * @param {Number} requestAmount must be a long integer
     */
     setRequestAmount: function(requestAmount) {
@@ -81,7 +88,8 @@ var payments_TxType = require("../payments/TxType");
     /**
     * Get the field value
     * Transaction Amount
-      * @return {Number} must be a long integer
+    * @memberof payments.GiftCardResponse
+    * @return {Number} must be a long integer
     */
     getRequestAmount: function() {
       return this.requestAmount;
@@ -89,7 +97,8 @@ var payments_TxType = require("../payments/TxType");
 
     /**
     * Set the field value
-    * @param {Payment} payment 
+    * @memberof payments.GiftCardResponse
+    * @param {payments.Payment} payment 
     */
     setPayment: function(payment) {
       this.payment = payment;
@@ -97,7 +106,8 @@ var payments_TxType = require("../payments/TxType");
 
     /**
     * Get the field value
-    * @return {Payment} 
+    * @memberof payments.GiftCardResponse
+    * @return {payments.Payment} 
     */
     getPayment: function() {
       return this.payment;
@@ -105,6 +115,7 @@ var payments_TxType = require("../payments/TxType");
 
     /**
     * Set the field value
+    * @memberof payments.GiftCardResponse
     * @param {String} responseMessage 
     */
     setResponseMessage: function(responseMessage) {
@@ -113,6 +124,7 @@ var payments_TxType = require("../payments/TxType");
 
     /**
     * Get the field value
+    * @memberof payments.GiftCardResponse
     * @return {String} 
     */
     getResponseMessage: function() {
@@ -121,6 +133,7 @@ var payments_TxType = require("../payments/TxType");
 
     /**
     * Set the field value
+    * @memberof payments.GiftCardResponse
     * @param {Boolean} requestSuccessful 
     */
     setRequestSuccessful: function(requestSuccessful) {
@@ -129,6 +142,7 @@ var payments_TxType = require("../payments/TxType");
 
     /**
     * Get the field value
+    * @memberof payments.GiftCardResponse
     * @return {Boolean} 
     */
     getRequestSuccessful: function() {
@@ -137,6 +151,7 @@ var payments_TxType = require("../payments/TxType");
 
     /**
     * Set the field value
+    * @memberof payments.GiftCardResponse
     * @param {String} accountNumber 
     */
     setAccountNumber: function(accountNumber) {
@@ -145,6 +160,7 @@ var payments_TxType = require("../payments/TxType");
 
     /**
     * Get the field value
+    * @memberof payments.GiftCardResponse
     * @return {String} 
     */
     getAccountNumber: function() {
@@ -153,6 +169,7 @@ var payments_TxType = require("../payments/TxType");
 
     /**
     * Set the field value
+    * @memberof payments.GiftCardResponse
     * @param {String} giftCardTxUuid 
     */
     setGiftCardTxUuid: function(giftCardTxUuid) {
@@ -161,6 +178,7 @@ var payments_TxType = require("../payments/TxType");
 
     /**
     * Get the field value
+    * @memberof payments.GiftCardResponse
     * @return {String} 
     */
     getGiftCardTxUuid: function() {
@@ -169,6 +187,7 @@ var payments_TxType = require("../payments/TxType");
 
     /**
     * Set the field value
+    * @memberof payments.GiftCardResponse
     * @param {String} transactionId 
     */
     setTransactionId: function(transactionId) {
@@ -177,6 +196,7 @@ var payments_TxType = require("../payments/TxType");
 
     /**
     * Get the field value
+    * @memberof payments.GiftCardResponse
     * @return {String} 
     */
     getTransactionId: function() {
@@ -185,6 +205,7 @@ var payments_TxType = require("../payments/TxType");
 
     /**
     * Set the field value
+    * @memberof payments.GiftCardResponse
     * @param {String} referenceUuid 
     */
     setReferenceUuid: function(referenceUuid) {
@@ -193,6 +214,7 @@ var payments_TxType = require("../payments/TxType");
 
     /**
     * Get the field value
+    * @memberof payments.GiftCardResponse
     * @return {String} 
     */
     getReferenceUuid: function() {
@@ -201,6 +223,7 @@ var payments_TxType = require("../payments/TxType");
 
     /**
     * Set the field value
+    * @memberof payments.GiftCardResponse
     * @param {String} authCode 
     */
     setAuthCode: function(authCode) {
@@ -209,6 +232,7 @@ var payments_TxType = require("../payments/TxType");
 
     /**
     * Get the field value
+    * @memberof payments.GiftCardResponse
     * @return {String} 
     */
     getAuthCode: function() {
@@ -217,6 +241,7 @@ var payments_TxType = require("../payments/TxType");
 
     /**
     * Set the field value
+    * @memberof payments.GiftCardResponse
     * @param {Null|Number} begBal must be a long integer
     */
     setBegBal: function(begBal) {
@@ -225,6 +250,7 @@ var payments_TxType = require("../payments/TxType");
 
     /**
     * Get the field value
+    * @memberof payments.GiftCardResponse
     * @return {Null|Number} must be a long integer
     */
     getBegBal: function() {
@@ -233,6 +259,7 @@ var payments_TxType = require("../payments/TxType");
 
     /**
     * Set the field value
+    * @memberof payments.GiftCardResponse
     * @param {Null|Number} endBal must be a long integer
     */
     setEndBal: function(endBal) {
@@ -241,6 +268,7 @@ var payments_TxType = require("../payments/TxType");
 
     /**
     * Get the field value
+    * @memberof payments.GiftCardResponse
     * @return {Null|Number} must be a long integer
     */
     getEndBal: function() {
@@ -249,6 +277,7 @@ var payments_TxType = require("../payments/TxType");
 
     /**
     * Set the field value
+    * @memberof payments.GiftCardResponse
     * @param {Null|Number} holdBal must be a long integer
     */
     setHoldBal: function(holdBal) {
@@ -257,11 +286,17 @@ var payments_TxType = require("../payments/TxType");
 
     /**
     * Get the field value
+    * @memberof payments.GiftCardResponse
     * @return {Null|Number} must be a long integer
     */
     getHoldBal: function() {
       return this.holdBal;
     },
+
+    /**
+    * @memberof payments.GiftCardResponse
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

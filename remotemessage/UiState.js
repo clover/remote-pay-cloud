@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof remotemessage
+* @enum {string}
+*/
 UiState = {
   START : "START",
   FAILED : "FAILED",

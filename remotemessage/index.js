@@ -1,6 +1,10 @@
 module.exports.remotemessage = remotemessage;
+/**
+* @namespace remotemessage
+*/
 function remotemessage() {}
 
+remotemessage.AcknowledgementMessage = require("./AcknowledgementMessage");
 remotemessage.AddDiscountAction = require("./AddDiscountAction");
 remotemessage.AddLineItemAction = require("./AddLineItemAction");
 remotemessage.BreakMessage = require("./BreakMessage");
@@ -9,6 +13,7 @@ remotemessage.CapturePreAuthResponseMessage = require("./CapturePreAuthResponseM
 remotemessage.CashbackSelectedMessage = require("./CashbackSelectedMessage");
 remotemessage.CloseoutRequestMessage = require("./CloseoutRequestMessage");
 remotemessage.CloseoutResponseMessage = require("./CloseoutResponseMessage");
+remotemessage.ConfirmPaymentMessage = require("./ConfirmPaymentMessage");
 remotemessage.DiscoveryRequestMessage = require("./DiscoveryRequestMessage");
 remotemessage.DiscoveryResponseMessage = require("./DiscoveryResponseMessage");
 remotemessage.ErrorCode = require("./ErrorCode");
@@ -22,6 +27,8 @@ remotemessage.KeyPressEnum = require("./KeyPressEnum");
 remotemessage.KeyPressMessage = require("./KeyPressMessage");
 remotemessage.LastMessageRequestMessage = require("./LastMessageRequestMessage");
 remotemessage.LastMessageResponseMessage = require("./LastMessageResponseMessage");
+remotemessage.LogLevelEnum = require("./LogLevelEnum");
+remotemessage.LogMessage = require("./LogMessage");
 remotemessage.Message = require("./Message");
 remotemessage.Method = require("./Method");
 remotemessage.OpenCashDrawerMessage = require("./OpenCashDrawerMessage");
@@ -34,6 +41,8 @@ remotemessage.OrderActionResponseMessage = require("./OrderActionResponseMessage
 remotemessage.OrderUpdateMessage = require("./OrderUpdateMessage");
 remotemessage.PartialAuthMessage = require("./PartialAuthMessage");
 remotemessage.PayIntent = require("./PayIntent");
+remotemessage.PaymentConfirmedMessage = require("./PaymentConfirmedMessage");
+remotemessage.PaymentRejectedMessage = require("./PaymentRejectedMessage");
 remotemessage.PaymentVoidedMessage = require("./PaymentVoidedMessage");
 remotemessage.RefundRequestMessage = require("./RefundRequestMessage");
 remotemessage.RefundResponseMessage = require("./RefundResponseMessage");

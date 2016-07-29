@@ -11,10 +11,12 @@ var order_DisplayModification = require("../order/DisplayModification");
 
   /**
   * @constructor
+  * @memberof order
   */
   DisplayLineItem = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof order.DisplayLineItem
     * @private
     */
     initialize: function() {
@@ -45,6 +47,7 @@ var order_DisplayModification = require("../order/DisplayModification");
     * Set the field value
     * Unique identifier
     *
+    * @memberof order.DisplayLineItem
     * @param {String} id 
     */
     setId: function(id) {
@@ -54,7 +57,8 @@ var order_DisplayModification = require("../order/DisplayModification");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof order.DisplayLineItem
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -64,6 +68,7 @@ var order_DisplayModification = require("../order/DisplayModification");
     * Set the field value
     * The order with which the line item is associated
     *
+    * @memberof order.DisplayLineItem
     * @param {String} orderId 
     */
     setOrderId: function(orderId) {
@@ -73,7 +78,8 @@ var order_DisplayModification = require("../order/DisplayModification");
     /**
     * Get the field value
     * The order with which the line item is associated
-      * @return {String} 
+    * @memberof order.DisplayLineItem
+    * @return {String} 
     */
     getOrderId: function() {
       return this.orderId;
@@ -83,6 +89,7 @@ var order_DisplayModification = require("../order/DisplayModification");
     * Set the field value
     * Line item name
     *
+    * @memberof order.DisplayLineItem
     * @param {Null|String} name 
     */
     setName: function(name) {
@@ -92,7 +99,8 @@ var order_DisplayModification = require("../order/DisplayModification");
     /**
     * Get the field value
     * Line item name
-      * @return {Null|String} 
+    * @memberof order.DisplayLineItem
+    * @return {Null|String} 
     */
     getName: function() {
       return this.name;
@@ -102,6 +110,7 @@ var order_DisplayModification = require("../order/DisplayModification");
     * Set the field value
     * Alternate name of the line item
     *
+    * @memberof order.DisplayLineItem
     * @param {Null|String} alternateName 
     */
     setAlternateName: function(alternateName) {
@@ -111,7 +120,8 @@ var order_DisplayModification = require("../order/DisplayModification");
     /**
     * Get the field value
     * Alternate name of the line item
-      * @return {Null|String} 
+    * @memberof order.DisplayLineItem
+    * @return {Null|String} 
     */
     getAlternateName: function() {
       return this.alternateName;
@@ -121,6 +131,7 @@ var order_DisplayModification = require("../order/DisplayModification");
     * Set the field value
     * Formatted total price of the line item
     *
+    * @memberof order.DisplayLineItem
     * @param {String} price 
     */
     setPrice: function(price) {
@@ -130,7 +141,8 @@ var order_DisplayModification = require("../order/DisplayModification");
     /**
     * Get the field value
     * Formatted total price of the line item
-      * @return {String} 
+    * @memberof order.DisplayLineItem
+    * @return {String} 
     */
     getPrice: function() {
       return this.price;
@@ -140,6 +152,7 @@ var order_DisplayModification = require("../order/DisplayModification");
     * Set the field value
     * Formatted unit price in cases if applicable
     *
+    * @memberof order.DisplayLineItem
     * @param {String} unitPrice 
     */
     setUnitPrice: function(unitPrice) {
@@ -149,7 +162,8 @@ var order_DisplayModification = require("../order/DisplayModification");
     /**
     * Get the field value
     * Formatted unit price in cases if applicable
-      * @return {String} 
+    * @memberof order.DisplayLineItem
+    * @return {String} 
     */
     getUnitPrice: function() {
       return this.unitPrice;
@@ -159,6 +173,7 @@ var order_DisplayModification = require("../order/DisplayModification");
     * Set the field value
     * Formatted quantity
     *
+    * @memberof order.DisplayLineItem
     * @param {Null|String} quantity 
     */
     setQuantity: function(quantity) {
@@ -168,7 +183,8 @@ var order_DisplayModification = require("../order/DisplayModification");
     /**
     * Get the field value
     * Formatted quantity
-      * @return {Null|String} 
+    * @memberof order.DisplayLineItem
+    * @return {Null|String} 
     */
     getQuantity: function() {
       return this.quantity;
@@ -178,6 +194,7 @@ var order_DisplayModification = require("../order/DisplayModification");
     * Set the field value
     * Formatted unit quantity - such as 10 @ $1.99/oz
     *
+    * @memberof order.DisplayLineItem
     * @param {Null|String} unitQuantity 
     */
     setUnitQuantity: function(unitQuantity) {
@@ -187,7 +204,8 @@ var order_DisplayModification = require("../order/DisplayModification");
     /**
     * Get the field value
     * Formatted unit quantity - such as 10 @ $1.99/oz
-      * @return {Null|String} 
+    * @memberof order.DisplayLineItem
+    * @return {Null|String} 
     */
     getUnitQuantity: function() {
       return this.unitQuantity;
@@ -195,6 +213,7 @@ var order_DisplayModification = require("../order/DisplayModification");
 
     /**
     * Set the field value
+    * @memberof order.DisplayLineItem
     * @param {Null|String} note 
     */
     setNote: function(note) {
@@ -203,6 +222,7 @@ var order_DisplayModification = require("../order/DisplayModification");
 
     /**
     * Get the field value
+    * @memberof order.DisplayLineItem
     * @return {Null|String} 
     */
     getNote: function() {
@@ -211,6 +231,7 @@ var order_DisplayModification = require("../order/DisplayModification");
 
     /**
     * Set the field value
+    * @memberof order.DisplayLineItem
     * @param {Boolean} printed 
     */
     setPrinted: function(printed) {
@@ -219,6 +240,7 @@ var order_DisplayModification = require("../order/DisplayModification");
 
     /**
     * Get the field value
+    * @memberof order.DisplayLineItem
     * @return {Boolean} 
     */
     getPrinted: function() {
@@ -227,6 +249,7 @@ var order_DisplayModification = require("../order/DisplayModification");
 
     /**
     * Set the field value
+    * @memberof order.DisplayLineItem
     * @param {Null|String} binName 
     */
     setBinName: function(binName) {
@@ -235,6 +258,7 @@ var order_DisplayModification = require("../order/DisplayModification");
 
     /**
     * Get the field value
+    * @memberof order.DisplayLineItem
     * @return {Null|String} 
     */
     getBinName: function() {
@@ -243,6 +267,7 @@ var order_DisplayModification = require("../order/DisplayModification");
 
     /**
     * Set the field value
+    * @memberof order.DisplayLineItem
     * @param {Null|String} userData 
     */
     setUserData: function(userData) {
@@ -251,6 +276,7 @@ var order_DisplayModification = require("../order/DisplayModification");
 
     /**
     * Get the field value
+    * @memberof order.DisplayLineItem
     * @return {Null|String} 
     */
     getUserData: function() {
@@ -259,7 +285,8 @@ var order_DisplayModification = require("../order/DisplayModification");
 
     /**
     * Set the field value
-    * @param {Array.<DisplayDiscount>} discounts An array of 
+    * @memberof order.DisplayLineItem
+    * @param {Array.<order.DisplayDiscount>} discounts An array of 
     */
     setDiscounts: function(discounts) {
       this.discounts = discounts;
@@ -267,7 +294,8 @@ var order_DisplayModification = require("../order/DisplayModification");
 
     /**
     * Get the field value
-    * @return {Array.<DisplayDiscount>} An array of 
+    * @memberof order.DisplayLineItem
+    * @return {Array.<order.DisplayDiscount>} An array of 
     */
     getDiscounts: function() {
       return this.discounts;
@@ -275,6 +303,7 @@ var order_DisplayModification = require("../order/DisplayModification");
 
     /**
     * Set the field value
+    * @memberof order.DisplayLineItem
     * @param {Null|String} discountAmount 
     */
     setDiscountAmount: function(discountAmount) {
@@ -283,6 +312,7 @@ var order_DisplayModification = require("../order/DisplayModification");
 
     /**
     * Get the field value
+    * @memberof order.DisplayLineItem
     * @return {Null|String} 
     */
     getDiscountAmount: function() {
@@ -291,6 +321,7 @@ var order_DisplayModification = require("../order/DisplayModification");
 
     /**
     * Set the field value
+    * @memberof order.DisplayLineItem
     * @param {Boolean} exchanged 
     */
     setExchanged: function(exchanged) {
@@ -299,6 +330,7 @@ var order_DisplayModification = require("../order/DisplayModification");
 
     /**
     * Get the field value
+    * @memberof order.DisplayLineItem
     * @return {Boolean} 
     */
     getExchanged: function() {
@@ -309,6 +341,7 @@ var order_DisplayModification = require("../order/DisplayModification");
     * Set the field value
     * Formatted exchanged amount
     *
+    * @memberof order.DisplayLineItem
     * @param {Null|String} exchangedAmount 
     */
     setExchangedAmount: function(exchangedAmount) {
@@ -318,7 +351,8 @@ var order_DisplayModification = require("../order/DisplayModification");
     /**
     * Get the field value
     * Formatted exchanged amount
-      * @return {Null|String} 
+    * @memberof order.DisplayLineItem
+    * @return {Null|String} 
     */
     getExchangedAmount: function() {
       return this.exchangedAmount;
@@ -326,7 +360,8 @@ var order_DisplayModification = require("../order/DisplayModification");
 
     /**
     * Set the field value
-    * @param {Array.<DisplayModification>} modifications An array of 
+    * @memberof order.DisplayLineItem
+    * @param {Array.<order.DisplayModification>} modifications An array of 
     */
     setModifications: function(modifications) {
       this.modifications = modifications;
@@ -334,7 +369,8 @@ var order_DisplayModification = require("../order/DisplayModification");
 
     /**
     * Get the field value
-    * @return {Array.<DisplayModification>} An array of 
+    * @memberof order.DisplayLineItem
+    * @return {Array.<order.DisplayModification>} An array of 
     */
     getModifications: function() {
       return this.modifications;
@@ -342,6 +378,7 @@ var order_DisplayModification = require("../order/DisplayModification");
 
     /**
     * Set the field value
+    * @memberof order.DisplayLineItem
     * @param {Boolean} refunded 
     */
     setRefunded: function(refunded) {
@@ -350,6 +387,7 @@ var order_DisplayModification = require("../order/DisplayModification");
 
     /**
     * Get the field value
+    * @memberof order.DisplayLineItem
     * @return {Boolean} 
     */
     getRefunded: function() {
@@ -360,6 +398,7 @@ var order_DisplayModification = require("../order/DisplayModification");
     * Set the field value
     * Formatted refunded amount
     *
+    * @memberof order.DisplayLineItem
     * @param {Null|String} refundedAmount 
     */
     setRefundedAmount: function(refundedAmount) {
@@ -369,7 +408,8 @@ var order_DisplayModification = require("../order/DisplayModification");
     /**
     * Get the field value
     * Formatted refunded amount
-      * @return {Null|String} 
+    * @memberof order.DisplayLineItem
+    * @return {Null|String} 
     */
     getRefundedAmount: function() {
       return this.refundedAmount;
@@ -377,6 +417,7 @@ var order_DisplayModification = require("../order/DisplayModification");
 
     /**
     * Set the field value
+    * @memberof order.DisplayLineItem
     * @param {Null|String} percent 
     */
     setPercent: function(percent) {
@@ -385,11 +426,17 @@ var order_DisplayModification = require("../order/DisplayModification");
 
     /**
     * Get the field value
+    * @memberof order.DisplayLineItem
     * @return {Null|String} 
     */
     getPercent: function() {
       return this.percent;
     },
+
+    /**
+    * @memberof order.DisplayLineItem
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

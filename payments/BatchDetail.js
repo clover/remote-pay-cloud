@@ -12,10 +12,12 @@ var payments_ServerTotalStats = require("../payments/ServerTotalStats");
 
   /**
   * @constructor
+  * @memberof payments
   */
   BatchDetail = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof payments.BatchDetail
     * @private
     */
     initialize: function() {
@@ -29,7 +31,8 @@ var payments_ServerTotalStats = require("../payments/ServerTotalStats");
 
     /**
     * Set the field value
-    * @param {BatchTotalStats} batchTotals 
+    * @memberof payments.BatchDetail
+    * @param {payments.BatchTotalStats} batchTotals 
     */
     setBatchTotals: function(batchTotals) {
       this.batchTotals = batchTotals;
@@ -37,7 +40,8 @@ var payments_ServerTotalStats = require("../payments/ServerTotalStats");
 
     /**
     * Get the field value
-    * @return {BatchTotalStats} 
+    * @memberof payments.BatchDetail
+    * @return {payments.BatchTotalStats} 
     */
     getBatchTotals: function() {
       return this.batchTotals;
@@ -45,7 +49,8 @@ var payments_ServerTotalStats = require("../payments/ServerTotalStats");
 
     /**
     * Set the field value
-    * @param {Array.<ServerTotalStats>} serverTotals An array of 
+    * @memberof payments.BatchDetail
+    * @param {Array.<payments.ServerTotalStats>} serverTotals An array of 
     */
     setServerTotals: function(serverTotals) {
       this.serverTotals = serverTotals;
@@ -53,7 +58,8 @@ var payments_ServerTotalStats = require("../payments/ServerTotalStats");
 
     /**
     * Get the field value
-    * @return {Array.<ServerTotalStats>} An array of 
+    * @memberof payments.BatchDetail
+    * @return {Array.<payments.ServerTotalStats>} An array of 
     */
     getServerTotals: function() {
       return this.serverTotals;
@@ -61,7 +67,8 @@ var payments_ServerTotalStats = require("../payments/ServerTotalStats");
 
     /**
     * Set the field value
-    * @param {Array.<BatchCardTotal>} cardTotals An array of 
+    * @memberof payments.BatchDetail
+    * @param {Array.<payments.BatchCardTotal>} cardTotals An array of 
     */
     setCardTotals: function(cardTotals) {
       this.cardTotals = cardTotals;
@@ -69,7 +76,8 @@ var payments_ServerTotalStats = require("../payments/ServerTotalStats");
 
     /**
     * Get the field value
-    * @return {Array.<BatchCardTotal>} An array of 
+    * @memberof payments.BatchDetail
+    * @return {Array.<payments.BatchCardTotal>} An array of 
     */
     getCardTotals: function() {
       return this.cardTotals;
@@ -79,6 +87,7 @@ var payments_ServerTotalStats = require("../payments/ServerTotalStats");
     * Set the field value
     * Number of open tips.
     *
+    * @memberof payments.BatchDetail
     * @param {Number} openTips must be a long integer
     */
     setOpenTips: function(openTips) {
@@ -88,7 +97,8 @@ var payments_ServerTotalStats = require("../payments/ServerTotalStats");
     /**
     * Get the field value
     * Number of open tips.
-      * @return {Number} must be a long integer
+    * @memberof payments.BatchDetail
+    * @return {Number} must be a long integer
     */
     getOpenTips: function() {
       return this.openTips;
@@ -98,6 +108,7 @@ var payments_ServerTotalStats = require("../payments/ServerTotalStats");
     * Set the field value
     * Number of open tabs.
     *
+    * @memberof payments.BatchDetail
     * @param {Number} openTabs must be a long integer
     */
     setOpenTabs: function(openTabs) {
@@ -107,11 +118,17 @@ var payments_ServerTotalStats = require("../payments/ServerTotalStats");
     /**
     * Get the field value
     * Number of open tabs.
-      * @return {Number} must be a long integer
+    * @memberof payments.BatchDetail
+    * @return {Number} must be a long integer
     */
     getOpenTabs: function() {
       return this.openTabs;
     },
+
+    /**
+    * @memberof payments.BatchDetail
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

@@ -10,10 +10,12 @@ var base_Reference = require("../base/Reference");
 
   /**
   * @constructor
+  * @memberof device
   */
   SwapRequestEvent = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof device.SwapRequestEvent
     * @private
     */
     initialize: function() {
@@ -29,6 +31,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Unique identifier
     *
+    * @memberof device.SwapRequestEvent
     * @param {String} id 
     */
     setId: function(id) {
@@ -38,7 +41,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof device.SwapRequestEvent
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -46,6 +50,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof device.SwapRequestEvent
     * @param {String} type 
     */
     setType: function(type) {
@@ -54,6 +59,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof device.SwapRequestEvent
     * @return {String} 
     */
     getType: function() {
@@ -62,6 +68,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof device.SwapRequestEvent
     * @param {String} serialNumber 
     */
     setSerialNumber: function(serialNumber) {
@@ -70,6 +77,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof device.SwapRequestEvent
     * @return {String} 
     */
     getSerialNumber: function() {
@@ -78,6 +86,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof device.SwapRequestEvent
     * @param {Number} createdTime must be a long integer
     */
     setCreatedTime: function(createdTime) {
@@ -86,6 +95,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof device.SwapRequestEvent
     * @return {Number} must be a long integer
     */
     getCreatedTime: function() {
@@ -94,7 +104,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
-    * @param {Reference} merchant 
+    * @memberof device.SwapRequestEvent
+    * @param {base.Reference} merchant 
     */
     setMerchant: function(merchant) {
       this.merchant = merchant;
@@ -102,11 +113,17 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * @return {Reference} 
+    * @memberof device.SwapRequestEvent
+    * @return {base.Reference} 
     */
     getMerchant: function() {
       return this.merchant;
     },
+
+    /**
+    * @memberof device.SwapRequestEvent
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

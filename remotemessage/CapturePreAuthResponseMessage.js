@@ -12,10 +12,13 @@ var remotemessage_Message = require("../remotemessage/Message");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   CapturePreAuthResponseMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.CapturePreAuthResponseMessage
     * @private
     */
     initialize: function($super) {
@@ -33,7 +36,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * The status of the request.
     *
-    * @param {ResultStatus} status 
+    * @memberof remotemessage.CapturePreAuthResponseMessage
+    * @param {remotemessage.ResultStatus} status 
     */
     setStatus: function(status) {
       this.status = status;
@@ -42,7 +46,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * The status of the request.
-      * @return {ResultStatus} 
+    * @memberof remotemessage.CapturePreAuthResponseMessage
+    * @return {remotemessage.ResultStatus} 
     */
     getStatus: function() {
       return this.status;
@@ -52,6 +57,7 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * Detail message from the server.
     *
+    * @memberof remotemessage.CapturePreAuthResponseMessage
     * @param {String} reason 
     */
     setReason: function(reason) {
@@ -61,7 +67,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * Detail message from the server.
-      * @return {String} 
+    * @memberof remotemessage.CapturePreAuthResponseMessage
+    * @return {String} 
     */
     getReason: function() {
       return this.reason;
@@ -71,6 +78,7 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * Unique identifier for a payment
     *
+    * @memberof remotemessage.CapturePreAuthResponseMessage
     * @param {String} paymentId 
     */
     setPaymentId: function(paymentId) {
@@ -80,7 +88,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * Unique identifier for a payment
-      * @return {String} 
+    * @memberof remotemessage.CapturePreAuthResponseMessage
+    * @return {String} 
     */
     getPaymentId: function() {
       return this.paymentId;
@@ -90,6 +99,7 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * Total amount paid
     *
+    * @memberof remotemessage.CapturePreAuthResponseMessage
     * @param {Number} amount must be a long integer
     */
     setAmount: function(amount) {
@@ -99,7 +109,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * Total amount paid
-      * @return {Number} must be a long integer
+    * @memberof remotemessage.CapturePreAuthResponseMessage
+    * @return {Number} must be a long integer
     */
     getAmount: function() {
       return this.amount;
@@ -109,6 +120,7 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * Amount paid in tips
     *
+    * @memberof remotemessage.CapturePreAuthResponseMessage
     * @param {Number|Null} tipAmount must be a long integer, 
     */
     setTipAmount: function(tipAmount) {
@@ -118,7 +130,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * Amount paid in tips
-      * @return {Number|Null} must be a long integer, 
+    * @memberof remotemessage.CapturePreAuthResponseMessage
+    * @return {Number|Null} must be a long integer, 
     */
     getTipAmount: function() {
       return this.tipAmount;

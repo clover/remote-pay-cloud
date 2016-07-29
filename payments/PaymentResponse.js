@@ -10,10 +10,12 @@ var payments_Payment = require("../payments/Payment");
 
   /**
   * @constructor
+  * @memberof payments
   */
   PaymentResponse = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof payments.PaymentResponse
     * @private
     */
     initialize: function() {
@@ -25,6 +27,7 @@ var payments_Payment = require("../payments/Payment");
 
     /**
     * Set the field value
+    * @memberof payments.PaymentResponse
     * @param {Boolean} requestSuccessful 
     */
     setRequestSuccessful: function(requestSuccessful) {
@@ -33,6 +36,7 @@ var payments_Payment = require("../payments/Payment");
 
     /**
     * Get the field value
+    * @memberof payments.PaymentResponse
     * @return {Boolean} 
     */
     getRequestSuccessful: function() {
@@ -41,6 +45,7 @@ var payments_Payment = require("../payments/Payment");
 
     /**
     * Set the field value
+    * @memberof payments.PaymentResponse
     * @param {String|Null} responseErrorMessage 
     */
     setResponseErrorMessage: function(responseErrorMessage) {
@@ -49,6 +54,7 @@ var payments_Payment = require("../payments/Payment");
 
     /**
     * Get the field value
+    * @memberof payments.PaymentResponse
     * @return {String|Null} 
     */
     getResponseErrorMessage: function() {
@@ -57,7 +63,8 @@ var payments_Payment = require("../payments/Payment");
 
     /**
     * Set the field value
-    * @param {Payment|Null} payment 
+    * @memberof payments.PaymentResponse
+    * @param {payments.Payment|Null} payment 
     */
     setPayment: function(payment) {
       this.payment = payment;
@@ -65,11 +72,17 @@ var payments_Payment = require("../payments/Payment");
 
     /**
     * Get the field value
-    * @return {Payment|Null} 
+    * @memberof payments.PaymentResponse
+    * @return {payments.Payment|Null} 
     */
     getPayment: function() {
       return this.payment;
     },
+
+    /**
+    * @memberof payments.PaymentResponse
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

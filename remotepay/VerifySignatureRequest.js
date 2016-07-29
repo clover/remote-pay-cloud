@@ -12,10 +12,13 @@ var base_Signature = require("../base/Signature");
 
   /**
   * @constructor
+  * @augments remotepay.BaseRequest
+  * @memberof remotepay
   */
   VerifySignatureRequest = Class.create(remotepay_BaseRequest, {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.VerifySignatureRequest
     * @private
     */
     initialize: function($super) {
@@ -29,7 +32,8 @@ var base_Signature = require("../base/Signature");
     * Set the field value
     * Payment that the signature is verifying for
     *
-    * @param {Payment} payment 
+    * @memberof remotepay.VerifySignatureRequest
+    * @param {payments.Payment} payment 
     */
     setPayment: function(payment) {
       this.payment = payment;
@@ -38,7 +42,8 @@ var base_Signature = require("../base/Signature");
     /**
     * Get the field value
     * Payment that the signature is verifying for
-      * @return {Payment} 
+    * @memberof remotepay.VerifySignatureRequest
+    * @return {payments.Payment} 
     */
     getPayment: function() {
       return this.payment;
@@ -46,7 +51,8 @@ var base_Signature = require("../base/Signature");
 
     /**
     * Set the field value
-    * @param {Signature} signature 
+    * @memberof remotepay.VerifySignatureRequest
+    * @param {base.Signature} signature 
     */
     setSignature: function(signature) {
       this.signature = signature;
@@ -54,7 +60,8 @@ var base_Signature = require("../base/Signature");
 
     /**
     * Get the field value
-    * @return {Signature} 
+    * @memberof remotepay.VerifySignatureRequest
+    * @return {base.Signature} 
     */
     getSignature: function() {
       return this.signature;

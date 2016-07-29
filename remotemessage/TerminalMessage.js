@@ -11,10 +11,13 @@ var remotemessage_Message = require("../remotemessage/Message");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   TerminalMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.TerminalMessage
     * @private
     */
     initialize: function($super) {
@@ -28,6 +31,7 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * The message to display.
     *
+    * @memberof remotemessage.TerminalMessage
     * @param {String} text 
     */
     setText: function(text) {
@@ -37,7 +41,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * The message to display.
-      * @return {String} 
+    * @memberof remotemessage.TerminalMessage
+    * @return {String} 
     */
     getText: function() {
       return this.text;

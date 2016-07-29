@@ -10,10 +10,12 @@ var base_Reference = require("../base/Reference");
 
   /**
   * @constructor
+  * @memberof inventory
   */
   Option = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof inventory.Option
     * @private
     */
     initialize: function() {
@@ -27,6 +29,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Unique identifier
     *
+    * @memberof inventory.Option
     * @param {String} id 
     */
     setId: function(id) {
@@ -36,7 +39,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof inventory.Option
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -46,6 +50,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Name of the option
     *
+    * @memberof inventory.Option
     * @param {String} name 
     */
     setName: function(name) {
@@ -55,7 +60,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Name of the option
-      * @return {String} 
+    * @memberof inventory.Option
+    * @return {String} 
     */
     getName: function() {
       return this.name;
@@ -63,7 +69,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
-    * @param {Reference} attribute 
+    * @memberof inventory.Option
+    * @param {base.Reference} attribute 
     */
     setAttribute: function(attribute) {
       this.attribute = attribute;
@@ -71,11 +78,17 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * @return {Reference} 
+    * @memberof inventory.Option
+    * @return {base.Reference} 
     */
     getAttribute: function() {
       return this.attribute;
     },
+
+    /**
+    * @memberof inventory.Option
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

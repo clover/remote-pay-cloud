@@ -12,10 +12,12 @@ var payments_Type = require("../payments/Type");
 
   /**
   * @constructor
+  * @memberof payments
   */
   Authorization = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof payments.Authorization
     * @private
     */
     initialize: function() {
@@ -37,6 +39,7 @@ var payments_Type = require("../payments/Type");
     * Set the field value
     * Unique identifier
     *
+    * @memberof payments.Authorization
     * @param {String} id 
     */
     setId: function(id) {
@@ -46,7 +49,8 @@ var payments_Type = require("../payments/Type");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof payments.Authorization
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -56,7 +60,8 @@ var payments_Type = require("../payments/Type");
     * Set the field value
     * Payment that the auth was opened with
     *
-    * @param {Payment} payment 
+    * @memberof payments.Authorization
+    * @param {payments.Payment} payment 
     */
     setPayment: function(payment) {
       this.payment = payment;
@@ -65,7 +70,8 @@ var payments_Type = require("../payments/Type");
     /**
     * Get the field value
     * Payment that the auth was opened with
-      * @return {Payment} 
+    * @memberof payments.Authorization
+    * @return {payments.Payment} 
     */
     getPayment: function() {
       return this.payment;
@@ -75,6 +81,7 @@ var payments_Type = require("../payments/Type");
     * Set the field value
     * Name of tab
     *
+    * @memberof payments.Authorization
     * @param {String|Null} tabName 
     */
     setTabName: function(tabName) {
@@ -84,7 +91,8 @@ var payments_Type = require("../payments/Type");
     /**
     * Get the field value
     * Name of tab
-      * @return {String|Null} 
+    * @memberof payments.Authorization
+    * @return {String|Null} 
     */
     getTabName: function() {
       return this.tabName;
@@ -94,6 +102,7 @@ var payments_Type = require("../payments/Type");
     * Set the field value
     * Amount authorized
     *
+    * @memberof payments.Authorization
     * @param {Number} amount must be a long integer
     */
     setAmount: function(amount) {
@@ -103,7 +112,8 @@ var payments_Type = require("../payments/Type");
     /**
     * Get the field value
     * Amount authorized
-      * @return {Number} must be a long integer
+    * @memberof payments.Authorization
+    * @return {Number} must be a long integer
     */
     getAmount: function() {
       return this.amount;
@@ -113,7 +123,8 @@ var payments_Type = require("../payments/Type");
     * Set the field value
     * Type of credit card used for authorization
     *
-    * @param {CardType} cardType 
+    * @memberof payments.Authorization
+    * @param {payments.CardType} cardType 
     */
     setCardType: function(cardType) {
       this.cardType = cardType;
@@ -122,7 +133,8 @@ var payments_Type = require("../payments/Type");
     /**
     * Get the field value
     * Type of credit card used for authorization
-      * @return {CardType} 
+    * @memberof payments.Authorization
+    * @return {payments.CardType} 
     */
     getCardType: function() {
       return this.cardType;
@@ -132,6 +144,7 @@ var payments_Type = require("../payments/Type");
     * Set the field value
     * Last 4 digits of credit card used for authorization
     *
+    * @memberof payments.Authorization
     * @param {String} last4 
     */
     setLast4: function(last4) {
@@ -141,7 +154,8 @@ var payments_Type = require("../payments/Type");
     /**
     * Get the field value
     * Last 4 digits of credit card used for authorization
-      * @return {String} 
+    * @memberof payments.Authorization
+    * @return {String} 
     */
     getLast4: function() {
       return this.last4;
@@ -151,6 +165,7 @@ var payments_Type = require("../payments/Type");
     * Set the field value
     * Authorization code
     *
+    * @memberof payments.Authorization
     * @param {String} authcode 
     */
     setAuthcode: function(authcode) {
@@ -160,7 +175,8 @@ var payments_Type = require("../payments/Type");
     /**
     * Get the field value
     * Authorization code
-      * @return {String} 
+    * @memberof payments.Authorization
+    * @return {String} 
     */
     getAuthcode: function() {
       return this.authcode;
@@ -168,7 +184,8 @@ var payments_Type = require("../payments/Type");
 
     /**
     * Set the field value
-    * @param {Type} type 
+    * @memberof payments.Authorization
+    * @param {payments.Type} type 
     */
     setType: function(type) {
       this.type = type;
@@ -176,7 +193,8 @@ var payments_Type = require("../payments/Type");
 
     /**
     * Get the field value
-    * @return {Type} 
+    * @memberof payments.Authorization
+    * @return {payments.Type} 
     */
     getType: function() {
       return this.type;
@@ -184,6 +202,7 @@ var payments_Type = require("../payments/Type");
 
     /**
     * Set the field value
+    * @memberof payments.Authorization
     * @param {String|Null} note 
     */
     setNote: function(note) {
@@ -192,6 +211,7 @@ var payments_Type = require("../payments/Type");
 
     /**
     * Get the field value
+    * @memberof payments.Authorization
     * @return {String|Null} 
     */
     getNote: function() {
@@ -202,7 +222,8 @@ var payments_Type = require("../payments/Type");
     * Set the field value
     * Payment that the auth was closed with
     *
-    * @param {Payment} closingPayment 
+    * @memberof payments.Authorization
+    * @param {payments.Payment} closingPayment 
     */
     setClosingPayment: function(closingPayment) {
       this.closingPayment = closingPayment;
@@ -211,7 +232,8 @@ var payments_Type = require("../payments/Type");
     /**
     * Get the field value
     * Payment that the auth was closed with
-      * @return {Payment} 
+    * @memberof payments.Authorization
+    * @return {payments.Payment} 
     */
     getClosingPayment: function() {
       return this.closingPayment;
@@ -221,6 +243,7 @@ var payments_Type = require("../payments/Type");
     * Set the field value
     * Time authorization was recorded on server
     *
+    * @memberof payments.Authorization
     * @param {Number} createdTime must be a long integer
     */
     setCreatedTime: function(createdTime) {
@@ -230,11 +253,17 @@ var payments_Type = require("../payments/Type");
     /**
     * Get the field value
     * Time authorization was recorded on server
-      * @return {Number} must be a long integer
+    * @memberof payments.Authorization
+    * @return {Number} must be a long integer
     */
     getCreatedTime: function() {
       return this.createdTime;
     },
+
+    /**
+    * @memberof payments.Authorization
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

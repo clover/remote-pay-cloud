@@ -17,10 +17,12 @@ var inventory_Option = require("../inventory/Option");
 
   /**
   * @constructor
+  * @memberof inventory
   */
   Item = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof inventory.Item
     * @private
     */
     initialize: function() {
@@ -52,6 +54,7 @@ var inventory_Option = require("../inventory/Option");
     * Set the field value
     * Unique identifier
     *
+    * @memberof inventory.Item
     * @param {String} id 
     */
     setId: function(id) {
@@ -61,7 +64,8 @@ var inventory_Option = require("../inventory/Option");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof inventory.Item
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -71,6 +75,7 @@ var inventory_Option = require("../inventory/Option");
     * Set the field value
     * True if this item is hidden from register
     *
+    * @memberof inventory.Item
     * @param {Boolean} hidden 
     */
     setHidden: function(hidden) {
@@ -80,7 +85,8 @@ var inventory_Option = require("../inventory/Option");
     /**
     * Get the field value
     * True if this item is hidden from register
-      * @return {Boolean} 
+    * @memberof inventory.Item
+    * @return {Boolean} 
     */
     getHidden: function() {
       return this.hidden;
@@ -90,7 +96,8 @@ var inventory_Option = require("../inventory/Option");
     * Set the field value
     * Reference to an item group
     *
-    * @param {Null|Reference} itemGroup 
+    * @memberof inventory.Item
+    * @param {Null|base.Reference} itemGroup 
     */
     setItemGroup: function(itemGroup) {
       this.itemGroup = itemGroup;
@@ -99,7 +106,8 @@ var inventory_Option = require("../inventory/Option");
     /**
     * Get the field value
     * Reference to an item group
-      * @return {Null|Reference} 
+    * @memberof inventory.Item
+    * @return {Null|base.Reference} 
     */
     getItemGroup: function() {
       return this.itemGroup;
@@ -109,7 +117,8 @@ var inventory_Option = require("../inventory/Option");
     * Set the field value
     * List of options pertaining to this item's attribute variation
     *
-    * @param {Array.<Option>} options An array of 
+    * @memberof inventory.Item
+    * @param {Array.<inventory.Option>} options An array of 
     */
     setOptions: function(options) {
       this.options = options;
@@ -118,7 +127,8 @@ var inventory_Option = require("../inventory/Option");
     /**
     * Get the field value
     * List of options pertaining to this item's attribute variation
-      * @return {Array.<Option>} An array of 
+    * @memberof inventory.Item
+    * @return {Array.<inventory.Option>} An array of 
     */
     getOptions: function() {
       return this.options;
@@ -128,6 +138,7 @@ var inventory_Option = require("../inventory/Option");
     * Set the field value
     * Name of the item
     *
+    * @memberof inventory.Item
     * @param {String} name 
     */
     setName: function(name) {
@@ -137,7 +148,8 @@ var inventory_Option = require("../inventory/Option");
     /**
     * Get the field value
     * Name of the item
-      * @return {String} 
+    * @memberof inventory.Item
+    * @return {String} 
     */
     getName: function() {
       return this.name;
@@ -147,6 +159,7 @@ var inventory_Option = require("../inventory/Option");
     * Set the field value
     * Alternate name of the item
     *
+    * @memberof inventory.Item
     * @param {Null|String} alternateName 
     */
     setAlternateName: function(alternateName) {
@@ -156,7 +169,8 @@ var inventory_Option = require("../inventory/Option");
     /**
     * Get the field value
     * Alternate name of the item
-      * @return {Null|String} 
+    * @memberof inventory.Item
+    * @return {Null|String} 
     */
     getAlternateName: function() {
       return this.alternateName;
@@ -166,6 +180,7 @@ var inventory_Option = require("../inventory/Option");
     * Set the field value
     * Product code, e.g. UPC or EAN
     *
+    * @memberof inventory.Item
     * @param {Null|String} code 
     */
     setCode: function(code) {
@@ -175,7 +190,8 @@ var inventory_Option = require("../inventory/Option");
     /**
     * Get the field value
     * Product code, e.g. UPC or EAN
-      * @return {Null|String} 
+    * @memberof inventory.Item
+    * @return {Null|String} 
     */
     getCode: function() {
       return this.code;
@@ -185,6 +201,7 @@ var inventory_Option = require("../inventory/Option");
     * Set the field value
     * SKU of the item
     *
+    * @memberof inventory.Item
     * @param {Null|String} sku 
     */
     setSku: function(sku) {
@@ -194,7 +211,8 @@ var inventory_Option = require("../inventory/Option");
     /**
     * Get the field value
     * SKU of the item
-      * @return {Null|String} 
+    * @memberof inventory.Item
+    * @return {Null|String} 
     */
     getSku: function() {
       return this.sku;
@@ -204,6 +222,7 @@ var inventory_Option = require("../inventory/Option");
     * Set the field value
     * Price of the item, typically in cents; use priceType and merchant currency to determine actual item price
     *
+    * @memberof inventory.Item
     * @param {Number} price must be a long integer
     */
     setPrice: function(price) {
@@ -213,7 +232,8 @@ var inventory_Option = require("../inventory/Option");
     /**
     * Get the field value
     * Price of the item, typically in cents; use priceType and merchant currency to determine actual item price
-      * @return {Number} must be a long integer
+    * @memberof inventory.Item
+    * @return {Number} must be a long integer
     */
     getPrice: function() {
       return this.price;
@@ -221,7 +241,8 @@ var inventory_Option = require("../inventory/Option");
 
     /**
     * Set the field value
-    * @param {PriceType} priceType 
+    * @memberof inventory.Item
+    * @param {inventory.PriceType} priceType 
     */
     setPriceType: function(priceType) {
       this.priceType = priceType;
@@ -229,7 +250,8 @@ var inventory_Option = require("../inventory/Option");
 
     /**
     * Get the field value
-    * @return {PriceType} 
+    * @memberof inventory.Item
+    * @return {inventory.PriceType} 
     */
     getPriceType: function() {
       return this.priceType;
@@ -239,6 +261,7 @@ var inventory_Option = require("../inventory/Option");
     * Set the field value
     * Flag to indicate whether or not to use default tax rates
     *
+    * @memberof inventory.Item
     * @param {Boolean} defaultTaxRates 
     */
     setDefaultTaxRates: function(defaultTaxRates) {
@@ -248,7 +271,8 @@ var inventory_Option = require("../inventory/Option");
     /**
     * Get the field value
     * Flag to indicate whether or not to use default tax rates
-      * @return {Boolean} 
+    * @memberof inventory.Item
+    * @return {Boolean} 
     */
     getDefaultTaxRates: function() {
       return this.defaultTaxRates;
@@ -258,6 +282,7 @@ var inventory_Option = require("../inventory/Option");
     * Set the field value
     * Unit name, e.g. oz, lb
     *
+    * @memberof inventory.Item
     * @param {Null|String} unitName 
     */
     setUnitName: function(unitName) {
@@ -267,7 +292,8 @@ var inventory_Option = require("../inventory/Option");
     /**
     * Get the field value
     * Unit name, e.g. oz, lb
-      * @return {Null|String} 
+    * @memberof inventory.Item
+    * @return {Null|String} 
     */
     getUnitName: function() {
       return this.unitName;
@@ -277,6 +303,7 @@ var inventory_Option = require("../inventory/Option");
     * Set the field value
     * Cost of the item to merchant, as opposed to customer price
     *
+    * @memberof inventory.Item
     * @param {Null|Number} cost must be a long integer
     */
     setCost: function(cost) {
@@ -286,7 +313,8 @@ var inventory_Option = require("../inventory/Option");
     /**
     * Get the field value
     * Cost of the item to merchant, as opposed to customer price
-      * @return {Null|Number} must be a long integer
+    * @memberof inventory.Item
+    * @return {Null|Number} must be a long integer
     */
     getCost: function() {
       return this.cost;
@@ -296,6 +324,7 @@ var inventory_Option = require("../inventory/Option");
     * Set the field value
     * True if this item should be counted as revenue, for example gift cards and donations would not
     *
+    * @memberof inventory.Item
     * @param {Boolean} isRevenue 
     */
     setIsRevenue: function(isRevenue) {
@@ -305,7 +334,8 @@ var inventory_Option = require("../inventory/Option");
     /**
     * Get the field value
     * True if this item should be counted as revenue, for example gift cards and donations would not
-      * @return {Boolean} 
+    * @memberof inventory.Item
+    * @return {Boolean} 
     */
     getIsRevenue: function() {
       return this.isRevenue;
@@ -315,6 +345,7 @@ var inventory_Option = require("../inventory/Option");
     * Set the field value
     * DEPRECATED: use itemStock instead
     *
+    * @memberof inventory.Item
     * @param {Null|Number} stockCount must be a long integer
     */
     setStockCount: function(stockCount) {
@@ -324,7 +355,8 @@ var inventory_Option = require("../inventory/Option");
     /**
     * Get the field value
     * DEPRECATED: use itemStock instead
-      * @return {Null|Number} must be a long integer
+    * @memberof inventory.Item
+    * @return {Null|Number} must be a long integer
     */
     getStockCount: function() {
       return this.stockCount;
@@ -332,7 +364,8 @@ var inventory_Option = require("../inventory/Option");
 
     /**
     * Set the field value
-    * @param {Array.<TaxRate>} taxRates An array of 
+    * @memberof inventory.Item
+    * @param {Array.<inventory.TaxRate>} taxRates An array of 
     */
     setTaxRates: function(taxRates) {
       this.taxRates = taxRates;
@@ -340,7 +373,8 @@ var inventory_Option = require("../inventory/Option");
 
     /**
     * Get the field value
-    * @return {Array.<TaxRate>} An array of 
+    * @memberof inventory.Item
+    * @return {Array.<inventory.TaxRate>} An array of 
     */
     getTaxRates: function() {
       return this.taxRates;
@@ -348,7 +382,8 @@ var inventory_Option = require("../inventory/Option");
 
     /**
     * Set the field value
-    * @param {Array.<ModifierGroup>} modifierGroups An array of 
+    * @memberof inventory.Item
+    * @param {Array.<inventory.ModifierGroup>} modifierGroups An array of 
     */
     setModifierGroups: function(modifierGroups) {
       this.modifierGroups = modifierGroups;
@@ -356,7 +391,8 @@ var inventory_Option = require("../inventory/Option");
 
     /**
     * Get the field value
-    * @return {Array.<ModifierGroup>} An array of 
+    * @memberof inventory.Item
+    * @return {Array.<inventory.ModifierGroup>} An array of 
     */
     getModifierGroups: function() {
       return this.modifierGroups;
@@ -366,7 +402,8 @@ var inventory_Option = require("../inventory/Option");
     * Set the field value
     * Categories associated with this item
     *
-    * @param {Array.<Category>} categories An array of 
+    * @memberof inventory.Item
+    * @param {Array.<inventory.Category>} categories An array of 
     */
     setCategories: function(categories) {
       this.categories = categories;
@@ -375,7 +412,8 @@ var inventory_Option = require("../inventory/Option");
     /**
     * Get the field value
     * Categories associated with this item
-      * @return {Array.<Category>} An array of 
+    * @memberof inventory.Item
+    * @return {Array.<inventory.Category>} An array of 
     */
     getCategories: function() {
       return this.categories;
@@ -385,7 +423,8 @@ var inventory_Option = require("../inventory/Option");
     * Set the field value
     * Tags associated with this item
     *
-    * @param {Array.<Tag>} tags An array of 
+    * @memberof inventory.Item
+    * @param {Array.<inventory.Tag>} tags An array of 
     */
     setTags: function(tags) {
       this.tags = tags;
@@ -394,7 +433,8 @@ var inventory_Option = require("../inventory/Option");
     /**
     * Get the field value
     * Tags associated with this item
-      * @return {Array.<Tag>} An array of 
+    * @memberof inventory.Item
+    * @return {Array.<inventory.Tag>} An array of 
     */
     getTags: function() {
       return this.tags;
@@ -404,7 +444,8 @@ var inventory_Option = require("../inventory/Option");
     * Set the field value
     * Item stock attribute that can be expanded to show stock quantity
     *
-    * @param {Null|ItemStock} itemStock 
+    * @memberof inventory.Item
+    * @param {Null|inventory.ItemStock} itemStock 
     */
     setItemStock: function(itemStock) {
       this.itemStock = itemStock;
@@ -413,7 +454,8 @@ var inventory_Option = require("../inventory/Option");
     /**
     * Get the field value
     * Item stock attribute that can be expanded to show stock quantity
-      * @return {Null|ItemStock} 
+    * @memberof inventory.Item
+    * @return {Null|inventory.ItemStock} 
     */
     getItemStock: function() {
       return this.itemStock;
@@ -421,6 +463,7 @@ var inventory_Option = require("../inventory/Option");
 
     /**
     * Set the field value
+    * @memberof inventory.Item
     * @param {Number} modifiedTime must be a long integer
     */
     setModifiedTime: function(modifiedTime) {
@@ -429,11 +472,17 @@ var inventory_Option = require("../inventory/Option");
 
     /**
     * Get the field value
+    * @memberof inventory.Item
     * @return {Number} must be a long integer
     */
     getModifiedTime: function() {
       return this.modifiedTime;
     },
+
+    /**
+    * @memberof inventory.Item
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

@@ -10,10 +10,12 @@ require("prototype");
 /** The base for requests */
   /**
   * @constructor
+  * @memberof remotepay
   */
   BaseRequest = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.BaseRequest
     * @private
     */
     initialize: function() {
@@ -25,6 +27,7 @@ require("prototype");
     * Set the field value
     * Identifier for the request
     *
+    * @memberof remotepay.BaseRequest
     * @param {String|Null} requestId 
     */
     setRequestId: function(requestId) {
@@ -34,11 +37,17 @@ require("prototype");
     /**
     * Get the field value
     * Identifier for the request
-      * @return {String|Null} 
+    * @memberof remotepay.BaseRequest
+    * @return {String|Null} 
     */
     getRequestId: function() {
       return this.requestId;
     },
+
+    /**
+    * @memberof remotepay.BaseRequest
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

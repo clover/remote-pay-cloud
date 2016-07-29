@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof payments
+* @enum {string}
+*/
 BatchState = {
   OPEN : "OPEN",
   QUEUED_FOR_PROCESSING : "QUEUED_FOR_PROCESSING",

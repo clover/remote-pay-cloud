@@ -10,10 +10,12 @@ var printer_PrinterType = require("../printer/PrinterType");
 
   /**
   * @constructor
+  * @memberof printer
   */
   Printer = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof printer.Printer
     * @private
     */
     initialize: function() {
@@ -30,6 +32,7 @@ var printer_PrinterType = require("../printer/PrinterType");
     * Set the field value
     * Unique identifier
     *
+    * @memberof printer.Printer
     * @param {String} id 
     */
     setId: function(id) {
@@ -39,7 +42,8 @@ var printer_PrinterType = require("../printer/PrinterType");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof printer.Printer
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -49,6 +53,7 @@ var printer_PrinterType = require("../printer/PrinterType");
     * Set the field value
     * MAC address of a network printer
     *
+    * @memberof printer.Printer
     * @param {String} mac 
     */
     setMac: function(mac) {
@@ -58,7 +63,8 @@ var printer_PrinterType = require("../printer/PrinterType");
     /**
     * Get the field value
     * MAC address of a network printer
-      * @return {String} 
+    * @memberof printer.Printer
+    * @return {String} 
     */
     getMac: function() {
       return this.mac;
@@ -66,6 +72,7 @@ var printer_PrinterType = require("../printer/PrinterType");
 
     /**
     * Set the field value
+    * @memberof printer.Printer
     * @param {String} model 
     */
     setModel: function(model) {
@@ -74,6 +81,7 @@ var printer_PrinterType = require("../printer/PrinterType");
 
     /**
     * Get the field value
+    * @memberof printer.Printer
     * @return {String} 
     */
     getModel: function() {
@@ -82,6 +90,7 @@ var printer_PrinterType = require("../printer/PrinterType");
 
     /**
     * Set the field value
+    * @memberof printer.Printer
     * @param {String} name 
     */
     setName: function(name) {
@@ -90,6 +99,7 @@ var printer_PrinterType = require("../printer/PrinterType");
 
     /**
     * Get the field value
+    * @memberof printer.Printer
     * @return {String} 
     */
     getName: function() {
@@ -100,6 +110,7 @@ var printer_PrinterType = require("../printer/PrinterType");
     * Set the field value
     * IP address of a network printer
     *
+    * @memberof printer.Printer
     * @param {String} ipAddress 
     */
     setIpAddress: function(ipAddress) {
@@ -109,7 +120,8 @@ var printer_PrinterType = require("../printer/PrinterType");
     /**
     * Get the field value
     * IP address of a network printer
-      * @return {String} 
+    * @memberof printer.Printer
+    * @return {String} 
     */
     getIpAddress: function() {
       return this.ipAddress;
@@ -119,7 +131,8 @@ var printer_PrinterType = require("../printer/PrinterType");
     * Set the field value
     * NETWORK is a printer that's directly connected to the network.  MY_LOCAL represents the printer that's connected to the device that's making the request.
     *
-    * @param {PrinterType} type 
+    * @memberof printer.Printer
+    * @param {printer.PrinterType} type 
     */
     setType: function(type) {
       this.type = type;
@@ -128,11 +141,17 @@ var printer_PrinterType = require("../printer/PrinterType");
     /**
     * Get the field value
     * NETWORK is a printer that's directly connected to the network.  MY_LOCAL represents the printer that's connected to the device that's making the request.
-      * @return {PrinterType} 
+    * @memberof printer.Printer
+    * @return {printer.PrinterType} 
     */
     getType: function() {
       return this.type;
     },
+
+    /**
+    * @memberof printer.Printer
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

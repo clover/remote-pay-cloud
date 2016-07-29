@@ -12,10 +12,12 @@ var payments_BatchState = require("../payments/BatchState");
 
   /**
   * @constructor
+  * @memberof payments
   */
   Batch = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof payments.Batch
     * @private
     */
     initialize: function() {
@@ -37,6 +39,7 @@ var payments_BatchState = require("../payments/BatchState");
 
     /**
     * Set the field value
+    * @memberof payments.Batch
     * @param {String} id 
     */
     setId: function(id) {
@@ -45,6 +48,7 @@ var payments_BatchState = require("../payments/BatchState");
 
     /**
     * Get the field value
+    * @memberof payments.Batch
     * @return {String} 
     */
     getId: function() {
@@ -53,6 +57,7 @@ var payments_BatchState = require("../payments/BatchState");
 
     /**
     * Set the field value
+    * @memberof payments.Batch
     * @param {Number} merchantId must be a long integer
     */
     setMerchantId: function(merchantId) {
@@ -61,6 +66,7 @@ var payments_BatchState = require("../payments/BatchState");
 
     /**
     * Get the field value
+    * @memberof payments.Batch
     * @return {Number} must be a long integer
     */
     getMerchantId: function() {
@@ -69,6 +75,7 @@ var payments_BatchState = require("../payments/BatchState");
 
     /**
     * Set the field value
+    * @memberof payments.Batch
     * @param {Number} firstGatewayTxId must be a long integer
     */
     setFirstGatewayTxId: function(firstGatewayTxId) {
@@ -77,6 +84,7 @@ var payments_BatchState = require("../payments/BatchState");
 
     /**
     * Get the field value
+    * @memberof payments.Batch
     * @return {Number} must be a long integer
     */
     getFirstGatewayTxId: function() {
@@ -85,6 +93,7 @@ var payments_BatchState = require("../payments/BatchState");
 
     /**
     * Set the field value
+    * @memberof payments.Batch
     * @param {Number} lastGatewayTxId must be a long integer
     */
     setLastGatewayTxId: function(lastGatewayTxId) {
@@ -93,6 +102,7 @@ var payments_BatchState = require("../payments/BatchState");
 
     /**
     * Get the field value
+    * @memberof payments.Batch
     * @return {Number} must be a long integer
     */
     getLastGatewayTxId: function() {
@@ -103,6 +113,7 @@ var payments_BatchState = require("../payments/BatchState");
     * Set the field value
     * The id of employee who executed batch
     *
+    * @memberof payments.Batch
     * @param {Number} accountId must be a long integer
     */
     setAccountId: function(accountId) {
@@ -112,7 +123,8 @@ var payments_BatchState = require("../payments/BatchState");
     /**
     * Get the field value
     * The id of employee who executed batch
-      * @return {Number} must be a long integer
+    * @memberof payments.Batch
+    * @return {Number} must be a long integer
     */
     getAccountId: function() {
       return this.accountId;
@@ -122,6 +134,7 @@ var payments_BatchState = require("../payments/BatchState");
     * Set the field value
     * The number of transactions being batched
     *
+    * @memberof payments.Batch
     * @param {Number} txCount must be a long integer
     */
     setTxCount: function(txCount) {
@@ -131,7 +144,8 @@ var payments_BatchState = require("../payments/BatchState");
     /**
     * Get the field value
     * The number of transactions being batched
-      * @return {Number} must be a long integer
+    * @memberof payments.Batch
+    * @return {Number} must be a long integer
     */
     getTxCount: function() {
       return this.txCount;
@@ -141,6 +155,7 @@ var payments_BatchState = require("../payments/BatchState");
     * Set the field value
     * Total amount closed
     *
+    * @memberof payments.Batch
     * @param {Number} totalBatchAmount must be a long integer
     */
     setTotalBatchAmount: function(totalBatchAmount) {
@@ -150,7 +165,8 @@ var payments_BatchState = require("../payments/BatchState");
     /**
     * Get the field value
     * Total amount closed
-      * @return {Number} must be a long integer
+    * @memberof payments.Batch
+    * @return {Number} must be a long integer
     */
     getTotalBatchAmount: function() {
       return this.totalBatchAmount;
@@ -160,6 +176,7 @@ var payments_BatchState = require("../payments/BatchState");
     * Set the field value
     * List of devices in batch
     *
+    * @memberof payments.Batch
     * @param {String} devices 
     */
     setDevices: function(devices) {
@@ -169,7 +186,8 @@ var payments_BatchState = require("../payments/BatchState");
     /**
     * Get the field value
     * List of devices in batch
-      * @return {String} 
+    * @memberof payments.Batch
+    * @return {String} 
     */
     getDevices: function() {
       return this.devices;
@@ -177,7 +195,8 @@ var payments_BatchState = require("../payments/BatchState");
 
     /**
     * Set the field value
-    * @param {BatchState} state 
+    * @memberof payments.Batch
+    * @param {payments.BatchState} state 
     */
     setState: function(state) {
       this.state = state;
@@ -185,7 +204,8 @@ var payments_BatchState = require("../payments/BatchState");
 
     /**
     * Get the field value
-    * @return {BatchState} 
+    * @memberof payments.Batch
+    * @return {payments.BatchState} 
     */
     getState: function() {
       return this.state;
@@ -193,7 +213,8 @@ var payments_BatchState = require("../payments/BatchState");
 
     /**
     * Set the field value
-    * @param {BatchType} batchType 
+    * @memberof payments.Batch
+    * @param {payments.BatchType} batchType 
     */
     setBatchType: function(batchType) {
       this.batchType = batchType;
@@ -201,7 +222,8 @@ var payments_BatchState = require("../payments/BatchState");
 
     /**
     * Get the field value
-    * @return {BatchType} 
+    * @memberof payments.Batch
+    * @return {payments.BatchType} 
     */
     getBatchType: function() {
       return this.batchType;
@@ -211,6 +233,7 @@ var payments_BatchState = require("../payments/BatchState");
     * Set the field value
     * Created time of batch
     *
+    * @memberof payments.Batch
     * @param {Number} createdTime must be a long integer
     */
     setCreatedTime: function(createdTime) {
@@ -220,7 +243,8 @@ var payments_BatchState = require("../payments/BatchState");
     /**
     * Get the field value
     * Created time of batch
-      * @return {Number} must be a long integer
+    * @memberof payments.Batch
+    * @return {Number} must be a long integer
     */
     getCreatedTime: function() {
       return this.createdTime;
@@ -230,6 +254,7 @@ var payments_BatchState = require("../payments/BatchState");
     * Set the field value
     * Modified time of batch
     *
+    * @memberof payments.Batch
     * @param {Number} modifiedTime must be a long integer
     */
     setModifiedTime: function(modifiedTime) {
@@ -239,7 +264,8 @@ var payments_BatchState = require("../payments/BatchState");
     /**
     * Get the field value
     * Modified time of batch
-      * @return {Number} must be a long integer
+    * @memberof payments.Batch
+    * @return {Number} must be a long integer
     */
     getModifiedTime: function() {
       return this.modifiedTime;
@@ -249,7 +275,8 @@ var payments_BatchState = require("../payments/BatchState");
     * Set the field value
     * Details split based on card / employees
     *
-    * @param {BatchDetail} batchDetails 
+    * @memberof payments.Batch
+    * @param {payments.BatchDetail} batchDetails 
     */
     setBatchDetails: function(batchDetails) {
       this.batchDetails = batchDetails;
@@ -258,11 +285,17 @@ var payments_BatchState = require("../payments/BatchState");
     /**
     * Get the field value
     * Details split based on card / employees
-      * @return {BatchDetail} 
+    * @memberof payments.Batch
+    * @return {payments.BatchDetail} 
     */
     getBatchDetails: function() {
       return this.batchDetails;
     },
+
+    /**
+    * @memberof payments.Batch
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

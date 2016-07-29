@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof remotepay
+* @enum {string}
+*/
 TransactionType = {
   PAYMENT : "PAYMENT",
   CREDIT : "CREDIT",

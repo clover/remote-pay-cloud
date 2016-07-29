@@ -9,10 +9,12 @@ require("prototype");
 
   /**
   * @constructor
+  * @memberof payments
   */
   VaultedCard = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof payments.VaultedCard
     * @private
     */
     initialize: function() {
@@ -26,6 +28,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof payments.VaultedCard
     * @param {String} first6 
     */
     setFirst6: function(first6) {
@@ -34,6 +37,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof payments.VaultedCard
     * @return {String} 
     */
     getFirst6: function() {
@@ -42,6 +46,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof payments.VaultedCard
     * @param {String} last4 
     */
     setLast4: function(last4) {
@@ -50,6 +55,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof payments.VaultedCard
     * @return {String} 
     */
     getLast4: function() {
@@ -58,6 +64,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof payments.VaultedCard
     * @param {String} cardholderName 
     */
     setCardholderName: function(cardholderName) {
@@ -66,6 +73,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof payments.VaultedCard
     * @return {String} 
     */
     getCardholderName: function() {
@@ -74,6 +82,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof payments.VaultedCard
     * @param {String} expirationDate 
     */
     setExpirationDate: function(expirationDate) {
@@ -82,6 +91,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof payments.VaultedCard
     * @return {String} 
     */
     getExpirationDate: function() {
@@ -90,6 +100,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof payments.VaultedCard
     * @param {String} token 
     */
     setToken: function(token) {
@@ -98,11 +109,17 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof payments.VaultedCard
     * @return {String} 
     */
     getToken: function() {
       return this.token;
     },
+
+    /**
+    * @memberof payments.VaultedCard
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

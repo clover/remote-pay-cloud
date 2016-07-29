@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof remotepay
+* @enum {string}
+*/
 KeyPress = {
   NONE : "NONE",
   ENTER : "ENTER",

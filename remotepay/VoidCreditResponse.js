@@ -11,10 +11,12 @@ var payments_Credit = require("../payments/Credit");
 
   /**
   * @constructor
+  * @memberof remotepay
   */
   VoidCreditResponse = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.VoidCreditResponse
     * @private
     */
     initialize: function() {
@@ -28,6 +30,7 @@ var payments_Credit = require("../payments/Credit");
     * Set the field value
     * Identifier for the request
     *
+    * @memberof remotepay.VoidCreditResponse
     * @param {String} requestId 
     */
     setRequestId: function(requestId) {
@@ -37,7 +40,8 @@ var payments_Credit = require("../payments/Credit");
     /**
     * Get the field value
     * Identifier for the request
-      * @return {String} 
+    * @memberof remotepay.VoidCreditResponse
+    * @return {String} 
     */
     getRequestId: function() {
       return this.requestId;
@@ -45,7 +49,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Set the field value
-    * @param {ResultStatus} status 
+    * @memberof remotepay.VoidCreditResponse
+    * @param {remotepay.ResultStatus} status 
     */
     setStatus: function(status) {
       this.status = status;
@@ -53,7 +58,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Get the field value
-    * @return {ResultStatus} 
+    * @memberof remotepay.VoidCreditResponse
+    * @return {remotepay.ResultStatus} 
     */
     getStatus: function() {
       return this.status;
@@ -63,7 +69,8 @@ var payments_Credit = require("../payments/Credit");
     * Set the field value
     * The credit that was voided
     *
-    * @param {Credit} credit 
+    * @memberof remotepay.VoidCreditResponse
+    * @param {payments.Credit} credit 
     */
     setCredit: function(credit) {
       this.credit = credit;
@@ -72,11 +79,17 @@ var payments_Credit = require("../payments/Credit");
     /**
     * Get the field value
     * The credit that was voided
-      * @return {Credit} 
+    * @memberof remotepay.VoidCreditResponse
+    * @return {payments.Credit} 
     */
     getCredit: function() {
       return this.credit;
     },
+
+    /**
+    * @memberof remotepay.VoidCreditResponse
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

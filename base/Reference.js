@@ -9,10 +9,12 @@ require("prototype");
 
   /**
   * @constructor
+  * @memberof base
   */
   Reference = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof base.Reference
     * @private
     */
     initialize: function() {
@@ -24,6 +26,7 @@ require("prototype");
     * Set the field value
     * Unique identifier
     *
+    * @memberof base.Reference
     * @param {String} id 
     */
     setId: function(id) {
@@ -33,11 +36,17 @@ require("prototype");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof base.Reference
+    * @return {String} 
     */
     getId: function() {
       return this.id;
     },
+
+    /**
+    * @memberof base.Reference
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

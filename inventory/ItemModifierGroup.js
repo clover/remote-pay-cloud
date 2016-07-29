@@ -11,10 +11,12 @@ var inventory_Item = require("../inventory/Item");
 
   /**
   * @constructor
+  * @memberof inventory
   */
   ItemModifierGroup = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof inventory.ItemModifierGroup
     * @private
     */
     initialize: function() {
@@ -25,7 +27,8 @@ var inventory_Item = require("../inventory/Item");
 
     /**
     * Set the field value
-    * @param {Item} item 
+    * @memberof inventory.ItemModifierGroup
+    * @param {inventory.Item} item 
     */
     setItem: function(item) {
       this.item = item;
@@ -33,7 +36,8 @@ var inventory_Item = require("../inventory/Item");
 
     /**
     * Get the field value
-    * @return {Item} 
+    * @memberof inventory.ItemModifierGroup
+    * @return {inventory.Item} 
     */
     getItem: function() {
       return this.item;
@@ -41,7 +45,8 @@ var inventory_Item = require("../inventory/Item");
 
     /**
     * Set the field value
-    * @param {ModifierGroup} modifierGroup 
+    * @memberof inventory.ItemModifierGroup
+    * @param {inventory.ModifierGroup} modifierGroup 
     */
     setModifierGroup: function(modifierGroup) {
       this.modifierGroup = modifierGroup;
@@ -49,11 +54,17 @@ var inventory_Item = require("../inventory/Item");
 
     /**
     * Get the field value
-    * @return {ModifierGroup} 
+    * @memberof inventory.ItemModifierGroup
+    * @return {inventory.ModifierGroup} 
     */
     getModifierGroup: function() {
       return this.modifierGroup;
     },
+
+    /**
+    * @memberof inventory.ItemModifierGroup
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

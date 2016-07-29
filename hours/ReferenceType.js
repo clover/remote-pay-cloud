@@ -5,9 +5,14 @@
  */
 
 
+/**
+* @memberof hours
+* @enum {string}
+*/
 ReferenceType = {
   ORDER_TYPE : "ORDER_TYPE",
-  ITEM_GROUP : "ITEM_GROUP"
+  ITEM_GROUP : "ITEM_GROUP",
+  SOFTWARE_UPDATE_EXCLUSION : "SOFTWARE_UPDATE_EXCLUSION"
 };
 
 

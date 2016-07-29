@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof payments
+* @enum {string}
+*/
 Type = {
   TAB : "TAB",
   AUTH : "AUTH"

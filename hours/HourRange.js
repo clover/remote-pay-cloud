@@ -9,10 +9,12 @@ require("prototype");
 
   /**
   * @constructor
+  * @memberof hours
   */
   HourRange = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof hours.HourRange
     * @private
     */
     initialize: function() {
@@ -23,6 +25,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof hours.HourRange
     * @param {Number} start must be an integer
     */
     setStart: function(start) {
@@ -31,6 +34,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof hours.HourRange
     * @return {Number} must be an integer
     */
     getStart: function() {
@@ -39,6 +43,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof hours.HourRange
     * @param {Number} end must be an integer
     */
     setEnd: function(end) {
@@ -47,11 +52,17 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof hours.HourRange
     * @return {Number} must be an integer
     */
     getEnd: function() {
       return this.end;
     },
+
+    /**
+    * @memberof hours.HourRange
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

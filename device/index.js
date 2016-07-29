@@ -1,4 +1,7 @@
 module.exports.device = device;
+/**
+* @namespace device
+*/
 function device() {}
 
 device.BuildType = require("./BuildType");

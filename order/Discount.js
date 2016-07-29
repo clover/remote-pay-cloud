@@ -10,10 +10,12 @@ var base_Reference = require("../base/Reference");
 
   /**
   * @constructor
+  * @memberof order
   */
   Discount = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof order.Discount
     * @private
     */
     initialize: function() {
@@ -31,6 +33,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Unique identifier
     *
+    * @memberof order.Discount
     * @param {String} id 
     */
     setId: function(id) {
@@ -40,7 +43,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof order.Discount
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -50,7 +54,8 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * The order with which the discount is associated
     *
-    * @param {Null|Reference} orderRef 
+    * @memberof order.Discount
+    * @param {Null|base.Reference} orderRef 
     */
     setOrderRef: function(orderRef) {
       this.orderRef = orderRef;
@@ -59,7 +64,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * The order with which the discount is associated
-      * @return {Null|Reference} 
+    * @memberof order.Discount
+    * @return {Null|base.Reference} 
     */
     getOrderRef: function() {
       return this.orderRef;
@@ -69,7 +75,8 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * The lineItem with which the discount is associated
     *
-    * @param {Null|Reference} lineItemRef 
+    * @memberof order.Discount
+    * @param {Null|base.Reference} lineItemRef 
     */
     setLineItemRef: function(lineItemRef) {
       this.lineItemRef = lineItemRef;
@@ -78,7 +85,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * The lineItem with which the discount is associated
-      * @return {Null|Reference} 
+    * @memberof order.Discount
+    * @return {Null|base.Reference} 
     */
     getLineItemRef: function() {
       return this.lineItemRef;
@@ -88,7 +96,8 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * If this item is based on a standard discount, this will point to the appropriate inventory.Discount
     *
-    * @param {Null|Reference} discount 
+    * @memberof order.Discount
+    * @param {Null|base.Reference} discount 
     */
     setDiscount: function(discount) {
       this.discount = discount;
@@ -97,7 +106,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * If this item is based on a standard discount, this will point to the appropriate inventory.Discount
-      * @return {Null|Reference} 
+    * @memberof order.Discount
+    * @return {Null|base.Reference} 
     */
     getDiscount: function() {
       return this.discount;
@@ -107,6 +117,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Name of the discount
     *
+    * @memberof order.Discount
     * @param {String} name 
     */
     setName: function(name) {
@@ -116,7 +127,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Name of the discount
-      * @return {String} 
+    * @memberof order.Discount
+    * @return {String} 
     */
     getName: function() {
       return this.name;
@@ -126,6 +138,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Discount amount in fraction of currency unit (e.g. cents) based on currency fraction digits supported
     *
+    * @memberof order.Discount
     * @param {Null|Number} amount must be a long integer
     */
     setAmount: function(amount) {
@@ -135,7 +148,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Discount amount in fraction of currency unit (e.g. cents) based on currency fraction digits supported
-      * @return {Null|Number} must be a long integer
+    * @memberof order.Discount
+    * @return {Null|Number} must be a long integer
     */
     getAmount: function() {
       return this.amount;
@@ -145,6 +159,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Discount amount in percent
     *
+    * @memberof order.Discount
     * @param {Null|Number} percentage must be a long integer
     */
     setPercentage: function(percentage) {
@@ -154,11 +169,17 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Discount amount in percent
-      * @return {Null|Number} must be a long integer
+    * @memberof order.Discount
+    * @return {Null|Number} must be a long integer
     */
     getPercentage: function() {
       return this.percentage;
     },
+
+    /**
+    * @memberof order.Discount
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

@@ -1,4 +1,7 @@
 module.exports.payments = payments;
+/**
+* @namespace payments
+*/
 function payments() {}
 
 payments.AVSResult = require("./AVSResult");
@@ -20,6 +23,7 @@ payments.CardType = require("./CardType");
 payments.Credit = require("./Credit");
 payments.Currency = require("./Currency");
 payments.CvmResult = require("./CvmResult");
+payments.DCCInfo = require("./DCCInfo");
 payments.GatewayTxState = require("./GatewayTxState");
 payments.GatewayTxType = require("./GatewayTxType");
 payments.GatewayTxs = require("./GatewayTxs");

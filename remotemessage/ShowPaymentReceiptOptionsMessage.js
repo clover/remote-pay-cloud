@@ -11,10 +11,13 @@ var remotemessage_Message = require("../remotemessage/Message");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   ShowPaymentReceiptOptionsMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.ShowPaymentReceiptOptionsMessage
     * @private
     */
     initialize: function($super) {
@@ -29,6 +32,7 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * Unique identifier for a order
     *
+    * @memberof remotemessage.ShowPaymentReceiptOptionsMessage
     * @param {String} orderId 
     */
     setOrderId: function(orderId) {
@@ -38,7 +42,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * Unique identifier for a order
-      * @return {String} 
+    * @memberof remotemessage.ShowPaymentReceiptOptionsMessage
+    * @return {String} 
     */
     getOrderId: function() {
       return this.orderId;
@@ -48,6 +53,7 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * Unique identifier for a payment
     *
+    * @memberof remotemessage.ShowPaymentReceiptOptionsMessage
     * @param {String} paymentId 
     */
     setPaymentId: function(paymentId) {
@@ -57,7 +63,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * Unique identifier for a payment
-      * @return {String} 
+    * @memberof remotemessage.ShowPaymentReceiptOptionsMessage
+    * @return {String} 
     */
     getPaymentId: function() {
       return this.paymentId;

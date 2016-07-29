@@ -16,7 +16,7 @@
  */
 
 require("prototype");
-var EndPointConfig = require("./EndPointConfig.js");
+var EndPointConfig = require("./EndpointConfig.js");
 
 /**
  * @constructor
@@ -111,14 +111,43 @@ CloverOAuth2 = Class.create( EndPointConfig, {
     getOAuthURL: function(redirect) {
         if(!redirect) {
             // Determine the redirect url
-            redirect = window.location.href.replace(window.location.hash, '');
+            if(this.getRedirectUrl()) {
+                redirect = this.getRedirectUrl().replace(window.location.hash, '');
+            } else {
+                redirect = window.location.href.replace(window.location.hash, '');
+            }
         }
         // This is the oauth url
-        var url = this.configuration.domain +
-            CloverOAuth2.oauthTokenURLFragment_0 + this.configuration.clientId +
-            CloverOAuth2.oauthTokenURLFragment_1 + encodeURIComponent(redirect);
+        var url = this.configuration.domain + CloverOAuth2.oauthTokenURLFragment_base;
+        // Must have client id
+        url += CloverOAuth2.oauthTokenURLFragment_clientId;
+        url += this.configuration.clientId;
+        // May have merchant id
+        if (this.configuration.merchantId) {
+            url += CloverOAuth2.oauthTokenURLFragment_merchantId;
+            url += this.configuration.merchantId;
+        }
+        // will have redirect
+        url += CloverOAuth2.oauthTokenURLFragment_redirectUri;
+        url += encodeURIComponent(redirect);
         return url;
     },
+
+    /**
+     * @return {string|null} the redirect url or null if the existing window url should be used.
+     */
+    getRedirectUrl: function() {
+        return this.redirectUrl;
+    },
+
+    /**
+     *
+     * @param {string|null} redirectUrl - the redirect url or null if the existing window url should be used.
+     */
+    setRedirectUrl: function(redirectUrl) {
+        this.redirectUrl = redirectUrl;
+    },
+
     /**
      * Get the url parameters from the proper url.
      *
@@ -164,8 +193,10 @@ CloverOAuth2 = Class.create( EndPointConfig, {
 
 /** the default clover domain/url */
 CloverOAuth2.defaultDomain = "http://www.clover.com/";
-CloverOAuth2.oauthTokenURLFragment_0 = 'oauth/authorize?response_type=token&client_id=';
-CloverOAuth2.oauthTokenURLFragment_1 = '&redirect_uri=';
+CloverOAuth2.oauthTokenURLFragment_base = 'oauth/authorize?response_type=token';
+CloverOAuth2.oauthTokenURLFragment_clientId = '&client_id=';
+CloverOAuth2.oauthTokenURLFragment_merchantId = '&merchant_id=';
+CloverOAuth2.oauthTokenURLFragment_redirectUri = '&redirect_uri=';
 CloverOAuth2._accessTokenKey = 'access_token';
 CloverOAuth2.accessTokenKey = '#' + CloverOAuth2._accessTokenKey;
 

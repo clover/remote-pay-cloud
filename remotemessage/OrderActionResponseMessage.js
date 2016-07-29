@@ -12,10 +12,13 @@ var remotemessage_OrderActionResponse = require("../remotemessage/OrderActionRes
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   OrderActionResponseMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.OrderActionResponseMessage
     * @private
     */
     initialize: function($super) {
@@ -27,7 +30,8 @@ var remotemessage_OrderActionResponse = require("../remotemessage/OrderActionRes
 
     /**
     * Set the field value
-    * @param {OrderActionResponse} orderActionResponse 
+    * @memberof remotemessage.OrderActionResponseMessage
+    * @param {remotemessage.OrderActionResponse} orderActionResponse 
     */
     setOrderActionResponse: function(orderActionResponse) {
       this.orderActionResponse = orderActionResponse;
@@ -35,7 +39,8 @@ var remotemessage_OrderActionResponse = require("../remotemessage/OrderActionRes
 
     /**
     * Get the field value
-    * @return {OrderActionResponse} 
+    * @memberof remotemessage.OrderActionResponseMessage
+    * @return {remotemessage.OrderActionResponse} 
     */
     getOrderActionResponse: function() {
       return this.orderActionResponse;

@@ -11,10 +11,12 @@ var inventory_Category = require("../inventory/Category");
 
   /**
   * @constructor
+  * @memberof order
   */
   OrderTypeCategory = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof order.OrderTypeCategory
     * @private
     */
     initialize: function() {
@@ -25,7 +27,8 @@ var inventory_Category = require("../inventory/Category");
 
     /**
     * Set the field value
-    * @param {OrderType} orderType 
+    * @memberof order.OrderTypeCategory
+    * @param {order.OrderType} orderType 
     */
     setOrderType: function(orderType) {
       this.orderType = orderType;
@@ -33,7 +36,8 @@ var inventory_Category = require("../inventory/Category");
 
     /**
     * Get the field value
-    * @return {OrderType} 
+    * @memberof order.OrderTypeCategory
+    * @return {order.OrderType} 
     */
     getOrderType: function() {
       return this.orderType;
@@ -41,7 +45,8 @@ var inventory_Category = require("../inventory/Category");
 
     /**
     * Set the field value
-    * @param {Category} category 
+    * @memberof order.OrderTypeCategory
+    * @param {inventory.Category} category 
     */
     setCategory: function(category) {
       this.category = category;
@@ -49,11 +54,17 @@ var inventory_Category = require("../inventory/Category");
 
     /**
     * Get the field value
-    * @return {Category} 
+    * @memberof order.OrderTypeCategory
+    * @return {inventory.Category} 
     */
     getCategory: function() {
       return this.category;
     },
+
+    /**
+    * @memberof order.OrderTypeCategory
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

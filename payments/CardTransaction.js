@@ -15,10 +15,12 @@ var payments_AVSResult = require("../payments/AVSResult");
 
   /**
   * @constructor
+  * @memberof payments
   */
   CardTransaction = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof payments.CardTransaction
     * @private
     */
     initialize: function() {
@@ -46,7 +48,8 @@ var payments_AVSResult = require("../payments/AVSResult");
     * Set the field value
     * The payment with which the card transaction is associated
     *
-    * @param {Null|Reference} paymentRef 
+    * @memberof payments.CardTransaction
+    * @param {Null|base.Reference} paymentRef 
     */
     setPaymentRef: function(paymentRef) {
       this.paymentRef = paymentRef;
@@ -55,7 +58,8 @@ var payments_AVSResult = require("../payments/AVSResult");
     /**
     * Get the field value
     * The payment with which the card transaction is associated
-      * @return {Null|Reference} 
+    * @memberof payments.CardTransaction
+    * @return {Null|base.Reference} 
     */
     getPaymentRef: function() {
       return this.paymentRef;
@@ -65,7 +69,8 @@ var payments_AVSResult = require("../payments/AVSResult");
     * Set the field value
     * The credit with which the card transaction is associated
     *
-    * @param {Null|Reference} creditRef 
+    * @memberof payments.CardTransaction
+    * @param {Null|base.Reference} creditRef 
     */
     setCreditRef: function(creditRef) {
       this.creditRef = creditRef;
@@ -74,7 +79,8 @@ var payments_AVSResult = require("../payments/AVSResult");
     /**
     * Get the field value
     * The credit with which the card transaction is associated
-      * @return {Null|Reference} 
+    * @memberof payments.CardTransaction
+    * @return {Null|base.Reference} 
     */
     getCreditRef: function() {
       return this.creditRef;
@@ -82,7 +88,8 @@ var payments_AVSResult = require("../payments/AVSResult");
 
     /**
     * Set the field value
-    * @param {CardType} cardType 
+    * @memberof payments.CardTransaction
+    * @param {payments.CardType} cardType 
     */
     setCardType: function(cardType) {
       this.cardType = cardType;
@@ -90,7 +97,8 @@ var payments_AVSResult = require("../payments/AVSResult");
 
     /**
     * Get the field value
-    * @return {CardType} 
+    * @memberof payments.CardTransaction
+    * @return {payments.CardType} 
     */
     getCardType: function() {
       return this.cardType;
@@ -98,7 +106,8 @@ var payments_AVSResult = require("../payments/AVSResult");
 
     /**
     * Set the field value
-    * @param {CardEntryType} entryType 
+    * @memberof payments.CardTransaction
+    * @param {payments.CardEntryType} entryType 
     */
     setEntryType: function(entryType) {
       this.entryType = entryType;
@@ -106,7 +115,8 @@ var payments_AVSResult = require("../payments/AVSResult");
 
     /**
     * Get the field value
-    * @return {CardEntryType} 
+    * @memberof payments.CardTransaction
+    * @return {payments.CardEntryType} 
     */
     getEntryType: function() {
       return this.entryType;
@@ -116,6 +126,7 @@ var payments_AVSResult = require("../payments/AVSResult");
     * Set the field value
     * The first four digits of the card number
     *
+    * @memberof payments.CardTransaction
     * @param {String} first6 
     */
     setFirst6: function(first6) {
@@ -125,7 +136,8 @@ var payments_AVSResult = require("../payments/AVSResult");
     /**
     * Get the field value
     * The first four digits of the card number
-      * @return {String} 
+    * @memberof payments.CardTransaction
+    * @return {String} 
     */
     getFirst6: function() {
       return this.first6;
@@ -135,6 +147,7 @@ var payments_AVSResult = require("../payments/AVSResult");
     * Set the field value
     * The last four digits of the card number
     *
+    * @memberof payments.CardTransaction
     * @param {String} last4 
     */
     setLast4: function(last4) {
@@ -144,7 +157,8 @@ var payments_AVSResult = require("../payments/AVSResult");
     /**
     * Get the field value
     * The last four digits of the card number
-      * @return {String} 
+    * @memberof payments.CardTransaction
+    * @return {String} 
     */
     getLast4: function() {
       return this.last4;
@@ -152,7 +166,8 @@ var payments_AVSResult = require("../payments/AVSResult");
 
     /**
     * Set the field value
-    * @param {CardTransactionType} type 
+    * @memberof payments.CardTransaction
+    * @param {payments.CardTransactionType} type 
     */
     setType: function(type) {
       this.type = type;
@@ -160,7 +175,8 @@ var payments_AVSResult = require("../payments/AVSResult");
 
     /**
     * Get the field value
-    * @return {CardTransactionType} 
+    * @memberof payments.CardTransaction
+    * @return {payments.CardTransactionType} 
     */
     getType: function() {
       return this.type;
@@ -170,6 +186,7 @@ var payments_AVSResult = require("../payments/AVSResult");
     * Set the field value
     * Authorization code (if successful)
     *
+    * @memberof payments.CardTransaction
     * @param {String} authCode 
     */
     setAuthCode: function(authCode) {
@@ -179,7 +196,8 @@ var payments_AVSResult = require("../payments/AVSResult");
     /**
     * Get the field value
     * Authorization code (if successful)
-      * @return {String} 
+    * @memberof payments.CardTransaction
+    * @return {String} 
     */
     getAuthCode: function() {
       return this.authCode;
@@ -187,6 +205,7 @@ var payments_AVSResult = require("../payments/AVSResult");
 
     /**
     * Set the field value
+    * @memberof payments.CardTransaction
     * @param {String} referenceId 
     */
     setReferenceId: function(referenceId) {
@@ -195,6 +214,7 @@ var payments_AVSResult = require("../payments/AVSResult");
 
     /**
     * Get the field value
+    * @memberof payments.CardTransaction
     * @return {String} 
     */
     getReferenceId: function() {
@@ -203,6 +223,7 @@ var payments_AVSResult = require("../payments/AVSResult");
 
     /**
     * Set the field value
+    * @memberof payments.CardTransaction
     * @param {String} transactionNo 
     */
     setTransactionNo: function(transactionNo) {
@@ -211,6 +232,7 @@ var payments_AVSResult = require("../payments/AVSResult");
 
     /**
     * Get the field value
+    * @memberof payments.CardTransaction
     * @return {String} 
     */
     getTransactionNo: function() {
@@ -219,7 +241,8 @@ var payments_AVSResult = require("../payments/AVSResult");
 
     /**
     * Set the field value
-    * @param {CardTransactionState} state 
+    * @memberof payments.CardTransaction
+    * @param {payments.CardTransactionState} state 
     */
     setState: function(state) {
       this.state = state;
@@ -227,7 +250,8 @@ var payments_AVSResult = require("../payments/AVSResult");
 
     /**
     * Get the field value
-    * @return {CardTransactionState} 
+    * @memberof payments.CardTransaction
+    * @return {payments.CardTransactionState} 
     */
     getState: function() {
       return this.state;
@@ -237,6 +261,7 @@ var payments_AVSResult = require("../payments/AVSResult");
     * Set the field value
     * Extra info to be stored as part of gateway/card transaction
     *
+    * @memberof payments.CardTransaction
     * @param {Object.<String,String>} extra A map of <String> to <>
     */
     setExtra: function(extra) {
@@ -246,7 +271,8 @@ var payments_AVSResult = require("../payments/AVSResult");
     /**
     * Get the field value
     * Extra info to be stored as part of gateway/card transaction
-      * @return {Object.<String,String>} A map of <String> to <>
+    * @memberof payments.CardTransaction
+    * @return {Object.<String,String>} A map of <String> to <>
     */
     getExtra: function() {
       return this.extra;
@@ -254,6 +280,7 @@ var payments_AVSResult = require("../payments/AVSResult");
 
     /**
     * Set the field value
+    * @memberof payments.CardTransaction
     * @param {Number|Null} begBalance must be a long integer, 
     */
     setBegBalance: function(begBalance) {
@@ -262,6 +289,7 @@ var payments_AVSResult = require("../payments/AVSResult");
 
     /**
     * Get the field value
+    * @memberof payments.CardTransaction
     * @return {Number|Null} must be a long integer, 
     */
     getBegBalance: function() {
@@ -270,6 +298,7 @@ var payments_AVSResult = require("../payments/AVSResult");
 
     /**
     * Set the field value
+    * @memberof payments.CardTransaction
     * @param {Number|Null} endBalance must be a long integer, 
     */
     setEndBalance: function(endBalance) {
@@ -278,6 +307,7 @@ var payments_AVSResult = require("../payments/AVSResult");
 
     /**
     * Get the field value
+    * @memberof payments.CardTransaction
     * @return {Number|Null} must be a long integer, 
     */
     getEndBalance: function() {
@@ -286,7 +316,8 @@ var payments_AVSResult = require("../payments/AVSResult");
 
     /**
     * Set the field value
-    * @param {AVSResult} avsResult 
+    * @memberof payments.CardTransaction
+    * @param {payments.AVSResult} avsResult 
     */
     setAvsResult: function(avsResult) {
       this.avsResult = avsResult;
@@ -294,7 +325,8 @@ var payments_AVSResult = require("../payments/AVSResult");
 
     /**
     * Get the field value
-    * @return {AVSResult} 
+    * @memberof payments.CardTransaction
+    * @return {payments.AVSResult} 
     */
     getAvsResult: function() {
       return this.avsResult;
@@ -302,6 +334,7 @@ var payments_AVSResult = require("../payments/AVSResult");
 
     /**
     * Set the field value
+    * @memberof payments.CardTransaction
     * @param {String} cardholderName 
     */
     setCardholderName: function(cardholderName) {
@@ -310,6 +343,7 @@ var payments_AVSResult = require("../payments/AVSResult");
 
     /**
     * Get the field value
+    * @memberof payments.CardTransaction
     * @return {String} 
     */
     getCardholderName: function() {
@@ -318,6 +352,7 @@ var payments_AVSResult = require("../payments/AVSResult");
 
     /**
     * Set the field value
+    * @memberof payments.CardTransaction
     * @param {String} token 
     */
     setToken: function(token) {
@@ -326,11 +361,17 @@ var payments_AVSResult = require("../payments/AVSResult");
 
     /**
     * Get the field value
+    * @memberof payments.CardTransaction
     * @return {String} 
     */
     getToken: function() {
       return this.token;
     },
+
+    /**
+    * @memberof payments.CardTransaction
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

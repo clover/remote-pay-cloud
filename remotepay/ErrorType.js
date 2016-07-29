@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof remotepay
+* @enum {string}
+*/
 ErrorType = {
   COMMUNICATION : "COMMUNICATION",
   VALIDATION : "VALIDATION",

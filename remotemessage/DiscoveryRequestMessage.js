@@ -11,10 +11,13 @@ var remotemessage_Message = require("../remotemessage/Message");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   DiscoveryRequestMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.DiscoveryRequestMessage
     * @private
     */
     initialize: function($super) {
@@ -26,8 +29,9 @@ var remotemessage_Message = require("../remotemessage/Message");
 
     /**
     * Set the field value
-    * If true then order modification operations are supportted.
+    * If true then order modification operations are supported.
     *
+    * @memberof remotemessage.DiscoveryRequestMessage
     * @param {Boolean|Null} supportsOrderModification 
     */
     setSupportsOrderModification: function(supportsOrderModification) {
@@ -36,8 +40,9 @@ var remotemessage_Message = require("../remotemessage/Message");
 
     /**
     * Get the field value
-    * If true then order modification operations are supportted.
-      * @return {Boolean|Null} 
+    * If true then order modification operations are supported.
+    * @memberof remotemessage.DiscoveryRequestMessage
+    * @return {Boolean|Null} 
     */
     getSupportsOrderModification: function() {
       return this.supportsOrderModification;

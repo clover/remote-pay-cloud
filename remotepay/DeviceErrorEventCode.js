@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof remotepay
+* @enum {string}
+*/
 DeviceErrorEventCode = {
   InvalidConfig : "InvalidConfig",
   IoSyncFailed : "IoSyncFailed",
@@ -41,7 +45,8 @@ DeviceErrorEventCode = {
   None : "None",
   Success : "Success",
   Ok : "Ok",
-  SendNotificationFailure : "SendNotificationFailure"
+  SendNotificationFailure : "SendNotificationFailure",
+  NotConnected : "NotConnected"
 };
 
 

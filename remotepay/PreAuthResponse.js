@@ -10,10 +10,13 @@ var remotepay_PaymentResponse = require("../remotepay/PaymentResponse");
 
   /**
   * @constructor
+  * @augments remotepay.PaymentResponse
+  * @memberof remotepay
   */
   PreAuthResponse = Class.create(remotepay_PaymentResponse, {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.PreAuthResponse
     * @private
     */
     initialize: function($super) {

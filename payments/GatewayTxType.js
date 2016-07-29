@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof payments
+* @enum {string}
+*/
 GatewayTxType = {
   AUTH : "AUTH",
   PREAUTH : "PREAUTH",

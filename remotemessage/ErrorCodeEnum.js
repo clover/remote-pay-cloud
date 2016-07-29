@@ -10,10 +10,12 @@ var remotemessage_ErrorCode = require("../remotemessage/ErrorCode");
 
   /**
   * @constructor
+  * @memberof remotemessage
   */
   ErrorCodeEnum = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.ErrorCodeEnum
     * @private
     */
     initialize: function() {
@@ -23,7 +25,8 @@ var remotemessage_ErrorCode = require("../remotemessage/ErrorCode");
 
     /**
     * Set the field value
-    * @param {ErrorCode} errorCode 
+    * @memberof remotemessage.ErrorCodeEnum
+    * @param {remotemessage.ErrorCode} errorCode 
     */
     setErrorCode: function(errorCode) {
       this.errorCode = errorCode;
@@ -31,11 +34,17 @@ var remotemessage_ErrorCode = require("../remotemessage/ErrorCode");
 
     /**
     * Get the field value
-    * @return {ErrorCode} 
+    * @memberof remotemessage.ErrorCodeEnum
+    * @return {remotemessage.ErrorCode} 
     */
     getErrorCode: function() {
       return this.errorCode;
     },
+
+    /**
+    * @memberof remotemessage.ErrorCodeEnum
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

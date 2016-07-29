@@ -14,10 +14,13 @@ var payments_Refund = require("../payments/Refund");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   RefundResponseMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.RefundResponseMessage
     * @private
     */
     initialize: function($super) {
@@ -36,6 +39,7 @@ var payments_Refund = require("../payments/Refund");
     * Set the field value
     * Unique identifier for a order
     *
+    * @memberof remotemessage.RefundResponseMessage
     * @param {String} orderId 
     */
     setOrderId: function(orderId) {
@@ -45,7 +49,8 @@ var payments_Refund = require("../payments/Refund");
     /**
     * Get the field value
     * Unique identifier for a order
-      * @return {String} 
+    * @memberof remotemessage.RefundResponseMessage
+    * @return {String} 
     */
     getOrderId: function() {
       return this.orderId;
@@ -55,6 +60,7 @@ var payments_Refund = require("../payments/Refund");
     * Set the field value
     * Unique identifier for a payment
     *
+    * @memberof remotemessage.RefundResponseMessage
     * @param {String} paymentId 
     */
     setPaymentId: function(paymentId) {
@@ -64,7 +70,8 @@ var payments_Refund = require("../payments/Refund");
     /**
     * Get the field value
     * Unique identifier for a payment
-      * @return {String} 
+    * @memberof remotemessage.RefundResponseMessage
+    * @return {String} 
     */
     getPaymentId: function() {
       return this.paymentId;
@@ -74,7 +81,8 @@ var payments_Refund = require("../payments/Refund");
     * Set the field value
     * The refund
     *
-    * @param {Refund} refund 
+    * @memberof remotemessage.RefundResponseMessage
+    * @param {payments.Refund} refund 
     */
     setRefund: function(refund) {
       this.refund = refund;
@@ -83,7 +91,8 @@ var payments_Refund = require("../payments/Refund");
     /**
     * Get the field value
     * The refund
-      * @return {Refund} 
+    * @memberof remotemessage.RefundResponseMessage
+    * @return {payments.Refund} 
     */
     getRefund: function() {
       return this.refund;
@@ -93,7 +102,8 @@ var payments_Refund = require("../payments/Refund");
     * Set the field value
     * Detail code if an error is encountered
     *
-    * @param {ErrorCode} reason 
+    * @memberof remotemessage.RefundResponseMessage
+    * @param {remotemessage.ErrorCode} reason 
     */
     setReason: function(reason) {
       this.reason = reason;
@@ -102,7 +112,8 @@ var payments_Refund = require("../payments/Refund");
     /**
     * Get the field value
     * Detail code if an error is encountered
-      * @return {ErrorCode} 
+    * @memberof remotemessage.RefundResponseMessage
+    * @return {remotemessage.ErrorCode} 
     */
     getReason: function() {
       return this.reason;
@@ -112,6 +123,7 @@ var payments_Refund = require("../payments/Refund");
     * Set the field value
     * Detail message
     *
+    * @memberof remotemessage.RefundResponseMessage
     * @param {String} message 
     */
     setMessage: function(message) {
@@ -121,7 +133,8 @@ var payments_Refund = require("../payments/Refund");
     /**
     * Get the field value
     * Detail message
-      * @return {String} 
+    * @memberof remotemessage.RefundResponseMessage
+    * @return {String} 
     */
     getMessage: function() {
       return this.message;
@@ -131,7 +144,8 @@ var payments_Refund = require("../payments/Refund");
     * Set the field value
     * Transaction state (success|fail)
     *
-    * @param {TxState} code 
+    * @memberof remotemessage.RefundResponseMessage
+    * @param {remotemessage.TxState} code 
     */
     setCode: function(code) {
       this.code = code;
@@ -140,7 +154,8 @@ var payments_Refund = require("../payments/Refund");
     /**
     * Get the field value
     * Transaction state (success|fail)
-      * @return {TxState} 
+    * @memberof remotemessage.RefundResponseMessage
+    * @return {remotemessage.TxState} 
     */
     getCode: function() {
       return this.code;

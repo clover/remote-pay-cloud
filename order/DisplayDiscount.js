@@ -9,10 +9,12 @@ require("prototype");
 
   /**
   * @constructor
+  * @memberof order
   */
   DisplayDiscount = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof order.DisplayDiscount
     * @private
     */
     initialize: function() {
@@ -28,6 +30,7 @@ require("prototype");
     * Set the field value
     * Unique identifier
     *
+    * @memberof order.DisplayDiscount
     * @param {String} id 
     */
     setId: function(id) {
@@ -37,7 +40,8 @@ require("prototype");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof order.DisplayDiscount
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -47,6 +51,7 @@ require("prototype");
     * Set the field value
     * The lineItem with which the discount is associated
     *
+    * @memberof order.DisplayDiscount
     * @param {String} lineItemId 
     */
     setLineItemId: function(lineItemId) {
@@ -56,7 +61,8 @@ require("prototype");
     /**
     * Get the field value
     * The lineItem with which the discount is associated
-      * @return {String} 
+    * @memberof order.DisplayDiscount
+    * @return {String} 
     */
     getLineItemId: function() {
       return this.lineItemId;
@@ -66,6 +72,7 @@ require("prototype");
     * Set the field value
     * Name of the discount
     *
+    * @memberof order.DisplayDiscount
     * @param {String} name 
     */
     setName: function(name) {
@@ -75,7 +82,8 @@ require("prototype");
     /**
     * Get the field value
     * Name of the discount
-      * @return {String} 
+    * @memberof order.DisplayDiscount
+    * @return {String} 
     */
     getName: function() {
       return this.name;
@@ -85,6 +93,7 @@ require("prototype");
     * Set the field value
     * Formatted discount amount
     *
+    * @memberof order.DisplayDiscount
     * @param {String} amount 
     */
     setAmount: function(amount) {
@@ -94,7 +103,8 @@ require("prototype");
     /**
     * Get the field value
     * Formatted discount amount
-      * @return {String} 
+    * @memberof order.DisplayDiscount
+    * @return {String} 
     */
     getAmount: function() {
       return this.amount;
@@ -104,6 +114,7 @@ require("prototype");
     * Set the field value
     * Discount amount in percent
     *
+    * @memberof order.DisplayDiscount
     * @param {String} percentage 
     */
     setPercentage: function(percentage) {
@@ -113,11 +124,17 @@ require("prototype");
     /**
     * Get the field value
     * Discount amount in percent
-      * @return {String} 
+    * @memberof order.DisplayDiscount
+    * @return {String} 
     */
     getPercentage: function() {
       return this.percentage;
     },
+
+    /**
+    * @memberof order.DisplayDiscount
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

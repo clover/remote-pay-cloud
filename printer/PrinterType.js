@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof printer
+* @enum {string}
+*/
 PrinterType = {
   NETWORK : "NETWORK",
   MY_LOCAL : "MY_LOCAL"

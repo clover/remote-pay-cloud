@@ -10,10 +10,13 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
 
   /**
   * @constructor
+  * @augments remotepay.BaseRequest
+  * @memberof remotepay
   */
   RefundPaymentRequest = Class.create(remotepay_BaseRequest, {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.RefundPaymentRequest
     * @private
     */
     initialize: function($super) {
@@ -29,6 +32,7 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     * Set the field value
     * If true, then it is a full refund.  The amount will be ignored.
     *
+    * @memberof remotepay.RefundPaymentRequest
     * @param {Boolean} fullRefund 
     */
     setFullRefund: function(fullRefund) {
@@ -38,7 +42,8 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     /**
     * Get the field value
     * If true, then it is a full refund.  The amount will be ignored.
-      * @return {Boolean} 
+    * @memberof remotepay.RefundPaymentRequest
+    * @return {Boolean} 
     */
     getFullRefund: function() {
       return this.fullRefund;
@@ -48,6 +53,7 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     * Set the field value
     * Amount to be refunded
     *
+    * @memberof remotepay.RefundPaymentRequest
     * @param {Number|Null} amount must be a long integer, 
     */
     setAmount: function(amount) {
@@ -57,7 +63,8 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     /**
     * Get the field value
     * Amount to be refunded
-      * @return {Number|Null} must be a long integer, 
+    * @memberof remotepay.RefundPaymentRequest
+    * @return {Number|Null} must be a long integer, 
     */
     getAmount: function() {
       return this.amount;
@@ -67,6 +74,7 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     * Set the field value
     * Unique identifier
     *
+    * @memberof remotepay.RefundPaymentRequest
     * @param {String} orderId 
     */
     setOrderId: function(orderId) {
@@ -76,7 +84,8 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof remotepay.RefundPaymentRequest
+    * @return {String} 
     */
     getOrderId: function() {
       return this.orderId;
@@ -86,6 +95,7 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     * Set the field value
     * Unique identifier
     *
+    * @memberof remotepay.RefundPaymentRequest
     * @param {String} paymentId 
     */
     setPaymentId: function(paymentId) {
@@ -95,7 +105,8 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof remotepay.RefundPaymentRequest
+    * @return {String} 
     */
     getPaymentId: function() {
       return this.paymentId;

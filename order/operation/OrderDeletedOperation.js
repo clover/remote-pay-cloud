@@ -9,10 +9,12 @@ require("prototype");
 
   /**
   * @constructor
+  * @memberof order.operation
   */
   OrderDeletedOperation = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof order.operation.OrderDeletedOperation
     * @private
     */
     initialize: function() {
@@ -22,6 +24,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof order.operation.OrderDeletedOperation
     * @param {String} id 
     */
     setId: function(id) {
@@ -30,11 +33,17 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof order.operation.OrderDeletedOperation
     * @return {String} 
     */
     getId: function() {
       return this.id;
     },
+
+    /**
+    * @memberof order.operation.OrderDeletedOperation
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

@@ -11,10 +11,13 @@ var remotemessage_Message = require("../remotemessage/Message");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   PartialAuthMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.PartialAuthMessage
     * @private
     */
     initialize: function($super) {
@@ -28,6 +31,7 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * Amount authorized
     *
+    * @memberof remotemessage.PartialAuthMessage
     * @param {Number} partialAuthAmount must be a long integer
     */
     setPartialAuthAmount: function(partialAuthAmount) {
@@ -37,7 +41,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * Amount authorized
-      * @return {Number} must be a long integer
+    * @memberof remotemessage.PartialAuthMessage
+    * @return {Number} must be a long integer
     */
     getPartialAuthAmount: function() {
       return this.partialAuthAmount;

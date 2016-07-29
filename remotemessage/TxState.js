@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof remotemessage
+* @enum {string}
+*/
 TxState = {
   START : "START",
   SUCCESS : "SUCCESS",

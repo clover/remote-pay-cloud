@@ -10,10 +10,12 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
   /**
   * @constructor
+  * @memberof payments
   */
   BatchTotalStats = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof payments.BatchTotalStats
     * @private
     */
     initialize: function() {
@@ -29,7 +31,8 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
     /**
     * Set the field value
-    * @param {BatchTotalType} sales 
+    * @memberof payments.BatchTotalStats
+    * @param {payments.BatchTotalType} sales 
     */
     setSales: function(sales) {
       this.sales = sales;
@@ -37,7 +40,8 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
     /**
     * Get the field value
-    * @return {BatchTotalType} 
+    * @memberof payments.BatchTotalStats
+    * @return {payments.BatchTotalType} 
     */
     getSales: function() {
       return this.sales;
@@ -45,7 +49,8 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
     /**
     * Set the field value
-    * @param {BatchTotalType} refunds 
+    * @memberof payments.BatchTotalStats
+    * @param {payments.BatchTotalType} refunds 
     */
     setRefunds: function(refunds) {
       this.refunds = refunds;
@@ -53,7 +58,8 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
     /**
     * Get the field value
-    * @return {BatchTotalType} 
+    * @memberof payments.BatchTotalStats
+    * @return {payments.BatchTotalType} 
     */
     getRefunds: function() {
       return this.refunds;
@@ -61,7 +67,8 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
     /**
     * Set the field value
-    * @param {BatchTotalType} net 
+    * @memberof payments.BatchTotalStats
+    * @param {payments.BatchTotalType} net 
     */
     setNet: function(net) {
       this.net = net;
@@ -69,7 +76,8 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
     /**
     * Get the field value
-    * @return {BatchTotalType} 
+    * @memberof payments.BatchTotalStats
+    * @return {payments.BatchTotalType} 
     */
     getNet: function() {
       return this.net;
@@ -77,7 +85,8 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
     /**
     * Set the field value
-    * @param {BatchTotalType} giftCardLoads 
+    * @memberof payments.BatchTotalStats
+    * @param {payments.BatchTotalType} giftCardLoads 
     */
     setGiftCardLoads: function(giftCardLoads) {
       this.giftCardLoads = giftCardLoads;
@@ -85,7 +94,8 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
     /**
     * Get the field value
-    * @return {BatchTotalType} 
+    * @memberof payments.BatchTotalStats
+    * @return {payments.BatchTotalType} 
     */
     getGiftCardLoads: function() {
       return this.giftCardLoads;
@@ -93,7 +103,8 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
     /**
     * Set the field value
-    * @param {BatchTotalType} giftCardCashOuts 
+    * @memberof payments.BatchTotalStats
+    * @param {payments.BatchTotalType} giftCardCashOuts 
     */
     setGiftCardCashOuts: function(giftCardCashOuts) {
       this.giftCardCashOuts = giftCardCashOuts;
@@ -101,7 +112,8 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
     /**
     * Get the field value
-    * @return {BatchTotalType} 
+    * @memberof payments.BatchTotalStats
+    * @return {payments.BatchTotalType} 
     */
     getGiftCardCashOuts: function() {
       return this.giftCardCashOuts;
@@ -109,7 +121,8 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
     /**
     * Set the field value
-    * @param {BatchTotalType} tax 
+    * @memberof payments.BatchTotalStats
+    * @param {payments.BatchTotalType} tax 
     */
     setTax: function(tax) {
       this.tax = tax;
@@ -117,7 +130,8 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
     /**
     * Get the field value
-    * @return {BatchTotalType} 
+    * @memberof payments.BatchTotalStats
+    * @return {payments.BatchTotalType} 
     */
     getTax: function() {
       return this.tax;
@@ -125,7 +139,8 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
     /**
     * Set the field value
-    * @param {BatchTotalType} tips 
+    * @memberof payments.BatchTotalStats
+    * @param {payments.BatchTotalType} tips 
     */
     setTips: function(tips) {
       this.tips = tips;
@@ -133,11 +148,17 @@ var payments_BatchTotalType = require("../payments/BatchTotalType");
 
     /**
     * Get the field value
-    * @return {BatchTotalType} 
+    * @memberof payments.BatchTotalStats
+    * @return {payments.BatchTotalType} 
     */
     getTips: function() {
       return this.tips;
     },
+
+    /**
+    * @memberof payments.BatchTotalStats
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

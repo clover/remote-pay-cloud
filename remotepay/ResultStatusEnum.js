@@ -10,10 +10,12 @@ var remotepay_ResultStatus = require("../remotepay/ResultStatus");
 
   /**
   * @constructor
+  * @memberof remotepay
   */
   ResultStatusEnum = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.ResultStatusEnum
     * @private
     */
     initialize: function() {
@@ -23,7 +25,8 @@ var remotepay_ResultStatus = require("../remotepay/ResultStatus");
 
     /**
     * Set the field value
-    * @param {ResultStatus} status 
+    * @memberof remotepay.ResultStatusEnum
+    * @param {remotepay.ResultStatus} status 
     */
     setStatus: function(status) {
       this.status = status;
@@ -31,11 +34,17 @@ var remotepay_ResultStatus = require("../remotepay/ResultStatus");
 
     /**
     * Get the field value
-    * @return {ResultStatus} 
+    * @memberof remotepay.ResultStatusEnum
+    * @return {remotepay.ResultStatus} 
     */
     getStatus: function() {
       return this.status;
     },
+
+    /**
+    * @memberof remotepay.ResultStatusEnum
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

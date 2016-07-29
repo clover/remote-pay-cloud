@@ -9,10 +9,12 @@ require("prototype");
 
   /**
   * @constructor
+  * @memberof remotepay
   */
   VoidCreditRequest = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.VoidCreditRequest
     * @private
     */
     initialize: function() {
@@ -26,6 +28,7 @@ require("prototype");
     * Set the field value
     * Identifier for the request
     *
+    * @memberof remotepay.VoidCreditRequest
     * @param {String} requestId 
     */
     setRequestId: function(requestId) {
@@ -35,7 +38,8 @@ require("prototype");
     /**
     * Get the field value
     * Identifier for the request
-      * @return {String} 
+    * @memberof remotepay.VoidCreditRequest
+    * @return {String} 
     */
     getRequestId: function() {
       return this.requestId;
@@ -45,6 +49,7 @@ require("prototype");
     * Set the field value
     * Unique identifier
     *
+    * @memberof remotepay.VoidCreditRequest
     * @param {String} orderId 
     */
     setOrderId: function(orderId) {
@@ -54,7 +59,8 @@ require("prototype");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof remotepay.VoidCreditRequest
+    * @return {String} 
     */
     getOrderId: function() {
       return this.orderId;
@@ -64,6 +70,7 @@ require("prototype");
     * Set the field value
     * Unique identifier
     *
+    * @memberof remotepay.VoidCreditRequest
     * @param {String} creditId 
     */
     setCreditId: function(creditId) {
@@ -73,11 +80,17 @@ require("prototype");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof remotepay.VoidCreditRequest
+    * @return {String} 
     */
     getCreditId: function() {
       return this.creditId;
     },
+
+    /**
+    * @memberof remotepay.VoidCreditRequest
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

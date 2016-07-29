@@ -10,10 +10,12 @@ var remotepay_KeyPress = require("../remotepay/KeyPress");
 
   /**
   * @constructor
+  * @memberof remotepay
   */
   InputOption = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.InputOption
     * @private
     */
     initialize: function() {
@@ -26,7 +28,8 @@ var remotepay_KeyPress = require("../remotepay/KeyPress");
     * Set the field value
     * The keypress this represents
     *
-    * @param {KeyPress} keyPress 
+    * @memberof remotepay.InputOption
+    * @param {remotepay.KeyPress} keyPress 
     */
     setKeyPress: function(keyPress) {
       this.keyPress = keyPress;
@@ -35,7 +38,8 @@ var remotepay_KeyPress = require("../remotepay/KeyPress");
     /**
     * Get the field value
     * The keypress this represents
-      * @return {KeyPress} 
+    * @memberof remotepay.InputOption
+    * @return {remotepay.KeyPress} 
     */
     getKeyPress: function() {
       return this.keyPress;
@@ -45,6 +49,7 @@ var remotepay_KeyPress = require("../remotepay/KeyPress");
     * Set the field value
     * A description of what this input option represents
     *
+    * @memberof remotepay.InputOption
     * @param {String} description 
     */
     setDescription: function(description) {
@@ -54,11 +59,17 @@ var remotepay_KeyPress = require("../remotepay/KeyPress");
     /**
     * Get the field value
     * A description of what this input option represents
-      * @return {String} 
+    * @memberof remotepay.InputOption
+    * @return {String} 
     */
     getDescription: function() {
       return this.description;
     },
+
+    /**
+    * @memberof remotepay.InputOption
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

@@ -13,10 +13,13 @@ var base_Signature = require("../base/Signature");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   VerifySignatureMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.VerifySignatureMessage
     * @private
     */
     initialize: function($super) {
@@ -31,7 +34,8 @@ var base_Signature = require("../base/Signature");
     * Set the field value
     * A payment
     *
-    * @param {Payment} payment 
+    * @memberof remotemessage.VerifySignatureMessage
+    * @param {payments.Payment} payment 
     */
     setPayment: function(payment) {
       this.payment = payment;
@@ -40,7 +44,8 @@ var base_Signature = require("../base/Signature");
     /**
     * Get the field value
     * A payment
-      * @return {Payment} 
+    * @memberof remotemessage.VerifySignatureMessage
+    * @return {payments.Payment} 
     */
     getPayment: function() {
       return this.payment;
@@ -50,7 +55,8 @@ var base_Signature = require("../base/Signature");
     * Set the field value
     * A signature
     *
-    * @param {Signature} signature 
+    * @memberof remotemessage.VerifySignatureMessage
+    * @param {base.Signature} signature 
     */
     setSignature: function(signature) {
       this.signature = signature;
@@ -59,7 +65,8 @@ var base_Signature = require("../base/Signature");
     /**
     * Get the field value
     * A signature
-      * @return {Signature} 
+    * @memberof remotemessage.VerifySignatureMessage
+    * @return {base.Signature} 
     */
     getSignature: function() {
       return this.signature;

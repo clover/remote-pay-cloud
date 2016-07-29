@@ -10,10 +10,12 @@ var base_Reference = require("../base/Reference");
 
   /**
   * @constructor
+  * @memberof inventory
   */
   TaxRate = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof inventory.TaxRate
     * @private
     */
     initialize: function() {
@@ -28,6 +30,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof inventory.TaxRate
     * @param {String} id 
     */
     setId: function(id) {
@@ -36,6 +39,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof inventory.TaxRate
     * @return {String} 
     */
     getId: function() {
@@ -46,7 +50,8 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * The line item with which the tax rate is associated
     *
-    * @param {Reference} lineItemRef 
+    * @memberof inventory.TaxRate
+    * @param {base.Reference} lineItemRef 
     */
     setLineItemRef: function(lineItemRef) {
       this.lineItemRef = lineItemRef;
@@ -55,7 +60,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * The line item with which the tax rate is associated
-      * @return {Reference} 
+    * @memberof inventory.TaxRate
+    * @return {base.Reference} 
     */
     getLineItemRef: function() {
       return this.lineItemRef;
@@ -63,6 +69,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof inventory.TaxRate
     * @param {String} name 
     */
     setName: function(name) {
@@ -71,6 +78,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof inventory.TaxRate
     * @return {String} 
     */
     getName: function() {
@@ -79,6 +87,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof inventory.TaxRate
     * @param {Number} rate must be a long integer
     */
     setRate: function(rate) {
@@ -87,6 +96,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof inventory.TaxRate
     * @return {Number} must be a long integer
     */
     getRate: function() {
@@ -95,6 +105,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof inventory.TaxRate
     * @param {Boolean} isDefault 
     */
     setIsDefault: function(isDefault) {
@@ -103,6 +114,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof inventory.TaxRate
     * @return {Boolean} 
     */
     getIsDefault: function() {
@@ -113,7 +125,8 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Items associated with this tax rate
     *
-    * @param {Array.<Reference>} items An array of 
+    * @memberof inventory.TaxRate
+    * @param {Array.<base.Reference>} items An array of 
     */
     setItems: function(items) {
       this.items = items;
@@ -122,11 +135,17 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Items associated with this tax rate
-      * @return {Array.<Reference>} An array of 
+    * @memberof inventory.TaxRate
+    * @return {Array.<base.Reference>} An array of 
     */
     getItems: function() {
       return this.items;
     },
+
+    /**
+    * @memberof inventory.TaxRate
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

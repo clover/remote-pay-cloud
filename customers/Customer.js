@@ -14,10 +14,12 @@ var customers_Card = require("../customers/Card");
 
   /**
   * @constructor
+  * @memberof customers
   */
   Customer = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof customers.Customer
     * @private
     */
     initialize: function() {
@@ -39,6 +41,7 @@ var customers_Card = require("../customers/Card");
     * Set the field value
     * Unique identifier
     *
+    * @memberof customers.Customer
     * @param {String} id 
     */
     setId: function(id) {
@@ -48,7 +51,8 @@ var customers_Card = require("../customers/Card");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof customers.Customer
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -58,7 +62,8 @@ var customers_Card = require("../customers/Card");
     * Set the field value
     * The order with which the customer is associated
     *
-    * @param {Reference} orderRef 
+    * @memberof customers.Customer
+    * @param {base.Reference} orderRef 
     */
     setOrderRef: function(orderRef) {
       this.orderRef = orderRef;
@@ -67,7 +72,8 @@ var customers_Card = require("../customers/Card");
     /**
     * Get the field value
     * The order with which the customer is associated
-      * @return {Reference} 
+    * @memberof customers.Customer
+    * @return {base.Reference} 
     */
     getOrderRef: function() {
       return this.orderRef;
@@ -77,6 +83,7 @@ var customers_Card = require("../customers/Card");
     * Set the field value
     * First/given name of the customer
     *
+    * @memberof customers.Customer
     * @param {Null|String} firstName 
     */
     setFirstName: function(firstName) {
@@ -86,7 +93,8 @@ var customers_Card = require("../customers/Card");
     /**
     * Get the field value
     * First/given name of the customer
-      * @return {Null|String} 
+    * @memberof customers.Customer
+    * @return {Null|String} 
     */
     getFirstName: function() {
       return this.firstName;
@@ -96,6 +104,7 @@ var customers_Card = require("../customers/Card");
     * Set the field value
     * Last name/surname of the customer
     *
+    * @memberof customers.Customer
     * @param {Null|String} lastName 
     */
     setLastName: function(lastName) {
@@ -105,7 +114,8 @@ var customers_Card = require("../customers/Card");
     /**
     * Get the field value
     * Last name/surname of the customer
-      * @return {Null|String} 
+    * @memberof customers.Customer
+    * @return {Null|String} 
     */
     getLastName: function() {
       return this.lastName;
@@ -113,6 +123,7 @@ var customers_Card = require("../customers/Card");
 
     /**
     * Set the field value
+    * @memberof customers.Customer
     * @param {Boolean} marketingAllowed 
     */
     setMarketingAllowed: function(marketingAllowed) {
@@ -121,6 +132,7 @@ var customers_Card = require("../customers/Card");
 
     /**
     * Get the field value
+    * @memberof customers.Customer
     * @return {Boolean} 
     */
     getMarketingAllowed: function() {
@@ -129,6 +141,7 @@ var customers_Card = require("../customers/Card");
 
     /**
     * Set the field value
+    * @memberof customers.Customer
     * @param {Number} customerSince must be a long integer
     */
     setCustomerSince: function(customerSince) {
@@ -137,6 +150,7 @@ var customers_Card = require("../customers/Card");
 
     /**
     * Get the field value
+    * @memberof customers.Customer
     * @return {Number} must be a long integer
     */
     getCustomerSince: function() {
@@ -145,7 +159,8 @@ var customers_Card = require("../customers/Card");
 
     /**
     * Set the field value
-    * @param {Array.<Reference>} orders An array of 
+    * @memberof customers.Customer
+    * @param {Array.<base.Reference>} orders An array of 
     */
     setOrders: function(orders) {
       this.orders = orders;
@@ -153,7 +168,8 @@ var customers_Card = require("../customers/Card");
 
     /**
     * Get the field value
-    * @return {Array.<Reference>} An array of 
+    * @memberof customers.Customer
+    * @return {Array.<base.Reference>} An array of 
     */
     getOrders: function() {
       return this.orders;
@@ -161,7 +177,8 @@ var customers_Card = require("../customers/Card");
 
     /**
     * Set the field value
-    * @param {Array.<Address>} addresses An array of 
+    * @memberof customers.Customer
+    * @param {Array.<customers.Address>} addresses An array of 
     */
     setAddresses: function(addresses) {
       this.addresses = addresses;
@@ -169,7 +186,8 @@ var customers_Card = require("../customers/Card");
 
     /**
     * Get the field value
-    * @return {Array.<Address>} An array of 
+    * @memberof customers.Customer
+    * @return {Array.<customers.Address>} An array of 
     */
     getAddresses: function() {
       return this.addresses;
@@ -177,7 +195,8 @@ var customers_Card = require("../customers/Card");
 
     /**
     * Set the field value
-    * @param {Array.<EmailAddress>} emailAddresses An array of 
+    * @memberof customers.Customer
+    * @param {Array.<customers.EmailAddress>} emailAddresses An array of 
     */
     setEmailAddresses: function(emailAddresses) {
       this.emailAddresses = emailAddresses;
@@ -185,7 +204,8 @@ var customers_Card = require("../customers/Card");
 
     /**
     * Get the field value
-    * @return {Array.<EmailAddress>} An array of 
+    * @memberof customers.Customer
+    * @return {Array.<customers.EmailAddress>} An array of 
     */
     getEmailAddresses: function() {
       return this.emailAddresses;
@@ -193,7 +213,8 @@ var customers_Card = require("../customers/Card");
 
     /**
     * Set the field value
-    * @param {Array.<PhoneNumber>} phoneNumbers An array of 
+    * @memberof customers.Customer
+    * @param {Array.<customers.PhoneNumber>} phoneNumbers An array of 
     */
     setPhoneNumbers: function(phoneNumbers) {
       this.phoneNumbers = phoneNumbers;
@@ -201,7 +222,8 @@ var customers_Card = require("../customers/Card");
 
     /**
     * Get the field value
-    * @return {Array.<PhoneNumber>} An array of 
+    * @memberof customers.Customer
+    * @return {Array.<customers.PhoneNumber>} An array of 
     */
     getPhoneNumbers: function() {
       return this.phoneNumbers;
@@ -209,7 +231,8 @@ var customers_Card = require("../customers/Card");
 
     /**
     * Set the field value
-    * @param {Array.<Card>} cards An array of 
+    * @memberof customers.Customer
+    * @param {Array.<customers.Card>} cards An array of 
     */
     setCards: function(cards) {
       this.cards = cards;
@@ -217,11 +240,17 @@ var customers_Card = require("../customers/Card");
 
     /**
     * Get the field value
-    * @return {Array.<Card>} An array of 
+    * @memberof customers.Customer
+    * @return {Array.<customers.Card>} An array of 
     */
     getCards: function() {
       return this.cards;
     },
+
+    /**
+    * @memberof customers.Customer
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

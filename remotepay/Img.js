@@ -9,10 +9,12 @@ require("prototype");
 
   /**
   * @constructor
+  * @memberof remotepay
   */
   Img = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.Img
     * @private
     */
     initialize: function() {
@@ -26,6 +28,7 @@ require("prototype");
     * Set the field value
     * The url to the image if available
     *
+    * @memberof remotepay.Img
     * @param {String} src 
     */
     setSrc: function(src) {
@@ -35,7 +38,8 @@ require("prototype");
     /**
     * Get the field value
     * The url to the image if available
-      * @return {String} 
+    * @memberof remotepay.Img
+    * @return {String} 
     */
     getSrc: function() {
       return this.src;
@@ -45,6 +49,7 @@ require("prototype");
     * Set the field value
     * The width of the image if available
     *
+    * @memberof remotepay.Img
     * @param {Number} width must be a long integer
     */
     setWidth: function(width) {
@@ -54,7 +59,8 @@ require("prototype");
     /**
     * Get the field value
     * The width of the image if available
-      * @return {Number} must be a long integer
+    * @memberof remotepay.Img
+    * @return {Number} must be a long integer
     */
     getWidth: function() {
       return this.width;
@@ -64,6 +70,7 @@ require("prototype");
     * Set the field value
     * The height of the image if available
     *
+    * @memberof remotepay.Img
     * @param {Number} height must be a long integer
     */
     setHeight: function(height) {
@@ -73,11 +80,17 @@ require("prototype");
     /**
     * Get the field value
     * The height of the image if available
-      * @return {Number} must be a long integer
+    * @memberof remotepay.Img
+    * @return {Number} must be a long integer
     */
     getHeight: function() {
       return this.height;
     },
+
+    /**
+    * @memberof remotepay.Img
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

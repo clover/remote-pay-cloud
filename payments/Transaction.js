@@ -12,10 +12,12 @@ var payments_Credit = require("../payments/Credit");
 
   /**
   * @constructor
+  * @memberof payments
   */
   Transaction = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof payments.Transaction
     * @private
     */
     initialize: function() {
@@ -31,6 +33,7 @@ var payments_Credit = require("../payments/Credit");
     * Set the field value
     * The time when the transaction was recorded on the server
     *
+    * @memberof payments.Transaction
     * @param {Number} createdTime must be a long integer
     */
     setCreatedTime: function(createdTime) {
@@ -40,7 +43,8 @@ var payments_Credit = require("../payments/Credit");
     /**
     * Get the field value
     * The time when the transaction was recorded on the server
-      * @return {Number} must be a long integer
+    * @memberof payments.Transaction
+    * @return {Number} must be a long integer
     */
     getCreatedTime: function() {
       return this.createdTime;
@@ -50,6 +54,7 @@ var payments_Credit = require("../payments/Credit");
     * Set the field value
     * The time when the transaction was recorded on the client
     *
+    * @memberof payments.Transaction
     * @param {Number} clientCreatedTime must be a long integer
     */
     setClientCreatedTime: function(clientCreatedTime) {
@@ -59,7 +64,8 @@ var payments_Credit = require("../payments/Credit");
     /**
     * Get the field value
     * The time when the transaction was recorded on the client
-      * @return {Number} must be a long integer
+    * @memberof payments.Transaction
+    * @return {Number} must be a long integer
     */
     getClientCreatedTime: function() {
       return this.clientCreatedTime;
@@ -67,7 +73,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Set the field value
-    * @param {Payment} payment 
+    * @memberof payments.Transaction
+    * @param {payments.Payment} payment 
     */
     setPayment: function(payment) {
       this.payment = payment;
@@ -75,7 +82,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Get the field value
-    * @return {Payment} 
+    * @memberof payments.Transaction
+    * @return {payments.Payment} 
     */
     getPayment: function() {
       return this.payment;
@@ -83,7 +91,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Set the field value
-    * @param {Refund} refund 
+    * @memberof payments.Transaction
+    * @param {payments.Refund} refund 
     */
     setRefund: function(refund) {
       this.refund = refund;
@@ -91,7 +100,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Get the field value
-    * @return {Refund} 
+    * @memberof payments.Transaction
+    * @return {payments.Refund} 
     */
     getRefund: function() {
       return this.refund;
@@ -99,7 +109,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Set the field value
-    * @param {Credit} credit 
+    * @memberof payments.Transaction
+    * @param {payments.Credit} credit 
     */
     setCredit: function(credit) {
       this.credit = credit;
@@ -107,11 +118,17 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Get the field value
-    * @return {Credit} 
+    * @memberof payments.Transaction
+    * @return {payments.Credit} 
     */
     getCredit: function() {
       return this.credit;
     },
+
+    /**
+    * @memberof payments.Transaction
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

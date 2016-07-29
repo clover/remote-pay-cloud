@@ -11,10 +11,12 @@ var remotepay_ResponseCode = require("../remotepay/ResponseCode");
 /** The base for responses */
   /**
   * @constructor
+  * @memberof remotepay
   */
   BaseResponse = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.BaseResponse
     * @private
     */
     initialize: function() {
@@ -29,6 +31,7 @@ var remotepay_ResponseCode = require("../remotepay/ResponseCode");
     * Set the field value
     * If true then the requested operation succeeded
     *
+    * @memberof remotepay.BaseResponse
     * @param {Boolean} success 
     */
     setSuccess: function(success) {
@@ -38,7 +41,8 @@ var remotepay_ResponseCode = require("../remotepay/ResponseCode");
     /**
     * Get the field value
     * If true then the requested operation succeeded
-      * @return {Boolean} 
+    * @memberof remotepay.BaseResponse
+    * @return {Boolean} 
     */
     getSuccess: function() {
       return this.success;
@@ -48,7 +52,8 @@ var remotepay_ResponseCode = require("../remotepay/ResponseCode");
     * Set the field value
     * The result of the requested operation.
     *
-    * @param {ResponseCode} result 
+    * @memberof remotepay.BaseResponse
+    * @param {remotepay.ResponseCode} result 
     */
     setResult: function(result) {
       this.result = result;
@@ -57,7 +62,8 @@ var remotepay_ResponseCode = require("../remotepay/ResponseCode");
     /**
     * Get the field value
     * The result of the requested operation.
-      * @return {ResponseCode} 
+    * @memberof remotepay.BaseResponse
+    * @return {remotepay.ResponseCode} 
     */
     getResult: function() {
       return this.result;
@@ -67,6 +73,7 @@ var remotepay_ResponseCode = require("../remotepay/ResponseCode");
     * Set the field value
     * Optional information about result.
     *
+    * @memberof remotepay.BaseResponse
     * @param {String|Null} reason 
     */
     setReason: function(reason) {
@@ -76,7 +83,8 @@ var remotepay_ResponseCode = require("../remotepay/ResponseCode");
     /**
     * Get the field value
     * Optional information about result.
-      * @return {String|Null} 
+    * @memberof remotepay.BaseResponse
+    * @return {String|Null} 
     */
     getReason: function() {
       return this.reason;
@@ -86,6 +94,7 @@ var remotepay_ResponseCode = require("../remotepay/ResponseCode");
     * Set the field value
     * Detailed information about result.
     *
+    * @memberof remotepay.BaseResponse
     * @param {String|Null} message 
     */
     setMessage: function(message) {
@@ -95,11 +104,17 @@ var remotepay_ResponseCode = require("../remotepay/ResponseCode");
     /**
     * Get the field value
     * Detailed information about result.
-      * @return {String|Null} 
+    * @memberof remotepay.BaseResponse
+    * @return {String|Null} 
     */
     getMessage: function() {
       return this.message;
     },
+
+    /**
+    * @memberof remotepay.BaseResponse
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

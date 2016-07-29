@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof payments
+* @enum {string}
+*/
 CardTransactionState = {
   PENDING : "PENDING",
   CLOSED : "CLOSED"

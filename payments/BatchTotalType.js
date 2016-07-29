@@ -9,10 +9,12 @@ require("prototype");
 
   /**
   * @constructor
+  * @memberof payments
   */
   BatchTotalType = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof payments.BatchTotalType
     * @private
     */
     initialize: function() {
@@ -25,6 +27,7 @@ require("prototype");
     * Set the field value
     * Total count of types
     *
+    * @memberof payments.BatchTotalType
     * @param {Number} count must be a long integer
     */
     setCount: function(count) {
@@ -34,7 +37,8 @@ require("prototype");
     /**
     * Get the field value
     * Total count of types
-      * @return {Number} must be a long integer
+    * @memberof payments.BatchTotalType
+    * @return {Number} must be a long integer
     */
     getCount: function() {
       return this.count;
@@ -44,6 +48,7 @@ require("prototype");
     * Set the field value
     * Total amount for type
     *
+    * @memberof payments.BatchTotalType
     * @param {Number} total must be a long integer
     */
     setTotal: function(total) {
@@ -53,11 +58,17 @@ require("prototype");
     /**
     * Get the field value
     * Total amount for type
-      * @return {Number} must be a long integer
+    * @memberof payments.BatchTotalType
+    * @return {Number} must be a long integer
     */
     getTotal: function() {
       return this.total;
     },
+
+    /**
+    * @memberof payments.BatchTotalType
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

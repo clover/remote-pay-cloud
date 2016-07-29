@@ -11,10 +11,12 @@ var inventory_Modifier = require("../inventory/Modifier");
 
   /**
   * @constructor
+  * @memberof inventory
   */
   ModifierGroup = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof inventory.ModifierGroup
     * @private
     */
     initialize: function() {
@@ -32,6 +34,9 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Set the field value
+    * Unique identifier
+    *
+    * @memberof inventory.ModifierGroup
     * @param {String} id 
     */
     setId: function(id) {
@@ -40,6 +45,8 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Get the field value
+    * Unique identifier
+    * @memberof inventory.ModifierGroup
     * @return {String} 
     */
     getId: function() {
@@ -50,6 +57,7 @@ var inventory_Modifier = require("../inventory/Modifier");
     * Set the field value
     * Name of the modifier group
     *
+    * @memberof inventory.ModifierGroup
     * @param {String} name 
     */
     setName: function(name) {
@@ -59,7 +67,8 @@ var inventory_Modifier = require("../inventory/Modifier");
     /**
     * Get the field value
     * Name of the modifier group
-      * @return {String} 
+    * @memberof inventory.ModifierGroup
+    * @return {String} 
     */
     getName: function() {
       return this.name;
@@ -67,6 +76,7 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Set the field value
+    * @memberof inventory.ModifierGroup
     * @param {String} alternateName 
     */
     setAlternateName: function(alternateName) {
@@ -75,6 +85,7 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Get the field value
+    * @memberof inventory.ModifierGroup
     * @return {String} 
     */
     getAlternateName: function() {
@@ -83,6 +94,9 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Set the field value
+    * The minimum amount of modifiers from this group that must be applied to associated lineItems when using Register
+    *
+    * @memberof inventory.ModifierGroup
     * @param {Number} minRequired must be an integer
     */
     setMinRequired: function(minRequired) {
@@ -91,6 +105,8 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Get the field value
+    * The minimum amount of modifiers from this group that must be applied to associated lineItems when using Register
+    * @memberof inventory.ModifierGroup
     * @return {Number} must be an integer
     */
     getMinRequired: function() {
@@ -99,6 +115,9 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Set the field value
+    * The maximum amount of modifiers from this group that can be applied to associated lineItems when using Register
+    *
+    * @memberof inventory.ModifierGroup
     * @param {Number} maxAllowed must be an integer
     */
     setMaxAllowed: function(maxAllowed) {
@@ -107,6 +126,8 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Get the field value
+    * The maximum amount of modifiers from this group that can be applied to associated lineItems when using Register
+    * @memberof inventory.ModifierGroup
     * @return {Number} must be an integer
     */
     getMaxAllowed: function() {
@@ -115,6 +136,9 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Set the field value
+    * Whether employees will be automatically prompted to add modifiers from this category when using Register
+    *
+    * @memberof inventory.ModifierGroup
     * @param {Boolean} showByDefault 
     */
     setShowByDefault: function(showByDefault) {
@@ -123,6 +147,8 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Get the field value
+    * Whether employees will be automatically prompted to add modifiers from this category when using Register
+    * @memberof inventory.ModifierGroup
     * @return {Boolean} 
     */
     getShowByDefault: function() {
@@ -131,7 +157,8 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Set the field value
-    * @param {Array.<Modifier>} modifiers An array of 
+    * @memberof inventory.ModifierGroup
+    * @param {Array.<inventory.Modifier>} modifiers An array of 
     */
     setModifiers: function(modifiers) {
       this.modifiers = modifiers;
@@ -139,7 +166,8 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Get the field value
-    * @return {Array.<Modifier>} An array of 
+    * @memberof inventory.ModifierGroup
+    * @return {Array.<inventory.Modifier>} An array of 
     */
     getModifiers: function() {
       return this.modifiers;
@@ -147,8 +175,9 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Set the field value
-    * The ordered, comma-separated list of modifier ids in this group.
+    * An ordered, comma-separated list of modifier ids in this group. (READ ONLY)
     *
+    * @memberof inventory.ModifierGroup
     * @param {String} modifierIds 
     */
     setModifierIds: function(modifierIds) {
@@ -157,8 +186,9 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Get the field value
-    * The ordered, comma-separated list of modifier ids in this group.
-      * @return {String} 
+    * An ordered, comma-separated list of modifier ids in this group. (READ ONLY)
+    * @memberof inventory.ModifierGroup
+    * @return {String} 
     */
     getModifierIds: function() {
       return this.modifierIds;
@@ -166,7 +196,8 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Set the field value
-    * @param {Array.<Reference>} items An array of 
+    * @memberof inventory.ModifierGroup
+    * @param {Array.<base.Reference>} items An array of 
     */
     setItems: function(items) {
       this.items = items;
@@ -174,11 +205,17 @@ var inventory_Modifier = require("../inventory/Modifier");
 
     /**
     * Get the field value
-    * @return {Array.<Reference>} An array of 
+    * @memberof inventory.ModifierGroup
+    * @return {Array.<base.Reference>} An array of 
     */
     getItems: function() {
       return this.items;
     },
+
+    /**
+    * @memberof inventory.ModifierGroup
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

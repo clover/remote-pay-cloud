@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof base
+* @enum {string}
+*/
 BusinessTypeCode = {
   FULL_SERVICE_RESTAURANT : "FULL_SERVICE_RESTAURANT",
   QUICK_SERVICE_RESTAURANT : "QUICK_SERVICE_RESTAURANT",

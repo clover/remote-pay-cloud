@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof remotemessage
+* @enum {string}
+*/
 KeyPress = {
   NONE : "NONE",
   ENTER : "ENTER",

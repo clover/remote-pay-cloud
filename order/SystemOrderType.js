@@ -9,10 +9,12 @@ require("prototype");
 
   /**
   * @constructor
+  * @memberof order
   */
   SystemOrderType = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof order.SystemOrderType
     * @private
     */
     initialize: function() {
@@ -28,6 +30,7 @@ require("prototype");
     * Set the field value
     * Unqiue identifier
     *
+    * @memberof order.SystemOrderType
     * @param {String} id 
     */
     setId: function(id) {
@@ -37,7 +40,8 @@ require("prototype");
     /**
     * Get the field value
     * Unqiue identifier
-      * @return {String} 
+    * @memberof order.SystemOrderType
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -47,6 +51,7 @@ require("prototype");
     * Set the field value
     * Label Key
     *
+    * @memberof order.SystemOrderType
     * @param {String} labelKey 
     */
     setLabelKey: function(labelKey) {
@@ -56,7 +61,8 @@ require("prototype");
     /**
     * Get the field value
     * Label Key
-      * @return {String} 
+    * @memberof order.SystemOrderType
+    * @return {String} 
     */
     getLabelKey: function() {
       return this.labelKey;
@@ -66,6 +72,7 @@ require("prototype");
     * Set the field value
     * Is for quick service restraunts?
     *
+    * @memberof order.SystemOrderType
     * @param {Boolean} isQsr 
     */
     setIsQsr: function(isQsr) {
@@ -75,7 +82,8 @@ require("prototype");
     /**
     * Get the field value
     * Is for quick service restraunts?
-      * @return {Boolean} 
+    * @memberof order.SystemOrderType
+    * @return {Boolean} 
     */
     getIsQsr: function() {
       return this.isQsr;
@@ -85,6 +93,7 @@ require("prototype");
     * Set the field value
     * Is for full service restraunts?
     *
+    * @memberof order.SystemOrderType
     * @param {Boolean} isFsr 
     */
     setIsFsr: function(isFsr) {
@@ -94,7 +103,8 @@ require("prototype");
     /**
     * Get the field value
     * Is for full service restraunts?
-      * @return {Boolean} 
+    * @memberof order.SystemOrderType
+    * @return {Boolean} 
     */
     getIsFsr: function() {
       return this.isFsr;
@@ -104,6 +114,7 @@ require("prototype");
     * Set the field value
     * Is for retail stores?
     *
+    * @memberof order.SystemOrderType
     * @param {Boolean} isRetail 
     */
     setIsRetail: function(isRetail) {
@@ -113,11 +124,17 @@ require("prototype");
     /**
     * Get the field value
     * Is for retail stores?
-      * @return {Boolean} 
+    * @memberof order.SystemOrderType
+    * @return {Boolean} 
     */
     getIsRetail: function() {
       return this.isRetail;
     },
+
+    /**
+    * @memberof order.SystemOrderType
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

@@ -10,10 +10,12 @@ var base_Reference = require("../base/Reference");
 
   /**
   * @constructor
+  * @memberof payments
   */
   LineItemPayment = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof payments.LineItemPayment
     * @private
     */
     initialize: function() {
@@ -30,6 +32,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Unique identifier; TBD this is confusing because it's used as either line item id or payment id
     *
+    * @memberof payments.LineItemPayment
     * @param {String} id 
     */
     setId: function(id) {
@@ -39,7 +42,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Unique identifier; TBD this is confusing because it's used as either line item id or payment id
-      * @return {String} 
+    * @memberof payments.LineItemPayment
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -49,7 +53,8 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * The line item with which the line item payment is associated
     *
-    * @param {Reference} lineItemRef 
+    * @memberof payments.LineItemPayment
+    * @param {base.Reference} lineItemRef 
     */
     setLineItemRef: function(lineItemRef) {
       this.lineItemRef = lineItemRef;
@@ -58,7 +63,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * The line item with which the line item payment is associated
-      * @return {Reference} 
+    * @memberof payments.LineItemPayment
+    * @return {base.Reference} 
     */
     getLineItemRef: function() {
       return this.lineItemRef;
@@ -68,7 +74,8 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * The payment with which the line item payment is associated
     *
-    * @param {Reference} paymentRef 
+    * @memberof payments.LineItemPayment
+    * @param {base.Reference} paymentRef 
     */
     setPaymentRef: function(paymentRef) {
       this.paymentRef = paymentRef;
@@ -77,7 +84,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * The payment with which the line item payment is associated
-      * @return {Reference} 
+    * @memberof payments.LineItemPayment
+    * @return {base.Reference} 
     */
     getPaymentRef: function() {
       return this.paymentRef;
@@ -87,6 +95,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Percent of this line item covered by this payment
     *
+    * @memberof payments.LineItemPayment
     * @param {Number} percentage must be a long integer
     */
     setPercentage: function(percentage) {
@@ -96,7 +105,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Percent of this line item covered by this payment
-      * @return {Number} must be a long integer
+    * @memberof payments.LineItemPayment
+    * @return {Number} must be a long integer
     */
     getPercentage: function() {
       return this.percentage;
@@ -106,6 +116,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Bin this line item payment was for
     *
+    * @memberof payments.LineItemPayment
     * @param {Null|String} binName 
     */
     setBinName: function(binName) {
@@ -115,7 +126,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Bin this line item payment was for
-      * @return {Null|String} 
+    * @memberof payments.LineItemPayment
+    * @return {Null|String} 
     */
     getBinName: function() {
       return this.binName;
@@ -125,6 +137,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Payment has been refunded
     *
+    * @memberof payments.LineItemPayment
     * @param {Boolean} refunded 
     */
     setRefunded: function(refunded) {
@@ -134,11 +147,17 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Payment has been refunded
-      * @return {Boolean} 
+    * @memberof payments.LineItemPayment
+    * @return {Boolean} 
     */
     getRefunded: function() {
       return this.refunded;
     },
+
+    /**
+    * @memberof payments.LineItemPayment
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

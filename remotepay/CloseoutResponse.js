@@ -12,10 +12,13 @@ var remotepay_BaseResponse = require("../remotepay/BaseResponse");
 /** The result of a request to do a closeout */
   /**
   * @constructor
+  * @augments remotepay.BaseResponse
+  * @memberof remotepay
   */
   CloseoutResponse = Class.create(remotepay_BaseResponse, {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.CloseoutResponse
     * @private
     */
     initialize: function($super) {
@@ -28,7 +31,8 @@ var remotepay_BaseResponse = require("../remotepay/BaseResponse");
     * Set the field value
     * The batch that was closed out.
     *
-    * @param {Batch} batch 
+    * @memberof remotepay.CloseoutResponse
+    * @param {payments.Batch} batch 
     */
     setBatch: function(batch) {
       this.batch = batch;
@@ -37,7 +41,8 @@ var remotepay_BaseResponse = require("../remotepay/BaseResponse");
     /**
     * Get the field value
     * The batch that was closed out.
-      * @return {Batch} 
+    * @memberof remotepay.CloseoutResponse
+    * @return {payments.Batch} 
     */
     getBatch: function() {
       return this.batch;

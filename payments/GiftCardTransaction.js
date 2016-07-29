@@ -13,10 +13,12 @@ var payments_GiftCard = require("../payments/GiftCard");
 
   /**
   * @constructor
+  * @memberof payments
   */
   GiftCardTransaction = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof payments.GiftCardTransaction
     * @private
     */
     initialize: function() {
@@ -31,12 +33,14 @@ var payments_GiftCard = require("../payments/GiftCard");
       this.taxableAmountRates = undefined;
       this.lineItems = undefined;
       this.employeeId = undefined;
+      this.suppressPayment = "false";
     },
 
     /**
     * Set the field value
     * Transaction Amount
     *
+    * @memberof payments.GiftCardTransaction
     * @param {Number} amount must be a long integer
     */
     setAmount: function(amount) {
@@ -46,7 +50,8 @@ var payments_GiftCard = require("../payments/GiftCard");
     /**
     * Get the field value
     * Transaction Amount
-      * @return {Number} must be a long integer
+    * @memberof payments.GiftCardTransaction
+    * @return {Number} must be a long integer
     */
     getAmount: function() {
       return this.amount;
@@ -56,6 +61,7 @@ var payments_GiftCard = require("../payments/GiftCard");
     * Set the field value
     * Tax Amount
     *
+    * @memberof payments.GiftCardTransaction
     * @param {Number} taxAmount must be a long integer
     */
     setTaxAmount: function(taxAmount) {
@@ -65,7 +71,8 @@ var payments_GiftCard = require("../payments/GiftCard");
     /**
     * Get the field value
     * Tax Amount
-      * @return {Number} must be a long integer
+    * @memberof payments.GiftCardTransaction
+    * @return {Number} must be a long integer
     */
     getTaxAmount: function() {
       return this.taxAmount;
@@ -73,6 +80,7 @@ var payments_GiftCard = require("../payments/GiftCard");
 
     /**
     * Set the field value
+    * @memberof payments.GiftCardTransaction
     * @param {String} orderId 
     */
     setOrderId: function(orderId) {
@@ -81,6 +89,7 @@ var payments_GiftCard = require("../payments/GiftCard");
 
     /**
     * Get the field value
+    * @memberof payments.GiftCardTransaction
     * @return {String} 
     */
     getOrderId: function() {
@@ -91,7 +100,8 @@ var payments_GiftCard = require("../payments/GiftCard");
     * Set the field value
     * Gift Card
     *
-    * @param {GiftCard} card 
+    * @memberof payments.GiftCardTransaction
+    * @param {payments.GiftCard} card 
     */
     setCard: function(card) {
       this.card = card;
@@ -100,7 +110,8 @@ var payments_GiftCard = require("../payments/GiftCard");
     /**
     * Get the field value
     * Gift Card
-      * @return {GiftCard} 
+    * @memberof payments.GiftCardTransaction
+    * @return {payments.GiftCard} 
     */
     getCard: function() {
       return this.card;
@@ -108,6 +119,7 @@ var payments_GiftCard = require("../payments/GiftCard");
 
     /**
     * Set the field value
+    * @memberof payments.GiftCardTransaction
     * @param {Array.<String>} paymentIds An array of 
     */
     setPaymentIds: function(paymentIds) {
@@ -116,6 +128,7 @@ var payments_GiftCard = require("../payments/GiftCard");
 
     /**
     * Get the field value
+    * @memberof payments.GiftCardTransaction
     * @return {Array.<String>} An array of 
     */
     getPaymentIds: function() {
@@ -124,6 +137,7 @@ var payments_GiftCard = require("../payments/GiftCard");
 
     /**
     * Set the field value
+    * @memberof payments.GiftCardTransaction
     * @param {Boolean} ignorePayment 
     */
     setIgnorePayment: function(ignorePayment) {
@@ -132,6 +146,7 @@ var payments_GiftCard = require("../payments/GiftCard");
 
     /**
     * Get the field value
+    * @memberof payments.GiftCardTransaction
     * @return {Boolean} 
     */
     getIgnorePayment: function() {
@@ -140,7 +155,8 @@ var payments_GiftCard = require("../payments/GiftCard");
 
     /**
     * Set the field value
-    * @param {ServiceChargeAmount} serviceChargeAmount 
+    * @memberof payments.GiftCardTransaction
+    * @param {payments.ServiceChargeAmount} serviceChargeAmount 
     */
     setServiceChargeAmount: function(serviceChargeAmount) {
       this.serviceChargeAmount = serviceChargeAmount;
@@ -148,7 +164,8 @@ var payments_GiftCard = require("../payments/GiftCard");
 
     /**
     * Get the field value
-    * @return {ServiceChargeAmount} 
+    * @memberof payments.GiftCardTransaction
+    * @return {payments.ServiceChargeAmount} 
     */
     getServiceChargeAmount: function() {
       return this.serviceChargeAmount;
@@ -156,7 +173,8 @@ var payments_GiftCard = require("../payments/GiftCard");
 
     /**
     * Set the field value
-    * @param {Array.<TaxableAmountRate>} taxableAmountRates An array of 
+    * @memberof payments.GiftCardTransaction
+    * @param {Array.<payments.TaxableAmountRate>} taxableAmountRates An array of 
     */
     setTaxableAmountRates: function(taxableAmountRates) {
       this.taxableAmountRates = taxableAmountRates;
@@ -164,7 +182,8 @@ var payments_GiftCard = require("../payments/GiftCard");
 
     /**
     * Get the field value
-    * @return {Array.<TaxableAmountRate>} An array of 
+    * @memberof payments.GiftCardTransaction
+    * @return {Array.<payments.TaxableAmountRate>} An array of 
     */
     getTaxableAmountRates: function() {
       return this.taxableAmountRates;
@@ -174,7 +193,8 @@ var payments_GiftCard = require("../payments/GiftCard");
     * Set the field value
     * Payments that were made for this line item
     *
-    * @param {Array.<LineItemPayment>} lineItems An array of 
+    * @memberof payments.GiftCardTransaction
+    * @param {Array.<payments.LineItemPayment>} lineItems An array of 
     */
     setLineItems: function(lineItems) {
       this.lineItems = lineItems;
@@ -183,7 +203,8 @@ var payments_GiftCard = require("../payments/GiftCard");
     /**
     * Get the field value
     * Payments that were made for this line item
-      * @return {Array.<LineItemPayment>} An array of 
+    * @memberof payments.GiftCardTransaction
+    * @return {Array.<payments.LineItemPayment>} An array of 
     */
     getLineItems: function() {
       return this.lineItems;
@@ -191,6 +212,7 @@ var payments_GiftCard = require("../payments/GiftCard");
 
     /**
     * Set the field value
+    * @memberof payments.GiftCardTransaction
     * @param {String} employeeId 
     */
     setEmployeeId: function(employeeId) {
@@ -199,11 +221,35 @@ var payments_GiftCard = require("../payments/GiftCard");
 
     /**
     * Get the field value
+    * @memberof payments.GiftCardTransaction
     * @return {String} 
     */
     getEmployeeId: function() {
       return this.employeeId;
     },
+
+    /**
+    * Set the field value
+    * @memberof payments.GiftCardTransaction
+    * @param {Boolean} suppressPayment 
+    */
+    setSuppressPayment: function(suppressPayment) {
+      this.suppressPayment = suppressPayment;
+    },
+
+    /**
+    * Get the field value
+    * @memberof payments.GiftCardTransaction
+    * @return {Boolean} 
+    */
+    getSuppressPayment: function() {
+      return this.suppressPayment;
+    },
+
+    /**
+    * @memberof payments.GiftCardTransaction
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {
@@ -245,6 +291,8 @@ GiftCardTransaction._meta_.fields["lineItems"].type = Array;
 GiftCardTransaction._meta_.fields["lineItems"].elementType = payments_LineItemPayment;
 GiftCardTransaction._meta_.fields["employeeId"] = {};
 GiftCardTransaction._meta_.fields["employeeId"].type = String;
+GiftCardTransaction._meta_.fields["suppressPayment"] = {};
+GiftCardTransaction._meta_.fields["suppressPayment"].type = Boolean;
 
 //
 // Expose the module.

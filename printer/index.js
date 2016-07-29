@@ -1,4 +1,7 @@
 module.exports.printer = printer;
+/**
+* @namespace printer
+*/
 function printer() {}
 
 printer.Printer = require("./Printer");

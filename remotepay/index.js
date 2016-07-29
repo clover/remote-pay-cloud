@@ -1,4 +1,7 @@
 module.exports.remotepay = remotepay;
+/**
+* @namespace remotepay
+*/
 function remotepay() {}
 
 remotepay.AuthRequest = require("./AuthRequest");
@@ -13,11 +16,13 @@ remotepay.CloseoutRequest = require("./CloseoutRequest");
 remotepay.CloseoutResponse = require("./CloseoutResponse");
 remotepay.CloverDeviceErrorEvent = require("./CloverDeviceErrorEvent");
 remotepay.CloverDeviceEvent = require("./CloverDeviceEvent");
+remotepay.ConfirmPaymentRequest = require("./ConfirmPaymentRequest");
 remotepay.DeviceErrorEventCode = require("./DeviceErrorEventCode");
 remotepay.DeviceEventEnum = require("./DeviceEventEnum");
 remotepay.DeviceEventState = require("./DeviceEventState");
 remotepay.DeviceInfo = require("./DeviceInfo");
 remotepay.DisplayReceiptOptionsRequest = require("./DisplayReceiptOptionsRequest");
+remotepay.ErrorType = require("./ErrorType");
 remotepay.ICloverConnector = require("./ICloverConnector");
 remotepay.ICloverConnectorListener = require("./ICloverConnectorListener");
 remotepay.Img = require("./Img");

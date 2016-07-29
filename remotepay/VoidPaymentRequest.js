@@ -10,10 +10,13 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
 
   /**
   * @constructor
+  * @augments remotepay.BaseRequest
+  * @memberof remotepay
   */
   VoidPaymentRequest = Class.create(remotepay_BaseRequest, {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.VoidPaymentRequest
     * @private
     */
     initialize: function($super) {
@@ -29,6 +32,7 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     * Set the field value
     * Unique identifier
     *
+    * @memberof remotepay.VoidPaymentRequest
     * @param {String} orderId 
     */
     setOrderId: function(orderId) {
@@ -38,7 +42,8 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof remotepay.VoidPaymentRequest
+    * @return {String} 
     */
     getOrderId: function() {
       return this.orderId;
@@ -48,6 +53,7 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     * Set the field value
     * Unique identifier
     *
+    * @memberof remotepay.VoidPaymentRequest
     * @param {String} paymentId 
     */
     setPaymentId: function(paymentId) {
@@ -57,7 +63,8 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof remotepay.VoidPaymentRequest
+    * @return {String} 
     */
     getPaymentId: function() {
       return this.paymentId;
@@ -67,6 +74,7 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     * Set the field value
     * Unique identifier
     *
+    * @memberof remotepay.VoidPaymentRequest
     * @param {String} employeeId 
     */
     setEmployeeId: function(employeeId) {
@@ -76,7 +84,8 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof remotepay.VoidPaymentRequest
+    * @return {String} 
     */
     getEmployeeId: function() {
       return this.employeeId;
@@ -86,6 +95,7 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     * Set the field value
     * Reason for void
     *
+    * @memberof remotepay.VoidPaymentRequest
     * @param {String} voidReason 
     */
     setVoidReason: function(voidReason) {
@@ -95,7 +105,8 @@ var remotepay_BaseRequest = require("../remotepay/BaseRequest");
     /**
     * Get the field value
     * Reason for void
-      * @return {String} 
+    * @memberof remotepay.VoidPaymentRequest
+    * @return {String} 
     */
     getVoidReason: function() {
       return this.voidReason;

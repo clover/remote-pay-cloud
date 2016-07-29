@@ -13,10 +13,13 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   VaultCardResponseMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.VaultCardResponseMessage
     * @private
     */
     initialize: function($super) {
@@ -32,6 +35,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     * Set the field value
     * May be populated when the operation fails.
     *
+    * @memberof remotemessage.VaultCardResponseMessage
     * @param {String} reason 
     */
     setReason: function(reason) {
@@ -41,7 +45,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     /**
     * Get the field value
     * May be populated when the operation fails.
-      * @return {String} 
+    * @memberof remotemessage.VaultCardResponseMessage
+    * @return {String} 
     */
     getReason: function() {
       return this.reason;
@@ -49,7 +54,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Set the field value
-    * @param {ResultStatus} status 
+    * @memberof remotemessage.VaultCardResponseMessage
+    * @param {remotemessage.ResultStatus} status 
     */
     setStatus: function(status) {
       this.status = status;
@@ -57,7 +63,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
 
     /**
     * Get the field value
-    * @return {ResultStatus} 
+    * @memberof remotemessage.VaultCardResponseMessage
+    * @return {remotemessage.ResultStatus} 
     */
     getStatus: function() {
       return this.status;
@@ -67,7 +74,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     * Set the field value
     * The card that was vaulted.
     *
-    * @param {VaultedCard} card 
+    * @memberof remotemessage.VaultCardResponseMessage
+    * @param {payments.VaultedCard} card 
     */
     setCard: function(card) {
       this.card = card;
@@ -76,7 +84,8 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     /**
     * Get the field value
     * The card that was vaulted.
-      * @return {VaultedCard} 
+    * @memberof remotemessage.VaultCardResponseMessage
+    * @return {payments.VaultedCard} 
     */
     getCard: function() {
       return this.card;

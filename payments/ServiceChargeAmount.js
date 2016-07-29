@@ -10,10 +10,12 @@ var base_Reference = require("../base/Reference");
 
   /**
   * @constructor
+  * @memberof payments
   */
   ServiceChargeAmount = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof payments.ServiceChargeAmount
     * @private
     */
     initialize: function() {
@@ -26,6 +28,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof payments.ServiceChargeAmount
     * @param {String} id 
     */
     setId: function(id) {
@@ -34,6 +37,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof payments.ServiceChargeAmount
     * @return {String} 
     */
     getId: function() {
@@ -42,6 +46,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof payments.ServiceChargeAmount
     * @param {String} name 
     */
     setName: function(name) {
@@ -50,6 +55,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof payments.ServiceChargeAmount
     * @return {String} 
     */
     getName: function() {
@@ -58,6 +64,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof payments.ServiceChargeAmount
     * @param {Number} amount must be a long integer
     */
     setAmount: function(amount) {
@@ -66,6 +73,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof payments.ServiceChargeAmount
     * @return {Number} must be a long integer
     */
     getAmount: function() {
@@ -76,7 +84,8 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * The payment with which the payment tax rate is associated
     *
-    * @param {Reference} paymentRef 
+    * @memberof payments.ServiceChargeAmount
+    * @param {base.Reference} paymentRef 
     */
     setPaymentRef: function(paymentRef) {
       this.paymentRef = paymentRef;
@@ -85,11 +94,17 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * The payment with which the payment tax rate is associated
-      * @return {Reference} 
+    * @memberof payments.ServiceChargeAmount
+    * @return {base.Reference} 
     */
     getPaymentRef: function() {
       return this.paymentRef;
     },
+
+    /**
+    * @memberof payments.ServiceChargeAmount
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

@@ -15,10 +15,13 @@ var payments_Credit = require("../payments/Credit");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   FinishOkMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.FinishOkMessage
     * @private
     */
     initialize: function($super) {
@@ -35,7 +38,8 @@ var payments_Credit = require("../payments/Credit");
     * Set the field value
     * A credit
     *
-    * @param {Credit} credit 
+    * @memberof remotemessage.FinishOkMessage
+    * @param {payments.Credit} credit 
     */
     setCredit: function(credit) {
       this.credit = credit;
@@ -44,7 +48,8 @@ var payments_Credit = require("../payments/Credit");
     /**
     * Get the field value
     * A credit
-      * @return {Credit} 
+    * @memberof remotemessage.FinishOkMessage
+    * @return {payments.Credit} 
     */
     getCredit: function() {
       return this.credit;
@@ -54,7 +59,8 @@ var payments_Credit = require("../payments/Credit");
     * Set the field value
     * A payment
     *
-    * @param {Payment} payment 
+    * @memberof remotemessage.FinishOkMessage
+    * @param {payments.Payment} payment 
     */
     setPayment: function(payment) {
       this.payment = payment;
@@ -63,7 +69,8 @@ var payments_Credit = require("../payments/Credit");
     /**
     * Get the field value
     * A payment
-      * @return {Payment} 
+    * @memberof remotemessage.FinishOkMessage
+    * @return {payments.Payment} 
     */
     getPayment: function() {
       return this.payment;
@@ -73,7 +80,8 @@ var payments_Credit = require("../payments/Credit");
     * Set the field value
     * The refund
     *
-    * @param {Refund} refund 
+    * @memberof remotemessage.FinishOkMessage
+    * @param {payments.Refund} refund 
     */
     setRefund: function(refund) {
       this.refund = refund;
@@ -82,7 +90,8 @@ var payments_Credit = require("../payments/Credit");
     /**
     * Get the field value
     * The refund
-      * @return {Refund} 
+    * @memberof remotemessage.FinishOkMessage
+    * @return {payments.Refund} 
     */
     getRefund: function() {
       return this.refund;
@@ -92,7 +101,8 @@ var payments_Credit = require("../payments/Credit");
     * Set the field value
     * A signature
     *
-    * @param {Signature} signature 
+    * @memberof remotemessage.FinishOkMessage
+    * @param {base.Signature} signature 
     */
     setSignature: function(signature) {
       this.signature = signature;
@@ -101,7 +111,8 @@ var payments_Credit = require("../payments/Credit");
     /**
     * Get the field value
     * A signature
-      * @return {Signature} 
+    * @memberof remotemessage.FinishOkMessage
+    * @return {base.Signature} 
     */
     getSignature: function() {
       return this.signature;

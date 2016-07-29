@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof order
+* @enum {string}
+*/
 CustomerIdMethod = {
   NAME : "NAME",
   TABLE : "TABLE",

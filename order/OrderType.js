@@ -13,10 +13,12 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
 
   /**
   * @constructor
+  * @memberof order
   */
   OrderType = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof order.OrderType
     * @private
     */
     initialize: function() {
@@ -45,6 +47,7 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     * Set the field value
     * Unique identifier
     *
+    * @memberof order.OrderType
     * @param {String} id 
     */
     setId: function(id) {
@@ -54,7 +57,8 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof order.OrderType
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -64,6 +68,7 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     * Set the field value
     * Label Key
     *
+    * @memberof order.OrderType
     * @param {String} labelKey 
     */
     setLabelKey: function(labelKey) {
@@ -73,7 +78,8 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     /**
     * Get the field value
     * Label Key
-      * @return {String} 
+    * @memberof order.OrderType
+    * @return {String} 
     */
     getLabelKey: function() {
       return this.labelKey;
@@ -83,6 +89,7 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     * Set the field value
     * Label Key
     *
+    * @memberof order.OrderType
     * @param {String} label 
     */
     setLabel: function(label) {
@@ -92,7 +99,8 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     /**
     * Get the field value
     * Label Key
-      * @return {String} 
+    * @memberof order.OrderType
+    * @return {String} 
     */
     getLabel: function() {
       return this.label;
@@ -102,6 +110,7 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     * Set the field value
     * If this order type is taxable
     *
+    * @memberof order.OrderType
     * @param {Boolean} taxable 
     */
     setTaxable: function(taxable) {
@@ -111,7 +120,8 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     /**
     * Get the field value
     * If this order type is taxable
-      * @return {Boolean} 
+    * @memberof order.OrderType
+    * @return {Boolean} 
     */
     getTaxable: function() {
       return this.taxable;
@@ -121,6 +131,7 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     * Set the field value
     * If this order type is the default
     *
+    * @memberof order.OrderType
     * @param {Boolean} isDefault 
     */
     setIsDefault: function(isDefault) {
@@ -130,7 +141,8 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     /**
     * Get the field value
     * If this order type is the default
-      * @return {Boolean} 
+    * @memberof order.OrderType
+    * @return {Boolean} 
     */
     getIsDefault: function() {
       return this.isDefault;
@@ -140,6 +152,7 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     * Set the field value
     * If set to false, then this order type includes all of the merchant's categories. Otherwise, it only contains the categories defined in the "categories" field on this object.
     *
+    * @memberof order.OrderType
     * @param {Boolean} filterCategories 
     */
     setFilterCategories: function(filterCategories) {
@@ -149,7 +162,8 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     /**
     * Get the field value
     * If set to false, then this order type includes all of the merchant's categories. Otherwise, it only contains the categories defined in the "categories" field on this object.
-      * @return {Boolean} 
+    * @memberof order.OrderType
+    * @return {Boolean} 
     */
     getFilterCategories: function() {
       return this.filterCategories;
@@ -159,6 +173,7 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     * Set the field value
     * If this order type is hidden on the register
     *
+    * @memberof order.OrderType
     * @param {Boolean} isHidden 
     */
     setIsHidden: function(isHidden) {
@@ -168,7 +183,8 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     /**
     * Get the field value
     * If this order type is hidden on the register
-      * @return {Boolean} 
+    * @memberof order.OrderType
+    * @return {Boolean} 
     */
     getIsHidden: function() {
       return this.isHidden;
@@ -178,6 +194,7 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     * Set the field value
     * The price of a fee added to this order type
     *
+    * @memberof order.OrderType
     * @param {Null|Number} fee must be a long integer
     */
     setFee: function(fee) {
@@ -187,7 +204,8 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     /**
     * Get the field value
     * The price of a fee added to this order type
-      * @return {Null|Number} must be a long integer
+    * @memberof order.OrderType
+    * @return {Null|Number} must be a long integer
     */
     getFee: function() {
       return this.fee;
@@ -197,6 +215,7 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     * Set the field value
     * The minimum amount required for an order to be placed
     *
+    * @memberof order.OrderType
     * @param {Null|Number} minOrderAmount must be a long integer
     */
     setMinOrderAmount: function(minOrderAmount) {
@@ -206,7 +225,8 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     /**
     * Get the field value
     * The minimum amount required for an order to be placed
-      * @return {Null|Number} must be a long integer
+    * @memberof order.OrderType
+    * @return {Null|Number} must be a long integer
     */
     getMinOrderAmount: function() {
       return this.minOrderAmount;
@@ -216,6 +236,7 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     * Set the field value
     * The maximum amount for an order allowed
     *
+    * @memberof order.OrderType
     * @param {Null|Number} maxOrderAmount must be a long integer
     */
     setMaxOrderAmount: function(maxOrderAmount) {
@@ -225,7 +246,8 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     /**
     * Get the field value
     * The maximum amount for an order allowed
-      * @return {Null|Number} must be a long integer
+    * @memberof order.OrderType
+    * @return {Null|Number} must be a long integer
     */
     getMaxOrderAmount: function() {
       return this.maxOrderAmount;
@@ -235,6 +257,7 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     * Set the field value
     * The maximum radius allowed for an order (i.e. delivery)
     *
+    * @memberof order.OrderType
     * @param {Null|Number} maxRadius must be a long integer
     */
     setMaxRadius: function(maxRadius) {
@@ -244,7 +267,8 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     /**
     * Get the field value
     * The maximum radius allowed for an order (i.e. delivery)
-      * @return {Null|Number} must be a long integer
+    * @memberof order.OrderType
+    * @return {Null|Number} must be a long integer
     */
     getMaxRadius: function() {
       return this.maxRadius;
@@ -254,6 +278,7 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     * Set the field value
     * The average time it takes to complete the order
     *
+    * @memberof order.OrderType
     * @param {Null|Number} avgOrderTime must be a long integer
     */
     setAvgOrderTime: function(avgOrderTime) {
@@ -263,7 +288,8 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     /**
     * Get the field value
     * The average time it takes to complete the order
-      * @return {Null|Number} must be a long integer
+    * @memberof order.OrderType
+    * @return {Null|Number} must be a long integer
     */
     getAvgOrderTime: function() {
       return this.avgOrderTime;
@@ -271,7 +297,8 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
 
     /**
     * Set the field value
-    * @param {HoursAvailable} hoursAvailable 
+    * @memberof order.OrderType
+    * @param {order.HoursAvailable} hoursAvailable 
     */
     setHoursAvailable: function(hoursAvailable) {
       this.hoursAvailable = hoursAvailable;
@@ -279,7 +306,8 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
 
     /**
     * Get the field value
-    * @return {HoursAvailable} 
+    * @memberof order.OrderType
+    * @return {order.HoursAvailable} 
     */
     getHoursAvailable: function() {
       return this.hoursAvailable;
@@ -287,7 +315,8 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
 
     /**
     * Set the field value
-    * @param {CustomerIdMethod} customerIdMethod 
+    * @memberof order.OrderType
+    * @param {order.CustomerIdMethod} customerIdMethod 
     */
     setCustomerIdMethod: function(customerIdMethod) {
       this.customerIdMethod = customerIdMethod;
@@ -295,7 +324,8 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
 
     /**
     * Get the field value
-    * @return {CustomerIdMethod} 
+    * @memberof order.OrderType
+    * @return {order.CustomerIdMethod} 
     */
     getCustomerIdMethod: function() {
       return this.customerIdMethod;
@@ -305,6 +335,7 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     * Set the field value
     * If this order type is deleted
     *
+    * @memberof order.OrderType
     * @param {Boolean} isDeleted 
     */
     setIsDeleted: function(isDeleted) {
@@ -314,7 +345,8 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     /**
     * Get the field value
     * If this order type is deleted
-      * @return {Boolean} 
+    * @memberof order.OrderType
+    * @return {Boolean} 
     */
     getIsDeleted: function() {
       return this.isDeleted;
@@ -324,6 +356,7 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     * Set the field value
     * Optional system order type that this order type is associated with.
     *
+    * @memberof order.OrderType
     * @param {String} systemOrderTypeId 
     */
     setSystemOrderTypeId: function(systemOrderTypeId) {
@@ -333,7 +366,8 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     /**
     * Get the field value
     * Optional system order type that this order type is associated with.
-      * @return {String} 
+    * @memberof order.OrderType
+    * @return {String} 
     */
     getSystemOrderTypeId: function() {
       return this.systemOrderTypeId;
@@ -343,7 +377,8 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     * Set the field value
     * The hours this order type is available (if they differ from normal merchant hours)
     *
-    * @param {HoursSet} hours 
+    * @memberof order.OrderType
+    * @param {hours.HoursSet} hours 
     */
     setHours: function(hours) {
       this.hours = hours;
@@ -352,7 +387,8 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     /**
     * Get the field value
     * The hours this order type is available (if they differ from normal merchant hours)
-      * @return {HoursSet} 
+    * @memberof order.OrderType
+    * @return {hours.HoursSet} 
     */
     getHours: function() {
       return this.hours;
@@ -362,7 +398,8 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     * Set the field value
     * The categories of items that can be assigned to this order type
     *
-    * @param {Array.<Reference>} categories An array of 
+    * @memberof order.OrderType
+    * @param {Array.<base.Reference>} categories An array of 
     */
     setCategories: function(categories) {
       this.categories = categories;
@@ -371,11 +408,17 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
     /**
     * Get the field value
     * The categories of items that can be assigned to this order type
-      * @return {Array.<Reference>} An array of 
+    * @memberof order.OrderType
+    * @return {Array.<base.Reference>} An array of 
     */
     getCategories: function() {
       return this.categories;
     },
+
+    /**
+    * @memberof order.OrderType
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

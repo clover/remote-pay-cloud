@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof base
+* @enum {string}
+*/
 ApprovalStatus = {
   NEW : "NEW",
   PENDING : "PENDING",

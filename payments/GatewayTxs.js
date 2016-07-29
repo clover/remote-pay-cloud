@@ -14,10 +14,12 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
   /**
   * @constructor
+  * @memberof payments
   */
   GatewayTxs = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof payments.GatewayTxs
     * @private
     */
     initialize: function() {
@@ -54,6 +56,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Set the field value
+    * @memberof payments.GatewayTxs
     * @param {Number} merchantGatewayId must be a long integer
     */
     setMerchantGatewayId: function(merchantGatewayId) {
@@ -62,6 +65,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Get the field value
+    * @memberof payments.GatewayTxs
     * @return {Number} must be a long integer
     */
     getMerchantGatewayId: function() {
@@ -70,6 +74,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Set the field value
+    * @memberof payments.GatewayTxs
     * @param {String} clientId 
     */
     setClientId: function(clientId) {
@@ -78,6 +83,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Get the field value
+    * @memberof payments.GatewayTxs
     * @return {String} 
     */
     getClientId: function() {
@@ -86,6 +92,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Set the field value
+    * @memberof payments.GatewayTxs
     * @param {Number} amount must be a long integer
     */
     setAmount: function(amount) {
@@ -94,6 +101,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Get the field value
+    * @memberof payments.GatewayTxs
     * @return {Number} must be a long integer
     */
     getAmount: function() {
@@ -102,6 +110,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Set the field value
+    * @memberof payments.GatewayTxs
     * @param {Number} adjustAmount must be a long integer
     */
     setAdjustAmount: function(adjustAmount) {
@@ -110,6 +119,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Get the field value
+    * @memberof payments.GatewayTxs
     * @return {Number} must be a long integer
     */
     getAdjustAmount: function() {
@@ -118,6 +128,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Set the field value
+    * @memberof payments.GatewayTxs
     * @param {Number} taxAmount must be a long integer
     */
     setTaxAmount: function(taxAmount) {
@@ -126,6 +137,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Get the field value
+    * @memberof payments.GatewayTxs
     * @return {Number} must be a long integer
     */
     getTaxAmount: function() {
@@ -134,6 +146,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Set the field value
+    * @memberof payments.GatewayTxs
     * @param {Number} tipAmount must be a long integer
     */
     setTipAmount: function(tipAmount) {
@@ -142,6 +155,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Get the field value
+    * @memberof payments.GatewayTxs
     * @return {Number} must be a long integer
     */
     getTipAmount: function() {
@@ -150,7 +164,8 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Set the field value
-    * @param {Currency} currency 
+    * @memberof payments.GatewayTxs
+    * @param {payments.Currency} currency 
     */
     setCurrency: function(currency) {
       this.currency = currency;
@@ -158,7 +173,8 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Get the field value
-    * @return {Currency} 
+    * @memberof payments.GatewayTxs
+    * @return {payments.Currency} 
     */
     getCurrency: function() {
       return this.currency;
@@ -166,7 +182,8 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Set the field value
-    * @param {GatewayTxState} state 
+    * @memberof payments.GatewayTxs
+    * @param {payments.GatewayTxState} state 
     */
     setState: function(state) {
       this.state = state;
@@ -174,7 +191,8 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Get the field value
-    * @return {GatewayTxState} 
+    * @memberof payments.GatewayTxs
+    * @return {payments.GatewayTxState} 
     */
     getState: function() {
       return this.state;
@@ -182,6 +200,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Set the field value
+    * @memberof payments.GatewayTxs
     * @param {Number} retries must be a long integer
     */
     setRetries: function(retries) {
@@ -190,6 +209,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Get the field value
+    * @memberof payments.GatewayTxs
     * @return {Number} must be a long integer
     */
     getRetries: function() {
@@ -198,7 +218,8 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Set the field value
-    * @param {GatewayTxType} type 
+    * @memberof payments.GatewayTxs
+    * @param {payments.GatewayTxType} type 
     */
     setType: function(type) {
       this.type = type;
@@ -206,7 +227,8 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Get the field value
-    * @return {GatewayTxType} 
+    * @memberof payments.GatewayTxs
+    * @return {payments.GatewayTxType} 
     */
     getType: function() {
       return this.type;
@@ -214,7 +236,8 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Set the field value
-    * @param {CardEntryType} entryType 
+    * @memberof payments.GatewayTxs
+    * @param {payments.CardEntryType} entryType 
     */
     setEntryType: function(entryType) {
       this.entryType = entryType;
@@ -222,7 +245,8 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Get the field value
-    * @return {CardEntryType} 
+    * @memberof payments.GatewayTxs
+    * @return {payments.CardEntryType} 
     */
     getEntryType: function() {
       return this.entryType;
@@ -230,6 +254,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Set the field value
+    * @memberof payments.GatewayTxs
     * @param {String} responseCode 
     */
     setResponseCode: function(responseCode) {
@@ -238,6 +263,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Get the field value
+    * @memberof payments.GatewayTxs
     * @return {String} 
     */
     getResponseCode: function() {
@@ -246,6 +272,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Set the field value
+    * @memberof payments.GatewayTxs
     * @param {String} responseMessage 
     */
     setResponseMessage: function(responseMessage) {
@@ -254,6 +281,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Get the field value
+    * @memberof payments.GatewayTxs
     * @return {String} 
     */
     getResponseMessage: function() {
@@ -262,6 +290,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Set the field value
+    * @memberof payments.GatewayTxs
     * @param {String} first4 
     */
     setFirst4: function(first4) {
@@ -270,6 +299,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Get the field value
+    * @memberof payments.GatewayTxs
     * @return {String} 
     */
     getFirst4: function() {
@@ -278,6 +308,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Set the field value
+    * @memberof payments.GatewayTxs
     * @param {String} last4 
     */
     setLast4: function(last4) {
@@ -286,6 +317,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Get the field value
+    * @memberof payments.GatewayTxs
     * @return {String} 
     */
     getLast4: function() {
@@ -294,7 +326,8 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Set the field value
-    * @param {CardType} cardType 
+    * @memberof payments.GatewayTxs
+    * @param {payments.CardType} cardType 
     */
     setCardType: function(cardType) {
       this.cardType = cardType;
@@ -302,7 +335,8 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Get the field value
-    * @return {CardType} 
+    * @memberof payments.GatewayTxs
+    * @return {payments.CardType} 
     */
     getCardType: function() {
       return this.cardType;
@@ -310,6 +344,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Set the field value
+    * @memberof payments.GatewayTxs
     * @param {String} refnum 
     */
     setRefnum: function(refnum) {
@@ -318,6 +353,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Get the field value
+    * @memberof payments.GatewayTxs
     * @return {String} 
     */
     getRefnum: function() {
@@ -326,6 +362,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Set the field value
+    * @memberof payments.GatewayTxs
     * @param {String} token 
     */
     setToken: function(token) {
@@ -334,6 +371,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Get the field value
+    * @memberof payments.GatewayTxs
     * @return {String} 
     */
     getToken: function() {
@@ -342,6 +380,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Set the field value
+    * @memberof payments.GatewayTxs
     * @param {String} authcode 
     */
     setAuthcode: function(authcode) {
@@ -350,6 +389,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Get the field value
+    * @memberof payments.GatewayTxs
     * @return {String} 
     */
     getAuthcode: function() {
@@ -358,6 +398,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Set the field value
+    * @memberof payments.GatewayTxs
     * @param {String} employeeId 
     */
     setEmployeeId: function(employeeId) {
@@ -366,6 +407,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Get the field value
+    * @memberof payments.GatewayTxs
     * @return {String} 
     */
     getEmployeeId: function() {
@@ -374,6 +416,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Set the field value
+    * @memberof payments.GatewayTxs
     * @param {String} extra 
     */
     setExtra: function(extra) {
@@ -382,6 +425,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Get the field value
+    * @memberof payments.GatewayTxs
     * @return {String} 
     */
     getExtra: function() {
@@ -390,6 +434,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Set the field value
+    * @memberof payments.GatewayTxs
     * @param {Boolean|Null} captured 
     */
     setCaptured: function(captured) {
@@ -398,6 +443,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Get the field value
+    * @memberof payments.GatewayTxs
     * @return {Boolean|Null} 
     */
     getCaptured: function() {
@@ -406,6 +452,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Set the field value
+    * @memberof payments.GatewayTxs
     * @param {String} swiperSerial 
     */
     setSwiperSerial: function(swiperSerial) {
@@ -414,6 +461,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Get the field value
+    * @memberof payments.GatewayTxs
     * @return {String} 
     */
     getSwiperSerial: function() {
@@ -422,6 +470,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Set the field value
+    * @memberof payments.GatewayTxs
     * @param {String} ksnPrefix 
     */
     setKsnPrefix: function(ksnPrefix) {
@@ -430,6 +479,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Get the field value
+    * @memberof payments.GatewayTxs
     * @return {String} 
     */
     getKsnPrefix: function() {
@@ -438,6 +488,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Set the field value
+    * @memberof payments.GatewayTxs
     * @param {Number} createdTime must be a long integer
     */
     setCreatedTime: function(createdTime) {
@@ -446,6 +497,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Get the field value
+    * @memberof payments.GatewayTxs
     * @return {Number} must be a long integer
     */
     getCreatedTime: function() {
@@ -454,6 +506,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Set the field value
+    * @memberof payments.GatewayTxs
     * @param {Number} modifiedTime must be a long integer
     */
     setModifiedTime: function(modifiedTime) {
@@ -462,6 +515,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Get the field value
+    * @memberof payments.GatewayTxs
     * @return {Number} must be a long integer
     */
     getModifiedTime: function() {
@@ -470,6 +524,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Set the field value
+    * @memberof payments.GatewayTxs
     * @param {Number|Null} refundId must be a long integer, 
     */
     setRefundId: function(refundId) {
@@ -478,6 +533,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Get the field value
+    * @memberof payments.GatewayTxs
     * @return {Number|Null} must be a long integer, 
     */
     getRefundId: function() {
@@ -486,6 +542,7 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Set the field value
+    * @memberof payments.GatewayTxs
     * @param {Number|Null} paymentRefundId must be a long integer, 
     */
     setPaymentRefundId: function(paymentRefundId) {
@@ -494,11 +551,17 @@ var payments_GatewayTxType = require("../payments/GatewayTxType");
 
     /**
     * Get the field value
+    * @memberof payments.GatewayTxs
     * @return {Number|Null} must be a long integer, 
     */
     getPaymentRefundId: function() {
       return this.paymentRefundId;
     },
+
+    /**
+    * @memberof payments.GatewayTxs
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

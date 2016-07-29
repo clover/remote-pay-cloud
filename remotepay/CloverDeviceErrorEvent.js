@@ -11,10 +11,12 @@ var remotepay_ErrorType = require("../remotepay/ErrorType");
 
   /**
   * @constructor
+  * @memberof remotepay
   */
   CloverDeviceErrorEvent = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof remotepay.CloverDeviceErrorEvent
     * @private
     */
     initialize: function() {
@@ -28,6 +30,7 @@ var remotepay_ErrorType = require("../remotepay/ErrorType");
     * Set the field value
     * Description of the error.
     *
+    * @memberof remotepay.CloverDeviceErrorEvent
     * @param {String} message 
     */
     setMessage: function(message) {
@@ -37,7 +40,8 @@ var remotepay_ErrorType = require("../remotepay/ErrorType");
     /**
     * Get the field value
     * Description of the error.
-      * @return {String} 
+    * @memberof remotepay.CloverDeviceErrorEvent
+    * @return {String} 
     */
     getMessage: function() {
       return this.message;
@@ -45,7 +49,8 @@ var remotepay_ErrorType = require("../remotepay/ErrorType");
 
     /**
     * Set the field value
-    * @param {DeviceErrorEventCode} code 
+    * @memberof remotepay.CloverDeviceErrorEvent
+    * @param {remotepay.DeviceErrorEventCode} code 
     */
     setCode: function(code) {
       this.code = code;
@@ -53,7 +58,8 @@ var remotepay_ErrorType = require("../remotepay/ErrorType");
 
     /**
     * Get the field value
-    * @return {DeviceErrorEventCode} 
+    * @memberof remotepay.CloverDeviceErrorEvent
+    * @return {remotepay.DeviceErrorEventCode} 
     */
     getCode: function() {
       return this.code;
@@ -61,7 +67,8 @@ var remotepay_ErrorType = require("../remotepay/ErrorType");
 
     /**
     * Set the field value
-    * @param {ErrorType} type 
+    * @memberof remotepay.CloverDeviceErrorEvent
+    * @param {remotepay.ErrorType} type 
     */
     setType: function(type) {
       this.type = type;
@@ -69,11 +76,17 @@ var remotepay_ErrorType = require("../remotepay/ErrorType");
 
     /**
     * Get the field value
-    * @return {ErrorType} 
+    * @memberof remotepay.CloverDeviceErrorEvent
+    * @return {remotepay.ErrorType} 
     */
     getType: function() {
       return this.type;
     },
+
+    /**
+    * @memberof remotepay.CloverDeviceErrorEvent
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

@@ -11,10 +11,13 @@ var remotemessage_Message = require("../remotemessage/Message");
 
   /**
   * @constructor
+  * @augments remotemessage.Message
+  * @memberof remotemessage
   */
   ImagePrintMessage = Class.create(remotemessage_Message, {
     /**
     * Initialize the values for this.
+    * @memberof remotemessage.ImagePrintMessage
     * @private
     */
     initialize: function($super) {
@@ -29,6 +32,7 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * An image serialized to a base64 encoded byte array
     *
+    * @memberof remotemessage.ImagePrintMessage
     * @param {Object} png Byte buffer
     */
     setPng: function(png) {
@@ -38,7 +42,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * An image serialized to a base64 encoded byte array
-      * @return {Object} Byte buffer
+    * @memberof remotemessage.ImagePrintMessage
+    * @return {Object} Byte buffer
     */
     getPng: function() {
       return this.png;
@@ -48,6 +53,7 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Set the field value
     * The url of an image.  The url must be accessible from the Clover device.
     *
+    * @memberof remotemessage.ImagePrintMessage
     * @param {String} urlString 
     */
     setUrlString: function(urlString) {
@@ -57,7 +63,8 @@ var remotemessage_Message = require("../remotemessage/Message");
     /**
     * Get the field value
     * The url of an image.  The url must be accessible from the Clover device.
-      * @return {String} 
+    * @memberof remotemessage.ImagePrintMessage
+    * @return {String} 
     */
     getUrlString: function() {
       return this.urlString;

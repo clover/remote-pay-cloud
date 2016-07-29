@@ -9,10 +9,12 @@ require("prototype");
 
   /**
   * @constructor
+  * @memberof inventory
   */
   Discount = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof inventory.Discount
     * @private
     */
     initialize: function() {
@@ -27,6 +29,7 @@ require("prototype");
     * Set the field value
     * Unique identifier
     *
+    * @memberof inventory.Discount
     * @param {String} id 
     */
     setId: function(id) {
@@ -36,7 +39,8 @@ require("prototype");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof inventory.Discount
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -46,6 +50,7 @@ require("prototype");
     * Set the field value
     * Name of the discount
     *
+    * @memberof inventory.Discount
     * @param {String} name 
     */
     setName: function(name) {
@@ -55,7 +60,8 @@ require("prototype");
     /**
     * Get the field value
     * Name of the discount
-      * @return {String} 
+    * @memberof inventory.Discount
+    * @return {String} 
     */
     getName: function() {
       return this.name;
@@ -65,6 +71,7 @@ require("prototype");
     * Set the field value
     * Discount amount in fraction of currency unit (e.g. cents) based on currency fraction digits supported
     *
+    * @memberof inventory.Discount
     * @param {Null|Number} amount must be a long integer
     */
     setAmount: function(amount) {
@@ -74,7 +81,8 @@ require("prototype");
     /**
     * Get the field value
     * Discount amount in fraction of currency unit (e.g. cents) based on currency fraction digits supported
-      * @return {Null|Number} must be a long integer
+    * @memberof inventory.Discount
+    * @return {Null|Number} must be a long integer
     */
     getAmount: function() {
       return this.amount;
@@ -84,6 +92,7 @@ require("prototype");
     * Set the field value
     * Discount amount in percent
     *
+    * @memberof inventory.Discount
     * @param {Null|Number} percentage must be a long integer
     */
     setPercentage: function(percentage) {
@@ -93,11 +102,17 @@ require("prototype");
     /**
     * Get the field value
     * Discount amount in percent
-      * @return {Null|Number} must be a long integer
+    * @memberof inventory.Discount
+    * @return {Null|Number} must be a long integer
     */
     getPercentage: function() {
       return this.percentage;
     },
+
+    /**
+    * @memberof inventory.Discount
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

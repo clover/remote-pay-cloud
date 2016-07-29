@@ -9,10 +9,12 @@ require("prototype");
 
   /**
   * @constructor
+  * @memberof base
   */
   Address = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof base.Address
     * @private
     */
     initialize: function() {
@@ -29,6 +31,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof base.Address
     * @param {String} address1 
     */
     setAddress1: function(address1) {
@@ -37,6 +40,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof base.Address
     * @return {String} 
     */
     getAddress1: function() {
@@ -45,6 +49,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof base.Address
     * @param {String} address2 
     */
     setAddress2: function(address2) {
@@ -53,6 +58,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof base.Address
     * @return {String} 
     */
     getAddress2: function() {
@@ -61,6 +67,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof base.Address
     * @param {String} address3 
     */
     setAddress3: function(address3) {
@@ -69,6 +76,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof base.Address
     * @return {String} 
     */
     getAddress3: function() {
@@ -77,6 +85,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof base.Address
     * @param {String} city 
     */
     setCity: function(city) {
@@ -85,6 +94,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof base.Address
     * @return {String} 
     */
     getCity: function() {
@@ -93,6 +103,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof base.Address
     * @param {String} country 
     */
     setCountry: function(country) {
@@ -101,6 +112,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof base.Address
     * @return {String} 
     */
     getCountry: function() {
@@ -109,6 +121,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof base.Address
     * @param {String} phoneNumber 
     */
     setPhoneNumber: function(phoneNumber) {
@@ -117,6 +130,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof base.Address
     * @return {String} 
     */
     getPhoneNumber: function() {
@@ -125,6 +139,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof base.Address
     * @param {String} state 
     */
     setState: function(state) {
@@ -133,6 +148,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof base.Address
     * @return {String} 
     */
     getState: function() {
@@ -141,6 +157,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof base.Address
     * @param {String} zip 
     */
     setZip: function(zip) {
@@ -149,11 +166,17 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof base.Address
     * @return {String} 
     */
     getZip: function() {
       return this.zip;
     },
+
+    /**
+    * @memberof base.Address
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

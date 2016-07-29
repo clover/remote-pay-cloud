@@ -9,10 +9,12 @@ require("prototype");
 
   /**
   * @constructor
+  * @memberof base
   */
   CountryInfo = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof base.CountryInfo
     * @private
     */
     initialize: function() {
@@ -33,6 +35,7 @@ require("prototype");
     * Set the field value
     * ISO 3166-1-alpha-2 code
     *
+    * @memberof base.CountryInfo
     * @param {String} countryCode 
     */
     setCountryCode: function(countryCode) {
@@ -42,7 +45,8 @@ require("prototype");
     /**
     * Get the field value
     * ISO 3166-1-alpha-2 code
-      * @return {String} 
+    * @memberof base.CountryInfo
+    * @return {String} 
     */
     getCountryCode: function() {
       return this.countryCode;
@@ -50,6 +54,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof base.CountryInfo
     * @param {String} displayName 
     */
     setDisplayName: function(displayName) {
@@ -58,6 +63,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof base.CountryInfo
     * @return {String} 
     */
     getDisplayName: function() {
@@ -66,6 +72,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof base.CountryInfo
     * @param {Null|String} localDisplayName 
     */
     setLocalDisplayName: function(localDisplayName) {
@@ -74,6 +81,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof base.CountryInfo
     * @return {Null|String} 
     */
     getLocalDisplayName: function() {
@@ -82,6 +90,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof base.CountryInfo
     * @param {String} defaultCurrency 
     */
     setDefaultCurrency: function(defaultCurrency) {
@@ -90,6 +99,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof base.CountryInfo
     * @return {String} 
     */
     getDefaultCurrency: function() {
@@ -98,6 +108,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof base.CountryInfo
     * @param {String} defaultTimezone 
     */
     setDefaultTimezone: function(defaultTimezone) {
@@ -106,6 +117,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof base.CountryInfo
     * @return {String} 
     */
     getDefaultTimezone: function() {
@@ -116,6 +128,7 @@ require("prototype");
     * Set the field value
     * Indicates whether the state/province field is required when creating the address
     *
+    * @memberof base.CountryInfo
     * @param {Boolean} stateProvinceRequired 
     */
     setStateProvinceRequired: function(stateProvinceRequired) {
@@ -125,7 +138,8 @@ require("prototype");
     /**
     * Get the field value
     * Indicates whether the state/province field is required when creating the address
-      * @return {Boolean} 
+    * @memberof base.CountryInfo
+    * @return {Boolean} 
     */
     getStateProvinceRequired: function() {
       return this.stateProvinceRequired;
@@ -135,6 +149,7 @@ require("prototype");
     * Set the field value
     * Indicates whether the ZIP/Postal code field is required when creating the address
     *
+    * @memberof base.CountryInfo
     * @param {Boolean} zipPostalRequired 
     */
     setZipPostalRequired: function(zipPostalRequired) {
@@ -144,7 +159,8 @@ require("prototype");
     /**
     * Get the field value
     * Indicates whether the ZIP/Postal code field is required when creating the address
-      * @return {Boolean} 
+    * @memberof base.CountryInfo
+    * @return {Boolean} 
     */
     getZipPostalRequired: function() {
       return this.zipPostalRequired;
@@ -154,6 +170,7 @@ require("prototype");
     * Set the field value
     * Indicates whether the county field is required when creating the address
     *
+    * @memberof base.CountryInfo
     * @param {Boolean} countyRequired 
     */
     setCountyRequired: function(countyRequired) {
@@ -163,7 +180,8 @@ require("prototype");
     /**
     * Get the field value
     * Indicates whether the county field is required when creating the address
-      * @return {Boolean} 
+    * @memberof base.CountryInfo
+    * @return {Boolean} 
     */
     getCountyRequired: function() {
       return this.countyRequired;
@@ -171,6 +189,7 @@ require("prototype");
 
     /**
     * Set the field value
+    * @memberof base.CountryInfo
     * @param {String} defaultLocale 
     */
     setDefaultLocale: function(defaultLocale) {
@@ -179,6 +198,7 @@ require("prototype");
 
     /**
     * Get the field value
+    * @memberof base.CountryInfo
     * @return {String} 
     */
     getDefaultLocale: function() {
@@ -189,6 +209,7 @@ require("prototype");
     * Set the field value
     * Indicates whether the country is enabled for app market billing
     *
+    * @memberof base.CountryInfo
     * @param {Boolean} appMarketBillingEnabled 
     */
     setAppMarketBillingEnabled: function(appMarketBillingEnabled) {
@@ -198,11 +219,17 @@ require("prototype");
     /**
     * Get the field value
     * Indicates whether the country is enabled for app market billing
-      * @return {Boolean} 
+    * @memberof base.CountryInfo
+    * @return {Boolean} 
     */
     getAppMarketBillingEnabled: function() {
       return this.appMarketBillingEnabled;
     },
+
+    /**
+    * @memberof base.CountryInfo
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

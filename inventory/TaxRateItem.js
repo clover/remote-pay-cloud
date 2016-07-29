@@ -11,10 +11,12 @@ var inventory_Item = require("../inventory/Item");
 
   /**
   * @constructor
+  * @memberof inventory
   */
   TaxRateItem = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof inventory.TaxRateItem
     * @private
     */
     initialize: function() {
@@ -25,7 +27,8 @@ var inventory_Item = require("../inventory/Item");
 
     /**
     * Set the field value
-    * @param {TaxRate} taxRate 
+    * @memberof inventory.TaxRateItem
+    * @param {inventory.TaxRate} taxRate 
     */
     setTaxRate: function(taxRate) {
       this.taxRate = taxRate;
@@ -33,7 +36,8 @@ var inventory_Item = require("../inventory/Item");
 
     /**
     * Get the field value
-    * @return {TaxRate} 
+    * @memberof inventory.TaxRateItem
+    * @return {inventory.TaxRate} 
     */
     getTaxRate: function() {
       return this.taxRate;
@@ -41,7 +45,8 @@ var inventory_Item = require("../inventory/Item");
 
     /**
     * Set the field value
-    * @param {Item} item 
+    * @memberof inventory.TaxRateItem
+    * @param {inventory.Item} item 
     */
     setItem: function(item) {
       this.item = item;
@@ -49,11 +54,17 @@ var inventory_Item = require("../inventory/Item");
 
     /**
     * Get the field value
-    * @return {Item} 
+    * @memberof inventory.TaxRateItem
+    * @return {inventory.Item} 
     */
     getItem: function() {
       return this.item;
     },
+
+    /**
+    * @memberof inventory.TaxRateItem
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

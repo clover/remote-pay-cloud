@@ -5,6 +5,10 @@
  */
 
 
+/**
+* @memberof payments
+* @enum {string}
+*/
 AVSResult = {
   SUCCESS : "SUCCESS",
   ZIP_CODE_MATCH : "ZIP_CODE_MATCH",

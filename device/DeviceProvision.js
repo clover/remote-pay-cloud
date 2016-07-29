@@ -11,10 +11,12 @@ var base_Reference = require("../base/Reference");
 
   /**
   * @constructor
+  * @memberof device
   */
   DeviceProvision = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof device.DeviceProvision
     * @private
     */
     initialize: function() {
@@ -39,6 +41,7 @@ var base_Reference = require("../base/Reference");
     * Set the field value
     * Unique identifier
     *
+    * @memberof device.DeviceProvision
     * @param {String} id 
     */
     setId: function(id) {
@@ -48,7 +51,8 @@ var base_Reference = require("../base/Reference");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof device.DeviceProvision
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -56,7 +60,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
-    * @param {Reference} deviceRef 
+    * @memberof device.DeviceProvision
+    * @param {base.Reference} deviceRef 
     */
     setDeviceRef: function(deviceRef) {
       this.deviceRef = deviceRef;
@@ -64,7 +69,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * @return {Reference} 
+    * @memberof device.DeviceProvision
+    * @return {base.Reference} 
     */
     getDeviceRef: function() {
       return this.deviceRef;
@@ -72,7 +78,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
-    * @param {DeviceProvisionState} state 
+    * @memberof device.DeviceProvision
+    * @param {device.DeviceProvisionState} state 
     */
     setState: function(state) {
       this.state = state;
@@ -80,7 +87,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * @return {DeviceProvisionState} 
+    * @memberof device.DeviceProvision
+    * @return {device.DeviceProvisionState} 
     */
     getState: function() {
       return this.state;
@@ -88,6 +96,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof device.DeviceProvision
     * @param {String} lastActivationCode 
     */
     setLastActivationCode: function(lastActivationCode) {
@@ -96,6 +105,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof device.DeviceProvision
     * @return {String} 
     */
     getLastActivationCode: function() {
@@ -104,6 +114,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof device.DeviceProvision
     * @param {String} activationCode 
     */
     setActivationCode: function(activationCode) {
@@ -112,6 +123,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof device.DeviceProvision
     * @return {String} 
     */
     getActivationCode: function() {
@@ -120,6 +132,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof device.DeviceProvision
     * @param {Boolean} emailSent 
     */
     setEmailSent: function(emailSent) {
@@ -128,6 +141,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof device.DeviceProvision
     * @return {Boolean} 
     */
     getEmailSent: function() {
@@ -136,6 +150,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof device.DeviceProvision
     * @param {Boolean} hasShipment 
     */
     setHasShipment: function(hasShipment) {
@@ -144,6 +159,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof device.DeviceProvision
     * @return {Boolean} 
     */
     getHasShipment: function() {
@@ -152,6 +168,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof device.DeviceProvision
     * @param {String} serialNumber 
     */
     setSerialNumber: function(serialNumber) {
@@ -160,6 +177,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof device.DeviceProvision
     * @return {String} 
     */
     getSerialNumber: function() {
@@ -168,7 +186,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
-    * @param {Reference} merchant 
+    * @memberof device.DeviceProvision
+    * @param {base.Reference} merchant 
     */
     setMerchant: function(merchant) {
       this.merchant = merchant;
@@ -176,7 +195,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * @return {Reference} 
+    * @memberof device.DeviceProvision
+    * @return {base.Reference} 
     */
     getMerchant: function() {
       return this.merchant;
@@ -184,6 +204,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof device.DeviceProvision
     * @param {String} deviceType 
     */
     setDeviceType: function(deviceType) {
@@ -192,6 +213,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof device.DeviceProvision
     * @return {String} 
     */
     getDeviceType: function() {
@@ -200,6 +222,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof device.DeviceProvision
     * @param {Number} provisionedTime must be a long integer
     */
     setProvisionedTime: function(provisionedTime) {
@@ -208,6 +231,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof device.DeviceProvision
     * @return {Number} must be a long integer
     */
     getProvisionedTime: function() {
@@ -216,6 +240,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * @memberof device.DeviceProvision
     * @param {Number} activatedTime must be a long integer
     */
     setActivatedTime: function(activatedTime) {
@@ -224,6 +249,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * @memberof device.DeviceProvision
     * @return {Number} must be a long integer
     */
     getActivatedTime: function() {
@@ -232,7 +258,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
-    * @param {Reference} reseller 
+    * @memberof device.DeviceProvision
+    * @param {base.Reference} reseller 
     */
     setReseller: function(reseller) {
       this.reseller = reseller;
@@ -240,7 +267,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * @return {Reference} 
+    * @memberof device.DeviceProvision
+    * @return {base.Reference} 
     */
     getReseller: function() {
       return this.reseller;
@@ -248,7 +276,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
-    * @param {Reference} currentRom 
+    * @memberof device.DeviceProvision
+    * @param {base.Reference} currentRom 
     */
     setCurrentRom: function(currentRom) {
       this.currentRom = currentRom;
@@ -256,11 +285,17 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * @return {Reference} 
+    * @memberof device.DeviceProvision
+    * @return {base.Reference} 
     */
     getCurrentRom: function() {
       return this.currentRom;
     },
+
+    /**
+    * @memberof device.DeviceProvision
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {

@@ -11,10 +11,12 @@ var hours_Reference = require("../hours/Reference");
 
   /**
   * @constructor
+  * @memberof hours
   */
   HoursSet = Class.create( {
     /**
     * Initialize the values for this.
+    * @memberof hours.HoursSet
     * @private
     */
     initialize: function() {
@@ -35,6 +37,7 @@ var hours_Reference = require("../hours/Reference");
     * Set the field value
     * Unique identifier
     *
+    * @memberof hours.HoursSet
     * @param {String} id 
     */
     setId: function(id) {
@@ -44,7 +47,8 @@ var hours_Reference = require("../hours/Reference");
     /**
     * Get the field value
     * Unique identifier
-      * @return {String} 
+    * @memberof hours.HoursSet
+    * @return {String} 
     */
     getId: function() {
       return this.id;
@@ -54,6 +58,7 @@ var hours_Reference = require("../hours/Reference");
     * Set the field value
     * Friendly name to describe the hours
     *
+    * @memberof hours.HoursSet
     * @param {String} name 
     */
     setName: function(name) {
@@ -63,7 +68,8 @@ var hours_Reference = require("../hours/Reference");
     /**
     * Get the field value
     * Friendly name to describe the hours
-      * @return {String} 
+    * @memberof hours.HoursSet
+    * @return {String} 
     */
     getName: function() {
       return this.name;
@@ -71,7 +77,8 @@ var hours_Reference = require("../hours/Reference");
 
     /**
     * Set the field value
-    * @param {Null|Reference} reference 
+    * @memberof hours.HoursSet
+    * @param {Null|hours.Reference} reference 
     */
     setReference: function(reference) {
       this.reference = reference;
@@ -79,7 +86,8 @@ var hours_Reference = require("../hours/Reference");
 
     /**
     * Get the field value
-    * @return {Null|Reference} 
+    * @memberof hours.HoursSet
+    * @return {Null|hours.Reference} 
     */
     getReference: function() {
       return this.reference;
@@ -87,7 +95,8 @@ var hours_Reference = require("../hours/Reference");
 
     /**
     * Set the field value
-    * @param {Array.<HourRange>} sunday An array of 
+    * @memberof hours.HoursSet
+    * @param {Array.<hours.HourRange>} sunday An array of 
     */
     setSunday: function(sunday) {
       this.sunday = sunday;
@@ -95,7 +104,8 @@ var hours_Reference = require("../hours/Reference");
 
     /**
     * Get the field value
-    * @return {Array.<HourRange>} An array of 
+    * @memberof hours.HoursSet
+    * @return {Array.<hours.HourRange>} An array of 
     */
     getSunday: function() {
       return this.sunday;
@@ -103,7 +113,8 @@ var hours_Reference = require("../hours/Reference");
 
     /**
     * Set the field value
-    * @param {Array.<HourRange>} monday An array of 
+    * @memberof hours.HoursSet
+    * @param {Array.<hours.HourRange>} monday An array of 
     */
     setMonday: function(monday) {
       this.monday = monday;
@@ -111,7 +122,8 @@ var hours_Reference = require("../hours/Reference");
 
     /**
     * Get the field value
-    * @return {Array.<HourRange>} An array of 
+    * @memberof hours.HoursSet
+    * @return {Array.<hours.HourRange>} An array of 
     */
     getMonday: function() {
       return this.monday;
@@ -119,7 +131,8 @@ var hours_Reference = require("../hours/Reference");
 
     /**
     * Set the field value
-    * @param {Array.<HourRange>} tuesday An array of 
+    * @memberof hours.HoursSet
+    * @param {Array.<hours.HourRange>} tuesday An array of 
     */
     setTuesday: function(tuesday) {
       this.tuesday = tuesday;
@@ -127,7 +140,8 @@ var hours_Reference = require("../hours/Reference");
 
     /**
     * Get the field value
-    * @return {Array.<HourRange>} An array of 
+    * @memberof hours.HoursSet
+    * @return {Array.<hours.HourRange>} An array of 
     */
     getTuesday: function() {
       return this.tuesday;
@@ -135,7 +149,8 @@ var hours_Reference = require("../hours/Reference");
 
     /**
     * Set the field value
-    * @param {Array.<HourRange>} wednesday An array of 
+    * @memberof hours.HoursSet
+    * @param {Array.<hours.HourRange>} wednesday An array of 
     */
     setWednesday: function(wednesday) {
       this.wednesday = wednesday;
@@ -143,7 +158,8 @@ var hours_Reference = require("../hours/Reference");
 
     /**
     * Get the field value
-    * @return {Array.<HourRange>} An array of 
+    * @memberof hours.HoursSet
+    * @return {Array.<hours.HourRange>} An array of 
     */
     getWednesday: function() {
       return this.wednesday;
@@ -151,7 +167,8 @@ var hours_Reference = require("../hours/Reference");
 
     /**
     * Set the field value
-    * @param {Array.<HourRange>} thursday An array of 
+    * @memberof hours.HoursSet
+    * @param {Array.<hours.HourRange>} thursday An array of 
     */
     setThursday: function(thursday) {
       this.thursday = thursday;
@@ -159,7 +176,8 @@ var hours_Reference = require("../hours/Reference");
 
     /**
     * Get the field value
-    * @return {Array.<HourRange>} An array of 
+    * @memberof hours.HoursSet
+    * @return {Array.<hours.HourRange>} An array of 
     */
     getThursday: function() {
       return this.thursday;
@@ -167,7 +185,8 @@ var hours_Reference = require("../hours/Reference");
 
     /**
     * Set the field value
-    * @param {Array.<HourRange>} friday An array of 
+    * @memberof hours.HoursSet
+    * @param {Array.<hours.HourRange>} friday An array of 
     */
     setFriday: function(friday) {
       this.friday = friday;
@@ -175,7 +194,8 @@ var hours_Reference = require("../hours/Reference");
 
     /**
     * Get the field value
-    * @return {Array.<HourRange>} An array of 
+    * @memberof hours.HoursSet
+    * @return {Array.<hours.HourRange>} An array of 
     */
     getFriday: function() {
       return this.friday;
@@ -183,7 +203,8 @@ var hours_Reference = require("../hours/Reference");
 
     /**
     * Set the field value
-    * @param {Array.<HourRange>} saturday An array of 
+    * @memberof hours.HoursSet
+    * @param {Array.<hours.HourRange>} saturday An array of 
     */
     setSaturday: function(saturday) {
       this.saturday = saturday;
@@ -191,11 +212,17 @@ var hours_Reference = require("../hours/Reference");
 
     /**
     * Get the field value
-    * @return {Array.<HourRange>} An array of 
+    * @memberof hours.HoursSet
+    * @return {Array.<hours.HourRange>} An array of 
     */
     getSaturday: function() {
       return this.saturday;
     },
+
+    /**
+    * @memberof hours.HoursSet
+    * @private
+    */
     getMetaInfo: function(fieldName) {
       var curclass = this._class_;
       do {
