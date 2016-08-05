@@ -278,7 +278,10 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
               // See if there is a registered callback for the message
               var ackMessage = new remotemessage.AcknowledgementMessage();
               this.remoteMessageParser.parseMessage(message, ackMessage);
-
+              if(!ackMessage.getSourceMessageId()) {
+                  // backwards compatibility hack.
+                  ackMessage.setSourceMessageId(message.id);
+              }
               var callback = this.acknowledgementHooks[ackMessage.getSourceMessageId()];
               if (callback) {
                   try {

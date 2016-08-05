@@ -27,10 +27,13 @@ RemoteMessageParser = Class.create( JSONToCustomObject, {
                 // Ok, its valid.
             }
         }
-        var payload = JSON.parse(remoteMessageObj.getPayload());
-        var copied = this.transfertoObject(payload, messageToPopulate, attachUnknownProperties);
-        if(copied) {
-            return copied;
+        if(remoteMessageObj.getPayload()) {
+            // Older versions of the remote-pay lib did not return a body here
+            var payload = JSON.parse(remoteMessageObj.getPayload());
+            var copied = this.transfertoObject(payload, messageToPopulate, attachUnknownProperties);
+            if (copied) {
+                return copied;
+            }
         }
         return messageToPopulate;
     }
