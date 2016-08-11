@@ -8,7 +8,7 @@
 require("prototype");
 var base_Reference = require("../base/Reference");
 
-/** The class is used to update the item stock */
+/** The class is used to update the item stock. */
   /**
   * @constructor
   * @memberof inventory

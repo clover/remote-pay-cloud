@@ -52,7 +52,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
-    * Unique identifier
+    * Unique identifier.
     *
     * @memberof order.LineItem
     * @param {String} id 
@@ -63,7 +63,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * Unique identifier
+    * Unique identifier.
     * @memberof order.LineItem
     * @return {String} 
     */
@@ -73,7 +73,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
-    * The order with which the line item is associated
+    * Reference to the order with which the line item is associated.
     *
     * @memberof order.LineItem
     * @param {base.Reference} orderRef 
@@ -84,7 +84,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * The order with which the line item is associated
+    * Reference to the order with which the line item is associated.
     * @memberof order.LineItem
     * @return {base.Reference} 
     */
@@ -94,7 +94,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
-    * Inventory item used to create this line item
+    * A reference to the inventory item that was used to create this line item.
     *
     * @memberof order.LineItem
     * @param {Null|base.Reference} item 
@@ -105,7 +105,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * Inventory item used to create this line item
+    * A reference to the inventory item that was used to create this line item.
     * @memberof order.LineItem
     * @return {Null|base.Reference} 
     */
@@ -136,7 +136,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
-    * Alternate name of the line item
+    * Alternate name of the line item.
     *
     * @memberof order.LineItem
     * @param {Null|String} alternateName 
@@ -147,7 +147,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * Alternate name of the line item
+    * Alternate name of the line item.
     * @memberof order.LineItem
     * @return {Null|String} 
     */
@@ -157,7 +157,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
-    * Price of the item, typically in cents; use priceType and merchant currency to determine actual item price
+    * Price of the item, typically in cents; use priceType and merchant currency to determine actual item price.
     *
     * @memberof order.LineItem
     * @param {Number} price must be a long integer
@@ -168,7 +168,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * Price of the item, typically in cents; use priceType and merchant currency to determine actual item price
+    * Price of the item, typically in cents; use priceType and merchant currency to determine actual item price.
     * @memberof order.LineItem
     * @return {Number} must be a long integer
     */
@@ -178,7 +178,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
-    * Unit quantity
+    * Unit quantity if this line item is priced by quantity instead of having a fixed price.
     *
     * @memberof order.LineItem
     * @param {Null|Number} unitQty must be an integer
@@ -189,7 +189,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * Unit quantity
+    * Unit quantity if this line item is priced by quantity instead of having a fixed price.
     * @memberof order.LineItem
     * @return {Null|Number} must be an integer
     */
@@ -256,6 +256,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * True if this line item has been printed out on an order printer at least once already.
+    *
     * @memberof order.LineItem
     * @param {Boolean} printed 
     */
@@ -265,6 +267,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * True if this line item has been printed out on an order printer at least once already.
     * @memberof order.LineItem
     * @return {Boolean} 
     */
@@ -364,6 +367,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * List of references to of Order discounts.
+    *
     * @memberof order.LineItem
     * @param {Array.<order.Discount>} discounts An array of 
     */
@@ -373,6 +378,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * List of references to of Order discounts.
     * @memberof order.LineItem
     * @return {Array.<order.Discount>} An array of 
     */
@@ -382,7 +388,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
-    * does the calculated flag actually do anything?
+    * Unnamed fixed discount amount in cents.
     *
     * @memberof order.LineItem
     * @param {Null|Number} discountAmount must be a long integer
@@ -393,7 +399,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * does the calculated flag actually do anything?
+    * Unnamed fixed discount amount in cents.
     * @memberof order.LineItem
     * @return {Null|Number} must be a long integer
     */
@@ -421,6 +427,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * List of references to modifications applied to this line item.
+    *
     * @memberof order.LineItem
     * @param {Array.<order.Modification>} modifications An array of 
     */
@@ -430,6 +438,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * List of references to modifications applied to this line item.
     * @memberof order.LineItem
     * @return {Array.<order.Modification>} An array of 
     */
@@ -439,6 +448,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * True if this line item has been refunded
+    *
     * @memberof order.LineItem
     * @param {Boolean} refunded 
     */
@@ -448,6 +459,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * True if this line item has been refunded
     * @memberof order.LineItem
     * @return {Boolean} 
     */
@@ -457,7 +469,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
-    * True if this item should be counted as revenue, for example gift cards and donations would not
+    * True if this item should be counted as revenue, for example gift cards and donations would not.
     *
     * @memberof order.LineItem
     * @param {Boolean} isRevenue 
@@ -468,7 +480,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * True if this item should be counted as revenue, for example gift cards and donations would not
+    * True if this item should be counted as revenue, for example gift cards and donations would not.
     * @memberof order.LineItem
     * @return {Boolean} 
     */
@@ -478,6 +490,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * Tax rates that apply to this line item
+    *
     * @memberof order.LineItem
     * @param {Array.<inventory.TaxRate>} taxRates An array of 
     */
@@ -487,6 +501,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * Tax rates that apply to this line item
     * @memberof order.LineItem
     * @return {Array.<inventory.TaxRate>} An array of 
     */
@@ -496,7 +511,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
-    * Payments that were made for this line item
+    * Payments that apply to this line item
     *
     * @memberof order.LineItem
     * @param {Array.<payments.LineItemPayment>} payments An array of 
@@ -507,7 +522,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * Payments that were made for this line item
+    * Payments that apply to this line item
     * @memberof order.LineItem
     * @return {Array.<payments.LineItemPayment>} An array of 
     */

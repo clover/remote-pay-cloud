@@ -19,7 +19,7 @@ var order_OrderTaxRate = require("../order/OrderTaxRate");
 var payments_Refund = require("../payments/Refund");
 var payments_Credit = require("../payments/Credit");
 
-/** The Order object is at the core of Clover’s transaction data. Almost every transaction either creates or updates an Order. When an order is created or updated, the order data is automatically synchronized between the Clover Server and the merchant’s Clover devices. */
+/** The Order object is at the core of Clover’s transaction data. Almost every transaction either creates or updates an Order. When an order is created or updated via one of the Clover SDKs, the order data is automatically synchronized between the Clover Server and the merchant’s Clover devices. */
   /**
   * @constructor
   * @memberof order
@@ -149,7 +149,7 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Set the field value
-    * Total price of the order
+    * Total price of the order in cents
     *
     * @memberof order.Order
     * @param {Null|Number} total must be a long integer
@@ -160,7 +160,7 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Get the field value
-    * Total price of the order
+    * Total price of the order in cents
     * @memberof order.Order
     * @return {Null|Number} must be a long integer
     */
@@ -188,6 +188,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Set the field value
+    * An arbitrary string with information about this order, may be printed on the order receipt and displayed in apps
+    *
     * @memberof order.Order
     * @param {Null|String} note 
     */
@@ -197,6 +199,7 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Get the field value
+    * An arbitrary string with information about this order, may be printed on the order receipt and displayed in apps
     * @memberof order.Order
     * @return {Null|String} 
     */
@@ -224,6 +227,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Set the field value
+    * If true then this order should not have taxes applied to it
+    *
     * @memberof order.Order
     * @param {Boolean} taxRemoved 
     */
@@ -233,6 +238,7 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Get the field value
+    * If true then this order should not have taxes applied to it
     * @memberof order.Order
     * @return {Boolean} 
     */
@@ -242,6 +248,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Set the field value
+    * This order was created by merchant with VAT enabled.
+    *
     * @memberof order.Order
     * @param {Boolean} isVat 
     */
@@ -251,6 +259,7 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Get the field value
+    * This order was created by merchant with VAT enabled.
     * @memberof order.Order
     * @return {Boolean} 
     */
@@ -260,6 +269,8 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Set the field value
+    * A String generally describing the state of this Order. The value null indicates an empty Order that is not displayed in user interfaces. Other value such as "open" and "locked" are not checked or enforced by client or server and thus are not useful for making any logical decisions about this Order.
+    *
     * @memberof order.Order
     * @param {Null|String} state 
     */
@@ -269,6 +280,7 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Get the field value
+    * A String generally describing the state of this Order. The value null indicates an empty Order that is not displayed in user interfaces. Other value such as "open" and "locked" are not checked or enforced by client or server and thus are not useful for making any logical decisions about this Order.
     * @memberof order.Order
     * @return {Null|String} 
     */
@@ -278,7 +290,7 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Set the field value
-    * Whether this order represents a manual transaction. A manual transaction is a transaction that has an arbitrary amount defined and is not associated with any inventory item. For example, the Clover Sale App and Clover Manual Transaction App create manual transactions. A nanual transactions will have a single associated line item to hold the sale amount, but the generated receipt will display this differently to indicate that it is not considered a typical order with inventory items.
+    * Whether this order represents a manual transaction. A manual transaction is a transaction that has an arbitrary amount defined and is not associated with any inventory items. For example, the Clover Sale App and Clover Manual Transaction App create manual transactions. A manual transactions will have a single associated line item to hold the sale amount, but the generated receipt will display this differently to indicate that it is not considered a typical order with inventory items.
     *
     * @memberof order.Order
     * @param {Boolean} manualTransaction 
@@ -289,7 +301,7 @@ var payments_Credit = require("../payments/Credit");
 
     /**
     * Get the field value
-    * Whether this order represents a manual transaction. A manual transaction is a transaction that has an arbitrary amount defined and is not associated with any inventory item. For example, the Clover Sale App and Clover Manual Transaction App create manual transactions. A nanual transactions will have a single associated line item to hold the sale amount, but the generated receipt will display this differently to indicate that it is not considered a typical order with inventory items.
+    * Whether this order represents a manual transaction. A manual transaction is a transaction that has an arbitrary amount defined and is not associated with any inventory items. For example, the Clover Sale App and Clover Manual Transaction App create manual transactions. A manual transactions will have a single associated line item to hold the sale amount, but the generated receipt will display this differently to indicate that it is not considered a typical order with inventory items.
     * @memberof order.Order
     * @return {Boolean} 
     */

@@ -47,6 +47,8 @@ var base_Reference = require("../base/Reference");
       this.offlinePaymentsLimitDefault = undefined;
       this.offlinePaymentsPromptThresholdDefault = undefined;
       this.offlinePaymentsTotalPaymentsLimitDefault = undefined;
+      this.offlinePaymentsMaxLimit = undefined;
+      this.offlinePaymentsMaxTotalPaymentsLimit = undefined;
       this.showOfflinePayments = undefined;
       this.maxOfflineDays = undefined;
       this.allowStoreAndForward = undefined;
@@ -551,6 +553,42 @@ var base_Reference = require("../base/Reference");
     /**
     * Set the field value
     * @memberof device.Device
+    * @param {Number} offlinePaymentsMaxLimit must be a long integer
+    */
+    setOfflinePaymentsMaxLimit: function(offlinePaymentsMaxLimit) {
+      this.offlinePaymentsMaxLimit = offlinePaymentsMaxLimit;
+    },
+
+    /**
+    * Get the field value
+    * @memberof device.Device
+    * @return {Number} must be a long integer
+    */
+    getOfflinePaymentsMaxLimit: function() {
+      return this.offlinePaymentsMaxLimit;
+    },
+
+    /**
+    * Set the field value
+    * @memberof device.Device
+    * @param {Number} offlinePaymentsMaxTotalPaymentsLimit must be a long integer
+    */
+    setOfflinePaymentsMaxTotalPaymentsLimit: function(offlinePaymentsMaxTotalPaymentsLimit) {
+      this.offlinePaymentsMaxTotalPaymentsLimit = offlinePaymentsMaxTotalPaymentsLimit;
+    },
+
+    /**
+    * Get the field value
+    * @memberof device.Device
+    * @return {Number} must be a long integer
+    */
+    getOfflinePaymentsMaxTotalPaymentsLimit: function() {
+      return this.offlinePaymentsMaxTotalPaymentsLimit;
+    },
+
+    /**
+    * Set the field value
+    * @memberof device.Device
     * @param {Boolean} showOfflinePayments 
     */
     setShowOfflinePayments: function(showOfflinePayments) {
@@ -695,6 +733,10 @@ Device._meta_.fields["offlinePaymentsPromptThresholdDefault"] = {};
 Device._meta_.fields["offlinePaymentsPromptThresholdDefault"].type = Number;
 Device._meta_.fields["offlinePaymentsTotalPaymentsLimitDefault"] = {};
 Device._meta_.fields["offlinePaymentsTotalPaymentsLimitDefault"].type = Number;
+Device._meta_.fields["offlinePaymentsMaxLimit"] = {};
+Device._meta_.fields["offlinePaymentsMaxLimit"].type = Number;
+Device._meta_.fields["offlinePaymentsMaxTotalPaymentsLimit"] = {};
+Device._meta_.fields["offlinePaymentsMaxTotalPaymentsLimit"].type = Number;
 Device._meta_.fields["showOfflinePayments"] = {};
 Device._meta_.fields["showOfflinePayments"].type = Boolean;
 Device._meta_.fields["maxOfflineDays"] = {};

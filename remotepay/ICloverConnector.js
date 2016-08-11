@@ -363,9 +363,20 @@ require("prototype");
   * haven't processed yet. will trigger an onRetrievePendingPaymentsResponse callback
     * @memberof remotepay.ICloverConnector
     *
-    * @return {Null} 
+    * @return void
     */
     retrievePendingPayments: function() {
+    },
+
+    /**
+    * Sends a request to read card information and call back with the information collected.
+  * @see ICloverConnectorListener.onReadCardDataResponse(ReadCardDataResponse)
+    * @memberof remotepay.ICloverConnector
+    *
+    * @param {Number} cardEntryMethods must be an integer
+    * @return void
+    */
+    readCardData: function(cardEntryMethods) {
     }
   });
 

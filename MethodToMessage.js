@@ -56,7 +56,8 @@ MethodToMessage[remotemessage.Method.VAULT_CARD] = VaultCardMessage;
 MethodToMessage[remotemessage.Method.VAULT_CARD_RESPONSE] = VaultCardResponseMessage;
 MethodToMessage[remotemessage.Method.RETRIEVE_PENDING_PAYMENTS] = RetrievePendingPaymentsMessage;
 MethodToMessage[remotemessage.Method.RETRIEVE_PENDING_PAYMENTS_RESPONSE] = RetrievePendingPaymentsResponseMessage;
-
+MethodToMessage[remotemessage.Method.CARD_DATA] = CardDataRequestMessage;
+MethodToMessage[remotemessage.Method.CARD_DATA_RESPONSE] = CardDataResponseMessage;
 //
 // Expose the module.
 //
