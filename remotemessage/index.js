@@ -10,6 +10,7 @@ remotemessage.AddLineItemAction = require("./AddLineItemAction");
 remotemessage.BreakMessage = require("./BreakMessage");
 remotemessage.CapturePreAuthMessage = require("./CapturePreAuthMessage");
 remotemessage.CapturePreAuthResponseMessage = require("./CapturePreAuthResponseMessage");
+remotemessage.CardData = require("./CardData");
 remotemessage.CardDataRequestMessage = require("./CardDataRequestMessage");
 remotemessage.CardDataResponseMessage = require("./CardDataResponseMessage");
 remotemessage.CashbackSelectedMessage = require("./CashbackSelectedMessage");

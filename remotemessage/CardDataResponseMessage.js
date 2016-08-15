@@ -8,6 +8,7 @@
 require("prototype");
 var remotemessage_Method = require("../remotemessage/Method");
 var remotemessage_ResultStatus = require("../remotemessage/ResultStatus");
+var remotemessage_CardData = require("../remotemessage/CardData");
 var remotemessage_Message = require("../remotemessage/Message");
 
   /**
@@ -27,8 +28,7 @@ var remotemessage_Message = require("../remotemessage/Message");
       this.setMethod(remotemessage_Method["CARD_DATA_RESPONSE"]);
       this.reason = undefined;
       this.status = undefined;
-      this.track1 = undefined;
-      this.track2 = undefined;
+      this.cardData = undefined;
     },
 
     /**
@@ -72,44 +72,23 @@ var remotemessage_Message = require("../remotemessage/Message");
 
     /**
     * Set the field value
-    * The track1 data from the card
+    * The data for the card
     *
     * @memberof remotemessage.CardDataResponseMessage
-    * @param {String} track1 
+    * @param {remotemessage.CardData} cardData 
     */
-    setTrack1: function(track1) {
-      this.track1 = track1;
+    setCardData: function(cardData) {
+      this.cardData = cardData;
     },
 
     /**
     * Get the field value
-    * The track1 data from the card
+    * The data for the card
     * @memberof remotemessage.CardDataResponseMessage
-    * @return {String} 
+    * @return {remotemessage.CardData} 
     */
-    getTrack1: function() {
-      return this.track1;
-    },
-
-    /**
-    * Set the field value
-    * The track2 data from the card
-    *
-    * @memberof remotemessage.CardDataResponseMessage
-    * @param {String} track2 
-    */
-    setTrack2: function(track2) {
-      this.track2 = track2;
-    },
-
-    /**
-    * Get the field value
-    * The track2 data from the card
-    * @memberof remotemessage.CardDataResponseMessage
-    * @return {String} 
-    */
-    getTrack2: function() {
-      return this.track2;
+    getCardData: function() {
+      return this.cardData;
     }
   });
 
@@ -118,10 +97,8 @@ CardDataResponseMessage._meta_.fields["reason"] = {};
 CardDataResponseMessage._meta_.fields["reason"].type = String;
 CardDataResponseMessage._meta_.fields["status"] = {};
 CardDataResponseMessage._meta_.fields["status"].type = remotemessage_ResultStatus;
-CardDataResponseMessage._meta_.fields["track1"] = {};
-CardDataResponseMessage._meta_.fields["track1"].type = String;
-CardDataResponseMessage._meta_.fields["track2"] = {};
-CardDataResponseMessage._meta_.fields["track2"].type = String;
+CardDataResponseMessage._meta_.fields["cardData"] = {};
+CardDataResponseMessage._meta_.fields["cardData"].type = remotemessage_CardData;
 
 //
 // Expose the module.
