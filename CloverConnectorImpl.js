@@ -568,8 +568,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
             var apiMessage = new remotepay.ReadCardDataResponse();
             this.populateGeneric(apiMessage, message);
 
-            apiMessage.setTrack1(message.getTrack1());
-            apiMessage.setTrack2(message.setTrack2());
+            apiMessage.setCardData(message.getCardData());
             this.delegateCloverConnectorListener.onReadCardDataResponse(apiMessage);
 
             if(apiMessage.getSuccess()) {
