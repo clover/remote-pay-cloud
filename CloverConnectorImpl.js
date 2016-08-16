@@ -1765,6 +1765,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
      */
     readCardData: function(cardEntryMethods) {
         var cardDataRequestMessage = new remotemessage.CardDataRequestMessage();
+        cardDataRequestMessage.setCardEntryMethods(cardEntryMethods);
         this.sendMessage(this.messageBuilder.buildRemoteMessageObject(cardDataRequestMessage));
     }
 
