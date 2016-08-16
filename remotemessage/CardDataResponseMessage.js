@@ -8,8 +8,8 @@
 require("prototype");
 var remotemessage_Method = require("../remotemessage/Method");
 var remotemessage_ResultStatus = require("../remotemessage/ResultStatus");
-var remotemessage_CardData = require("../remotemessage/CardData");
 var remotemessage_Message = require("../remotemessage/Message");
+var base_CardData = require("../base/CardData");
 
   /**
   * @constructor
@@ -75,7 +75,7 @@ var remotemessage_Message = require("../remotemessage/Message");
     * The data for the card
     *
     * @memberof remotemessage.CardDataResponseMessage
-    * @param {remotemessage.CardData} cardData 
+    * @param {base.CardData} cardData 
     */
     setCardData: function(cardData) {
       this.cardData = cardData;
@@ -85,7 +85,7 @@ var remotemessage_Message = require("../remotemessage/Message");
     * Get the field value
     * The data for the card
     * @memberof remotemessage.CardDataResponseMessage
-    * @return {remotemessage.CardData} 
+    * @return {base.CardData} 
     */
     getCardData: function() {
       return this.cardData;
@@ -98,7 +98,7 @@ CardDataResponseMessage._meta_.fields["reason"].type = String;
 CardDataResponseMessage._meta_.fields["status"] = {};
 CardDataResponseMessage._meta_.fields["status"].type = remotemessage_ResultStatus;
 CardDataResponseMessage._meta_.fields["cardData"] = {};
-CardDataResponseMessage._meta_.fields["cardData"].type = remotemessage_CardData;
+CardDataResponseMessage._meta_.fields["cardData"].type = base_CardData;
 
 //
 // Expose the module.

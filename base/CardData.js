@@ -9,12 +9,12 @@ require("prototype");
 
   /**
   * @constructor
-  * @memberof remotemessage
+  * @memberof base
   */
   CardData = Class.create( {
     /**
     * Initialize the values for this.
-    * @memberof remotemessage.CardData
+    * @memberof base.CardData
     * @private
     */
     initialize: function() {
@@ -31,7 +31,7 @@ require("prototype");
       this.firstName = undefined;
       this.lastName = undefined;
       this.exp = undefined;
-      this.last4 = undefined;
+      this.last6 = undefined;
       this.first4 = undefined;
     },
 
@@ -39,7 +39,7 @@ require("prototype");
     * Set the field value
     * The track1 data from the card.
     *
-    * @memberof remotemessage.CardData
+    * @memberof base.CardData
     * @param {String} track1 
     */
     setTrack1: function(track1) {
@@ -49,7 +49,7 @@ require("prototype");
     /**
     * Get the field value
     * The track1 data from the card.
-    * @memberof remotemessage.CardData
+    * @memberof base.CardData
     * @return {String} 
     */
     getTrack1: function() {
@@ -60,7 +60,7 @@ require("prototype");
     * Set the field value
     * The track2 data from the card.
     *
-    * @memberof remotemessage.CardData
+    * @memberof base.CardData
     * @param {String} track2 
     */
     setTrack2: function(track2) {
@@ -70,7 +70,7 @@ require("prototype");
     /**
     * Get the field value
     * The track2 data from the card.
-    * @memberof remotemessage.CardData
+    * @memberof base.CardData
     * @return {String} 
     */
     getTrack2: function() {
@@ -81,7 +81,7 @@ require("prototype");
     * Set the field value
     * The track3 data from the card.
     *
-    * @memberof remotemessage.CardData
+    * @memberof base.CardData
     * @param {String} track3 
     */
     setTrack3: function(track3) {
@@ -91,7 +91,7 @@ require("prototype");
     /**
     * Get the field value
     * The track3 data from the card.
-    * @memberof remotemessage.CardData
+    * @memberof base.CardData
     * @return {String} 
     */
     getTrack3: function() {
@@ -102,7 +102,7 @@ require("prototype");
     * Set the field value
     * Indicates if the data is encrypted.
     *
-    * @memberof remotemessage.CardData
+    * @memberof base.CardData
     * @param {Boolean} encrypted 
     */
     setEncrypted: function(encrypted) {
@@ -112,7 +112,7 @@ require("prototype");
     /**
     * Get the field value
     * Indicates if the data is encrypted.
-    * @memberof remotemessage.CardData
+    * @memberof base.CardData
     * @return {Boolean} 
     */
     getEncrypted: function() {
@@ -123,7 +123,7 @@ require("prototype");
     * Set the field value
     * The track1 data from the card.
     *
-    * @memberof remotemessage.CardData
+    * @memberof base.CardData
     * @param {String} maskedTrack1 
     */
     setMaskedTrack1: function(maskedTrack1) {
@@ -133,7 +133,7 @@ require("prototype");
     /**
     * Get the field value
     * The track1 data from the card.
-    * @memberof remotemessage.CardData
+    * @memberof base.CardData
     * @return {String} 
     */
     getMaskedTrack1: function() {
@@ -144,7 +144,7 @@ require("prototype");
     * Set the field value
     * The track2 data from the card.
     *
-    * @memberof remotemessage.CardData
+    * @memberof base.CardData
     * @param {String} maskedTrack2 
     */
     setMaskedTrack2: function(maskedTrack2) {
@@ -154,7 +154,7 @@ require("prototype");
     /**
     * Get the field value
     * The track2 data from the card.
-    * @memberof remotemessage.CardData
+    * @memberof base.CardData
     * @return {String} 
     */
     getMaskedTrack2: function() {
@@ -165,7 +165,7 @@ require("prototype");
     * Set the field value
     * The track3 data from the card.
     *
-    * @memberof remotemessage.CardData
+    * @memberof base.CardData
     * @param {String} maskedTrack3 
     */
     setMaskedTrack3: function(maskedTrack3) {
@@ -175,7 +175,7 @@ require("prototype");
     /**
     * Get the field value
     * The track3 data from the card.
-    * @memberof remotemessage.CardData
+    * @memberof base.CardData
     * @return {String} 
     */
     getMaskedTrack3: function() {
@@ -186,7 +186,7 @@ require("prototype");
     * Set the field value
     * The pan data from the card.
     *
-    * @memberof remotemessage.CardData
+    * @memberof base.CardData
     * @param {String} pan 
     */
     setPan: function(pan) {
@@ -196,7 +196,7 @@ require("prototype");
     /**
     * Get the field value
     * The pan data from the card.
-    * @memberof remotemessage.CardData
+    * @memberof base.CardData
     * @return {String} 
     */
     getPan: function() {
@@ -207,7 +207,7 @@ require("prototype");
     * Set the field value
     * The cardholderName data from the card.
     *
-    * @memberof remotemessage.CardData
+    * @memberof base.CardData
     * @param {String} cardholderName 
     */
     setCardholderName: function(cardholderName) {
@@ -217,7 +217,7 @@ require("prototype");
     /**
     * Get the field value
     * The cardholderName data from the card.
-    * @memberof remotemessage.CardData
+    * @memberof base.CardData
     * @return {String} 
     */
     getCardholderName: function() {
@@ -228,7 +228,7 @@ require("prototype");
     * Set the field value
     * The firstName data from the card.
     *
-    * @memberof remotemessage.CardData
+    * @memberof base.CardData
     * @param {String} firstName 
     */
     setFirstName: function(firstName) {
@@ -238,7 +238,7 @@ require("prototype");
     /**
     * Get the field value
     * The firstName data from the card.
-    * @memberof remotemessage.CardData
+    * @memberof base.CardData
     * @return {String} 
     */
     getFirstName: function() {
@@ -249,7 +249,7 @@ require("prototype");
     * Set the field value
     * The lastName data from the card.
     *
-    * @memberof remotemessage.CardData
+    * @memberof base.CardData
     * @param {String} lastName 
     */
     setLastName: function(lastName) {
@@ -259,7 +259,7 @@ require("prototype");
     /**
     * Get the field value
     * The lastName data from the card.
-    * @memberof remotemessage.CardData
+    * @memberof base.CardData
     * @return {String} 
     */
     getLastName: function() {
@@ -270,7 +270,7 @@ require("prototype");
     * Set the field value
     * The exp data from the card.
     *
-    * @memberof remotemessage.CardData
+    * @memberof base.CardData
     * @param {String} exp 
     */
     setExp: function(exp) {
@@ -280,7 +280,7 @@ require("prototype");
     /**
     * Get the field value
     * The exp data from the card.
-    * @memberof remotemessage.CardData
+    * @memberof base.CardData
     * @return {String} 
     */
     getExp: function() {
@@ -289,30 +289,30 @@ require("prototype");
 
     /**
     * Set the field value
-    * The last4 data from the card.
+    * The last6 data from the card.
     *
-    * @memberof remotemessage.CardData
-    * @param {String} last4 
+    * @memberof base.CardData
+    * @param {String} last6 
     */
-    setLast4: function(last4) {
-      this.last4 = last4;
+    setLast6: function(last6) {
+      this.last6 = last6;
     },
 
     /**
     * Get the field value
-    * The last4 data from the card.
-    * @memberof remotemessage.CardData
+    * The last6 data from the card.
+    * @memberof base.CardData
     * @return {String} 
     */
-    getLast4: function() {
-      return this.last4;
+    getLast6: function() {
+      return this.last6;
     },
 
     /**
     * Set the field value
     * The first4 data from the card.
     *
-    * @memberof remotemessage.CardData
+    * @memberof base.CardData
     * @param {String} first4 
     */
     setFirst4: function(first4) {
@@ -322,7 +322,7 @@ require("prototype");
     /**
     * Get the field value
     * The first4 data from the card.
-    * @memberof remotemessage.CardData
+    * @memberof base.CardData
     * @return {String} 
     */
     getFirst4: function() {
@@ -330,7 +330,7 @@ require("prototype");
     },
 
     /**
-    * @memberof remotemessage.CardData
+    * @memberof base.CardData
     * @private
     */
     getMetaInfo: function(fieldName) {
@@ -376,8 +376,8 @@ CardData._meta_.fields["lastName"] = {};
 CardData._meta_.fields["lastName"].type = String;
 CardData._meta_.fields["exp"] = {};
 CardData._meta_.fields["exp"].type = String;
-CardData._meta_.fields["last4"] = {};
-CardData._meta_.fields["last4"].type = String;
+CardData._meta_.fields["last6"] = {};
+CardData._meta_.fields["last6"].type = String;
 CardData._meta_.fields["first4"] = {};
 CardData._meta_.fields["first4"].type = String;
 

@@ -7,6 +7,7 @@ module.exports.base = base;
 base.Address = require("./Address");
 base.ApprovalStatus = require("./ApprovalStatus");
 base.BusinessTypeCode = require("./BusinessTypeCode");
+base.CardData = require("./CardData");
 base.Challenge = require("./Challenge");
 base.ChallengeType = require("./ChallengeType");
 base.ChallengeTypeEnum = require("./ChallengeTypeEnum");

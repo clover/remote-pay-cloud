@@ -6,6 +6,7 @@
 
 // Prototype.js required
 require("prototype");
+var base_CardData = require("../base/CardData");
 var remotepay_BaseResponse = require("../remotepay/BaseResponse");
 
   /**
@@ -22,58 +23,34 @@ var remotepay_BaseResponse = require("../remotepay/BaseResponse");
     initialize: function($super) {
       $super();
       this._class_ = ReadCardDataResponse;
-      this.track1 = undefined;
-      this.track2 = undefined;
+      this.cardData = undefined;
     },
 
     /**
     * Set the field value
-    * The track1 data from the card
+    * The data for the card
     *
     * @memberof remotepay.ReadCardDataResponse
-    * @param {String} track1 
+    * @param {base.CardData} cardData 
     */
-    setTrack1: function(track1) {
-      this.track1 = track1;
+    setCardData: function(cardData) {
+      this.cardData = cardData;
     },
 
     /**
     * Get the field value
-    * The track1 data from the card
+    * The data for the card
     * @memberof remotepay.ReadCardDataResponse
-    * @return {String} 
+    * @return {base.CardData} 
     */
-    getTrack1: function() {
-      return this.track1;
-    },
-
-    /**
-    * Set the field value
-    * The track2 data from the card
-    *
-    * @memberof remotepay.ReadCardDataResponse
-    * @param {String} track2 
-    */
-    setTrack2: function(track2) {
-      this.track2 = track2;
-    },
-
-    /**
-    * Get the field value
-    * The track2 data from the card
-    * @memberof remotepay.ReadCardDataResponse
-    * @return {String} 
-    */
-    getTrack2: function() {
-      return this.track2;
+    getCardData: function() {
+      return this.cardData;
     }
   });
 
 ReadCardDataResponse._meta_ =  {fields:  {}};
-ReadCardDataResponse._meta_.fields["track1"] = {};
-ReadCardDataResponse._meta_.fields["track1"].type = String;
-ReadCardDataResponse._meta_.fields["track2"] = {};
-ReadCardDataResponse._meta_.fields["track2"].type = String;
+ReadCardDataResponse._meta_.fields["cardData"] = {};
+ReadCardDataResponse._meta_.fields["cardData"].type = base_CardData;
 
 //
 // Expose the module.
