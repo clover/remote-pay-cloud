@@ -31,7 +31,7 @@ var CloudMethod = require("./CloudMethod.js");
 // !!NOTE!!  The following is automatically updated to reflect the npm version.
 // See the package.json postversion script, which maps to scripts/postversion.sh
 // Do not change this or the versioning may not reflect the npm version correctly.
-CLOVER_CLOUD_SDK_VERSION = "1.1.0-RC1";
+CLOVER_CLOUD_SDK_VERSION = "1.1.0-RC2";
 
 /**
  *  Interface to the Clover remote-pay API.
@@ -278,7 +278,10 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
               // See if there is a registered callback for the message
               var ackMessage = new remotemessage.AcknowledgementMessage();
               this.remoteMessageParser.parseMessage(message, ackMessage);
-
+              if(!ackMessage.getSourceMessageId()) {
+                  // backwards compatibility hack.
+                  ackMessage.setSourceMessageId(message.id);
+              }
               var callback = this.acknowledgementHooks[ackMessage.getSourceMessageId()];
               if (callback) {
                   try {
