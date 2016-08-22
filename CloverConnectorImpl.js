@@ -1760,12 +1760,15 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
      * @see ICloverConnectorListener.onReadCardDataResponse(ReadCardDataResponse)
      * @memberof remotepay.ICloverConnector
      *
-     * @param {Number} cardEntryMethods must be an integer
+     * @param {remotepay.ReadCardDataRequest} request
      * @return void
      */
-    readCardData: function(cardEntryMethods) {
+    readCardData: function(request) {
         var cardDataRequestMessage = new remotemessage.CardDataRequestMessage();
-        cardDataRequestMessage.setCardEntryMethods(cardEntryMethods);
+        var payIntent = new remotemessage.PayIntent();
+        payIntent.setIsForceSwipePinEntry(request.getIsForceSwipePinEntry());
+        payIntent.setCardEntryMethods(request.getCardEntryMethods());
+        cardDataRequestMessage.setPayIntent(payIntent);
         this.sendMessage(this.messageBuilder.buildRemoteMessageObject(cardDataRequestMessage));
     }
 
