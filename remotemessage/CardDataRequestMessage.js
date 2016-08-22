@@ -7,6 +7,7 @@
 // Prototype.js required
 require("prototype");
 var remotemessage_Method = require("../remotemessage/Method");
+var remotemessage_PayIntent = require("../remotemessage/PayIntent");
 var remotemessage_Message = require("../remotemessage/Message");
 
   /**
@@ -24,34 +25,34 @@ var remotemessage_Message = require("../remotemessage/Message");
       $super();
       this._class_ = CardDataRequestMessage;
       this.setMethod(remotemessage_Method["CARD_DATA"]);
-      this.cardEntryMethods = undefined;
+      this.payIntent = undefined;
     },
 
     /**
     * Set the field value
-    * Allowed entry methods
+    * The payIntent
     *
     * @memberof remotemessage.CardDataRequestMessage
-    * @param {Number} cardEntryMethods must be an integer
+    * @param {remotemessage.PayIntent} payIntent 
     */
-    setCardEntryMethods: function(cardEntryMethods) {
-      this.cardEntryMethods = cardEntryMethods;
+    setPayIntent: function(payIntent) {
+      this.payIntent = payIntent;
     },
 
     /**
     * Get the field value
-    * Allowed entry methods
+    * The payIntent
     * @memberof remotemessage.CardDataRequestMessage
-    * @return {Number} must be an integer
+    * @return {remotemessage.PayIntent} 
     */
-    getCardEntryMethods: function() {
-      return this.cardEntryMethods;
+    getPayIntent: function() {
+      return this.payIntent;
     }
   });
 
 CardDataRequestMessage._meta_ =  {fields:  {}};
-CardDataRequestMessage._meta_.fields["cardEntryMethods"] = {};
-CardDataRequestMessage._meta_.fields["cardEntryMethods"].type = Number;
+CardDataRequestMessage._meta_.fields["payIntent"] = {};
+CardDataRequestMessage._meta_.fields["payIntent"].type = remotemessage_PayIntent;
 
 //
 // Expose the module.

@@ -373,10 +373,10 @@ require("prototype");
   * @see ICloverConnectorListener.onReadCardDataResponse(ReadCardDataResponse)
     * @memberof remotepay.ICloverConnector
     *
-    * @param {Number} cardEntryMethods must be an integer
+    * @param {remotepay.ReadCardDataRequest} request 
     * @return void
     */
-    readCardData: function(cardEntryMethods) {
+    readCardData: function(request) {
     }
   });
 

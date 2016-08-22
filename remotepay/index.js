@@ -35,6 +35,7 @@ remotepay.MerchantInfo = require("./MerchantInfo");
 remotepay.PaymentResponse = require("./PaymentResponse");
 remotepay.PreAuthRequest = require("./PreAuthRequest");
 remotepay.PreAuthResponse = require("./PreAuthResponse");
+remotepay.ReadCardDataRequest = require("./ReadCardDataRequest");
 remotepay.ReadCardDataResponse = require("./ReadCardDataResponse");
 remotepay.RefundPaymentRequest = require("./RefundPaymentRequest");
 remotepay.RefundPaymentResponse = require("./RefundPaymentResponse");
