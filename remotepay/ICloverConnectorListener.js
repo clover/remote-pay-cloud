@@ -214,10 +214,21 @@ require("prototype");
     * Called in response to a retrievePendingPayment(...) request.
     * @memberof remotepay.ICloverConnectorListener
     *
-    * @param {remotepay.RetrievePendingPaymentsResponse} response
+    * @param {remotepay.RetrievePendingPaymentsResponse} retrievePendingPaymentResponse 
     * @return void
     */
-    onRetrievePendingPaymentsResponse: function(response) {
+    onRetrievePendingPaymentsResponse: function(retrievePendingPaymentResponse) {
+    },
+
+    /**
+    * Called in response to a readCardData(...) request
+    * @memberof remotepay.ICloverConnectorListener
+    *
+    * @param {remotepay.ReadCardDataResponse} response 
+    * @return {Null} 
+    */
+    onReadCardDataResponse: function(response) {
+      return null;
     }
   });
 

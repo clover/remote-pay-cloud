@@ -314,6 +314,23 @@ DelegateCloverConnectorListener = Class.create(ICloverConnectorListener, {
     },
 
     /**
+     * Called in response to a readCardData(...) request
+     * @memberof remotepay.ICloverConnectorListener
+     *
+     * @param {remotepay.ReadCardDataResponse} response
+     * @return {Null}
+     */
+    onReadCardDataResponse: function(response) {
+        this.listenersource.getListeners().forEach(function (element) {
+            try {
+                element.onReadCardDataResponse(response);
+            } catch (error) {
+                this.handleError("onReadCardDataResponse", element, error);
+            }
+        }.bind(this));
+    },
+
+    /**
      * 
      * @param functionName
      * @param listener

@@ -49,7 +49,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
-    * 
+    * The name of the category which will appear in Clover Register App.
     *
     * @memberof inventory.Category
     * @param {String} name 
@@ -60,7 +60,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * 
+    * The name of the category which will appear in Clover Register App.
     * @memberof inventory.Category
     * @return {String} 
     */
@@ -70,6 +70,8 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
+    * Integer used to determine how this category is sorted against other categories.
+    *
     * @memberof inventory.Category
     * @param {Number} sortOrder must be an integer
     */
@@ -79,6 +81,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
+    * Integer used to determine how this category is sorted against other categories.
     * @memberof inventory.Category
     * @return {Number} must be an integer
     */
@@ -88,7 +91,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Set the field value
-    * Items associated with this category
+    * Ordered list of items associated with this category.
     *
     * @memberof inventory.Category
     * @param {Array.<base.Reference>} items An array of 
@@ -99,7 +102,7 @@ var base_Reference = require("../base/Reference");
 
     /**
     * Get the field value
-    * Items associated with this category
+    * Ordered list of items associated with this category.
     * @memberof inventory.Category
     * @return {Array.<base.Reference>} An array of 
     */

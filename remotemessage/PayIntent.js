@@ -23,7 +23,7 @@ var payments_VaultedCard = require("../payments/VaultedCard");
     */
     initialize: function() {
       this._class_ = PayIntent;
-      this.action = "com.clover.remote.protocol.action.START_REMOTE_PROTOCOL_PAY";
+      this.action = undefined;
       this.amount = undefined;
       this.tippableAmount = undefined;
       this.tipAmount = undefined;

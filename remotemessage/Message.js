@@ -26,7 +26,7 @@ var remotemessage_Method = require("../remotemessage/Method");
 
     /**
     * Set the field value
-    * The list of message type
+    * The list of message types
     *
     * @memberof remotemessage.Message
     * @param {remotemessage.Method} method 
@@ -37,7 +37,7 @@ var remotemessage_Method = require("../remotemessage/Method");
 
     /**
     * Get the field value
-    * The list of message type
+    * The list of message types
     * @memberof remotemessage.Message
     * @return {remotemessage.Method} 
     */

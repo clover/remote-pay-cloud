@@ -192,7 +192,7 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
 
     /**
     * Set the field value
-    * The price of a fee added to this order type
+    * The price of a fee added to this order type, not fully implemented at this time.
     *
     * @memberof order.OrderType
     * @param {Null|Number} fee must be a long integer
@@ -203,7 +203,7 @@ var order_CustomerIdMethod = require("../order/CustomerIdMethod");
 
     /**
     * Get the field value
-    * The price of a fee added to this order type
+    * The price of a fee added to this order type, not fully implemented at this time.
     * @memberof order.OrderType
     * @return {Null|Number} must be a long integer
     */

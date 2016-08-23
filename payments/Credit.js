@@ -9,6 +9,7 @@ require("prototype");
 var customers_Customer = require("../customers/Customer");
 var payments_CardTransaction = require("../payments/CardTransaction");
 var payments_TaxableAmountRate = require("../payments/TaxableAmountRate");
+var payments_DCCInfo = require("../payments/DCCInfo");
 var base_Reference = require("../base/Reference");
 var base_Tender = require("../base/Tender");
 
@@ -38,6 +39,7 @@ var base_Tender = require("../base/Tender");
       this.cardTransaction = undefined;
       this.voided = undefined;
       this.voidReason = undefined;
+      this.dccInfo = undefined;
     },
 
     /**
@@ -323,6 +325,27 @@ var base_Tender = require("../base/Tender");
     },
 
     /**
+    * Set the field value
+    * Dynamic Currency Conversion information
+    *
+    * @memberof payments.Credit
+    * @param {payments.DCCInfo|Null} dccInfo 
+    */
+    setDccInfo: function(dccInfo) {
+      this.dccInfo = dccInfo;
+    },
+
+    /**
+    * Get the field value
+    * Dynamic Currency Conversion information
+    * @memberof payments.Credit
+    * @return {payments.DCCInfo|Null} 
+    */
+    getDccInfo: function() {
+      return this.dccInfo;
+    },
+
+    /**
     * @memberof payments.Credit
     * @private
     */
@@ -374,6 +397,8 @@ Credit._meta_.fields["voided"] = {};
 Credit._meta_.fields["voided"].type = Boolean;
 Credit._meta_.fields["voidReason"] = {};
 Credit._meta_.fields["voidReason"].type = String;
+Credit._meta_.fields["dccInfo"] = {};
+Credit._meta_.fields["dccInfo"].type = payments_DCCInfo;
 
 //
 // Expose the module.

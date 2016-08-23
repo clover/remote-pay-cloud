@@ -32,7 +32,8 @@ Please report back to us any questions/comments/concerns, by emailing semi-integ
 
 ### Version 1.1.0-RC2
 
-SEMI-423: Added backwards compatibility For older versions of android remote-pay ACK messages.
+* SEMI-434: Add ability to read card data.
+* SEMI-423: Added backwards compatibility For older versions of android remote-pay ACK messages.
 
 ### Version 1.1.0-RC1
 

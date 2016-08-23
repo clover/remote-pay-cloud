@@ -198,6 +198,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
         this.mapFinishCancel();
         this.mapTxStartResponse();
         this.mapRetrievePendingPayments();
+        this.mapCardDataResponse();
     },
 
     /**
@@ -218,6 +219,8 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
      * @private
      *
      * @param remoteMessageJson
+     * @return {remotemessage.RemoteMessage} the remote message object type that is mapped from the
+     *  string returned from the remoteMessageJson.getMethod() call.
      */
     extractPayloadFromRemoteMessageJson: function(remoteMessageJson) {
         // Get the remotemessage.Message type for this message
@@ -229,17 +232,6 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
         this.remoteMessageParser.parseMessage(message, remotemessageMessage);
         // remotemessageMessage is a remotemessage.Message that is populated.
         return remotemessageMessage;
-    },
-
-    /**
-     * currently unused
-     * @private
-     */
-    mapTxStartResponse: function() {
-        this.device.on(remotemessage.Method.TX_START_RESPONSE, function (remoteMessageJson) {
-            var protocolMessage = this.extractPayloadFromRemoteMessageJson(remoteMessageJson);
-            //Do something with it
-        }.bind(this));
     },
 
     /**
@@ -445,6 +437,36 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
     },
 
     /**
+     * Newer remotemessage response objects contain a more standard pattern, but they do not share a
+     * baseclass.  This results in the unfortunate need for a convention that is not enforced.
+     *
+     * The convention is the presense of the getStatus() and getReason() functions.
+     *
+     * @param {remotepay.BaseResponse} apiMessage
+     * @param {remotemessage.Message} message
+     */
+    populateGeneric: function(apiMessage, message) {
+        try {
+            apiMessage.setSuccess(message.getStatus() == remotepay.ResultStatus.SUCCESS);
+        }catch(e){
+            log.error("Attempt to set success failed!");
+        }
+        try {
+            apiMessage.setResult(message.getStatus() == remotepay.ResultStatus.SUCCESS ?
+              remotepay.ResponseCode.SUCCESS : message.getCode() == remotepay.ResultStatus.FAIL ?
+              remotepay.ResponseCode.FAIL : ResponseCode.ERROR );
+        }catch(e){
+            log.error("Attempt to set result failed!");
+        }
+        try {
+            apiMessage.setReason(message.getReason());
+        }catch(e){
+          log.warn("Attempt to set reason failed!");
+      }
+
+  },
+
+    /**
      * @private
      */
     mapCapturePreauthResponse: function() {
@@ -453,11 +475,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
             this.remoteMessageParser.parseMessage(remoteMessage, message);
 
             var apiMessage = new remotepay.CapturePreAuthResponse();
-            apiMessage.setSuccess(message.getStatus() == ResultStatus.SUCCESS);
-            apiMessage.setResult(message.getStatus() == ResultStatus.SUCCESS ?
-              ResponseCode.SUCCESS : message.getCode() == ResultStatus.FAIL ?
-              ResponseCode.FAIL : ResponseCode.ERROR );
-            apiMessage.setReason(message.getReason());
+            this.populateGeneric(apiMessage, message);
 
             apiMessage.setPaymentId(message.getPaymentId());
             apiMessage.setAmount(message.getAmount());
@@ -476,11 +494,7 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
             this.remoteMessageParser.parseMessage(remoteMessage, message);
 
             var apiMessage = new remotepay.CloseoutResponse();
-            apiMessage.setSuccess(message.getStatus() == ResultStatus.SUCCESS);
-            apiMessage.setResult(message.getStatus() == ResultStatus.SUCCESS ?
-              ResponseCode.SUCCESS : message.getCode() == ResultStatus.FAIL ?
-              ResponseCode.FAIL : ResponseCode.ERROR );
-            apiMessage.setReason(message.getReason());
+            this.populateGeneric(apiMessage, message);
 
             apiMessage.setBatch(message.getBatch());
             this.delegateCloverConnectorListener.onCloseoutResponse(apiMessage);
@@ -530,12 +544,8 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
             this.remoteMessageParser.parseMessage(remoteMessage, message);
 
             var apiMessage = new remotepay.VaultCardResponse();
-            apiMessage.setSuccess(message.getStatus() == ResultStatus.SUCCESS);
-            apiMessage.setResult(message.getStatus() == ResultStatus.SUCCESS ?
-              ResponseCode.SUCCESS : message.getStatus() == ResultStatus.FAIL ?
-              ResponseCode.FAIL : message.getStatus() == ResultStatus.CANCEL ?
-              ResponseCode.CANCEL : ResponseCode.ERROR);
-            apiMessage.setReason(message.getReason());
+            this.populateGeneric(apiMessage, message);
+
             apiMessage.setCard(message.getCard());
             this.delegateCloverConnectorListener.onVaultCardResponse(apiMessage);
 
@@ -546,6 +556,29 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
             }
         }.bind(this));
     },
+
+    /**
+     * @private
+     */
+    mapCardDataResponse: function() {
+        this.device.on(remotemessage.Method.CARD_DATA_RESPONSE, function (remoteMessage) {
+            var message = new remotemessage.CardDataResponseMessage();
+            this.remoteMessageParser.parseMessage(remoteMessage, message);
+
+            var apiMessage = new remotepay.ReadCardDataResponse();
+            this.populateGeneric(apiMessage, message);
+
+            apiMessage.setCardData(message.getCardData());
+            this.delegateCloverConnectorListener.onReadCardDataResponse(apiMessage);
+
+            if(apiMessage.getSuccess()) {
+                this.endOfOperationOK();
+            } else {
+                this.endOfOperationCancel();
+            }
+        }.bind(this));
+    },
+
 
     /**
      * @private
@@ -734,21 +767,17 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
 
     /**
      * @private
-     * @param message
+     * @param remoteMessage
      */
-    processRetrievePendingPayments: function(message) {
+    processRetrievePendingPayments: function(remoteMessage) {
         // var retrievePendingPaymentsMessage = this.extractPayloadFromRemoteMessageJson(message);
-        var retrievePendingPaymentsMessage = new remotemessage.RetrievePendingPaymentsResponseMessage();
-        this.remoteMessageParser.parseMessage(message, retrievePendingPaymentsMessage);
+        var message = new remotemessage.RetrievePendingPaymentsResponseMessage();
+        this.remoteMessageParser.parseMessage(remoteMessage, message);
 
         var apiMessage = new remotepay.RetrievePendingPaymentsResponse();
-        apiMessage.setSuccess(retrievePendingPaymentsMessage.getStatus() == remotemessage.ResultStatus.SUCCESS);
-        apiMessage.setResult(retrievePendingPaymentsMessage.getStatus() == remotemessage.ResultStatus.SUCCESS ?
-          remotepay.ResponseCode.SUCCESS : message.getCode() == remotemessage.ResultStatus.FAIL ?
-          remotepay.ResponseCode.FAIL : remotepay.ResponseCode.ERROR );
-        apiMessage.setReason(message.getReason());
+        this.populateGeneric(apiMessage, message);
 
-        apiMessage.setPendingPaymentEntries(retrievePendingPaymentsMessage.getPendingPaymentEntries());
+        apiMessage.setPendingPaymentEntries(message.getPendingPaymentEntries());
 
         this.delegateCloverConnectorListener.onRetrievePendingPaymentsResponse(apiMessage);
     },
@@ -1722,10 +1751,28 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
     },
 
     retrievePendingPayments: function() {
-        return null;
         var retrievePendingPaymentsMessage = new remotemessage.RetrievePendingPaymentsMessage();
         this.sendMessage(this.messageBuilder.buildRemoteMessageObject(retrievePendingPaymentsMessage));
+    },
+
+    /**
+     * Sends a request to read card information and call back with the information collected.
+     * @see ICloverConnectorListener.onReadCardDataResponse(ReadCardDataResponse)
+     * @memberof remotepay.ICloverConnector
+     *
+     * @param {remotepay.ReadCardDataRequest} request
+     * @return void
+     */
+    readCardData: function(request) {
+        var cardDataRequestMessage = new remotemessage.CardDataRequestMessage();
+        var payIntent = new remotemessage.PayIntent();
+        payIntent.setTransactionType(remotemessage.TransactionType.DATA);
+        payIntent.setIsForceSwipePinEntry(request.getIsForceSwipePinEntry());
+        payIntent.setCardEntryMethods(request.getCardEntryMethods());
+        cardDataRequestMessage.setPayIntent(payIntent);
+        this.sendMessage(this.messageBuilder.buildRemoteMessageObject(cardDataRequestMessage));
     }
+
 });
 
 /**

@@ -73,7 +73,7 @@ var inventory_Option = require("../inventory/Option");
 
     /**
     * Set the field value
-    * True if this item is hidden from register
+    * True if this item is hidden from Clover Register App
     *
     * @memberof inventory.Item
     * @param {Boolean} hidden 
@@ -84,7 +84,7 @@ var inventory_Option = require("../inventory/Option");
 
     /**
     * Get the field value
-    * True if this item is hidden from register
+    * True if this item is hidden from Clover Register App
     * @memberof inventory.Item
     * @return {Boolean} 
     */

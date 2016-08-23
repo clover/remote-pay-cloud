@@ -29,6 +29,7 @@ var base_Reference = require("../base/Reference");
       this.exchangeRateSourceName = undefined;
       this.exchangeRateSourceTimeStamp = undefined;
       this.paymentRef = undefined;
+      this.creditRef = undefined;
     },
 
     /**
@@ -221,6 +222,27 @@ var base_Reference = require("../base/Reference");
     },
 
     /**
+    * Set the field value
+    * The credit (manual refund) with which this DCC info is associated
+    *
+    * @memberof payments.DCCInfo
+    * @param {base.Reference} creditRef 
+    */
+    setCreditRef: function(creditRef) {
+      this.creditRef = creditRef;
+    },
+
+    /**
+    * Get the field value
+    * The credit (manual refund) with which this DCC info is associated
+    * @memberof payments.DCCInfo
+    * @return {base.Reference} 
+    */
+    getCreditRef: function() {
+      return this.creditRef;
+    },
+
+    /**
     * @memberof payments.DCCInfo
     * @private
     */
@@ -261,6 +283,8 @@ DCCInfo._meta_.fields["exchangeRateSourceTimeStamp"] = {};
 DCCInfo._meta_.fields["exchangeRateSourceTimeStamp"].type = String;
 DCCInfo._meta_.fields["paymentRef"] = {};
 DCCInfo._meta_.fields["paymentRef"].type = base_Reference;
+DCCInfo._meta_.fields["creditRef"] = {};
+DCCInfo._meta_.fields["creditRef"].type = base_Reference;
 
 //
 // Expose the module.
