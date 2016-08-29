@@ -32,7 +32,7 @@ Please report back to us any questions/comments/concerns, by emailing semi-integ
 
 ### Version 1.1.0-RC2
 
-* SEMI-457: Add applicationId to required configuration.
+* SEMI-457: Add remoteApplicationId to required configuration.
 * SEMI-434: Add ability to read card data.
 * SEMI-423: Added backwards compatibility For older versions of android remote-pay ACK messages.
 
@@ -64,7 +64,7 @@ var connector = new clover.CloverConnectorFactory().createICloverConnector({
     "oauthToken": "1e7a9007-141a-293d-f41d-f603f0842139",
     "merchantId": "BBFF8NBCXEMDV",
     "clientId": "3RPTN642FHXTX",
-    "applicationId": "com.yourname.yourapplication:1.0.0-beta1",
+    "remoteApplicationId": "com.yourname.yourapplication:1.0.0-beta1",
     "deviceSerialId": "C031UQ52340015",
     "domain": "https://dev1.dev.clover.com/"
 });
@@ -119,7 +119,7 @@ This will require gathering the configuration information to create the connecto
 var connector = new clover.CloverConnectorFactory().createICloverConnector({
     "merchantId": "BBFF8NBCXEMDT",
     "clientId": "3RPTN642FHXTC",
-    "applicationId": "com.yourname.yourapplication:1.0.0-beta1",
+    "remoteApplicationId": "com.yourname.yourapplication:1.0.0-beta1",
     "deviceSerialId": "C031UQ52340045",
     "domain": "https://dev1.dev.clover.com/"
 });
@@ -133,7 +133,7 @@ Examples of configurations that can be used when creating the Clover Connector o
 ```
 {
   "clientId" : "3BZPZ6A6FQ8ZM",
-  "applicationId": "com.yourname.yourapplication:1.0.0-beta1",
+  "remoteApplicationId": "com.yourname.yourapplication:1.0.0-beta1",
   "domain" : "https://sandbox.dev.clover.com/",
   "merchantId" : "VKYQ0RVGMYHRS",
   "deviceSerialId" : "C021UQ52341078"
@@ -146,7 +146,7 @@ Examples of configurations that can be used when creating the Clover Connector o
   "domain" : "https://sandbox.dev.clover.com/",
   "merchantId" : "VKYQ0RVGMYHRS",
   "clientId" : "3BZPZ6A6FQ8ZM",
-  "applicationId": "com.yourname.yourapplication:1.0.0-beta1",
+  "remoteApplicationId": "com.yourname.yourapplication:1.0.0-beta1",
   "deviceSerialId" : "C021UQ52341078"
 }
 ```
