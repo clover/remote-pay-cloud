@@ -81,13 +81,16 @@ CloverConnectorImpl = Class.create( remotepay.ICloverConnector, {
         if(!this.configuration["clientId"]) {
             throw new CloverError(CloverError.INCOMPLETE_CONFIGURATION, "'clientId' must be included in the configuration.");
         }
+        if(!this.configuration["remoteApplicationId"]) {
+            throw new CloverError(CloverError.INCOMPLETE_CONFIGURATION, "'remoteApplicationId' must be included in the configuration.");
+        }
         var messageCount = isNaN(parseInt(this.configuration["messageCount"])) ?
           0 : parseInt(this.configuration["messageCount"]);
 
         this.remoteMessageParser = new RemoteMessageParser(builderPackageConf);
         this.messageBuilder = new RemoteMessageBuilder(builderPackageConf,
           CloverConnectorImpl.RemoteSourceSDK + ":" + CLOVER_CLOUD_SDK_VERSION,
-          this.configuration.clientId, messageCount
+          this.configuration.remoteApplicationId, messageCount
         );
         this.device.messageBuilder = this.messageBuilder;
 
