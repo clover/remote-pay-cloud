@@ -30,6 +30,10 @@ Please report back to us any questions/comments/concerns, by emailing semi-integ
 
 ## Release Notes
 
+### Version 1.1.0-RC3
+
+* SEMI-470: Publish ReadCardData request and response structures.
+
 ### Version 1.1.0-RC2
 
 * SEMI-457: Add remoteApplicationId to required configuration.
