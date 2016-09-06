@@ -5,7 +5,7 @@
 See the package.json postversion script, which maps to scripts/postversion.sh
 Do not change this or the versioning may not reflect the npm version correctly.
 --->
-Current version: 1.1.0-RC2
+Current version: 1.1.0-RC3
 
 ## Overview
 
@@ -29,6 +29,10 @@ A example project composed of small examples [Clover Cloud Connector Unit Exampl
 Please report back to us any questions/comments/concerns, by emailing semi-integrations@clover.com.
 
 ## Release Notes
+
+### Version 1.1.0-RC3
+
+* SEMI-470: Publish ReadCardData request and response structures.
 
 ### Version 1.1.0-RC2
 
@@ -210,4 +214,4 @@ $(window).on('beforeunload ', function () {
 
 ## Generate Documentation
 API documentation is generated when `npm install` is run. 
-[Online Docs](http://clover.github.io/remote-pay-cloud/1.1.0-RC2/)
+[Online Docs](http://clover.github.io/remote-pay-cloud/1.1.0-RC3/)
