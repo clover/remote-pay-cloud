@@ -4,7 +4,7 @@
     "dictionaries": ["jsdoc","closure"]
   },
   "source": {
-    "include": ["base","customers","device","employees","hours","inventory","order","payments","printer","remotepay"],
+    "include": ["."],
     "exclude": ["node_modules"],
     "includePattern": ".+\\.js(doc)?$",
     "excludePattern": "(^|\\/|\\\\)_"

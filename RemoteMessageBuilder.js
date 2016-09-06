@@ -1,6 +1,9 @@
 var LanMethod = require("./LanMethod.js");
-var DiscoveryRequestMessage = require("./remotemessage/DiscoveryRequestMessage");
-var RemoteMessage = require("./remotemessage/RemoteMessage");
+
+var sdk = require("remote-pay-cloud-api");
+
+var DiscoveryRequestMessage = sdk.remotemessage.DiscoveryRequestMessage;
+var RemoteMessage = sdk.remotemessage.RemoteMessage;
 
 /**
  * Builds messages to pass to the clover device.
