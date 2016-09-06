@@ -4,8 +4,7 @@
  * DO NOT EDIT DIRECTLY
  */
 
-// Prototype.js required
-require("prototype");
+var Class = require("../Class.js");
 var payments_Currency = require("../payments/Currency");
 var payments_CardType = require("../payments/CardType");
 var payments_CardEntryType = require("../payments/CardEntryType");

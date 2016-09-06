@@ -48,9 +48,9 @@ Please report back to us any questions/comments/concerns, by emailing semi-integ
 
 A deprecated beta version of the Connector (Clover.js) is included in this version with `require` directive syntax, but will removed in the future.
 
-### Version [BETA](https://github.com/clover/remote-pay-cloud-BETA/tree/BETA_Final) 
+### Version [BETA](https://github.com/clover/remote-pay-cloud-BETA/tree/BETA_Final)
 
-The beta version includes the earliest library as well as a server with examples of the functions. 
+The beta version includes the earliest library as well as a server with examples of the functions.
 
 ---
 
@@ -61,8 +61,7 @@ Clover's cloud connector API.  Published as an NPM package.  Intended for use in
 ## At a Glance
 
 ### Make a sale.
-```
-require("prototype");
+```javascript
 var $ = require('jQuery');
 
 var clover = require("remote-pay-cloud");
@@ -77,7 +76,7 @@ var connector = new clover.CloverConnectorFactory().createICloverConnector({
     "domain": "https://dev1.dev.clover.com/"
 });
 
-var ExampleCloverConnectorListener = Class.create( clover.remotepay.ICloverConnectorListener, {
+var ExampleCloverConnectorListener = clover.Class.create( clover.remotepay.ICloverConnectorListener, {
     initialize: function (cloverConnector) {
         this.cloverConnector = cloverConnector;
     },
@@ -116,14 +115,13 @@ $(window).on('beforeunload ', function () {
 ```
 
 ### To make a payment using the High Level Cloud API
-#### Import the libraries needed to create the clover object.
-```
-require("prototype");
+#### Import the Clover library.
+```javascript
 var clover = require("remote-pay-cloud");
 ```
 #### Create the Clover Connector object.
 This will require gathering the configuration information to create the connector.  In this example, the configuration is hard coded.  The creation of the connector is done using the connector factory.
-```
+```javascript
 var connector = new clover.CloverConnectorFactory().createICloverConnector({
     "merchantId": "BBFF8NBCXEMDT",
     "clientId": "3RPTN642FHXTC",
@@ -138,7 +136,7 @@ There are several ways the Clover Connector object can be configured.
 Examples of configurations that can be used when creating the Clover Connector object:
 
 1. With a clientID, domain, merchantId, deviceSerialId
-```
+```javascript
 {
   "clientId" : "3BZPZ6A6FQ8ZM",
   "remoteApplicationId": "com.yourname.yourapplication:1.0.0-beta1",
@@ -148,7 +146,7 @@ Examples of configurations that can be used when creating the Clover Connector o
 }
 ```
 1. With a oauthToken, domain, merchantId, clientId, deviceSerialId
-```
+```javascript
 {
   "oauthToken" : "6e6313e8-fe33-8662-7ff2-3a6690e0ff14",
   "domain" : "https://sandbox.dev.clover.com/",
@@ -160,11 +158,11 @@ Examples of configurations that can be used when creating the Clover Connector o
 ```
 
 #### Define a listener that will listen for events produced byt the Clover Connector.
-The functions implemented will be called as the connector encounters the events.  These functions can be found in the clover.remotepay.ICloverConnectorListener. 
-```
-var ExampleCloverConnectorListener = Class.create( clover.remotepay.ICloverConnectorListener, {
-    // This function overrides the basic prototype.js initialization function.  This example
-    // expects that a coler connector implementation instance is passed to the created listener.
+The functions implemented will be called as the connector encounters the events.  These functions can be found in the clover.remotepay.ICloverConnectorListener.
+```javascript
+var ExampleCloverConnectorListener = clover.Class.create( clover.remotepay.ICloverConnectorListener, {
+    // This function overrides the basic class initialization method.  This example
+    // expects that a Clover connector implementation instance is passed to the created listener.
     initialize: function (cloverConnector) {
         this.cloverConnector = cloverConnector;
     },
@@ -184,7 +182,7 @@ var ExampleCloverConnectorListener = Class.create( clover.remotepay.ICloverConne
         this.cloverConnector.acceptSignature(request);
     },
     // The ICloverConnectorListener function that is called when a sale request is completed.
-    // This example logs the response, and disposes of the connector.  If the response is not an expected 
+    // This example logs the response, and disposes of the connector.  If the response is not an expected
     // type, it will log an error.
     onSaleResponse: function (response) {
         log.info(response);
@@ -198,7 +196,7 @@ var ExampleCloverConnectorListener = Class.create( clover.remotepay.ICloverConne
 ```
 
 #### Add the listener instance to the connector, and initialize the connection to the device.
-```
+```javascript
 var connectorListener = new ExampleCloverConnectorListener(connector);
 connector.addCloverConnectorListener(connectorListener);
 connector.initializeConnection();
@@ -206,7 +204,7 @@ connector.initializeConnection();
 
 #### Clean up the connection on exit of the window.  This should be done with all connectors.
 This example uses jQuery to add a hook for the window `beforeunload` event that ensures that the connector is displosed of.
-```
+```javascript
 $(window).on('beforeunload ', function () {
     try {
         connector.dispose();
@@ -217,5 +215,5 @@ $(window).on('beforeunload ', function () {
 ```
 
 ## Generate Documentation
-API documentation is generated when `npm install` is run. 
+API documentation is generated when `npm install` is run.
 [Online Docs](http://clover.github.io/remote-pay-cloud/1.1.0-rc4.0/)

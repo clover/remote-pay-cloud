@@ -4,8 +4,7 @@
  * DO NOT EDIT DIRECTLY
  */
 
-// Prototype.js required
-require("prototype");
+var Class = require("../Class.js");
 var device_DeviceProvisionState = require("../device/DeviceProvisionState");
 var base_Reference = require("../base/Reference");
 

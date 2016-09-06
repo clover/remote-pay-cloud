@@ -4,8 +4,7 @@
  * DO NOT EDIT DIRECTLY
  */
 
-// Prototype.js required
-require("prototype");
+var Class = require("../Class.js");
 var order_Modification = require("../order/Modification");
 var inventory_TaxRate = require("../inventory/TaxRate");
 var payments_LineItemPayment = require("../payments/LineItemPayment");

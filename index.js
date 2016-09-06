@@ -36,6 +36,7 @@ CloverLib.CloverConnectorFactory = require("./CloverConnectorFactory.js")
 CloverLib.DelegateCloverConnectorListener = require("./DelegateCloverConnectorListener.js")
 CloverLib.DebugCloverConnectorListener = require("./DebugCloverConnectorListener.js")
 
+CloverLib.Class = require('./Class.js');
 CloverLib.Logger = require('./Logger.js');
 
 

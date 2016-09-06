@@ -4,8 +4,7 @@
  * DO NOT EDIT DIRECTLY
  */
 
-// Prototype.js required
-require("prototype");
+var Class = require("../Class.js");
 var order_HoursAvailable = require("../order/HoursAvailable");
 var hours_HoursSet = require("../hours/HoursSet");
 var base_Reference = require("../base/Reference");

@@ -4,8 +4,7 @@
  * DO NOT EDIT DIRECTLY
  */
 
-// Prototype.js required
-require("prototype");
+var Class = require("../Class.js");
 var remotemessage_TransactionType = require("../remotemessage/TransactionType");
 var payments_TaxableAmountRate = require("../payments/TaxableAmountRate");
 var payments_ServiceChargeAmount = require("../payments/ServiceChargeAmount");

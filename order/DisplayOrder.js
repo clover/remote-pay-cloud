@@ -4,8 +4,7 @@
  * DO NOT EDIT DIRECTLY
  */
 
-// Prototype.js required
-require("prototype");
+var Class = require("../Class.js");
 var order_DisplayPayment = require("../order/DisplayPayment");
 var order_DisplayDiscount = require("../order/DisplayDiscount");
 var order_DisplayLineItem = require("../order/DisplayLineItem");

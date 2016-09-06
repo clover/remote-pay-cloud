@@ -4,8 +4,7 @@
  * DO NOT EDIT DIRECTLY
  */
 
-// Prototype.js required
-require("prototype");
+var Class = require("../Class.js");
 var payments_Tag = require("../payments/Tag");
 var payments_ParamType = require("../payments/ParamType");
 var payments_OverrideType = require("../payments/OverrideType");

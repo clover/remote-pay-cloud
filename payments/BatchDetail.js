@@ -4,8 +4,7 @@
  * DO NOT EDIT DIRECTLY
  */
 
-// Prototype.js required
-require("prototype");
+var Class = require("../Class.js");
 var payments_BatchCardTotal = require("../payments/BatchCardTotal");
 var payments_BatchTotalStats = require("../payments/BatchTotalStats");
 var payments_ServerTotalStats = require("../payments/ServerTotalStats");

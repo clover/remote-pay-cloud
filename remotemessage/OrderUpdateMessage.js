@@ -4,8 +4,7 @@
  * DO NOT EDIT DIRECTLY
  */
 
-// Prototype.js required
-require("prototype");
+var Class = require("../Class.js");
 var remotemessage_Method = require("../remotemessage/Method");
 var order_operation_DiscountsAddedOperation = require("../order/operation/DiscountsAddedOperation");
 var order_operation_OrderDeletedOperation = require("../order/operation/OrderDeletedOperation");

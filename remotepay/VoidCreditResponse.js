@@ -4,8 +4,7 @@
  * DO NOT EDIT DIRECTLY
  */
 
-// Prototype.js required
-require("prototype");
+var Class = require("../Class.js");
 var remotepay_ResultStatus = require("../remotepay/ResultStatus");
 var payments_Credit = require("../payments/Credit");
 

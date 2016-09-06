@@ -4,8 +4,7 @@
  * DO NOT EDIT DIRECTLY
  */
 
-// Prototype.js required
-require("prototype");
+var Class = require("../Class.js");
 var inventory_ModifierGroup = require("../inventory/ModifierGroup");
 var inventory_Item = require("../inventory/Item");
 

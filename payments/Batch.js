@@ -4,8 +4,7 @@
  * DO NOT EDIT DIRECTLY
  */
 
-// Prototype.js required
-require("prototype");
+var Class = require("../Class.js");
 var payments_BatchType = require("../payments/BatchType");
 var payments_BatchDetail = require("../payments/BatchDetail");
 var payments_BatchState = require("../payments/BatchState");

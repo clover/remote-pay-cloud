@@ -1,4 +1,4 @@
-require("prototype");
+var Class = require("./Class.js");
 var log = require('./Logger.js').create();
 var ICloverConnectorListener = require("./remotepay/ICloverConnectorListener.js");
 
@@ -183,4 +183,3 @@ DebugCloverConnectorListener = Class.create(ICloverConnectorListener, {
 if ('undefined' !== typeof module) {
     module.exports = DebugCloverConnectorListener;
 }
-

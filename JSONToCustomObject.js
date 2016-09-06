@@ -1,4 +1,4 @@
-require("prototype");
+var Class = require("./Class.js");
 var log = require('./Logger.js').create();
 
 JSONToCustomObject = Class.create({

@@ -4,8 +4,7 @@
  * DO NOT EDIT DIRECTLY
  */
 
-// Prototype.js required
-require("prototype");
+var Class = require("../Class.js");
 var hours_HourRange = require("../hours/HourRange");
 var hours_Reference = require("../hours/Reference");
 

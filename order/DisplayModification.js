@@ -4,8 +4,7 @@
  * DO NOT EDIT DIRECTLY
  */
 
-// Prototype.js required
-require("prototype");
+var Class = require("../Class.js");
 
 /** Snapshot of a line item modifier at the time that the order was placed. */
   /**

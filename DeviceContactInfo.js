@@ -1,4 +1,4 @@
-require("prototype");
+var Class = require("./Class.js");
 
 /**
  * @constructor
