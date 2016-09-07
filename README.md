@@ -30,7 +30,7 @@ Please report back to us any questions/comments/concerns, by emailing semi-integ
 
 ## Release Notes
 
-### Version 1.1.0-rc4
+### Version 1.1.0-rc4.0
 
 * SEMI-471: Remove uppercase letters from version.
 
