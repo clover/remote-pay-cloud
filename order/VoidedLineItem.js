@@ -4,8 +4,7 @@
  * DO NOT EDIT DIRECTLY
  */
 
-// Prototype.js required
-require("prototype");
+var Class = require("../Class.js");
 var employees_Employee = require("../employees/Employee");
 var order_LineItem = require("../order/LineItem");
 

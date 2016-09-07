@@ -4,8 +4,7 @@
  * DO NOT EDIT DIRECTLY
  */
 
-// Prototype.js required
-require("prototype");
+var Class = require("../Class.js");
 var printer_Printer = require("../printer/Printer");
 var inventory_Tag = require("../inventory/Tag");
 

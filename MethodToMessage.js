@@ -1,4 +1,3 @@
-// Prototype.js required
 var remotemessage = require("./remotemessage");
 
 MethodToMessage = {};

@@ -4,8 +4,7 @@
  * DO NOT EDIT DIRECTLY
  */
 
-// Prototype.js required
-require("prototype");
+var Class = require("../Class.js");
 var customers_EmailAddress = require("../customers/EmailAddress");
 var customers_PhoneNumber = require("../customers/PhoneNumber");
 var base_Reference = require("../base/Reference");

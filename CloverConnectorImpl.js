@@ -1,4 +1,4 @@
-require("prototype");
+var Class = require("./Class.js");
 
 var log = require('./Logger.js').create();
 
@@ -1831,4 +1831,3 @@ if ('undefined' !== typeof module) {
  * @property {string} host
  * @property {string} token
  */
-

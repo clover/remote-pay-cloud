@@ -29,7 +29,6 @@
     "preinstall": "scripts/generateDocs.sh"
   },
   "dependencies": {
-    "prototype": "*",
     "eventemitter3": "~1.1.1",
     "jsdoc": "*"
   },

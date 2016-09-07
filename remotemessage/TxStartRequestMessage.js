@@ -4,8 +4,7 @@
  * DO NOT EDIT DIRECTLY
  */
 
-// Prototype.js required
-require("prototype");
+var Class = require("../Class.js");
 var remotemessage_Method = require("../remotemessage/Method");
 var remotemessage_PayIntent = require("../remotemessage/PayIntent");
 var remotemessage_Message = require("../remotemessage/Message");

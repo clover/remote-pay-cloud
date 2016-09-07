@@ -1,4 +1,4 @@
-require("prototype");
+var Class = require("./Class.js");
 
 var remotemessage = require("./remotemessage");
 
@@ -46,4 +46,3 @@ RemoteMessageParser.KEY_Package = "code_package";
 if ('undefined' !== typeof module) {
     module.exports = RemoteMessageParser;
 }
-

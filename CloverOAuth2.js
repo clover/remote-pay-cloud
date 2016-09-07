@@ -15,7 +15,7 @@
  *  }
  */
 
-require("prototype");
+var Class = require("./Class.js");
 var EndPointConfig = require("./EndpointConfig.js");
 
 /**

@@ -4,8 +4,7 @@
  * DO NOT EDIT DIRECTLY
  */
 
-// Prototype.js required
-require("prototype");
+var Class = require("../Class.js");
 var base_Reference = require("../base/Reference");
 var employees_Permissions = require("../employees/Permissions");
 
