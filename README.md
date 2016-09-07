@@ -30,6 +30,10 @@ Please report back to us any questions/comments/concerns, by emailing semi-integ
 
 ## Release Notes
 
+### Version 1.1.0-rc5.0
+
+* SEMI-438: Remove dependency on 'prototype.js'
+
 ### Version 1.1.0-RC2
 
 * SEMI-457: Add remoteApplicationId to required configuration.
