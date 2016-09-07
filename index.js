@@ -19,22 +19,26 @@ CloverLib.JSONToCustomObject = require("./JSONToCustomObject.js");
 CloverLib.MethodToMessage = require("./MethodToMessage.js");
 
 // These exports expose the v1 interface and objects.
-CloverLib.base = require("./base");
-CloverLib.customers = require("./customers");
-CloverLib.device = require("./device");
-CloverLib.hours = require("./hours");
-CloverLib.inventory = require("./inventory");
-CloverLib.order = require("./order");
-CloverLib.payments = require("./payments");
-CloverLib.base = require("./base");
-CloverLib.printer = require("./printer");
-CloverLib.remotepay = require("./remotepay");
-CloverLib.remotemessage = require("./remotemessage");
+var sdk = require("remote-pay-cloud-api");
 
-CloverLib.CloverConnectorImpl = require("./CloverConnectorImpl.js")
-CloverLib.CloverConnectorFactory = require("./CloverConnectorFactory.js")
-CloverLib.DelegateCloverConnectorListener = require("./DelegateCloverConnectorListener.js")
-CloverLib.DebugCloverConnectorListener = require("./DebugCloverConnectorListener.js")
+CloverLib.base = sdk.base;
+CloverLib.customers = sdk.customers;
+CloverLib.device = sdk.device;
+CloverLib.hours = sdk.hours;
+CloverLib.inventory = sdk.inventory;
+CloverLib.order = sdk.order;
+CloverLib.payments = sdk.payments;
+CloverLib.base = sdk.base;
+CloverLib.printer = sdk.printer;
+CloverLib.remotepay = sdk.remotepay;
+CloverLib.remotemessage = sdk.remotemessage;
+
+CloverLib.base = sdk.base;
+
+CloverLib.CloverConnectorImpl = require("./CloverConnectorImpl.js");
+CloverLib.CloverConnectorFactory = require("./CloverConnectorFactory.js");
+CloverLib.DelegateCloverConnectorListener = require("./DelegateCloverConnectorListener.js");
+CloverLib.DebugCloverConnectorListener = require("./DebugCloverConnectorListener.js");
 
 CloverLib.Logger = require('./Logger.js');
 

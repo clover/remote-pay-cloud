@@ -1,6 +1,7 @@
-require("prototype");
 var log = require('./Logger.js').create();
-var ICloverConnectorListener = require("./remotepay/ICloverConnectorListener.js");
+var sdk = require("remote-pay-cloud-api");
+
+var ICloverConnectorListener = sdk.remotepay.ICloverConnectorListener;
 
 /**
  *  Interface to the Clover remote-pay API.
@@ -9,173 +10,172 @@ var ICloverConnectorListener = require("./remotepay/ICloverConnectorListener.js"
  *  adapters.
  */
 
-DebugCloverConnectorListener = Class.create(ICloverConnectorListener, {
+var DebugCloverConnectorListener = function() {
+    ICloverConnectorListener.call(this);
+    log.enabled = true;
+};
 
-    /**
-     *
-     */
-    initialize: function () {
-        log.enabled = true;
-    },
+DebugCloverConnectorListener.prototype = Object.create(ICloverConnectorListener.prototype);
+DebugCloverConnectorListener.prototype.constructor = DebugCloverConnectorListener;
 
-    /**
-     * @return void
-     */
-    onDisconnected: function () {
-        log.debug("onDisconnected()");
-    },
+/**
+ * @return void
+ */
+DebugCloverConnectorListener.prototype.onDisconnected = function () {
+    log.debug("onDisconnected()");
+};
 
-    /**
-     * @return void
-     */
-    onConnected: function () {
-        log.debug("onConnected()");
-    },
 
-    /**
-     * @param {MerchantInfo} merchantInfo
-     * @return void
-     */
-    onReady: function (merchantInfo) {
-        log.debug("onReady(" + merchantInfo + ")");
-    },
+/**
+ * @return void
+ */
+DebugCloverConnectorListener.prototype.onConnected = function () {
+    log.debug("onConnected()");
+};
 
-    /**
-     * @param {CloverDeviceEvent} deviceEvent
-     * @return void
-     */
-    onDeviceActivityStart: function (deviceEvent) {
-        log.debug("onDeviceActivityStart(" + deviceEvent + ")");
-    },
+/**
+ * @param {MerchantInfo} merchantInfo
+ * @return void
+ */
+DebugCloverConnectorListener.prototype.onReady = function (merchantInfo) {
+    log.debug("onReady(" + merchantInfo + ")");
+};
 
-    /**
-     * @param {CloverDeviceEvent} deviceEvent
-     * @return void
-     */
-    onDeviceActivityEnd: function (deviceEvent) {
-        log.debug("onDeviceActivityEnd(" + deviceEvent + ")");
-    },
+/**
+ * @param {CloverDeviceEvent} deviceEvent
+ * @return void
+ */
+DebugCloverConnectorListener.prototype.onDeviceActivityStart = function (deviceEvent) {
+    log.debug("onDeviceActivityStart(" + deviceEvent + ")");
+};
 
-    /**
-     * @param {CloverDeviceErrorEvent} deviceErrorEvent
-     * @return void
-     */
-    onDeviceError: function (deviceErrorEvent) {
-        log.debug("onDeviceError(" + deviceErrorEvent + ")");
-    },
+/**
+ * @param {CloverDeviceEvent} deviceEvent
+ * @return void
+ */
+DebugCloverConnectorListener.prototype.onDeviceActivityEnd = function (deviceEvent) {
+    log.debug("onDeviceActivityEnd(" + deviceEvent + ")");
+};
 
-    /**
-     * @param {AuthResponse} response
-     * @return void
-     */
-    onAuthResponse: function (response) {
-        log.debug("OnAuthResponse(" + response + ")");
-    },
+/**
+ * @param {CloverDeviceErrorEvent} deviceErrorEvent
+ * @return void
+ */
+DebugCloverConnectorListener.prototype.onDeviceError = function (deviceErrorEvent) {
+    log.debug("onDeviceError(" + deviceErrorEvent + ")");
+};
 
-    /**
-     * @param {TipAdjustAuthResponse} response
-     * @return void
-     */
-    onTipAdjustAuthResponse: function (response) {
-        log.debug("onTipAdjustAuthResponse(" + response + ")");
-    },
+/**
+ * @param {AuthResponse} response
+ * @return void
+ */
+DebugCloverConnectorListener.prototype.onAuthResponse = function (response) {
+    log.debug("OnAuthResponse(" + response + ")");
+};
 
-    /**
-     * @param {CapturePreAuthResponse} response
-     * @return void
-     */
-    onCapturePreAuthResponse: function (response) {
-        log.debug("onCapturePreAuthResponse(" + response + ")");
-    },
+/**
+ * @param {TipAdjustAuthResponse} response
+ * @return void
+ */
+DebugCloverConnectorListener.prototype.onTipAdjustAuthResponse = function (response) {
+    log.debug("onTipAdjustAuthResponse(" + response + ")");
+};
 
-    /**
-     * @param {VerifySignatureRequest} request
-     * @return void
-     */
-    onVerifySignatureRequest: function (request) {
-        log.debug("onVerifySignatureRequest(" + request + ")");
-    },
+/**
+ * @param {CapturePreAuthResponse} response
+ * @return void
+ */
+DebugCloverConnectorListener.prototype.onCapturePreAuthResponse = function (response) {
+    log.debug("onCapturePreAuthResponse(" + response + ")");
+};
 
-    /**
-     * @param {CloseoutResponse} response
-     * @return void
-     */
-    onCloseoutResponse: function (response) {
-        log.debug("onCloseoutResponse(" + response + ")");
-    },
+/**
+ * @param {VerifySignatureRequest} request
+ * @return void
+ */
+DebugCloverConnectorListener.prototype.onVerifySignatureRequest = function (request) {
+    log.debug("onVerifySignatureRequest(" + request + ")");
+};
 
-    /**
-     * @param {SaleResponse} response
-     * @return void
-     */
-    onSaleResponse: function (response) {
-        log.debug("onSaleResponse(" + response + ")");
-    },
+/**
+ * @param {CloseoutResponse} response
+ * @return void
+ */
+DebugCloverConnectorListener.prototype.onCloseoutResponse = function (response) {
+    log.debug("onCloseoutResponse(" + response + ")");
+};
 
-    /**
-     * @param {ManualRefundResponse} response
-     * @return void
-     */
-    onManualRefundResponse: function (response) {
-        log.debug("onManualRefundResponse(" + response + ")");
-    },
+/**
+ * @param {SaleResponse} response
+ * @return void
+ */
+DebugCloverConnectorListener.prototype.onSaleResponse = function (response) {
+    log.debug("onSaleResponse(" + response + ")");
+};
 
-    /**
-     * @param {RefundPaymentResponse} response
-     * @return void
-     */
-    onRefundPaymentResponse: function (response) {
-        log.debug("onRefundPaymentResponse(" + response + ")");
-    },
+/**
+ * @param {ManualRefundResponse} response
+ * @return void
+ */
+DebugCloverConnectorListener.prototype.onManualRefundResponse = function (response) {
+    log.debug("onManualRefundResponse(" + response + ")");
+};
 
-    /**
-     * @param {TipAdded} tipAdded
-     * @return void
-     */
-    onTipAdded: function (tipAdded) {
-        log.debug("onTipAdded(" + tipAdded + ")");
-    },
+/**
+ * @param {RefundPaymentResponse} response
+ * @return void
+ */
+DebugCloverConnectorListener.prototype.onRefundPaymentResponse = function (response) {
+    log.debug("onRefundPaymentResponse(" + response + ")");
+};
 
-    /**
-     * @param {VoidPaymentResponse} response
-     * @return void
-     */
-    onVoidPaymentResponse: function (response) {
-        log.debug("onVoidPaymentResponse(" + response + ")");
-    },
+/**
+ * @param {TipAdded} tipAdded
+ * @return void
+ */
+DebugCloverConnectorListener.prototype.onTipAdded = function (tipAdded) {
+    log.debug("onTipAdded(" + tipAdded + ")");
+};
 
-    /**
-     * @param {VaultCardResponse} response
-     * @return void
-     */
-    onVaultCardResponse: function (response) {
-        log.debug("onVaultCardResponse(" + response + ")");
-    },
+/**
+ * @param {VoidPaymentResponse} response
+ * @return void
+ */
+DebugCloverConnectorListener.prototype.onVoidPaymentResponse = function (response) {
+    log.debug("onVoidPaymentResponse(" + response + ")");
+};
 
-    /**
-     * @param {ConfigErrorResponse} response
-     * @return void
-     */
-    onConfigErrorResponse: function (response) {
-        log.debug("onConfigErrorResponse(" + response + ")");
-    },
+/**
+ * @param {VaultCardResponse} response
+ * @return void
+ */
+DebugCloverConnectorListener.prototype.onVaultCardResponse = function (response) {
+    log.debug("onVaultCardResponse(" + response + ")");
+};
 
-    /**
-     * @param {PreAuthResponse} response
-     * @return void
-     */
-    onPreAuthResponse: function (response) {
-        log.debug("onPreAuthResponse(" + response + ")");
-    },
+/**
+ * @param {ConfigErrorResponse} response
+ * @return void
+ */
+DebugCloverConnectorListener.prototype.onConfigErrorResponse = function (response) {
+    log.debug("onConfigErrorResponse(" + response + ")");
+};
 
-    /**
-     * @param {BaseResponse} response
-     * @return void
-     */
-    onLastTransactionResponse: function (response) {
-        log.debug("onLastTransactionResponse(" + response + ")");
-    }
-});
+/**
+ * @param {PreAuthResponse} response
+ * @return void
+ */
+DebugCloverConnectorListener.prototype.onPreAuthResponse = function (response) {
+    log.debug("onPreAuthResponse(" + response + ")");
+};
+
+/**
+ * @param {BaseResponse} response
+ * @return void
+ */
+DebugCloverConnectorListener.prototype.onLastTransactionResponse = function (response) {
+    log.debug("onLastTransactionResponse(" + response + ")");
+};
 
 //
 // Expose the module.
