@@ -30,6 +30,10 @@ Please report back to us any questions/comments/concerns, by emailing semi-integ
 
 ## Release Notes
 
+### Version 1.1.0-rc4
+
+* SEMI-471: Remove uppercase letters from version.
+
 ### Version 1.1.0-RC3
 
 * SEMI-470: Publish ReadCardData request and response structures.
