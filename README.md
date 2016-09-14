@@ -30,6 +30,13 @@ Please report back to us any questions/comments/concerns, by emailing semi-integ
 
 ## Release Notes
 
+### Version 1.1.0-rc5.1
+
+* SEMI-493: Allow suppression of log messages. Log messages are now suppressed by default.  To enable default logging:
+```
+require("remote-pay-cloud").DebugConfig.loggingEnabled = true;
+```
+
 ### Version 1.1.0-rc5.0
 
 * SEMI-438: Remove dependency on 'prototype.js'
