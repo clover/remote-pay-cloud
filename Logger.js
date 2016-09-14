@@ -1,6 +1,8 @@
 var EventEmitter = require("events").EventEmitter
     , slice = Array.prototype.slice;
 
+var DebugConfig = require("./DebugConfig.js");
+
 module.exports = {
     create: create
 };
@@ -16,11 +18,11 @@ function create() {
     log.error = log.emit.bind(log, "log", "error");
     log.debug = log.emit.bind(log, "log", "debug");
 
-    log.enabled = true;
+    log.enabled = false;
     return log;
 
     function toConsole() {
-        if (log.enabled) {
+        if (log.enabled || DebugConfig.loggingEnabled) {
             console.log.apply(console, arguments)
         }
     }

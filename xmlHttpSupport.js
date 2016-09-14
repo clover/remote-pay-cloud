@@ -1,7 +1,7 @@
 //*********************************************
 //
 //*********************************************
-var log = require('./Logger.js').create();
+var Logger = require('./Logger.js');
 
 /**
  * Simple class to use the xmlhttp interface
@@ -9,7 +9,9 @@ var log = require('./Logger.js').create();
  * @constructor
  */
 function XmlHttpSupport() {
+    this.log = Logger.create();
     this.xmlhttp = new XMLHttpRequest();
+    var me = this;
 
     this.setXmlHttpCallback = function (xmlhttp, endpoint, onDataLoaded, onError) {
         xmlhttp.onreadystatechange = function () {
@@ -24,7 +26,7 @@ function XmlHttpSupport() {
                             onDataLoaded(data);
                         }
                     } catch (e) {
-                        log.error(endpoint, e);
+                        me.log.error(endpoint, e);
                         if (onDataLoaded) {
                             onDataLoaded({});
                         }

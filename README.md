@@ -5,7 +5,7 @@
 See the package.json postversion script, which maps to scripts/postversion.sh
 Do not change this or the versioning may not reflect the npm version correctly.
 --->
-Current version: 1.1.0-rc5.0
+Current version: 1.1.0-rc5.1
 
 ## Overview
 
@@ -29,6 +29,13 @@ A example project composed of small examples [Clover Cloud Connector Unit Exampl
 Please report back to us any questions/comments/concerns, by emailing semi-integrations@clover.com.
 
 ## Release Notes
+
+### Version 1.1.0-rc5.1
+
+* SEMI-493: Allow suppression of log messages. Log messages are now suppressed by default.  To enable default logging:
+```
+require("remote-pay-cloud").DebugConfig.loggingEnabled = true;
+```
 
 ### Version 1.1.0-rc5.0
 
@@ -219,5 +226,5 @@ $(window).on('beforeunload ', function () {
 
 ## Generate Documentation
 API documentation is generated when `npm install` is run. 
-[Online Docs](http://clover.github.io/remote-pay-cloud/1.1.0-rc5.0/) and
+[Online Docs](http://clover.github.io/remote-pay-cloud/1.1.0-rc5.1/) and
 [Online API class Docs](http://clover.github.io/remote-pay-cloud-api/1.1.0-rc5.0/)

@@ -12,12 +12,12 @@ var CloverID = require("./CloverID.js");
 var KeyPress = require("./KeyPress.js");
 var VoidReason = require("./VoidReason.js");
 
-var log = require('./Logger.js').create();
+var Logger = require('./Logger.js');
 
 // !!NOTE!!  The following is automatically updated to reflect the npm version.
 // See the package.json postversion script, which maps to scripts/postversion.sh
 // Do not change this or the versioning may not reflect the npm version correctly.
-CLOVER_CLOUD_SDK_VERSION = "1.1.0-rc5.0";
+CLOVER_CLOUD_SDK_VERSION = "1.1.0-rc5.1";
 
 /**
  * Clover API for external Systems
@@ -27,6 +27,7 @@ CLOVER_CLOUD_SDK_VERSION = "1.1.0-rc5.0";
  * @constructor
  */
 function Clover(configurationIN) {
+    this.log = Logger.create();
     var configuration= {};
     if(configurationIN){
         // Make sure we do not change the passed object, make a copy.
@@ -182,10 +183,11 @@ function Clover(configurationIN) {
     // Very useful for debugging
     //****************************************
     if (this.debugConfiguration[WebSocketDevice.ALL_MESSAGES]) {
+        var me = this;
         this.device.on(WebSocketDevice.ALL_MESSAGES,
             function (message) {
                 if ((message['type'] != 'PONG') && (message['type'] != 'PING')) {
-                    log.debug(message);
+                    me.log.debug(message);
                 }
             }
         );
@@ -353,7 +355,7 @@ function Clover(configurationIN) {
                                       me.configuration.clientId
                                     );
 
-                                    log.debug("Server responded with information on how to contact device. " +
+                                    me.log.debug("Server responded with information on how to contact device. " +
                                         "Opening communication channel...");
 
                                     // The response to this will be reflected in the device.onopen method (or on error),
@@ -369,7 +371,7 @@ function Clover(configurationIN) {
                                         callBackOnDeviceReady(new CloverError(CloverError.DEVICE_OFFLINE,
                                             message));
                                     } else {
-                                        log.error(message);
+                                        me.log.error(message);
                                     }
                                 }
                             },
@@ -378,7 +380,7 @@ function Clover(configurationIN) {
                                     callBackOnDeviceReady(new CloverError(CloverError.COMMUNICATION_ERROR,
                                         "Error getting device ws endpoint", error));
                                 } else {
-                                    log.error(error);
+                                    me.log.error(error);
                                 }
                             }, deviceContactInfo
                         );
@@ -395,7 +397,7 @@ function Clover(configurationIN) {
 
                         xmlHttpSupport.getData(url,
                             function (devices) {
-                                log.debug(devices);
+                                me.log.debug(devices);
                                 me.handleDevices(devices);
                                 if (me.configuration.deviceSerialId) {
                                     // Stations do not support the kiosk/pay display.
@@ -406,7 +408,7 @@ function Clover(configurationIN) {
                                             "Device " + deviceSerialId + " not in set returned."));
                                     }
                                     if (me.deviceBySerial[me.configuration.deviceSerialId].model == "Clover_C100") {
-                                        log.warn(
+                                        me.log.warn(
                                             "Warning - Selected device model (" +
                                             me.deviceBySerial[me.configuration.deviceSerialId].model +
                                             ") does not support cloud pay display." +
@@ -436,7 +438,7 @@ function Clover(configurationIN) {
                                     callBackOnDeviceReady(new CloverError(CloverError.COMMUNICATION_ERROR,
                                         "Error getting device information", error));
                                 } else {
-                                    log.error(error);
+                                    me.log.error(error);
                                 }
                             }
                         );
@@ -582,7 +584,7 @@ function Clover(configurationIN) {
             clearInterval(me.device.discoveryTimerId);
             me.device.discoveryTimerId = null;
             me.discoveryResponseReceived = true;
-            log.debug("Device has responded to discovery message.");
+            me.log.debug("Device has responded to discovery message.");
         };
         this.device.once(LanMethod.DISCOVERY_RESPONSE, discoveryResponseCallback);
 
@@ -596,11 +598,11 @@ function Clover(configurationIN) {
                 me.device.discoveryTimerId =
                     setInterval(
                         function () {
-                            log.debug("Sending 'discovery' message to device.");
+                            me.log.debug("Sending 'discovery' message to device.");
                             try {
                                 me.device.sendMessage(me.device.messageBuilder.buildDiscoveryRequest());
                             } catch (e) {
-                                log.debug(e);
+                                me.log.debug(e);
                             }
                             me.device.dicoveryMessagesSent++;
 
@@ -610,7 +612,7 @@ function Clover(configurationIN) {
                                 me.device.removeListeners(allCallBacks);
                                 var seconds = (me.numberOfDiscoveryMessagesToSend * me.pauseBetweenDiscovery) / 1000;
                                 var message = "No discovery response after " + seconds + " seconds";
-                                log.info(message +
+                                me.log.info(message +
                                     "  Shutting down the connection.");
                                 me.device.disconnectFromDevice();
                                 clearInterval(me.device.discoveryTimerId);
@@ -623,7 +625,7 @@ function Clover(configurationIN) {
                         }, me.pauseBetweenDiscovery
                     );
             }
-            log.info('device opened');
+            me.log.info('device opened');
         };
         this.device.once(WebSocketDevice.DEVICE_OPEN, onopenCallback);
         allCallBacks.push({"event": WebSocketDevice.DEVICE_OPEN, "callback": onopenCallback});
@@ -639,7 +641,7 @@ function Clover(configurationIN) {
         this.device.once(WebSocketDevice.CONNECTION_DENIED, connctionDeniedCallback);
         allCallBacks.push({"event": WebSocketDevice.CONNECTION_DENIED, "callback": connctionDeniedCallback});
 
-        log.info("Contacting device at " + this.configuration.deviceURL);
+        me.log.info("Contacting device at " + this.configuration.deviceURL);
         this.device.contactDevice(this.configuration.deviceURL);
     };
 
@@ -895,7 +897,7 @@ function Clover(configurationIN) {
             try {
                 txnRequestCallback(null, callbackPayload);
             } catch (err) {
-                log.error(err);
+                me.log.error(err);
             }
             me.endOfOperation();
         };
@@ -915,7 +917,7 @@ function Clover(configurationIN) {
             try {
                 txnRequestCallback(error, callbackPayload);
             } catch (err) {
-                log.error(err);
+                me.log.error(err);
             }
             me.endOfOperation();
         };
@@ -977,7 +979,7 @@ function Clover(configurationIN) {
                     // Show the welcome screen after the acknowledgement.
                     // This might be removed later
                 } catch (err) {
-                    log.error(err);
+                    me.log.error(err);
                 }
                 if(returnToWelcomeScreen) {
                     me.device.sendShowWelcomeScreen();
@@ -1064,7 +1066,7 @@ function Clover(configurationIN) {
                     completionCallback(null, callbackPayload);
                 }
             } catch (err) {
-                log.error(err);
+                me.log.error(err);
             }
           me.endOfOperation();
         };
@@ -1082,7 +1084,7 @@ function Clover(configurationIN) {
                     completionCallback(error, callbackPayload);
                 }
             } catch (err) {
-                log.error(err);
+                me.log.error(err);
             }
           me.endOfOperation();
         };
@@ -1256,7 +1258,7 @@ function Clover(configurationIN) {
                     "request": callbackPayload
                 });
             }
-            log.error(cloverError);
+            this.log.error(cloverError);
         }
     };
 
@@ -1314,7 +1316,7 @@ function Clover(configurationIN) {
                     "request": callbackPayload
                 });
             }
-            log.error(cloverError);
+            this.log.error(cloverError);
         }
     };
 
@@ -1502,7 +1504,7 @@ function Clover(configurationIN) {
                     "request": callbackPayload
                 });
             }
-            log.error(cloverError);
+            this.log.error(cloverError);
         }
     };
 
@@ -1530,7 +1532,7 @@ function Clover(configurationIN) {
                     "request": callbackPayload
                 });
             }
-            log.error(cloverError);
+            this.log.error(cloverError);
         }
     };
 
@@ -1558,7 +1560,7 @@ function Clover(configurationIN) {
                     "request": callbackPayload
                 });
             }
-            log.error(cloverError);
+            this.log.error(cloverError);
         }
     };
 
@@ -1592,7 +1594,7 @@ function Clover(configurationIN) {
                     "request": callbackPayload
                 });
             }
-            log.error(cloverError);
+            this.log.error(cloverError);
         }
     };
 
@@ -1626,7 +1628,7 @@ function Clover(configurationIN) {
                     "request": callbackPayload
                 });
             }
-            log.error(cloverError);
+            this.log.error(cloverError);
         }
     };
 
@@ -1653,7 +1655,7 @@ function Clover(configurationIN) {
                     "request": callbackPayload
                 });
             }
-            log.error(cloverError);
+            this.log.error(cloverError);
         }
     };
 
@@ -1780,7 +1782,7 @@ function Clover(configurationIN) {
                     "request": callbackPayload
                 });
             }
-            log.error(cloverError);
+            this.log.error(cloverError);
         }
     };
 

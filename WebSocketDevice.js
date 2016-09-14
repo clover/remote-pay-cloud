@@ -9,7 +9,7 @@ var XmlHttpSupport = require("./xmlHttpSupport.js");
 
 var RemoteMessageBuilder = require("./RemoteMessageBuilder.js");
 
-var log = require('./Logger.js').create();
+var Logger = require('./Logger.js');
 
 /**
  * The object used to communicate with the device.
@@ -18,6 +18,7 @@ var log = require('./Logger.js').create();
  * @constructor
  */
 function WebSocketDevice(allowOvertakeConnection, friendlyId) {
+    this.log = Logger.create();
     // This is the websocket connection
     this.deviceSocket = null;
     // The id for the ping interval timer so we can stop it
@@ -95,7 +96,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
             // to the device (it is doing that now , but it is hardcoded)
             // deviceSocket = new WebSocket("ws://localhost:18000");
             try {
-                log.debug("contacting device");
+                me.log.debug("contacting device");
 
                 // A different way to deal with the 401 error that
                 // occurs when a websocket connection is made to the
@@ -119,7 +120,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
                     function () {me.startSSSS(ws_address)}
                     );
             } catch (error) {
-                log.error(error);
+                me.log.error(error);
             }
         }
     };
@@ -132,7 +133,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
         if (connectedId && !this.allowOvertakeConnection) {
             if (this.friendlyId == connectedId) {
                 // Do anything here?  This is already connected.
-                log.debug("Trying to connect, but already connected.");
+                this.log.debug("Trying to connect, but already connected.");
             } else {
                 this.connectionDenied(connectedId);
                 return;
@@ -143,15 +144,15 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
         }
 
         if (!this.deviceSocket || this.deviceSocket.readyState != WebSocket.OPEN) {
-            log.debug("Contacting url - " + ws_address);
+            this.log.debug("Contacting url - " + ws_address);
             this.deviceSocket = new WebSocket(
                 //        "ws://192.168.0.56:49152"
                 //        selectedDevice.websocket_direct
                 ws_address
             );
-            log.debug("this.deviceSocket = " + this.deviceSocket);
+            this.log.debug("this.deviceSocket = " + this.deviceSocket);
             this.deviceSocket.onopen = function (event) {
-                log.debug("deviceSocket.onopen");
+                me.log.debug("deviceSocket.onopen");
                 me.reconnecting = false;
                 me.reconnectAttempts = 0;
                 // Set up the ping for every X seconds
@@ -171,7 +172,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
             };
 
             this.deviceSocket.onerror = function (event) {
-                log.error(event);
+                me.log.error(event);
                 if (me.reconnect) {
                     me.startupReconnect(me.timebetweenReconnectAttempts);
                 }
@@ -182,12 +183,12 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
 
             this.deviceSocket.onclose = function (event) {
                 try {
-                    log.debug("Clearing ping thread");
+                    me.log.debug("Clearing ping thread");
                     if(me.pingIntervalId) {
                         clearInterval(me.pingIntervalId);
                     }
                 } catch (e) {
-                    log.error(e);
+                    me.log.error(e);
                 }
                 me.onclose(event);
             }
@@ -206,7 +207,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
                 }.bind(this), delay);
         }
         else {
-            log.error("Exceeded number of reconnect attempts, giving up. There are " +
+            this.log.error("Exceeded number of reconnect attempts, giving up. There are " +
                 this.resendQueue.length + " messages that were queued, but not sent.");
             this.reconnectAttempts = 0;
             this.onerror(event);
@@ -392,7 +393,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
             }
         }
         this.reconnecting = true;
-        log.debug("attempting reconnect...");
+        this.log.debug("attempting reconnect...");
         var me = this;
         if (this["bootStrapReconnect"]) {
             // Depending on the configuration, we may be able to tell the device to wake
@@ -416,7 +417,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
     this.sendMessage = function(message) {
         var stringMessage = message==null?null:JSON.stringify(message);
         if(this.echoAllMessages) {
-            log.debug("sending message:" + stringMessage)
+            this.log.debug("sending message:" + stringMessage)
         }
         // If the deviceSocket is closed or closing, we may try to reconnect
         if(this.deviceSocket.readyState == WebSocket.CLOSING || this.deviceSocket.readyState == WebSocket.CLOSED) {
@@ -471,7 +472,7 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
     this.receiveMessage = function(message) {
         if(this.echoAllMessages) {
             var stringMessage = JSON.stringify(message);
-            log.debug("receive message:" + stringMessage)
+            this.log.debug("receive message:" + stringMessage)
         }
         if(message.hasOwnProperty("type")) {
             if(message["type"] == RemoteMessageBuilder.PONG) {

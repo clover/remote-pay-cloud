@@ -1,5 +1,5 @@
-var log = require('./Logger.js').create();
 var sdk = require("remote-pay-cloud-api");
+var Logger = require('./Logger.js');
 
 var ICloverConnectorListener = sdk.remotepay.ICloverConnectorListener;
 
@@ -13,6 +13,7 @@ var ICloverConnectorListener = sdk.remotepay.ICloverConnectorListener;
 DelegateCloverConnectorListener  = function(listenersource) {
     ICloverConnectorListener.call(this);
     this.listenersource = listenersource;
+    this.log = Logger.create();
 };
 
 DelegateCloverConnectorListener.prototype = Object.create(ICloverConnectorListener.prototype);
@@ -337,7 +338,7 @@ DelegateCloverConnectorListener.prototype.onReadCardDataResponse = function(resp
  */
 DelegateCloverConnectorListener.prototype.handleError = function(functionName, listener, error) {
     try {
-        log.error({"functionName": functionName, "error:": error, "listener": listener});
+        this.log.error({"functionName": functionName, "error:": error, "listener": listener});
     }catch(error2){
         // no idea what is going wrong at this point!  Might be the logger or a rouge toString()
         // Hard code this so someone can search for it in the code base if needed.  This is useful when
