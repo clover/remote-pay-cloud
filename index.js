@@ -41,7 +41,7 @@ CloverLib.DelegateCloverConnectorListener = require("./DelegateCloverConnectorLi
 CloverLib.DebugCloverConnectorListener = require("./DebugCloverConnectorListener.js");
 
 CloverLib.Logger = require('./Logger.js');
-
+CloverLib.DebugConfig = require('./DebugConfig.js');
 
 //
 // Expose the module.

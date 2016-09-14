@@ -1,5 +1,5 @@
-var log = require('./Logger.js').create();
 var sdk = require("remote-pay-cloud-api");
+var Logger = require('./Logger.js');
 
 var ICloverConnectorListener = sdk.remotepay.ICloverConnectorListener;
 
@@ -12,6 +12,7 @@ var ICloverConnectorListener = sdk.remotepay.ICloverConnectorListener;
 
 var DebugCloverConnectorListener = function() {
     ICloverConnectorListener.call(this);
+    this.log = Logger.create();
     log.enabled = true;
 };
 
@@ -22,7 +23,7 @@ DebugCloverConnectorListener.prototype.constructor = DebugCloverConnectorListene
  * @return void
  */
 DebugCloverConnectorListener.prototype.onDisconnected = function () {
-    log.debug("onDisconnected()");
+    this.log.debug("onDisconnected()");
 };
 
 
@@ -30,7 +31,7 @@ DebugCloverConnectorListener.prototype.onDisconnected = function () {
  * @return void
  */
 DebugCloverConnectorListener.prototype.onConnected = function () {
-    log.debug("onConnected()");
+    this.log.debug("onConnected()");
 };
 
 /**
@@ -38,7 +39,7 @@ DebugCloverConnectorListener.prototype.onConnected = function () {
  * @return void
  */
 DebugCloverConnectorListener.prototype.onReady = function (merchantInfo) {
-    log.debug("onReady(" + merchantInfo + ")");
+    this.log.debug("onReady(" + merchantInfo + ")");
 };
 
 /**
@@ -46,7 +47,7 @@ DebugCloverConnectorListener.prototype.onReady = function (merchantInfo) {
  * @return void
  */
 DebugCloverConnectorListener.prototype.onDeviceActivityStart = function (deviceEvent) {
-    log.debug("onDeviceActivityStart(" + deviceEvent + ")");
+    this.log.debug("onDeviceActivityStart(" + deviceEvent + ")");
 };
 
 /**
@@ -54,7 +55,7 @@ DebugCloverConnectorListener.prototype.onDeviceActivityStart = function (deviceE
  * @return void
  */
 DebugCloverConnectorListener.prototype.onDeviceActivityEnd = function (deviceEvent) {
-    log.debug("onDeviceActivityEnd(" + deviceEvent + ")");
+    this.log.debug("onDeviceActivityEnd(" + deviceEvent + ")");
 };
 
 /**
@@ -62,7 +63,7 @@ DebugCloverConnectorListener.prototype.onDeviceActivityEnd = function (deviceEve
  * @return void
  */
 DebugCloverConnectorListener.prototype.onDeviceError = function (deviceErrorEvent) {
-    log.debug("onDeviceError(" + deviceErrorEvent + ")");
+    this.log.debug("onDeviceError(" + deviceErrorEvent + ")");
 };
 
 /**
@@ -70,7 +71,7 @@ DebugCloverConnectorListener.prototype.onDeviceError = function (deviceErrorEven
  * @return void
  */
 DebugCloverConnectorListener.prototype.onAuthResponse = function (response) {
-    log.debug("OnAuthResponse(" + response + ")");
+    this.log.debug("OnAuthResponse(" + response + ")");
 };
 
 /**
@@ -78,7 +79,7 @@ DebugCloverConnectorListener.prototype.onAuthResponse = function (response) {
  * @return void
  */
 DebugCloverConnectorListener.prototype.onTipAdjustAuthResponse = function (response) {
-    log.debug("onTipAdjustAuthResponse(" + response + ")");
+    this.log.debug("onTipAdjustAuthResponse(" + response + ")");
 };
 
 /**
@@ -86,7 +87,7 @@ DebugCloverConnectorListener.prototype.onTipAdjustAuthResponse = function (respo
  * @return void
  */
 DebugCloverConnectorListener.prototype.onCapturePreAuthResponse = function (response) {
-    log.debug("onCapturePreAuthResponse(" + response + ")");
+    this.log.debug("onCapturePreAuthResponse(" + response + ")");
 };
 
 /**
@@ -94,7 +95,7 @@ DebugCloverConnectorListener.prototype.onCapturePreAuthResponse = function (resp
  * @return void
  */
 DebugCloverConnectorListener.prototype.onVerifySignatureRequest = function (request) {
-    log.debug("onVerifySignatureRequest(" + request + ")");
+    this.log.debug("onVerifySignatureRequest(" + request + ")");
 };
 
 /**
@@ -102,7 +103,7 @@ DebugCloverConnectorListener.prototype.onVerifySignatureRequest = function (requ
  * @return void
  */
 DebugCloverConnectorListener.prototype.onCloseoutResponse = function (response) {
-    log.debug("onCloseoutResponse(" + response + ")");
+    this.log.debug("onCloseoutResponse(" + response + ")");
 };
 
 /**
@@ -110,7 +111,7 @@ DebugCloverConnectorListener.prototype.onCloseoutResponse = function (response) 
  * @return void
  */
 DebugCloverConnectorListener.prototype.onSaleResponse = function (response) {
-    log.debug("onSaleResponse(" + response + ")");
+    this.log.debug("onSaleResponse(" + response + ")");
 };
 
 /**
@@ -118,7 +119,7 @@ DebugCloverConnectorListener.prototype.onSaleResponse = function (response) {
  * @return void
  */
 DebugCloverConnectorListener.prototype.onManualRefundResponse = function (response) {
-    log.debug("onManualRefundResponse(" + response + ")");
+    this.log.debug("onManualRefundResponse(" + response + ")");
 };
 
 /**
@@ -126,7 +127,7 @@ DebugCloverConnectorListener.prototype.onManualRefundResponse = function (respon
  * @return void
  */
 DebugCloverConnectorListener.prototype.onRefundPaymentResponse = function (response) {
-    log.debug("onRefundPaymentResponse(" + response + ")");
+    this.log.debug("onRefundPaymentResponse(" + response + ")");
 };
 
 /**
@@ -134,7 +135,7 @@ DebugCloverConnectorListener.prototype.onRefundPaymentResponse = function (respo
  * @return void
  */
 DebugCloverConnectorListener.prototype.onTipAdded = function (tipAdded) {
-    log.debug("onTipAdded(" + tipAdded + ")");
+    this.log.debug("onTipAdded(" + tipAdded + ")");
 };
 
 /**
@@ -142,7 +143,7 @@ DebugCloverConnectorListener.prototype.onTipAdded = function (tipAdded) {
  * @return void
  */
 DebugCloverConnectorListener.prototype.onVoidPaymentResponse = function (response) {
-    log.debug("onVoidPaymentResponse(" + response + ")");
+    this.log.debug("onVoidPaymentResponse(" + response + ")");
 };
 
 /**
@@ -150,7 +151,7 @@ DebugCloverConnectorListener.prototype.onVoidPaymentResponse = function (respons
  * @return void
  */
 DebugCloverConnectorListener.prototype.onVaultCardResponse = function (response) {
-    log.debug("onVaultCardResponse(" + response + ")");
+    this.log.debug("onVaultCardResponse(" + response + ")");
 };
 
 /**
@@ -158,7 +159,7 @@ DebugCloverConnectorListener.prototype.onVaultCardResponse = function (response)
  * @return void
  */
 DebugCloverConnectorListener.prototype.onConfigErrorResponse = function (response) {
-    log.debug("onConfigErrorResponse(" + response + ")");
+    this.log.debug("onConfigErrorResponse(" + response + ")");
 };
 
 /**
@@ -166,7 +167,7 @@ DebugCloverConnectorListener.prototype.onConfigErrorResponse = function (respons
  * @return void
  */
 DebugCloverConnectorListener.prototype.onPreAuthResponse = function (response) {
-    log.debug("onPreAuthResponse(" + response + ")");
+    this.log.debug("onPreAuthResponse(" + response + ")");
 };
 
 /**
@@ -174,7 +175,7 @@ DebugCloverConnectorListener.prototype.onPreAuthResponse = function (response) {
  * @return void
  */
 DebugCloverConnectorListener.prototype.onLastTransactionResponse = function (response) {
-    log.debug("onLastTransactionResponse(" + response + ")");
+    this.log.debug("onLastTransactionResponse(" + response + ")");
 };
 
 //

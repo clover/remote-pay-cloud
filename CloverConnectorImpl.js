@@ -1,5 +1,3 @@
-var log = require('./Logger.js').create();
-
 var sdk = require("remote-pay-cloud-api");
 
 var DelegateCloverConnectorListener = require("./DelegateCloverConnectorListener.js");
@@ -19,6 +17,7 @@ var CloverID = require("./CloverID.js");
 var EndPointConfig = require("./EndpointConfig.js");
 var MessageBundle = require("./MessageBundle.js");
 var CloudMethod = require("./CloudMethod.js");
+var Logger = require('./Logger.js');
 
 // !!NOTE!!  The following is automatically updated to reflect the npm version.
 // See the package.json postversion script, which maps to scripts/postversion.sh
@@ -36,13 +35,15 @@ CLOVER_CLOUD_SDK_VERSION = "1.1.0-rc5.0";
  */
 var CloverConnectorImpl = function(configuration) {
     sdk.remotepay.ICloverConnector.call(this);
+    this.log = Logger.create();
+
     this.cloverConnectorListeners = [];
     if(configuration){
         try {
             // Make sure we do not change the passed object, make a copy.
             this.configuration = JSON.parse(JSON.stringify(configuration));
         } catch(e) {
-            log.error("Could not load configuration", e);
+            this.log.error("Could not load configuration", e);
             throw e;
         }
     } else {
@@ -123,9 +124,9 @@ var CloverConnectorImpl = function(configuration) {
           function (message) {
               // Do not log ping or pong
               if ((message['type'] != 'PONG') && (message['type'] != 'PING')) {
-                  log.debug(message);
+                  this.log.debug(message);
               }
-          }
+          }.bind(this)
         );
     }
 };
@@ -139,7 +140,7 @@ CloverConnectorImpl.prototype.constructor = CloverConnectorImpl;
  */
 CloverConnectorImpl.prototype.sendMessage = function(message) {
             try {
-                log.debug("sendMessage", message);
+                this.log.debug("sendMessage", message);
                 if(this.device == null) {
                     var notConnectedErrorEvent = new sdk.remotepay.CloverDeviceErrorEvent();
                     notConnectedErrorEvent.setMessage("Device is not connected");
@@ -161,7 +162,7 @@ CloverConnectorImpl.prototype.sendMessage = function(message) {
                     }
                 }catch(e) {
                     // no idea what to do now
-                    log.error(e);
+                    this.log.error(e);
                 }
                 this.delegateCloverConnectorListener.onDeviceError(errorEvent);
             }
@@ -276,7 +277,7 @@ CloverConnectorImpl.prototype.mapAck = function () {
                   // Call the registered callback
                   callback();
               } catch (e) {
-                  log.warn(e);
+                  this.log.warn(e);
               }
           }
       }.bind(this));
@@ -289,17 +290,17 @@ CloverConnectorImpl.prototype.mapDeviceEvents = function() {
     this.device.on(WebSocketDevice.DEVICE_OPEN, function (event) {
         // The connection to the device is open, but we do not yet know if there is anyone at the other end.
         // Send discovery request message.
-        log.debug(event);
+        this.log.debug(event);
         this.sendMessage(this.messageBuilder.buildDiscoveryRequestObject());
         this.delegateCloverConnectorListener.onConnected();
     }.bind(this));
     this.device.on(WebSocketDevice.DEVICE_CLOSE, function (event) {
-        log.debug(event);
+        this.log.debug(event);
         this.delegateCloverConnectorListener.onDisconnected();
     }.bind(this));
     this.device.on(WebSocketDevice.DEVICE_ERROR, function (event) {
         // todo: Will figure out error codes later
-        log.debug(event);
+        this.log.debug(event);
         var deviceErrorEvent = new sdk.remotepay.CloverDeviceErrorEvent();
         deviceErrorEvent.setType(sdk.remotepay.ErrorType.COMMUNICATION);
         //deviceErrorEvent.setCode(DeviceErrorEventCode.AccessDenied);
@@ -313,7 +314,7 @@ CloverConnectorImpl.prototype.mapDeviceEvents = function() {
 CloverConnectorImpl.prototype.mapConnectionEvents = function() {
     this.device.on(CloverConnectorImpl.ERROR, function (event) {
         // Will figure out error codes later
-        log.debug(event);
+        this.log.debug(event);
         var deviceErrorEvent = new sdk.remotepay.CloverDeviceErrorEvent();
         deviceErrorEvent.setType(sdk.remotepay.ErrorType.EXCEPTION);
         //deviceErrorEvent.setCode(DeviceErrorEventCode.AccessDenied);
@@ -321,7 +322,7 @@ CloverConnectorImpl.prototype.mapConnectionEvents = function() {
     }.bind(this));
     this.device.on(WebSocketDevice.CONNECTION_ERROR, function (message) {
         // Will figure out error codes later
-        log.debug(message);
+        this.log.debug(message);
         var deviceErrorEvent = new sdk.remotepay.CloverDeviceErrorEvent();
         deviceErrorEvent.setType(sdk.remotepay.ErrorType.COMMUNICATION);
         //deviceErrorEvent.setCode(DeviceErrorEventCode.AccessDenied);
@@ -329,13 +330,13 @@ CloverConnectorImpl.prototype.mapConnectionEvents = function() {
         this.delegateCloverConnectorListener.onDeviceError(deviceErrorEvent);
     }.bind(this));
     this.device.on(WebSocketDevice.CONNECTION_STOLEN, function (message) {
-        log.debug(message);
+        this.log.debug(message);
         // How do we handle this?  Message is the friendly id of the
         // other terminal that stole the connection.
         this.delegateCloverConnectorListener.onDisconnected();
     }.bind(this));
     this.device.on(WebSocketDevice.CONNECTION_DENIED, function (message) {
-        log.debug(message);
+        this.log.debug(message);
         // Will figure out error codes later
         var deviceErrorEvent = new sdk.remotepay.CloverDeviceErrorEvent();
         deviceErrorEvent.setMessage(message);
@@ -443,19 +444,19 @@ CloverConnectorImpl.prototype.populateGeneric = function(apiMessage, message) {
     try {
         apiMessage.setSuccess(message.getStatus() == sdk.remotepay.ResultStatus.SUCCESS);
     }catch(e){
-        log.error("Attempt to set success failed!");
+        this.log.error("Attempt to set success failed!");
     }
     try {
         apiMessage.setResult(message.getStatus() == sdk.remotepay.ResultStatus.SUCCESS ?
           sdk.remotepay.ResponseCode.SUCCESS : message.getCode() == sdk.remotepay.ResultStatus.FAIL ?
           sdk.remotepay.ResponseCode.FAIL : ResponseCode.ERROR );
     }catch(e){
-        log.error("Attempt to set result failed!");
+        this.log.error("Attempt to set result failed!");
     }
     try {
         apiMessage.setReason(message.getReason());
     }catch(e){
-        log.warn("Attempt to set reason failed!");
+        this.log.warn("Attempt to set reason failed!");
     }
 
 };
@@ -521,7 +522,7 @@ CloverConnectorImpl.prototype.mapRefundResponse = function() {
  */
 CloverConnectorImpl.prototype.mapPaymentVoided = function() {
     this.device.on(sdk.remotemessage.Method.PAYMENT_VOIDED, function (remoteMessage) {
-        log.debug(remoteMessage);
+        this.log.debug(remoteMessage);
         var message = new sdk.remotemessage.PaymentVoidedMessage();
         this.remoteMessageParser.parseMessage(remoteMessage, message);
 
@@ -607,24 +608,24 @@ CloverConnectorImpl.prototype.mapLastMessageResponse = function() {
  */
 CloverConnectorImpl.prototype.mapTxStartResponse = function() {
     this.device.on(sdk.remotemessage.Method.TX_START_RESPONSE, function (message) {
-        log.debug(message);
+        this.log.debug(message);
         var txStartResponseMessage = new sdk.remotemessage.TxStartResponseMessage();
         this.remoteMessageParser.parseMessage(message, txStartResponseMessage);
 
         if(!txStartResponseMessage.getSuccess()) {
-            if (this.lastRequest instanceof sdk.remotepay.PreAuthRequest) {
+            if (this.matchsLastRequest(this.lastRequest, sdk.remotepay.PreAuthRequest)) {
                 var preAuthResponse = new sdk.remotepay.PreAuthResponse();
                 this.populateTxStartResponseToBaseResponse(txStartResponseMessage, preAuthResponse);
                 this.delegateCloverConnectorListener.onPreAuthResponse(preAuthResponse);
-            } else if (this.lastRequest instanceof sdk.remotepay.AuthRequest) {
+            } else if (this.matchsLastRequest(this.lastRequest, sdk.remotepay.AuthRequest)) {
                 var authResponse = new sdk.remotepay.AuthResponse();
                 this.populateTxStartResponseToBaseResponse(txStartResponseMessage, authResponse);
                 this.delegateCloverConnectorListener.onAuthResponse(authResponse);
-            } else if (this.lastRequest instanceof sdk.remotepay.SaleRequest) {
+            } else if (this.matchsLastRequest(this.lastRequest, sdk.remotepay.SaleRequest)) {
                 var saleResponse = new sdk.remotepay.SaleResponse();
                 this.populateTxStartResponseToBaseResponse(txStartResponseMessage, saleResponse);
                 this.delegateCloverConnectorListener.onSaleResponse(saleResponse);
-            } else if (this.lastRequest instanceof sdk.remotepay.ManualRefundRequest) {
+            } else if (this.matchsLastRequest(this.lastRequest, sdk.remotepay.ManualRefundRequest)) {
                 var manualRefundResponse = new sdk.remotepay.ManualRefundResponse();
                 this.populateTxStartResponseToBaseResponse(txStartResponseMessage, manualRefundResponse);
                 this.delegateCloverConnectorListener.onManualRefundResponse(manualRefundResponse);
@@ -633,6 +634,17 @@ CloverConnectorImpl.prototype.mapTxStartResponse = function() {
             this.endOfOperationCancel();
         }
     }.bind(this));
+};
+
+CloverConnectorImpl.prototype.matchsLastRequest = function (lastRequest, theType) {
+    var result = false;
+    if(lastRequest != null) {
+        var lastReqStr = '' + lastRequest._class_;
+        var theTypeStr = '' + theType;
+        result = (lastReqStr == theTypeStr);
+    }
+    return result;
+    // return (lastRequest instanceof theType);
 };
 
 /**
@@ -653,7 +665,7 @@ CloverConnectorImpl.prototype.populateTxStartResponseToBaseResponse = function(t
  */
 CloverConnectorImpl.prototype.mapFinishOk = function() {
     this.device.on(sdk.remotemessage.Method.FINISH_OK, function (message) {
-        log.debug(message);
+        this.log.debug(message);
         /**
          * This goes in a deserialization class
          * It will be the RemoteMessageParser
@@ -666,19 +678,19 @@ CloverConnectorImpl.prototype.mapFinishOk = function() {
             // Is a reparse needed here?
             // var payment = JSON.parse(payload.payment);
 
-            if (this.lastRequest instanceof sdk.remotepay.PreAuthRequest)
+            if (this.matchsLastRequest(this.lastRequest, sdk.remotepay.PreAuthRequest))
             {
                 var preAuthResponse = new sdk.remotepay.PreAuthResponse();
                 this.populateOkPaymentResponse(preAuthResponse, finishOk.getPayment(), finishOk.getSignature());
                 this.delegateCloverConnectorListener.onPreAuthResponse(preAuthResponse);
                 this.lastRequest = null;
-            }else if (this.lastRequest instanceof sdk.remotepay.AuthRequest)
+            }else if (this.matchsLastRequest(this.lastRequest, sdk.remotepay.AuthRequest))
             {
                 var authResponse = new sdk.remotepay.AuthResponse();
                 this.populateOkPaymentResponse(authResponse, finishOk.getPayment(), finishOk.getSignature());
                 this.delegateCloverConnectorListener.onAuthResponse(authResponse);
                 this.lastRequest = null;
-            }else if (this.lastRequest instanceof sdk.remotepay.SaleRequest)
+            }else if (this.matchsLastRequest(this.lastRequest, sdk.remotepay.SaleRequest))
             {
                 var saleResponse = new sdk.remotepay.SaleResponse();
                 this.populateOkPaymentResponse(saleResponse, finishOk.getPayment(), finishOk.getSignature());
@@ -713,7 +725,7 @@ CloverConnectorImpl.prototype.mapFinishOk = function() {
  */
 CloverConnectorImpl.prototype.mapFinishCancel = function() {
     this.device.on(sdk.remotemessage.Method.FINISH_CANCEL, function (message) {
-        log.debug(message);
+        this.log.debug(message);
         /*
          * This goes in a deserialization class
          * It will be the RemoteMessageParser
@@ -721,19 +733,19 @@ CloverConnectorImpl.prototype.mapFinishCancel = function() {
         var finishcancel = new sdk.remotemessage.FinishCancelMessage();
         this.remoteMessageParser.parseMessage(message, finishcancel);
 
-        if (this.lastRequest instanceof sdk.remotepay.PreAuthRequest) {
+        if (this.matchsLastRequest(this.lastRequest, sdk.remotepay.PreAuthRequest)) {
             var preAuthResponse = new sdk.remotepay.PreAuthResponse();
             this.populateCancelResponse(preAuthResponse);
             this.delegateCloverConnectorListener.onPreAuthResponse(preAuthResponse);
-        } else if (this.lastRequest instanceof sdk.remotepay.AuthRequest) {
+        } else if (this.matchsLastRequest(this.lastRequest, sdk.remotepay.AuthRequest)) {
             var authResponse = new sdk.remotepay.AuthResponse();
             this.populateCancelResponse(authResponse);
             this.delegateCloverConnectorListener.onAuthResponse(authResponse);
-        } else if (this.lastRequest instanceof sdk.remotepay.SaleRequest) {
+        } else if (this.matchsLastRequest(this.lastRequest, sdk.remotepay.SaleRequest)) {
             var saleResponse = new sdk.remotepay.SaleResponse();
             this.populateCancelResponse(saleResponse);
             this.delegateCloverConnectorListener.onSaleResponse(saleResponse);
-        } else if (this.lastRequest instanceof sdk.remotepay.ManualRefundRequest) {
+        } else if (this.matchsLastRequest(this.lastRequest, sdk.remotepay.ManualRefundRequest)) {
             var manualRefundResponse = new sdk.remotepay.ManualRefundResponse();
             this.populateCancelResponse(manualRefundResponse);
             this.delegateCloverConnectorListener.onManualRefundResponse(manualRefundResponse);
@@ -821,13 +833,17 @@ CloverConnectorImpl.prototype.endOfOperationCancel = function() {
  */
 CloverConnectorImpl.prototype.endOfOperationOK = function() {
     // Say "Thank you" for three seconds
-    this.showThankYouScreen();
-    // Then say "Welcome"
-    setTimeout(
-      function () {
-          this.showWelcomeScreen();
-      }.bind(this), 3000 // three seconds
-    );
+    if(this.device != null) {
+        this.showThankYouScreen();
+        // Then say "Welcome"
+        setTimeout(
+          function () {
+              if(this.device != null) {
+                  this.showWelcomeScreen();
+              }
+          }.bind(this), 3000 // three seconds
+        );
+    }
 };
 
 /**
@@ -969,7 +985,7 @@ CloverConnectorImpl.prototype.handleDeviceResult = function(devices) {
         // Stations do not support the kiosk/pay display.
         // If the user has selected one, then print out a (loud) warning
         if (myDevice.model == "Clover_C100") {
-            log.warn(
+            this.log.warn(
               "Warning - Selected device model (" +
               devices[this.configuration.deviceSerialId].model +
               ") does not support cloud pay display." +
@@ -1074,7 +1090,7 @@ CloverConnectorImpl.prototype.deviceNotificationSent = function(endpoints, devic
     // and assume that the notification WAS SENT.
     if (!data.hasOwnProperty('sent') || data.sent) {
         var url = data.host + Endpoints.WEBSOCKET_PATH + '?token=' + data.token;
-        log.debug("Server responded with information on how to contact device. " +
+        this.log.debug("Server responded with information on how to contact device. " +
           "Opening communication channel...");
         // The response to this will be reflected in the device.onopen method (or on error),
         // That function will attempt the discovery.
@@ -1411,7 +1427,7 @@ CloverConnectorImpl.prototype.dispose = function() {
             this.device.reconnect = false;
             this.cancel();
         } catch (e) {
-            log.info(e);
+            this.log.info(e);
         }
         /*
          try {
@@ -1421,10 +1437,10 @@ CloverConnectorImpl.prototype.dispose = function() {
          }
          */
         try {
-            log.info("Calling disconnectFromDevice");
+            this.log.info("Calling disconnectFromDevice");
             this.device.disconnectFromDevice();
         } catch (e) {
-            log.info(e);
+            this.log.info(e);
         }
         this.device = null;
     }
@@ -1697,7 +1713,7 @@ CloverConnectorImpl.prototype.SDKInfo = function() {
  */
 CloverConnectorImpl.prototype.addAcknowledgementHook = function(id, callback) {
     if(!this.deviceSupportsAckMessages) {
-        log.warn("addAcknowledgementHook called, but device does not support ACK messages.  " +
+        this.log.warn("addAcknowledgementHook called, but device does not support ACK messages.  " +
           "Callback will never be called or removed from internal acknowledgementHooks store.");
     }
     this.acknowledgementHooks[id] = callback;

@@ -1,6 +1,7 @@
-var log = require('./Logger.js').create();
+var Logger = require('./Logger.js');
 
 var JSONToCustomObject = function (configuration) {
+    this.log = Logger.create();
 };
 
 /**
@@ -20,7 +21,7 @@ JSONToCustomObject.prototype.transfertoObject = function(jsonobject, customobjec
         try {
             jsonobject = JSON.parse(jsonobject);
         } catch(e) {
-            log.warn(e);
+            this.log.warn(e);
         }
     }
     // First see if we can do this
@@ -61,7 +62,7 @@ JSONToCustomObject.prototype.transfertoObject = function(jsonobject, customobjec
                             }
                         } else {
                             // Warn.  We will be tolerant...
-                            log.warn("Passed json contains field " + key + " of type " + typeof jsonArray  +
+                            this.log.warn("Passed json contains field " + key + " of type " + typeof jsonArray  +
                               ".  The field on the object is of type array.  No assignment will be made", jsonArray, jsonobject);
                             if(attachUnknownProperties) {
                                 customobject["x_" + key] = jsonArray;
