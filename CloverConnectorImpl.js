@@ -185,7 +185,7 @@ CloverConnectorImpl.prototype.setupMappingOfProtocolMessages = function() {
     this.mapTipAdjustResponse();
     this.mapCapturePreauthResponse();
     this.mapCloseoutResponse();
-    this.mapRefundResponse();
+    // this.mapRefundResponse(); mapped in finishOk now
     this.mapPaymentVoided();
     this.mapVaultCardResponse();
     this.mapLastMessageResponse();
@@ -497,6 +497,8 @@ CloverConnectorImpl.prototype.mapCloseoutResponse = function() {
 };
 
 /**
+ *
+ * @deprecated - finishOK is now used.
  * @private
  */
 CloverConnectorImpl.prototype.mapRefundResponse = function() {
@@ -542,12 +544,15 @@ CloverConnectorImpl.prototype.mapVaultCardResponse = function() {
         this.populateGeneric(apiMessage, message);
 
         apiMessage.setCard(message.getCard());
-        this.delegateCloverConnectorListener.onVaultCardResponse(apiMessage);
+
+        var endOfOperationCallback = function() {
+            this.delegateCloverConnectorListener.onVaultCardResponse(apiMessage);
+        }.bind(this);
 
         if(apiMessage.getSuccess()) {
-            this.endOfOperationOK();
+            this.endOfOperationOK(endOfOperationCallback);
         } else {
-            this.endOfOperationCancel();
+            this.endOfOperationCancel(endOfOperationCallback);
         }
     }.bind(this));
 };
@@ -564,12 +569,15 @@ CloverConnectorImpl.prototype.mapCardDataResponse = function() {
         this.populateGeneric(apiMessage, message);
 
         apiMessage.setCardData(message.getCardData());
-        this.delegateCloverConnectorListener.onReadCardDataResponse(apiMessage);
+
+        var endOfOperationCallback = function() {
+            this.delegateCloverConnectorListener.onReadCardDataResponse(apiMessage);
+        }.bind(this);
 
         if(apiMessage.getSuccess()) {
-            this.endOfOperationOK();
+            this.endOfOperationOK(endOfOperationCallback);
         } else {
-            this.endOfOperationCancel();
+            this.endOfOperationCancel(endOfOperationCallback);
         }
     }.bind(this));
 };
@@ -606,32 +614,49 @@ CloverConnectorImpl.prototype.mapLastMessageResponse = function() {
 /**
  * @private
  */
-CloverConnectorImpl.prototype.mapTxStartResponse = function() {
+CloverConnectorImpl.prototype.mapTxStartResponse = function () {
     this.device.on(sdk.remotemessage.Method.TX_START_RESPONSE, function (message) {
         this.log.debug(message);
         var txStartResponseMessage = new sdk.remotemessage.TxStartResponseMessage();
         this.remoteMessageParser.parseMessage(message, txStartResponseMessage);
 
-        if(!txStartResponseMessage.getSuccess()) {
-            if (this.matchsLastRequest(this.lastRequest, sdk.remotepay.PreAuthRequest)) {
+        if (!txStartResponseMessage.getSuccess()) {
+            var theLastRequest = this.lastRequest;
+            this.lastRequest = null;
+            var endOfOperationCallback = null;
+
+            if (this.matchsLastRequest(theLastRequest, sdk.remotepay.PreAuthRequest)) {
                 var preAuthResponse = new sdk.remotepay.PreAuthResponse();
                 this.populateTxStartResponseToBaseResponse(txStartResponseMessage, preAuthResponse);
-                this.delegateCloverConnectorListener.onPreAuthResponse(preAuthResponse);
-            } else if (this.matchsLastRequest(this.lastRequest, sdk.remotepay.AuthRequest)) {
+                endOfOperationCallback = function () {
+                    this.delegateCloverConnectorListener.onPreAuthResponse(preAuthResponse);
+                }.bind(this);
+            } else if (this.matchsLastRequest(theLastRequest, sdk.remotepay.AuthRequest)) {
                 var authResponse = new sdk.remotepay.AuthResponse();
                 this.populateTxStartResponseToBaseResponse(txStartResponseMessage, authResponse);
-                this.delegateCloverConnectorListener.onAuthResponse(authResponse);
-            } else if (this.matchsLastRequest(this.lastRequest, sdk.remotepay.SaleRequest)) {
+                endOfOperationCallback = function () {
+                    this.delegateCloverConnectorListener.onAuthResponse(authResponse);
+                }.bind(this);
+            } else if (this.matchsLastRequest(theLastRequest, sdk.remotepay.SaleRequest)) {
                 var saleResponse = new sdk.remotepay.SaleResponse();
                 this.populateTxStartResponseToBaseResponse(txStartResponseMessage, saleResponse);
-                this.delegateCloverConnectorListener.onSaleResponse(saleResponse);
-            } else if (this.matchsLastRequest(this.lastRequest, sdk.remotepay.ManualRefundRequest)) {
+                endOfOperationCallback = function () {
+                    this.delegateCloverConnectorListener.onSaleResponse(saleResponse);
+                }.bind(this);
+            } else if (this.matchsLastRequest(theLastRequest, sdk.remotepay.ManualRefundRequest)) {
                 var manualRefundResponse = new sdk.remotepay.ManualRefundResponse();
                 this.populateTxStartResponseToBaseResponse(txStartResponseMessage, manualRefundResponse);
-                this.delegateCloverConnectorListener.onManualRefundResponse(manualRefundResponse);
+                endOfOperationCallback = function () {
+                    this.delegateCloverConnectorListener.onManualRefundResponse(manualRefundResponse);
+                }.bind(this);
+            } else if (this.matchsLastRequest(theLastRequest, sdk.remotepay.RefundRequestMessage)) {
+                var apiMessage = new sdk.remotepay.RefundPaymentResponse();
+                this.populateTxStartResponseToBaseResponse(txStartResponseMessage, apiMessage);
+                endOfOperationCallback = function () {
+                    this.delegateCloverConnectorListener.onManualRefundResponse(apiMessage);
+                }.bind(this);
             }
-            this.lastRequest = null;
-            this.endOfOperationCancel();
+            this.endOfOperationCancel(endOfOperationCallback);
         }
     }.bind(this));
 };
@@ -663,98 +688,107 @@ CloverConnectorImpl.prototype.populateTxStartResponseToBaseResponse = function(t
 /**
  * @private
  */
-CloverConnectorImpl.prototype.mapFinishOk = function() {
+CloverConnectorImpl.prototype.mapFinishOk = function () {
     this.device.on(sdk.remotemessage.Method.FINISH_OK, function (message) {
         this.log.debug(message);
-        /**
-         * This goes in a deserialization class
-         * It will be the RemoteMessageParser
-         */
+
         var finishOk = new sdk.remotemessage.FinishOkMessage();
         this.remoteMessageParser.parseMessage(message, finishOk);
+        var theLastRequest = this.lastRequest;
+        this.lastRequest = null;
 
-        if(finishOk.getPayment() !== undefined) {
+        var endOfOperationCallback = null;
 
-            // Is a reparse needed here?
-            // var payment = JSON.parse(payload.payment);
-
-            if (this.matchsLastRequest(this.lastRequest, sdk.remotepay.PreAuthRequest))
-            {
+        if (finishOk.getPayment() !== undefined) {
+            if (this.matchsLastRequest(theLastRequest, sdk.remotepay.PreAuthRequest)) {
                 var preAuthResponse = new sdk.remotepay.PreAuthResponse();
                 this.populateOkPaymentResponse(preAuthResponse, finishOk.getPayment(), finishOk.getSignature());
-                this.delegateCloverConnectorListener.onPreAuthResponse(preAuthResponse);
-                this.lastRequest = null;
-            }else if (this.matchsLastRequest(this.lastRequest, sdk.remotepay.AuthRequest))
-            {
+                endOfOperationCallback = function () {
+                    this.delegateCloverConnectorListener.onPreAuthResponse(preAuthResponse);
+                }.bind(this);
+            } else if (this.matchsLastRequest(theLastRequest, sdk.remotepay.AuthRequest)) {
                 var authResponse = new sdk.remotepay.AuthResponse();
                 this.populateOkPaymentResponse(authResponse, finishOk.getPayment(), finishOk.getSignature());
-                this.delegateCloverConnectorListener.onAuthResponse(authResponse);
-                this.lastRequest = null;
-            }else if (this.matchsLastRequest(this.lastRequest, sdk.remotepay.SaleRequest))
-            {
+                endOfOperationCallback = function () {
+                    this.delegateCloverConnectorListener.onAuthResponse(authResponse);
+                }.bind(this);
+            } else if (this.matchsLastRequest(theLastRequest, sdk.remotepay.SaleRequest)) {
                 var saleResponse = new sdk.remotepay.SaleResponse();
                 this.populateOkPaymentResponse(saleResponse, finishOk.getPayment(), finishOk.getSignature());
-                this.delegateCloverConnectorListener.onSaleResponse(saleResponse);
-                this.lastRequest = null;
-            }else if (this.lastRequest === null)
-            {
+                endOfOperationCallback = function () {
+                    this.delegateCloverConnectorListener.onSaleResponse(saleResponse);
+                }.bind(this);
+            } else if (theLastRequest === null) {
                 this.showWelcomeScreen();
                 return; // skip the end of operation
-            }else
-            {
+            } else {
                 this.resetDevice();
-                this.lastRequest = null;
                 throw new CloverError(CloverError.INVALID_DATA,
                   "Failed to pair this response. " + finishOk.getPayment());
             }
-        } else if(finishOk.getCredit()) {
-            // Is a reparse needed here?
-            // var credit = JSON.parse("credit");
+        } else if (finishOk.getCredit()) {
             var manualRefundResponse = new sdk.remotepay.ManualRefundResponse();
             manualRefundResponse.setSuccess(true);
             manualRefundResponse.setCredit(finishOk.getCredit());
-            this.delegateCloverConnectorListener.onManualRefundResponse(manualRefundResponse);
-            this.lastRequest = null;
+            endOfOperationCallback = function () {
+                this.delegateCloverConnectorListener.onManualRefundResponse(manualRefundResponse);
+            }.bind(this);
+        } else if (finishOk.getRefund()) {
+            var apiMessage = new sdk.remotepay.RefundPaymentResponse();
+            apiMessage.setSuccess(true);
+            apiMessage.setRefund(finishOk.getRefund());
+            endOfOperationCallback = function () {
+                this.delegateCloverConnectorListener.onRefundPaymentResponse(apiMessage);
+            }.bind(this);
+        } else {
+            // Something is wrong...
+            this.log.error(sdk.remotemessage.Method.FINISH_OK +
+              " received, but no payment, credit or refund attached to it!");
         }
-        this.endOfOperationOK();
+        this.endOfOperationOK(endOfOperationCallback);
     }.bind(this));
 };
 
 /**
  * @private
  */
-CloverConnectorImpl.prototype.mapFinishCancel = function() {
+CloverConnectorImpl.prototype.mapFinishCancel = function () {
     this.device.on(sdk.remotemessage.Method.FINISH_CANCEL, function (message) {
         this.log.debug(message);
-        /*
-         * This goes in a deserialization class
-         * It will be the RemoteMessageParser
-         */
+
         var finishcancel = new sdk.remotemessage.FinishCancelMessage();
         this.remoteMessageParser.parseMessage(message, finishcancel);
+        var endOfOperationCallback = null;
 
         if (this.matchsLastRequest(this.lastRequest, sdk.remotepay.PreAuthRequest)) {
             var preAuthResponse = new sdk.remotepay.PreAuthResponse();
             this.populateCancelResponse(preAuthResponse);
-            this.delegateCloverConnectorListener.onPreAuthResponse(preAuthResponse);
+            endOfOperationCallback = function () {
+                this.delegateCloverConnectorListener.onPreAuthResponse(preAuthResponse);
+            }.bind(this);
         } else if (this.matchsLastRequest(this.lastRequest, sdk.remotepay.AuthRequest)) {
             var authResponse = new sdk.remotepay.AuthResponse();
             this.populateCancelResponse(authResponse);
-            this.delegateCloverConnectorListener.onAuthResponse(authResponse);
+            endOfOperationCallback = function () {
+                this.delegateCloverConnectorListener.onAuthResponse(authResponse);
+            }.bind(this);
         } else if (this.matchsLastRequest(this.lastRequest, sdk.remotepay.SaleRequest)) {
             var saleResponse = new sdk.remotepay.SaleResponse();
             this.populateCancelResponse(saleResponse);
-            this.delegateCloverConnectorListener.onSaleResponse(saleResponse);
+            endOfOperationCallback = function () {
+                this.delegateCloverConnectorListener.onSaleResponse(saleResponse);
+            }.bind(this);
         } else if (this.matchsLastRequest(this.lastRequest, sdk.remotepay.ManualRefundRequest)) {
             var manualRefundResponse = new sdk.remotepay.ManualRefundResponse();
             this.populateCancelResponse(manualRefundResponse);
-            this.delegateCloverConnectorListener.onManualRefundResponse(manualRefundResponse);
+            endOfOperationCallback = function () {
+                this.delegateCloverConnectorListener.onManualRefundResponse(manualRefundResponse);
+            }.bind(this);
         }
         this.lastRequest = null;
-        this.endOfOperationCancel();
+        this.endOfOperationCancel(endOfOperationCallback);
     }.bind(this));
 };
-
 
 /**
  * @private
@@ -822,27 +856,89 @@ CloverConnectorImpl.prototype.sendVoidPaymentResponse = function(payment) {
 /**
  * @private - action after an operation cancel
  */
-CloverConnectorImpl.prototype.endOfOperationCancel = function() {
-    this.showMessage(MessageBundle.TRANSACTION_CANCELLED);
-    setTimeout(this.endOfOperationOK.bind(this), 3000 // three seconds
-    );
+CloverConnectorImpl.prototype.endOfOperationCancel = function(callback) {
+    //this.showMessage(MessageBundle.TRANSACTION_CANCELLED);
+    //setTimeout(this.endOfOperationOK.bind(this), 3000 // three seconds
+    //);
+
+    // Build the transaction cancelled message to display
+    var protocolRequest = new sdk.remotemessage.TerminalMessage();
+    protocolRequest.setText(MessageBundle.TRANSACTION_CANCELLED);
+    // Send the message.  Once the ACK is received for this, we will wait three
+    // seconds, then call the end of operation function, passing along
+    // the callback passed to this.
+    this.callOnACK(protocolRequest, function () {
+        if (this.device != null) {
+            setTimeout(
+              function () {
+                  this.endOfOperationOK(callback);
+              }.bind(this), 3000 // three seconds
+            );
+        }
+    }.bind(this));
 };
 
 /**
  * @private - action after an operation ok
  */
-CloverConnectorImpl.prototype.endOfOperationOK = function() {
+CloverConnectorImpl.prototype.endOfOperationOK = function(callback) {
     // Say "Thank you" for three seconds
+    //if (this.device != null) {
+    //    this.showThankYouScreen();
+    //    // Then say "Welcome"
+    //    setTimeout(
+    //      function () {
+    //          if (this.device != null) {
+    //              this.showWelcomeScreen();
+    //          }
+    //      }.bind(this), 3000 // three seconds
+    //    );
+    //}
+
+    // Build the thank you message
+    var protocolRequest = new sdk.remotemessage.ThankYouMessage();
+    // Send the thank you message, wait for the "ACK" from it to present the
+    // Welcome Screen after three seconds.
+    this.callOnACK(protocolRequest, function () {
+        if (this.device != null) {
+            setTimeout(
+              function () {
+                  if (this.device != null) {
+                      // Build the "Welcome" message
+                      var protocolRequest2 = new sdk.remotemessage.WelcomeMessage();
+                      // Send the welcome message, wait for the "ACK" from it to call
+                      // whatever callback was passed.
+                      this.callOnACK(protocolRequest2, callback);
+                  }
+              }.bind(this), 3000 // three seconds
+            );
+        }
+    }.bind(this));
+};
+
+CloverConnectorImpl.prototype.callOnACK = function(protocolRequest, callback) {
     if(this.device != null) {
-        this.showThankYouScreen();
-        // Then say "Welcome"
-        setTimeout(
-          function () {
-              if(this.device != null) {
-                  this.showWelcomeScreen();
-              }
-          }.bind(this), 3000 // three seconds
-        );
+        // Wait for an ACK... then call sendVoidPaymentResponse
+        var remoteMessage = this.messageBuilder.buildRemoteMessageObject(protocolRequest);
+        // This is a backwards compatibility hack.
+        if(this.deviceSupportsAckMessages) {
+            // If acknowledgements are supported, then
+            // wait for an ACK from the device.  The ACK hook will call
+            // callback()
+
+            // Add the hook
+            // send the message
+            this.addAcknowledgementHook(remoteMessage.getId(), callback);
+            this.sendMessage(remoteMessage);
+        } else {
+            // ACK messages are  not supported.  We will just send the message before
+            // calling the callback.  This causes threading issues, but is necessary for
+            // backwards compatibility.
+            this.sendMessage(remoteMessage);
+            if(callback) {
+                callback();
+            }
+        }
     }
 };
 
@@ -1494,6 +1590,8 @@ CloverConnectorImpl.prototype.refundPayment = function(request) {
     }
     protocolRequest.setOrderId(request.getOrderId());
     protocolRequest.setPaymentId(request.getPaymentId());
+    this.lastRequest = request;
+
     this.sendMessage(this.messageBuilder.buildRemoteMessageObject(protocolRequest));
 };
 
@@ -1697,9 +1795,8 @@ CloverConnectorImpl.prototype.voidPayment = function(request) {
  * @return {String}
  */
 CloverConnectorImpl.prototype.SDKInfo = function() {
-    var sdkInfo = CloverConnectorImpl.RemoteSourceSDK + ":" +
+    return CloverConnectorImpl.RemoteSourceSDK + ":" +
       CLOVER_CLOUD_SDK_VERSION;
-    return sdkInfo;
 };
 
 /**
