@@ -80,7 +80,7 @@ var connector = new clover.CloverConnectorFactory().createICloverConnector({
 });
 
 ExampleCloverConnectorListener  = function(cloverConnector) {
-    ICloverConnectorListener.call(this);
+    clover.remotepay.ICloverConnectorListener.call(this);
     this.cloverConnector = cloverConnector;
 };
 
@@ -169,7 +169,7 @@ The functions implemented will be called as the connector encounters the events.
 // This overrides/implements the constructor function.  This example
 // expects that a clover connector implementation instance is passed to the created listener.
 ExampleCloverConnectorListener  = function(cloverConnector) {
-    ICloverConnectorListener.call(this);
+    clover.remotepay.ICloverConnectorListener.call(this);
     this.cloverConnector = cloverConnector;
 };
 ExampleCloverConnectorListener.prototype = Object.create(clover.remotepay.ICloverConnectorListener.prototype);
