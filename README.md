@@ -30,6 +30,10 @@ Please report back to us any questions/comments/concerns, by emailing semi-integ
 
 ## Release Notes
 
+### Version 1.1.0-rc6
+
+* PAY-1258 Fix documentation.  Set up flow to capture "REFUND_RESPONSE" and extract any additional failure info.  Fix namespace issues.  Change flow to depend on ACK messages (when supported).  Extend ping/pong timeout check.
+
 ### Version 1.1.0-rc5.1
 
 * SEMI-493: Allow suppression of log messages. Log messages are now suppressed by default.  To enable default logging:
