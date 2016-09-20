@@ -315,7 +315,6 @@ DelegateCloverConnectorListener.prototype.onRetrievePendingPaymentsResponse = fu
 
 /**
  * Called in response to a readCardData(...) request
- * @memberof remotepay.ICloverConnectorListener
  *
  * @param {remotepay.ReadCardDataResponse} response
  * @return {Null}

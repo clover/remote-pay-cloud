@@ -1787,7 +1787,8 @@ function Clover(configurationIN) {
     };
 
     /**
-     * @private - action after an operation
+     * action after an operation
+     * @private
      */
     this.endOfOperation = function() {
         // Say "Thank you" for three seconds

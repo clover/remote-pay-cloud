@@ -30,7 +30,10 @@ CLOVER_CLOUD_SDK_VERSION = "1.1.0-rc5.1";
  *  Defines the interface used to interact with remote pay
  *  adapters.
  */
+
 /**
+ *
+ * @param {Object.<string, string>} configuration - the configuration for the connector
  * @constructor
  */
 var CloverConnectorImpl = function(configuration) {
@@ -79,7 +82,7 @@ var CloverConnectorImpl = function(configuration) {
     this.remoteMessageParser = new RemoteMessageParser(builderPackageConf);
     this.messageBuilder = new RemoteMessageBuilder(builderPackageConf,
       CloverConnectorImpl.RemoteSourceSDK + ":" + CLOVER_CLOUD_SDK_VERSION,
-      this.configuration.remoteApplicationId, messageCount
+      this.configuration["remoteApplicationId"], messageCount
     );
     this.device.messageBuilder = this.messageBuilder;
 
@@ -113,6 +116,9 @@ var CloverConnectorImpl = function(configuration) {
 
     // Following is an internal structure used for specialized acknowledgement message handling.
     this.acknowledgementHooks = {};
+
+    // We need to hold on to this because the finishOK does not provide enough information
+    this.refundPaymentResponse = null; // RefundPaymentResponse;
 
     this.setupMappingOfProtocolMessages();
 
@@ -185,7 +191,7 @@ CloverConnectorImpl.prototype.setupMappingOfProtocolMessages = function() {
     this.mapTipAdjustResponse();
     this.mapCapturePreauthResponse();
     this.mapCloseoutResponse();
-    // this.mapRefundResponse(); mapped in finishOk now
+    this.mapRefundResponse();
     this.mapPaymentVoided();
     this.mapVaultCardResponse();
     this.mapLastMessageResponse();
@@ -403,6 +409,9 @@ CloverConnectorImpl.prototype.mapUIEvents = function() {
 
         var deviceEvent = new sdk.remotepay.CloverDeviceEvent();
         deviceEvent.setMessage(uiMessage.getUiText());
+        // Following maps exactly, but want insulation from
+        // remotemessage <-> remotepay
+        //noinspection JSCheckFunctionSignatures
         deviceEvent.setEventState(uiMessage.getUiState());
         deviceEvent.setInputOptions(uiMessage.getInputOptions());
 
@@ -433,27 +442,31 @@ CloverConnectorImpl.prototype.mapTipAdjustResponse = function() {
 
 /**
  * Newer sdk.remotemessage response objects contain a more standard pattern, but they do not share a
- * baseclass.  This results in the unfortunate need for a convention that is not enforced.
+ * baseclass.  This results in the unfortunate need for a convention that is not enforced.  Some
+ * subclasses will have these functions, others may not.
  *
- * The convention is the presense of the getStatus() and getReason() functions.
+ * The convention is the presence of the getStatus() and getReason() functions.
  *
- * @param {sdk.remotepay.BaseResponse} apiMessage
- * @param {sdk.remotemessage.Message} message
+ * @param {remotepay.BaseResponse} apiMessage
+ * @param {remotemessage.Message} message
  */
 CloverConnectorImpl.prototype.populateGeneric = function(apiMessage, message) {
     try {
+        //noinspection JSUnresolvedFunction
         apiMessage.setSuccess(message.getStatus() == sdk.remotepay.ResultStatus.SUCCESS);
     }catch(e){
         this.log.error("Attempt to set success failed!");
     }
     try {
+        //noinspection JSUnresolvedFunction
         apiMessage.setResult(message.getStatus() == sdk.remotepay.ResultStatus.SUCCESS ?
           sdk.remotepay.ResponseCode.SUCCESS : message.getCode() == sdk.remotepay.ResultStatus.FAIL ?
-          sdk.remotepay.ResponseCode.FAIL : ResponseCode.ERROR );
+          sdk.remotepay.ResponseCode.FAIL : sdk.remotepay.ResponseCode.ERROR );
     }catch(e){
         this.log.error("Attempt to set result failed!");
     }
     try {
+        //noinspection JSUnresolvedFunction
         apiMessage.setReason(message.getReason());
     }catch(e){
         this.log.warn("Attempt to set reason failed!");
@@ -497,8 +510,11 @@ CloverConnectorImpl.prototype.mapCloseoutResponse = function() {
 };
 
 /**
+ * This message has additional information about failures, so we build
+ * a response based on this information - if the result is a failure.
+ * This will then be used in the "finishCancel" processing.
  *
- * @deprecated - finishOK is now used.
+ *
  * @private
  */
 CloverConnectorImpl.prototype.mapRefundResponse = function() {
@@ -506,16 +522,19 @@ CloverConnectorImpl.prototype.mapRefundResponse = function() {
         var message = new sdk.remotemessage.RefundResponseMessage();
         this.remoteMessageParser.parseMessage(remoteMessage, message);
 
-        var apiMessage = new sdk.remotepay.RefundPaymentResponse();
-        apiMessage.setSuccess(message.getCode() == TxState.SUCCESS);
-        apiMessage.setResult(message.getCode() == TxState.SUCCESS ?
-          ResponseCode.SUCCESS : message.getCode() == TxState.FAIL ?
-          ResponseCode.FAIL : ResponseCode.ERROR );
-        apiMessage.setReason(message.getReason());
-        apiMessage.setMessage(message.getMessage());
+        if(message.getCode() != sdk.remotemessage.TxState.SUCCESS) {
+            this.refundPaymentResponse = new sdk.remotepay.RefundPaymentResponse();
+            this.refundPaymentResponse.setSuccess(message.getCode() == sdk.remotemessage.TxState.SUCCESS);
+            this.refundPaymentResponse.setResult(message.getCode() == sdk.remotemessage.TxState.SUCCESS ?
+              sdk.remotepay.ResponseCode.SUCCESS : message.getCode() == sdk.remotemessage.TxState.FAIL ?
+              sdk.remotepay.ResponseCode.FAIL : sdk.remotepay.ResponseCode.ERROR);
+            this.refundPaymentResponse.setReason(message.getReason());
+            this.refundPaymentResponse.setMessage(message.getMessage());
 
-        apiMessage.setRefund(message.getRefund());
-        this.delegateCloverConnectorListener.onRefundPaymentResponse(apiMessage);
+            this.refundPaymentResponse.setRefund(message.getRefund());
+        }
+        // This is now called from finishOK mapping
+        // this.delegateCloverConnectorListener.onRefundPaymentResponse(apiMessage);
     }.bind(this));
 };
 
@@ -652,8 +671,9 @@ CloverConnectorImpl.prototype.mapTxStartResponse = function () {
             } else if (this.matchsLastRequest(theLastRequest, sdk.remotepay.RefundRequestMessage)) {
                 var apiMessage = new sdk.remotepay.RefundPaymentResponse();
                 this.populateTxStartResponseToBaseResponse(txStartResponseMessage, apiMessage);
+                this.refundPaymentResponse = null;
                 endOfOperationCallback = function () {
-                    this.delegateCloverConnectorListener.onManualRefundResponse(apiMessage);
+                    this.delegateCloverConnectorListener.onRefundPaymentResponse(apiMessage);
                 }.bind(this);
             }
             this.endOfOperationCancel(endOfOperationCallback);
@@ -669,13 +689,12 @@ CloverConnectorImpl.prototype.matchsLastRequest = function (lastRequest, theType
         result = (lastReqStr == theTypeStr);
     }
     return result;
-    // return (lastRequest instanceof theType);
 };
 
 /**
  * @private
- * @param {TxStartResponseMessage} txStartResponseMessage
- * @param {BaseResponse} response
+ * @param {remotemessage.TxStartResponseMessage} txStartResponseMessage
+ * @param {remotepay.BaseResponse} response
  */
 CloverConnectorImpl.prototype.populateTxStartResponseToBaseResponse = function(txStartResponseMessage, response) {
     response.setSuccess(txStartResponseMessage.getSuccess());
@@ -737,6 +756,7 @@ CloverConnectorImpl.prototype.mapFinishOk = function () {
             var apiMessage = new sdk.remotepay.RefundPaymentResponse();
             apiMessage.setSuccess(true);
             apiMessage.setRefund(finishOk.getRefund());
+            this.refundPaymentResponse = null;
             endOfOperationCallback = function () {
                 this.delegateCloverConnectorListener.onRefundPaymentResponse(apiMessage);
             }.bind(this);
@@ -756,36 +776,52 @@ CloverConnectorImpl.prototype.mapFinishCancel = function () {
     this.device.on(sdk.remotemessage.Method.FINISH_CANCEL, function (message) {
         this.log.debug(message);
 
-        var finishcancel = new sdk.remotemessage.FinishCancelMessage();
-        this.remoteMessageParser.parseMessage(message, finishcancel);
+        var finishCancel = new sdk.remotemessage.FinishCancelMessage();
+        this.remoteMessageParser.parseMessage(message, finishCancel);
         var endOfOperationCallback = null;
+        var theLastRequest = this.lastRequest;
+        this.lastRequest = null;
 
-        if (this.matchsLastRequest(this.lastRequest, sdk.remotepay.PreAuthRequest)) {
+        if (this.matchsLastRequest(theLastRequest, sdk.remotepay.PreAuthRequest)) {
             var preAuthResponse = new sdk.remotepay.PreAuthResponse();
             this.populateCancelResponse(preAuthResponse);
             endOfOperationCallback = function () {
                 this.delegateCloverConnectorListener.onPreAuthResponse(preAuthResponse);
             }.bind(this);
-        } else if (this.matchsLastRequest(this.lastRequest, sdk.remotepay.AuthRequest)) {
+        } else if (this.matchsLastRequest(theLastRequest, sdk.remotepay.AuthRequest)) {
             var authResponse = new sdk.remotepay.AuthResponse();
             this.populateCancelResponse(authResponse);
             endOfOperationCallback = function () {
                 this.delegateCloverConnectorListener.onAuthResponse(authResponse);
             }.bind(this);
-        } else if (this.matchsLastRequest(this.lastRequest, sdk.remotepay.SaleRequest)) {
+        } else if (this.matchsLastRequest(theLastRequest, sdk.remotepay.SaleRequest)) {
             var saleResponse = new sdk.remotepay.SaleResponse();
             this.populateCancelResponse(saleResponse);
             endOfOperationCallback = function () {
                 this.delegateCloverConnectorListener.onSaleResponse(saleResponse);
             }.bind(this);
-        } else if (this.matchsLastRequest(this.lastRequest, sdk.remotepay.ManualRefundRequest)) {
+        } else if (this.matchsLastRequest(theLastRequest, sdk.remotepay.ManualRefundRequest)) {
             var manualRefundResponse = new sdk.remotepay.ManualRefundResponse();
             this.populateCancelResponse(manualRefundResponse);
             endOfOperationCallback = function () {
                 this.delegateCloverConnectorListener.onManualRefundResponse(manualRefundResponse);
             }.bind(this);
+        } else if (this.matchsLastRequest(theLastRequest, sdk.remotepay.RefundPaymentRequest)) {
+            /*
+            This case is a little different.  The REFUND_RESPONSE message has greater details on failures,
+            so we will try to return information from that (if it is set)
+             */
+            var apiMessage = this.refundPaymentResponse;
+            this.refundPaymentResponse = null;
+            if(!apiMessage) {
+                // The REFUND_RESPONSE did not set the variable, make a new one and populate it.
+                apiMessage = new sdk.remotepay.RefundPaymentResponse();
+                this.populateCancelResponse(apiMessage);
+            }
+            endOfOperationCallback = function () {
+                this.delegateCloverConnectorListener.onRefundPaymentResponse(apiMessage);
+            }.bind(this);
         }
-        this.lastRequest = null;
         this.endOfOperationCancel(endOfOperationCallback);
     }.bind(this));
 };
@@ -810,7 +846,6 @@ CloverConnectorImpl.prototype.processVerifySignature = function(message) {
  * @param remoteMessage
  */
 CloverConnectorImpl.prototype.processRetrievePendingPayments = function(remoteMessage) {
-    // var retrievePendingPaymentsMessage = this.extractPayloadFromRemoteMessageJson(message);
     var message = new sdk.remotemessage.RetrievePendingPaymentsResponseMessage();
     this.remoteMessageParser.parseMessage(remoteMessage, message);
 
@@ -842,25 +877,22 @@ CloverConnectorImpl.prototype.processConfirmPayment = function(message) {
  * Not sure if this one should do the same.
  *
  * @private
- * @param {Payment} payment
+ * @param {payments.Payment} payment
  */
 CloverConnectorImpl.prototype.sendVoidPaymentResponse = function(payment) {
     var apiMessage = new sdk.remotepay.VoidPaymentResponse();
     apiMessage.setSuccess(true);
-    apiMessage.setResult(ResponseCode.SUCCESS);
+    apiMessage.setResult(sdk.remotepay.ResponseCode.SUCCESS);
     apiMessage.setPaymentId(payment.getId());
 
     this.delegateCloverConnectorListener.onVoidPaymentResponse(apiMessage);
 };
 
 /**
- * @private - action after an operation cancel
+ * action after an operation cancel
+ * @private
  */
 CloverConnectorImpl.prototype.endOfOperationCancel = function(callback) {
-    //this.showMessage(MessageBundle.TRANSACTION_CANCELLED);
-    //setTimeout(this.endOfOperationOK.bind(this), 3000 // three seconds
-    //);
-
     // Build the transaction cancelled message to display
     var protocolRequest = new sdk.remotemessage.TerminalMessage();
     protocolRequest.setText(MessageBundle.TRANSACTION_CANCELLED);
@@ -879,22 +911,10 @@ CloverConnectorImpl.prototype.endOfOperationCancel = function(callback) {
 };
 
 /**
- * @private - action after an operation ok
+ * action after an operation ok
+ * @private
  */
 CloverConnectorImpl.prototype.endOfOperationOK = function(callback) {
-    // Say "Thank you" for three seconds
-    //if (this.device != null) {
-    //    this.showThankYouScreen();
-    //    // Then say "Welcome"
-    //    setTimeout(
-    //      function () {
-    //          if (this.device != null) {
-    //              this.showWelcomeScreen();
-    //          }
-    //      }.bind(this), 3000 // three seconds
-    //    );
-    //}
-
     // Build the thank you message
     var protocolRequest = new sdk.remotemessage.ThankYouMessage();
     // Send the thank you message, wait for the "ACK" from it to present the
@@ -944,28 +964,28 @@ CloverConnectorImpl.prototype.callOnACK = function(protocolRequest, callback) {
 
 /**
  * @private
- * @param {PaymentResponse} response
- * @param {Payment} payment
- * @param {Signature} signature
+ * @param {remotepay.PaymentResponse} response
+ * @param {payments.Payment} payment
+ * @param {base.Signature} signature
  */
 CloverConnectorImpl.prototype.populateOkPaymentResponse = function(response, payment, signature) {
     response.setPayment(payment);
     response.setSignature(signature);
     response.setSuccess(true);
     response.setIsPreAuth(
-      (payment.getResult() === Result.AUTH) &&
-      (payment.getCardTransaction().getType() ===  CardTransactionType.PREAUTH));
+      (payment.getResult() === sdk.payments.Result.AUTH) &&
+      (payment.getCardTransaction().getType() ===  sdk.payments.CardTransactionType.PREAUTH));
     response.setIsSale(
-      (payment.getResult() === Result.SUCCESS) &&
-      (payment.getCardTransaction().getType() ===  CardTransactionType.AUTH));
+      (payment.getResult() === sdk.payments.Result.SUCCESS) &&
+      (payment.getCardTransaction().getType() ===  sdk.payments.CardTransactionType.AUTH));
     response.setIsAuth(
-      (payment.getResult() === Result.SUCCESS) &&
-      (payment.getCardTransaction().getType() ===  CardTransactionType.PREAUTH));
+      (payment.getResult() === sdk.payments.Result.SUCCESS) &&
+      (payment.getCardTransaction().getType() ===  sdk.payments.CardTransactionType.PREAUTH));
 };
 
 /**
  * @private
- * @param {BaseResponse} response
+ * @param {remotepay.BaseResponse} response
  */
 CloverConnectorImpl.prototype.populateCancelResponse = function(response) {
     response.setSuccess(false);
@@ -1203,7 +1223,7 @@ CloverConnectorImpl.prototype.deviceNotificationSent = function(endpoints, devic
 
 /**
  * Send a signature acceptance
- * @param {VerifySignatureRequest} request
+ * @param {remotepay.VerifySignatureRequest} request
  * @return void
  */
 CloverConnectorImpl.prototype.acceptSignature = function(request) {
@@ -1216,7 +1236,7 @@ CloverConnectorImpl.prototype.acceptSignature = function(request) {
 
 /**
  * Accepts a payment that has been challenged.
- * @param {Payment} payment
+ * @param {payments.Payment} payment
  * @return void
  */
 CloverConnectorImpl.prototype.acceptPayment = function(payment) {
@@ -1227,8 +1247,8 @@ CloverConnectorImpl.prototype.acceptPayment = function(payment) {
 
 /**
  * Rejects a payment that has been challenged.
- * @param {Payment} payment
- * @param {Challenge} challenge
+ * @param {payments.Payment} payment
+ * @param {base.Challenge} challenge
  * @return void
  */
 CloverConnectorImpl.prototype.rejectPayment = function(payment, challenge) {
@@ -1240,7 +1260,7 @@ CloverConnectorImpl.prototype.rejectPayment = function(payment, challenge) {
 
 /**
  * Request an authorization operation.
- * @param {AuthRequest} request
+ * @param {remotepay.AuthRequest} request
  * @return void
  */
 CloverConnectorImpl.prototype.auth = function(request) {
@@ -1267,7 +1287,7 @@ CloverConnectorImpl.prototype.auth = function(request) {
 
 /**
  * @private
- * @param {TransactionRequest} request
+ * @param {remotepay.TransactionRequest} request
  */
 CloverConnectorImpl.prototype.populateBasePayIntent = function(request) {
     var payIntent = new sdk.remotemessage.PayIntent();
@@ -1275,6 +1295,9 @@ CloverConnectorImpl.prototype.populateBasePayIntent = function(request) {
         throw new CloverError(CloverError.INVALID_DATA, "externalId is required");
     }
     payIntent.setExternalPaymentId(request.getExternalId()); //
+    // Following maps exactly, but different types are attempt to isolate
+    // remotemessage <-> remotepay
+    //noinspection JSCheckFunctionSignatures
     payIntent.setTransactionType(request.getType());//
     payIntent.setAmount(request.getAmount()); //
     payIntent.setVaultedCard(request.getVaultedCard());//
@@ -1307,7 +1330,7 @@ CloverConnectorImpl.prototype.verifyValidAmount = function (amount, allowZero) {
 
 /**
  * Request a preauth operation.
- * @param {PreAuthRequest} preAuthRequest
+ * @param {remotepay.PreAuthRequest} preAuthRequest
  * @return void
  */
 CloverConnectorImpl.prototype.preAuth = function(preAuthRequest) {
@@ -1334,7 +1357,7 @@ CloverConnectorImpl.prototype.cancel = function() {
 
 /**
  * Request a preauth be captured.
- * @param {CapturePreAuthRequest} capturePreAuthRequest
+ * @param {remotepay.CapturePreAuthRequest} capturePreAuthRequest
  * @return void
  */
 CloverConnectorImpl.prototype.capturePreAuth = function(capturePreAuthRequest) {
@@ -1350,7 +1373,7 @@ CloverConnectorImpl.prototype.capturePreAuth = function(capturePreAuthRequest) {
 
 /**
  * Request a closeout.
- * @param {CloseoutRequest} closeoutRequest
+ * @param {remotepay.CloseoutRequest} closeoutRequest
  * @return void
  */
 CloverConnectorImpl.prototype.closeout = function(closeoutRequest) {
@@ -1397,19 +1420,12 @@ CloverConnectorImpl.prototype.showPaymentReceiptOptions = function(orderId, paym
  * @param {string} refundId
  * @return void
  */
-/*
- v2
- showPaymentRefundReceiptOptions = function(orderId, refundId) {
- // Waiting on changes in remote-pay.
- throw new CloverError(CloverError.NOT_IMPLEMENTED);
- };
- */
 
 /**
  * Display orderObj information on the screen. Calls to this method will cause the DisplayOrder
  * to show on the clover device. If a DisplayOrder is already showing on the Clover device,
  * it will replace the existing DisplayOrder on the device.
- * @param {DisplayOrder} orderObj
+ * @param {order.DisplayOrder} orderObj
  * @return void
  */
 CloverConnectorImpl.prototype.showDisplayOrder = function(orderObj) {
@@ -1430,8 +1446,8 @@ CloverConnectorImpl.prototype.removeDisplayOrder = function(orderObj) {
 /**
  * Notify device of a discount being added to the orderObj. The discount will then reflect in the displayOrder.
  * Note: This is independent of a discount being added to a display line item.
- * @param {DisplayDiscount} discountObj
- * @param {DisplayOrder} orderObj
+ * @param {order.DisplayDiscount} discountObj
+ * @param {order.DisplayOrder} orderObj
  * @return void
  */
 CloverConnectorImpl.prototype.discountAddedToDisplayOrder = function(discountObj, orderObj) {
@@ -1448,8 +1464,8 @@ CloverConnectorImpl.prototype.discountAddedToDisplayOrder = function(discountObj
 /**
  * Notify device of a discount being removed to the orderObj. The discount will then reflect in the displayOrder.
  * Note: This is independent of a discount being removed to a display line item.
- * @param {DisplayDiscount} discount
- * @param {DisplayOrder} orderObj
+ * @param {order.DisplayDiscount} discount
+ * @param {order.DisplayOrder} orderObj
  * @return void
  */
 CloverConnectorImpl.prototype.discountRemovedFromDisplayOrder = function(discount, orderObj) {
@@ -1466,8 +1482,8 @@ CloverConnectorImpl.prototype.discountRemovedFromDisplayOrder = function(discoun
 /**
  * Notify device of a line item being added to the orderObj. The line item will then reflect in the displayOrder.
  * Note: This is independent of a line item being added to a display line item.
- * @param {DisplayLineItem} lineItem
- * @param {DisplayOrder} orderObj
+ * @param {order.DisplayLineItem} lineItem
+ * @param {order.DisplayOrder} orderObj
  * @return void
  */
 CloverConnectorImpl.prototype.lineItemAddedToDisplayOrder = function(lineItem, orderObj) {
@@ -1484,8 +1500,8 @@ CloverConnectorImpl.prototype.lineItemAddedToDisplayOrder = function(lineItem, o
 /**
  * Notify device of a line item being removed to the orderObj. The line item will then reflect in the displayOrder.
  * Note: This is independent of a line item being removed to a display line item.
- * @param {DisplayLineItem} lineItem
- * @param {DisplayOrder} orderObj
+ * @param {order.DisplayLineItem} lineItem
+ * @param {order.DisplayOrder} orderObj
  * @return void
  */
 CloverConnectorImpl.prototype.lineItemRemovedFromDisplayOrder = function(lineItem, orderObj) {
@@ -1501,10 +1517,12 @@ CloverConnectorImpl.prototype.lineItemRemovedFromDisplayOrder = function(lineIte
 
 /**
  * This can be used internally, but will remain hidden for now.
- * @private
+ *
  * When called, it will return a tuple with the last transactional request sent to the Clover Mini, and
  * the corresponding response from the Mini if there was one (NULL if not). Works for sale, auth, manual refund
  * and refund.
+ *
+ * @private
  * @return void
  */
 CloverConnectorImpl.prototype.getLastTransaction = function() {
@@ -1525,13 +1543,6 @@ CloverConnectorImpl.prototype.dispose = function() {
         } catch (e) {
             this.log.info(e);
         }
-        /*
-         try {
-         this.resetDevice();
-         } catch (e) {
-         log.info(e);
-         }
-         */
         try {
             this.log.info("Calling disconnectFromDevice");
             this.device.disconnectFromDevice();
@@ -1545,7 +1556,7 @@ CloverConnectorImpl.prototype.dispose = function() {
 /**
  * Send a keystroke to the device.  When in non secure displays are on the device, this can be used to
  * act in the role of the user to 'press' available keys.
- * @param {InputOption} io
+ * @param {remotemessage.InputOption} io
  * @return void
  */
 CloverConnectorImpl.prototype.invokeInputOption = function(io) {
@@ -1556,7 +1567,7 @@ CloverConnectorImpl.prototype.invokeInputOption = function(io) {
 
 /**
  * Do a refund to a card.
- * @param {ManualRefundRequest} request
+ * @param {remotepay.ManualRefundRequest} request
  * @return void
  */
 CloverConnectorImpl.prototype.manualRefund = function(request) {
@@ -1574,7 +1585,7 @@ CloverConnectorImpl.prototype.manualRefund = function(request) {
 
 /**
  * Do a refund on a previously made payment.
- * @param {RefundPaymentRequest} request
+ * @param {remotepay.RefundPaymentRequest} request
  * @return void
  */
 CloverConnectorImpl.prototype.refundPayment = function(request) {
@@ -1642,7 +1653,7 @@ CloverConnectorImpl.prototype.printText = function(messages) {
 
 /**
  * Reject a signature
- * @param {VerifySignatureRequest} request
+ * @param {remotepay.VerifySignatureRequest} request
  * @return void
  */
 CloverConnectorImpl.prototype.rejectSignature = function(request) {
@@ -1665,7 +1676,7 @@ CloverConnectorImpl.prototype.resetDevice = function() {
 
 /**
  * Begin a sale transaction.
- * @param {SaleRequest} request
+ * @param {remotepay.SaleRequest} request
  * @return void
  */
 CloverConnectorImpl.prototype.sale = function(request) {
@@ -1723,7 +1734,7 @@ CloverConnectorImpl.prototype.showWelcomeScreen = function() {
 
 /**
  * Tip adjust an existing auth
- * @param {TipAdjustAuthRequest} request
+ * @param {remotepay.TipAdjustAuthRequest} request
  * @return void
  */
 CloverConnectorImpl.prototype.tipAdjustAuth = function(request) {
@@ -1753,7 +1764,7 @@ CloverConnectorImpl.prototype.vaultCard = function(cardEntryMethods) {
 
 /**
  * Void a payment
- * @param {VoidPaymentRequest} request
+ * @param {remotepay.VoidPaymentRequest} request
  * @return void
  */
 CloverConnectorImpl.prototype.voidPayment = function(request) {
@@ -1765,7 +1776,7 @@ CloverConnectorImpl.prototype.voidPayment = function(request) {
     orderReference.setId(request.getOrderId());
     payment.setOrder(orderReference);
     var employeeReference = new sdk.base.Reference();
-    employeeReference.setId(request.getEmployeeId()===undefined
+    employeeReference.setId(request.getEmployeeId() == null
       ? this.configuration.defaultEmployeeId : request.getEmployeeId());
     payment.setEmployee(employeeReference);
     protocolRequest.setPayment(payment);
@@ -1847,7 +1858,7 @@ CloverConnectorImpl.prototype.getListeners = function() {
 /**
  * Used internally
  * @protected
- * @param {LogLevelEnum} logLevel - the logging level
+ * @param {remotemessage.LogLevelEnum} logLevel - the logging level
  * @param {Object} messages - a mappiing of string->string that is passed directly in the message
  */
 CloverConnectorImpl.prototype.logMessageRemotely = function(logLevel, messages) {
@@ -1867,7 +1878,7 @@ CloverConnectorImpl.prototype.retrievePendingPayments = function() {
  * @see ICloverConnectorListener.onReadCardDataResponse(ReadCardDataResponse)
  * @memberof sdk.remotepay.ICloverConnector
  *
- * @param {sdk.remotepay.ReadCardDataRequest} request
+ * @param {remotepay.ReadCardDataRequest} request
  * @return void
  */
 CloverConnectorImpl.prototype.readCardData = function(request) {
@@ -1923,7 +1934,9 @@ CloverConnectorImpl.ERROR = "ERROR";
 //
 // Expose the module.
 //
+//noinspection JSUnresolvedVariable
 if ('undefined' !== typeof module) {
+    //noinspection JSUnresolvedVariable
     module.exports = CloverConnectorImpl;
 }
 
