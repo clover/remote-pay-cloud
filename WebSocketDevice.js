@@ -30,11 +30,11 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
     // The last time a ping was sent, set to current time initially
     this.pingSentMillis = new Date().getTime();
     // How often a ping is sent
-    this.millisecondsBetweenPings = 2500; // 5 seconds
+    this.millisecondsBetweenPings = 5000; // 5 seconds
     // How long should it be before we warn on a dead connection
     this.deadConnectionWarnThreshold = this.millisecondsBetweenPings * 2;
     // How long should it be before we error on a dead connection
-    this.deadConnectionErrorThreshold = this.deadConnectionWarnThreshold * 2;
+    this.deadConnectionErrorThreshold = this.deadConnectionWarnThreshold * 4;
     // How long should it be before we shut down on a dead connection
     this.deadConnectionShutdownThreshold = this.deadConnectionErrorThreshold * 2;
     this.allowOvertakeConnection = allowOvertakeConnection;
@@ -653,7 +653,9 @@ WebSocketDevice.prototype.sendShowOrderScreen = function(order, ackId) {
     };
     var lanMessage = this.messageBuilder.buildShowOrderScreen(payload);
     // If an id is included, then an "ACK" message will be sent for this message
-    if(ackId) lanMessage.id = ackId;
+    if(ackId) {
+        lanMessage.id = ackId;
+    }
 
     this.sendMessage(lanMessage);
 };

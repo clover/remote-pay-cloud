@@ -17,7 +17,7 @@ var Logger = require('./Logger.js');
 // !!NOTE!!  The following is automatically updated to reflect the npm version.
 // See the package.json postversion script, which maps to scripts/postversion.sh
 // Do not change this or the versioning may not reflect the npm version correctly.
-CLOVER_CLOUD_SDK_VERSION = "1.1.0-rc5.1";
+CLOVER_CLOUD_SDK_VERSION = "1.1.0-rc6.0";
 
 /**
  * Clover API for external Systems
@@ -1787,7 +1787,8 @@ function Clover(configurationIN) {
     };
 
     /**
-     * @private - action after an operation
+     * action after an operation
+     * @private
      */
     this.endOfOperation = function() {
         // Say "Thank you" for three seconds
