@@ -18,6 +18,7 @@ var EndPointConfig = require("./EndpointConfig.js");
 var MessageBundle = require("./MessageBundle.js");
 var CloudMethod = require("./CloudMethod.js");
 var Logger = require('./Logger.js');
+var LanMethod = require('./LanMethod.js');
 
 // !!NOTE!!  The following is automatically updated to reflect the npm version.
 // See the package.json postversion script, which maps to scripts/postversion.sh
@@ -200,6 +201,43 @@ CloverConnectorImpl.prototype.setupMappingOfProtocolMessages = function() {
     this.mapTxStartResponse();
     this.mapRetrievePendingPayments();
     this.mapCardDataResponse();
+    this.mapShutdown();
+    this.mapReset();
+};
+
+/**
+ * This is a special method only used in Cloud.
+ *
+ * @private
+ */
+CloverConnectorImpl.prototype.mapShutdown = function() {
+    this.device.on(LanMethod.SHUTDOWN,
+      function (message) {
+          this.dispose();
+      }.bind(this));
+};
+
+/**
+ * This is a special method only used in Cloud.
+ *
+ * @private
+ */
+CloverConnectorImpl.prototype.mapReset = function() {
+    this.device.on(LanMethod.RESET,
+      function (message) {
+          this.onResetRequest();
+      }.bind(this));
+};
+
+/**
+ * When the server requests a connection reset, this will be called.
+ *
+ * The default implementation is to immediately drop the connection and reconnect.  To allow
+ * for current work to be completed, this can be overridden.  If a reset request is sent, but ignored,
+ * the server will forcably drop the connection after a period of time.
+ */
+CloverConnectorImpl.prototype.onResetRequest = function() {
+    this.reconnect();
 };
 
 /**
@@ -1550,6 +1588,19 @@ CloverConnectorImpl.prototype.dispose = function() {
             this.log.info(e);
         }
         this.device = null;
+    }
+};
+
+/**
+ * @return void
+ */
+CloverConnectorImpl.prototype.reconnect = function() {
+    if (this.device) {
+        try {
+            this.device.attemptReconnect();
+        } catch (e) {
+            this.log.info(e);
+        }
     }
 };
 
