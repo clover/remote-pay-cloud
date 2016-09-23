@@ -30,7 +30,11 @@ Please report back to us any questions/comments/concerns, by emailing semi-integ
 
 ## Release Notes
 
-### Version 1.1.0-rc6
+### Version 1.1.0-rc6.1
+
+* SVR-899 Handle reconnect requests from the server.
+
+### Version 1.1.0-rc6.0
 
 * PAY-1258 Fix documentation.  Set up flow to capture "REFUND_RESPONSE" and extract any additional failure info.  Fix namespace issues.  Change flow to depend on ACK messages (when supported).  Extend ping/pong timeout check.
 
