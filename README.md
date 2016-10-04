@@ -5,7 +5,7 @@
 See the package.json postversion script, which maps to scripts/postversion.sh
 Do not change this or the versioning may not reflect the npm version correctly.
 --->
-Current version: 1.1.0-rc6.0
+Current version: 1.1.0-rc6.1
 
 ## Overview
 
@@ -30,7 +30,11 @@ Please report back to us any questions/comments/concerns, by emailing semi-integ
 
 ## Release Notes
 
-### Version 1.1.0-rc6
+### Version 1.1.0-rc6.1
+
+* SVR-899 Handle reconnect requests from the server.
+
+### Version 1.1.0-rc6.0
 
 * PAY-1258 Fix documentation.  Set up flow to capture "REFUND_RESPONSE" and extract any additional failure info.  Fix namespace issues.  Change flow to depend on ACK messages (when supported).  Extend ping/pong timeout check.
 
@@ -230,5 +234,5 @@ $(window).on('beforeunload ', function () {
 
 ## Generate Documentation
 API documentation is generated when `npm install` is run. 
-[Online Docs](http://clover.github.io/remote-pay-cloud/1.1.0-rc6.0/) and
+[Online Docs](http://clover.github.io/remote-pay-cloud/1.1.0-rc6.1/) and
 [Online API class Docs](http://clover.github.io/remote-pay-cloud-api/1.1.0-rc5.0/)

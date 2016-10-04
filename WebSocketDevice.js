@@ -487,9 +487,6 @@ function WebSocketDevice(allowOvertakeConnection, friendlyId) {
             // note: Look at JSON.parse(text[, reviver]).
             // This can be used with the MethodToMessage class
             // to automatically parse the json into the correct objects.
-
-
-
             this.eventEmitter.emit(message.method, message);
         }
         this.eventEmitter.emit(WebSocketDevice.ALL_MESSAGES, message);

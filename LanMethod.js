@@ -106,6 +106,12 @@ LanMethod.ACK = "ACK";
  */
 LanMethod.ERROR = "ERROR";
 
+/**
+ * The reset method type
+ * This is a special type only present in the cloud adaptor.
+ */
+LanMethod.RESET = "RESET";
+
 
 //
 // Expose the module.
