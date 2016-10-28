@@ -1,6 +1,6 @@
 {
   "name": "remote-pay-cloud",
-  "version": "1.1.0-rc6.1",
+  "version": "1.1.0-rc6.2",
   "description": "Access Clover devices through the cloud.",
   "keywords": [
     "clover",
@@ -29,7 +29,7 @@
     "preinstall": "scripts/generateDocs.sh"
   },
   "dependencies": {
-    "remote-pay-cloud-api": "1.1.0-rc5.0",
+    "remote-pay-cloud-api": "1.1.0-rc5.1",
     "eventemitter3": "~1.1.1",
     "jsdoc": "*"
   },
