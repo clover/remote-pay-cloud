@@ -23,7 +23,7 @@ var LanMethod = require('./LanMethod.js');
 // !!NOTE!!  The following is automatically updated to reflect the npm version.
 // See the package.json postversion script, which maps to scripts/postversion.sh
 // Do not change this or the versioning may not reflect the npm version correctly.
-CLOVER_CLOUD_SDK_VERSION = "1.1.0-rc6.1";
+CLOVER_CLOUD_SDK_VERSION = "1.1.0-rc6.2";
 
 /**
  *  Interface to the Clover remote-pay API.
