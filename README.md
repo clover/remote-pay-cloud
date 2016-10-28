@@ -30,6 +30,10 @@ Please report back to us any questions/comments/concerns, by emailing semi-integ
 
 ## Release Notes
 
+### Version 1.1.0-rc6.2
+
+SEMI-541 Update remote pay cloud API classes to ver 1.1.0-rc5.1
+
 ### Version 1.1.0-rc6.1
 
 * SVR-899 Handle reconnect requests from the server.
