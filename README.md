@@ -19,6 +19,8 @@ The API is available on [GitHub](https://github.com/clover/remote-pay-cloud) for
 
 The library requires the browser you use to support WebSockets. See [WebSocket Browser Support](http://caniuse.com/#feat=websockets).
 
+For more developer documentation and information about the Semi-Integration program, please visit our [semi-integration developer documents] (https://docs.clover.com/build/integration-overview-requirements/). 
+
 ### Examples
 #### Application
 A sale/refund UI example project [Clover Cloud Connector Example](https://github.com/clover/clover-cloud-connector-example) is available for download and deployment, or direct deployment to a Heroku server.
