@@ -90,7 +90,7 @@ var connector = new clover.CloverConnectorFactory().createICloverConnector({
     "clientId": "3RPTN642FHXTX",
     "remoteApplicationId": "com.yourname.yourapplication:1.0.0-beta1",
     "deviceSerialId": "C031UQ52340015",
-    "domain": "https://dev1.dev.clover.com/"
+    "domain": "https://sandbox.dev.clover.com/"
 });
 
 ExampleCloverConnectorListener  = function(cloverConnector) {
@@ -101,7 +101,7 @@ ExampleCloverConnectorListener  = function(cloverConnector) {
 ExampleCloverConnectorListener.prototype = Object.create(clover.remotepay.ICloverConnectorListener.prototype);
 ExampleCloverConnectorListener.prototype.constructor = ExampleCloverConnectorListener;
 
-ExampleCloverConnectorListener.prototype.onReady: function (merchantInfo) {
+ExampleCloverConnectorListener.prototype.onReady = function (merchantInfo) {
     var saleRequest = new clover.remotepay.SaleRequest();
     saleRequest.setExternalId(clover.CloverID.getNewId());
     saleRequest.setAmount(10000);
@@ -147,7 +147,7 @@ var connector = new clover.CloverConnectorFactory().createICloverConnector({
     "clientId": "3RPTN642FHXTC",
     "remoteApplicationId": "com.yourname.yourapplication:1.0.0-beta1",
     "deviceSerialId": "C031UQ52340045",
-    "domain": "https://dev1.dev.clover.com/"
+    "domain": "https://sandbox.dev.clover.com/"
 });
 ```
 
