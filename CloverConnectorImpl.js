@@ -91,6 +91,9 @@ var CloverConnectorImpl = function(configuration) {
     this.pauseBetweenDiscovery = 3000;
     this.numberOfDiscoveryMessagesToSend = 10;
     this.discoveryResponseReceived = false;
+    this.isReady = false;
+    // MerchantInfo
+    this.merchantInfo = null;
 
     this.configuration.autoVerifySignature =
       Boolean(this.configuration.autoVerifySignature);
@@ -143,12 +146,15 @@ CloverConnectorImpl.prototype.constructor = CloverConnectorImpl;
 
 /**
  * @param {Object} message - the message to send
+ * @param {boolean} handshaking - are we currently handshaking
  * @private
  */
-CloverConnectorImpl.prototype.sendMessage = function(message) {
+CloverConnectorImpl.prototype.sendMessage = function(message, handshaking) {
             try {
                 this.log.debug("sendMessage", message);
-                if(this.device == null) {
+                // If the device is null OR
+                // we are NOT handshaking, and we are not ready
+                if(this.device == null || (!handshaking && !this.isReady)) {
                     var notConnectedErrorEvent = new sdk.remotepay.CloverDeviceErrorEvent();
                     notConnectedErrorEvent.setMessage("Device is not connected");
                     notConnectedErrorEvent.setCode(sdk.remotepay.DeviceErrorEventCode.NotConnected);
@@ -335,11 +341,13 @@ CloverConnectorImpl.prototype.mapDeviceEvents = function() {
         // The connection to the device is open, but we do not yet know if there is anyone at the other end.
         // Send discovery request message.
         this.log.debug(event);
-        this.sendMessage(this.messageBuilder.buildDiscoveryRequestObject());
+        this.sendMessage(this.messageBuilder.buildDiscoveryRequestObject(), true);
+        this.isReady = false;
         this.delegateCloverConnectorListener.onConnected();
     }.bind(this));
     this.device.on(WebSocketDevice.DEVICE_CLOSE, function (event) {
         this.log.debug(event);
+        this.isReady = false;
         this.delegateCloverConnectorListener.onDisconnected();
     }.bind(this));
     this.device.on(WebSocketDevice.DEVICE_ERROR, function (event) {
@@ -348,6 +356,7 @@ CloverConnectorImpl.prototype.mapDeviceEvents = function() {
         var deviceErrorEvent = new sdk.remotepay.CloverDeviceErrorEvent();
         deviceErrorEvent.setType(sdk.remotepay.ErrorType.COMMUNICATION);
         //deviceErrorEvent.setCode(DeviceErrorEventCode.AccessDenied);
+        // this.isReady = false;  For this connector, this may not be true yet.
         this.delegateCloverConnectorListener.onDeviceError(deviceErrorEvent);
     }.bind(this));
 };
@@ -377,6 +386,7 @@ CloverConnectorImpl.prototype.mapConnectionEvents = function() {
         this.log.debug(message);
         // How do we handle this?  Message is the friendly id of the
         // other terminal that stole the connection.
+        this.isReady = false;
         this.delegateCloverConnectorListener.onDisconnected();
     }.bind(this));
     this.device.on(WebSocketDevice.CONNECTION_DENIED, function (message) {
@@ -399,23 +409,24 @@ CloverConnectorImpl.prototype.mapDiscoveryResponse = function() {
         this.remoteMessageParser.parseMessage(message, discoveryResponse);
 
         /**  This goes in a deserialization class **/
-        var merchantInfo = new sdk.remotepay.MerchantInfo();
-        merchantInfo.setMerchantID(discoveryResponse.getMerchantId());
-        merchantInfo.setMerchantName(discoveryResponse.getMerchantName());
-        merchantInfo.setMerchantMID(discoveryResponse.getMerchantMId());
-        merchantInfo.setSupportsTipAdjust(discoveryResponse.getSupportsTipAdjust());
-        merchantInfo.setSupportsManualRefunds(discoveryResponse.getSupportsManualRefund());
+        this.merchantInfo = new sdk.remotepay.MerchantInfo();
+        this.merchantInfo.setMerchantID(discoveryResponse.getMerchantId());
+        this.merchantInfo.setMerchantName(discoveryResponse.getMerchantName());
+        this.merchantInfo.setMerchantMID(discoveryResponse.getMerchantMId());
+        this.merchantInfo.setSupportsTipAdjust(discoveryResponse.getSupportsTipAdjust());
+        this.merchantInfo.setSupportsManualRefunds(discoveryResponse.getSupportsManualRefund());
 
         var deviceInfo = new sdk.remotepay.DeviceInfo();
         deviceInfo.setName( discoveryResponse.getName() );
         deviceInfo.setSerial(discoveryResponse.getSerial());
         deviceInfo.setModel(discoveryResponse.getModel());
 
-        merchantInfo.setDeviceInfo(deviceInfo);
+        this.merchantInfo.setDeviceInfo(deviceInfo);
 
         this.deviceSupportsAckMessages = discoveryResponse.supportsAcknowledgement;
 
-        this.delegateCloverConnectorListener.onReady(merchantInfo);
+        this.isReady = discoveryResponse.ready;
+        this.delegateCloverConnectorListener.onReady(this.merchantInfo);
     }.bind(this));
 };
 
@@ -1028,7 +1039,68 @@ CloverConnectorImpl.prototype.populateOkPaymentResponse = function(response, pay
 CloverConnectorImpl.prototype.populateCancelResponse = function(response) {
     response.setSuccess(false);
     response.setResult(sdk.remotepay.ResponseCode.CANCEL);
+    return response;
 };
+
+/**
+ * @private
+ * @param {string} messagePrefix - a descriptive prefix for the message
+ * @param {remotepay.BaseResponse} response
+ * @returns {*}
+ */
+CloverConnectorImpl.prototype.populateConnectionError = function(messagePrefix, response) {
+    response.setSuccess(false);
+    response.setResult(sdk.remotepay.ResponseCode.ERROR);
+    response.setReason("Device Connection Error");
+    response.setMessage(messagePrefix + "The Clover device is not connected.");
+    return response;
+};
+
+/**
+ * @private
+ * @param {remotepay.BaseResponse} response
+ */
+CloverConnectorImpl.prototype.populateMerchantConfigurationUnsupported = function(response) {
+    response.setSuccess(false);
+    response.setResult(sdk.remotepay.ResponseCode.UNSUPPORTED);
+    response.setReason("Merchant Configuration Error");
+    return response;
+};
+
+/**
+ * @private
+ * @param {remotepay.BaseResponse} response
+ */
+CloverConnectorImpl.prototype.populateRequestValidationFail = function(response) {
+    response.setSuccess(false);
+    response.setResult(sdk.remotepay.ResponseCode.FAIL);
+    response.setReason("Request Validation Error");
+    return response;
+};
+
+/**
+ * @private
+ * @param {string} messagePrefix - a descriptive prefix for the message
+ * @param {remotepay.BaseResponse} response
+ */
+CloverConnectorImpl.prototype.populateEmptyRequestValidationFail = function(messagePrefix, response) {
+    this.populateRequestValidationFail(response);
+    response.setMessage(messagePrefix + "The request that was passed in for processing is empty.");
+    return response;
+};
+
+/**
+ * @private
+ * @param {string} messagePrefix - a descriptive prefix for the message
+ * @param {remotepay.BaseRequest} request
+ * @param {remotepay.BaseResponse} response
+ */
+CloverConnectorImpl.prototype.populateRequestAmountValidationFail = function(messagePrefix, request, response) {
+    this.populateRequestValidationFail(response);
+    response.setMessage(messagePrefix + "The request amount cannot be zero. Original Request = " + request);
+    return response;
+};
+
 
 /**
  * Begin connecting.
@@ -1265,11 +1337,54 @@ CloverConnectorImpl.prototype.deviceNotificationSent = function(endpoints, devic
  * @return void
  */
 CloverConnectorImpl.prototype.acceptSignature = function(request) {
-    var payment = request.getPayment();
-    var protocolRequest = new sdk.remotemessage.SignatureVerifiedMessage();
-    protocolRequest.setPayment(payment);
-    protocolRequest.setVerified(true);
-    this.sendMessage(this.messageBuilder.buildRemoteMessageObject(protocolRequest));
+    if(this.validateSignatureRequest("In AcceptSignature : ", request)) {
+        var payment = request.getPayment();
+        var protocolRequest = new sdk.remotemessage.SignatureVerifiedMessage();
+        protocolRequest.setPayment(payment);
+        protocolRequest.setVerified(true);
+        this.sendMessage(this.messageBuilder.buildRemoteMessageObject(protocolRequest));
+    }
+};
+
+/**
+ * Reject a signature
+ * @param {remotepay.VerifySignatureRequest} request
+ * @return void
+ */
+CloverConnectorImpl.prototype.rejectSignature = function(request) {
+    if(this.validateSignatureRequest("In RejectSignature : ", request)) {
+        var payment = request.getPayment();
+        var protocolRequest = new sdk.remotemessage.SignatureVerifiedMessage();
+        protocolRequest.setPayment(payment);
+        protocolRequest.setVerified(false);
+        this.sendMessage(this.messageBuilder.buildRemoteMessageObject(protocolRequest));
+    }
+};
+
+/**
+ * @private
+ * @param messagePrefix - used in error message if validation fails.
+ * @param {remotepay.VerifySignatureRequest} request
+ * @returns {boolean} true if validation passed, else false
+ */
+CloverConnectorImpl.prototype.validateSignatureRequest = function(messagePrefix, request) {
+    if(request == null) {
+        var response = new sdk.remotepay.CloverDeviceErrorEvent();
+        response.setType(sdk.remotepay.ErrorType.VALIDATION);
+        response.setMessage(messagePrefix + "VerifySignatureRequest cannot be null. ");
+        this.delegateCloverConnectorListener.onDeviceError(response);
+
+        return false;
+    }
+    if (!request.getPayment() || !request.getPayment().getId()) {
+        var response = new sdk.remotepay.CloverDeviceErrorEvent();
+        response.setType(sdk.remotepay.ErrorType.VALIDATION);
+        response.setMessage(messagePrefix + "VerifySignatureRequest.Payment must have an ID. ");
+        this.delegateCloverConnectorListener.onDeviceError(response);
+
+        return false;
+    }
+    return true;
 };
 
 /**
@@ -1278,6 +1393,14 @@ CloverConnectorImpl.prototype.acceptSignature = function(request) {
  * @return void
  */
 CloverConnectorImpl.prototype.acceptPayment = function(payment) {
+    if(payment == null || payment.getId() == null) {
+        var response = new sdk.remotepay.CloverDeviceErrorEvent();
+        response.setType(sdk.remotepay.ErrorType.VALIDATION);
+        response.setMessage("In AcceptPayment: The Payment ID cannot be null.");
+        this.delegateCloverConnectorListener.onDeviceError(response);
+
+        return;
+    }
     var protocolRequest = new sdk.remotemessage.PaymentConfirmedMessage();
     protocolRequest.setPayment(payment);
     this.sendMessage(this.messageBuilder.buildRemoteMessageObject(protocolRequest));
@@ -1290,6 +1413,14 @@ CloverConnectorImpl.prototype.acceptPayment = function(payment) {
  * @return void
  */
 CloverConnectorImpl.prototype.rejectPayment = function(payment, challenge) {
+    if(payment == null || payment.getId() == null) {
+        var response = new sdk.remotepay.CloverDeviceErrorEvent();
+        response.setType(sdk.remotepay.ErrorType.VALIDATION);
+        response.setMessage("In RejectPayment: The Payment ID cannot be null.");
+        this.delegateCloverConnectorListener.onDeviceError(response);
+
+        return;
+    }
     var protocolRequest = new sdk.remotemessage.PaymentRejectedMessage();
     protocolRequest.setPayment(payment);
     protocolRequest.setVoidReason(challenge.getReason());
@@ -1302,6 +1433,21 @@ CloverConnectorImpl.prototype.rejectPayment = function(payment, challenge) {
  * @return void
  */
 CloverConnectorImpl.prototype.auth = function(request) {
+    if(!this.validateSaleAuthPreauth(
+            "In Auth : AuthRequest - ",
+            sdk.remotepay.AuthResponse,
+            request,
+            this.delegateCloverConnectorListener.onAuthResponse.bind(this.delegateCloverConnectorListener))) {
+        return;
+    }
+    if(!this.validateSupportsTipAdjust(
+            "In Auth : AuthRequest - ",
+            sdk.remotepay.AuthResponse,
+            request,
+            this.delegateCloverConnectorListener.onAuthResponse.bind(this.delegateCloverConnectorListener))) {
+        return;
+    }
+
     var protocolRequest = new sdk.remotemessage.TxStartRequestMessage();
     this.verifyValidAmount(request.getAmount());
 
@@ -1322,6 +1468,259 @@ CloverConnectorImpl.prototype.auth = function(request) {
 
     this.sendMessage(this.messageBuilder.buildRemoteMessageObject(protocolRequest));
 };
+
+/**
+ * Handle a check to see if the payment id is blank
+ *
+ * @private
+ * @param {String} messagePrefix
+ * @param responseType - a response type
+ * @param request - a request
+ * @param onresponse - the appropriate callback on validation fail
+ * @returns {boolean} if validation succeeds, else false
+ */
+CloverConnectorImpl.prototype.validatePaymentId = function(messagePrefix, responseType, request, onresponse) {
+
+    if ( !request.getPaymentId() )
+    {
+        var response = new responseType;
+        this.populateRequestValidationFail(response);
+        response.setMessage(messagePrefix + "PaymentID cannot be empty.");
+        if(onresponse) {
+            onresponse(response);
+        }
+
+        return false;
+    }
+    return true;
+};
+
+/**
+ * Handle a check to see if the merchant supports tip adjust.
+ *
+ * @private
+ * @param {String} messagePrefix
+ * @param responseType - a response type
+ * @param request - a request
+ * @param onresponse - the appropriate callback on validation fail
+ * @returns {boolean} if validation succeeds, else false
+ */
+CloverConnectorImpl.prototype.validateSupportsManualRefunds = function(messagePrefix, responseType, request, onresponse) {
+    if (!this.merchantInfo.getSupportsManualRefunds())
+    {
+        var response = new responseType;
+        this.populateMerchantConfigurationUnsupported(response);
+        response.setMessage(messagePrefix + "Manual refunds are not supported by the merchant configured gateway." + request);
+        if(onresponse) {
+            onresponse(response);
+        }
+
+        return false;
+    }
+    return true;
+};
+
+/**
+ * Handle a check to see if the merchant supports tip adjust.
+ *
+ * @private
+ * @param {String} messagePrefix
+ * @param responseType - a response type
+ * @param request - a request
+ * @param onresponse - the appropriate callback on validation fail
+ * @returns {boolean} if validation succeeds, else false
+ */
+CloverConnectorImpl.prototype.validateSupportsTipAdjust = function(messagePrefix, responseType, request, onresponse) {
+    if (!this.merchantInfo.getSupportsTipAdjust())
+    {
+        var response = new responseType;
+        this.populateMerchantConfigurationUnsupported(response);
+        response.setMessage(messagePrefix + "Auths are not enabled for the payment gateway. Original Request = " + request);
+        if(onresponse) {
+            onresponse(response);
+        }
+
+        return false;
+    }
+    return true;
+};
+
+/**
+ * Handle a check to see if the merchant supports pre auth.
+ *
+ * @private
+ * @param {String} messagePrefix
+ * @param responseType - a response type
+ * @param request - a request
+ * @param onresponse - the appropriate callback on validation fail
+ * @returns {boolean} if validation succeeds, else false
+ */
+CloverConnectorImpl.prototype.validateSupportsPreAuth = function(messagePrefix, responseType, request, onresponse) {
+    if (!this.merchantInfo.getSupportsPreAuths())
+    {
+        var response = new responseType;
+        this.populateMerchantConfigurationUnsupported(response);
+        response.setMessage(messagePrefix + "PreAuths are not enabled for the payment gateway. Original Request = " + request);
+        if(onresponse) {
+            onresponse(response);
+        }
+
+        return false;
+    }
+    return true;
+};
+
+/**
+ * Do common validation for a valid tip amount
+ *
+ * @private
+ * @param {String} messagePrefix
+ * @param responseType - a response type
+ * @param request - a request
+ * @param onresponse - the appropriate callback on validation fail
+ * @returns {boolean} if validation succeeds, else false
+ */
+CloverConnectorImpl.prototype.validateTipAmount = function(messagePrefix, responseType, request, onresponse) {
+    if (request.getTipAmount()  && request.getTipAmount() < 0) {
+        var response = new responseType;
+        this.populateRequestValidationFail(response);
+        response.setMessage(messagePrefix + "The request tip amount cannot be less than zero. Original Request = " + request);
+        if(onresponse) {
+            onresponse(response);
+        }
+
+        return false;
+    }
+    return true;
+};
+
+/**
+ * Do common validation for ready + request + amount
+ *
+ * @private
+ * @param {String} messagePrefix
+ * @param responseType - a response type
+ * @param request - a request
+ * @param onresponse - the appropriate callback on validation fail
+ * @returns {boolean} if validation succeeds, else false
+ */
+CloverConnectorImpl.prototype.validateReadyRequest = function(messagePrefix, responseType, request, onresponse) {
+    if( !this.validateReady(messagePrefix, responseType, request, onresponse) ||
+        !this.validateRequest(messagePrefix, responseType, request, onresponse)) {
+        return false;
+    }
+    return true;
+};
+
+
+/**
+ * Do common validation for ready + request + amount
+ *
+ * @private
+ * @param {String} messagePrefix
+ * @param responseType - a response type
+ * @param request - a request
+ * @param onresponse - the appropriate callback on validation fail
+ * @returns {boolean} if validation succeeds, else false
+ */
+CloverConnectorImpl.prototype.validateReady = function(messagePrefix, responseType, request, onresponse) {
+    if (this.device == null || !this.isReady) {
+        var response = new responseType;
+        this.populateConnectionError(messagePrefix, response);
+        if (onresponse) {
+            onresponse(response);
+        }
+
+        return false;
+    }
+    return true;
+};
+
+/**
+ * Do common validation for ready + request + amount
+ *
+ * @private
+ * @param {String} messagePrefix
+ * @param responseType - a response type
+ * @param request - a request
+ * @param onresponse - the appropriate callback on validation fail
+ * @returns {boolean} if validation succeeds, else false
+ */
+CloverConnectorImpl.prototype.validateRequest = function(messagePrefix, responseType, request, onresponse) {
+    if (request == null) {
+        var response = new responseType;
+        this.populateEmptyRequestValidationFail(messagePrefix, response);
+        if(onresponse) {
+            onresponse(response);
+        }
+
+        return false;
+    }
+    return true;
+};
+
+/**
+ * Do common validation for amount
+ *
+ * @private
+ * @param {String} messagePrefix
+ * @param responseType - a response type
+ * @param request - a request
+ * @param onresponse - the appropriate callback on validation fail
+ * @returns {boolean} if validation succeeds, else false
+ */
+CloverConnectorImpl.prototype.validateAmount = function(messagePrefix, responseType, request, onresponse) {
+    if(request.getAmount() <= 0) {
+        var response = new responseType;
+        this.populateRequestAmountValidationFail(messagePrefix, request, response);
+        if(onresponse) {
+            onresponse(response);
+        }
+
+        return false;
+    }
+    return true;
+};
+
+/**
+ * Do common validation for sale auth and preauth
+ *
+ * @private
+ * @param {String} messagePrefix
+ * @param responseType - a sale, auth or preauth response type
+ * @param request - a sale, auth or preauth request
+ * @param onresponse - the appropriate callback on validation fail
+ * @returns {boolean} if validation succeeds, else false
+ */
+CloverConnectorImpl.prototype.validateSaleAuthPreauthManref = function(messagePrefix, responseType, request, onresponse) {
+    if(! this.validateReadyRequest(messagePrefix, responseType, request, onresponse)) {
+        return false;
+    }
+    if(!this.validateAmount(messagePrefix, responseType, request, onresponse)) {
+        return false;
+    }
+    if(!request.getExternalId() ||  !request.getExternalId().trim()) {
+        var response = new responseType;
+        this.populateRequestValidationFail(response);
+        response.setMessage(messagePrefix + "The request ExternalId cannot be null or blank. Original Request = " + request);
+        if(onresponse) {
+            onresponse(response);
+        }
+
+        return false;
+    }
+    if (request.getVaultedCard() && !this.merchantInfo.getSupportsVaultCards()) {
+        var response = new responseType;
+        this.populateMerchantConfigurationUnsupported(response);
+        response.setMessage(messagePrefix + "Vault Card support is not offered by the merchant configured gateway. Original Request = " + request);
+        if(onresponse) {
+            onresponse(response);
+        }
+
+        return false;
+    }
+    return true;
+}
 
 /**
  * @private
@@ -1372,6 +1771,22 @@ CloverConnectorImpl.prototype.verifyValidAmount = function (amount, allowZero) {
  * @return void
  */
 CloverConnectorImpl.prototype.preAuth = function(preAuthRequest) {
+    if(!this.validateSaleAuthPreauthManref(
+            "In PreAuth : PreAuthRequest - ",
+            sdk.remotepay.PreAuthResponse,
+            request,
+            this.delegateCloverConnectorListener.onPreAuthResponse.bind(this.delegateCloverConnectorListener))) {
+        return;
+    }
+    if (!this.merchantInfo.getSupportsPreAuths())
+    {
+        var response = new sdk.remotepay.PreAuthResponse();
+        this.populateMerchantConfigurationUnsupported(response);
+        response.setMessage("In PreAuth : PreAuthRequest - " + "PreAuths are not enabled for the payment gateway. Original Request = " + request);
+        this.delegateCloverConnectorListener.onSaleResponse(response);
+
+        return;
+    }
     var protocolRequest = new sdk.remotemessage.TxStartRequestMessage();
     this.verifyValidAmount(preAuthRequest.getAmount());
 
@@ -1399,6 +1814,27 @@ CloverConnectorImpl.prototype.cancel = function() {
  * @return void
  */
 CloverConnectorImpl.prototype.capturePreAuth = function(capturePreAuthRequest) {
+    if(!this.validateSaleAuthPreauthManref(
+            "In CapturePreAuth : CapturePreAuthRequest - ",
+            sdk.remotepay.CapturePreAuthResponse,
+            request,
+            this.delegateCloverConnectorListener.onCapturePreAuthResponse.bind(this.delegateCloverConnectorListener))) {
+        return;
+    }
+    if(!this.validateSupportsPreAuth(
+            "In CapturePreAuth : CapturePreAuthRequest - ",
+            sdk.remotepay.CapturePreAuthResponse,
+            request,
+            this.delegateCloverConnectorListener.onCapturePreAuthResponse.bind(this.delegateCloverConnectorListener))) {
+        return;
+    }
+    if(!this.validateTipAmount(
+            "In CapturePreAuth : CapturePreAuthRequest - ",
+            sdk.remotepay.CapturePreAuthResponse,
+            request,
+            this.delegateCloverConnectorListener.onCapturePreAuthResponse.bind(this.delegateCloverConnectorListener))) {
+        return;
+    }
     var protocolRequest = new sdk.remotemessage.CapturePreAuthMessage();
     this.verifyValidAmount(capturePreAuthRequest.getAmount());
 
@@ -1415,11 +1851,16 @@ CloverConnectorImpl.prototype.capturePreAuth = function(capturePreAuthRequest) {
  * @return void
  */
 CloverConnectorImpl.prototype.closeout = function(closeoutRequest) {
+    if(!this.validateReadyRequest(
+            "In Closeout: CloseoutRequest - ",
+            sdk.remotepay.CloseoutResponse,
+            request,
+            this.delegateCloverConnectorListener.onCloseoutResponse.bind(this.delegateCloverConnectorListener))) {
+        return;
+    }
     var protocolRequest = new sdk.remotemessage.CloseoutRequestMessage();
-
     protocolRequest.setAllowOpenTabs(closeoutRequest.getAllowOpenTabs());
     protocolRequest.setBatchId(closeoutRequest.getBatchId());
-
     this.sendMessage(this.messageBuilder.buildRemoteMessageObject(protocolRequest));
 };
 
@@ -1444,6 +1885,22 @@ CloverConnectorImpl.prototype.closeout = function(closeoutRequest) {
  * @return void
  */
 CloverConnectorImpl.prototype.showPaymentReceiptOptions = function(orderId, paymentId) {
+    if(orderId == null) {
+        var response = new sdk.remotepay.CloverDeviceErrorEvent();
+        response.setType(sdk.remotepay.ErrorType.VALIDATION);
+        response.setMessage("In DisplayPaymentReceiptOptions: The orderId cannot be null.");
+        this.delegateCloverConnectorListener.onDeviceError(response);
+
+        return;
+    }
+    if(paymentId == null) {
+        var response = new sdk.remotepay.CloverDeviceErrorEvent();
+        response.setType(sdk.remotepay.ErrorType.VALIDATION);
+        response.setMessage("In DisplayPaymentReceiptOptions: The paymentId cannot be null.");
+        this.delegateCloverConnectorListener.onDeviceError(response);
+
+        return;
+    }
     var protocolRequest = new sdk.remotemessage.ShowPaymentReceiptOptionsMessage();
 
     protocolRequest.setOrderId(orderId);
@@ -1467,6 +1924,14 @@ CloverConnectorImpl.prototype.showPaymentReceiptOptions = function(orderId, paym
  * @return void
  */
 CloverConnectorImpl.prototype.showDisplayOrder = function(orderObj) {
+    if(orderObj == null) {
+        var response = new sdk.remotepay.CloverDeviceErrorEvent();
+        response.setType(sdk.remotepay.ErrorType.VALIDATION);
+        response.setMessage("In ShowDisplayOrder : DisplayOrder object cannot be null.");
+        this.delegateCloverConnectorListener.onDeviceError(response);
+
+        return;
+    }
     var protocolRequest = new sdk.remotemessage.OrderUpdateMessage();
     protocolRequest.setOrder(orderObj);
     this.sendMessage(this.messageBuilder.buildRemoteMessageObject(protocolRequest));
@@ -1611,6 +2076,14 @@ CloverConnectorImpl.prototype.reconnect = function() {
  * @return void
  */
 CloverConnectorImpl.prototype.invokeInputOption = function(io) {
+    if(io == null) {
+        var response = new sdk.remotepay.CloverDeviceErrorEvent();
+        response.setType(sdk.remotepay.ErrorType.VALIDATION);
+        response.setMessage("In InvokeInputOption: The InputOption object cannot be null.");
+        this.delegateCloverConnectorListener.onDeviceError(response);
+
+        return;
+    }
     var protocolRequest = new sdk.remotemessage.KeyPressMessage();
     protocolRequest.setKeyPress(io.getKeyPress());
     this.sendMessage(this.messageBuilder.buildRemoteMessageObject(protocolRequest));
@@ -1622,6 +2095,21 @@ CloverConnectorImpl.prototype.invokeInputOption = function(io) {
  * @return void
  */
 CloverConnectorImpl.prototype.manualRefund = function(request) {
+    if(!this.validateSaleAuthPreauthManref(
+            "In ManualRefund : ManualRefundRequest - ",
+            sdk.remotepay.SaleResponse,
+            request,
+            this.delegateCloverConnectorListener.onSaleResponse.bind(this.delegateCloverConnectorListener))) {
+        return;
+    }
+    if(!this.validateSupportsManualRefunds(
+            "In ManualRefund : ManualRefundRequest - ",
+            sdk.remotepay.SaleResponse,
+            request,
+            this.delegateCloverConnectorListener.onSaleResponse.bind(this.delegateCloverConnectorListener))) {
+        return;
+    }
+
     var protocolRequest = new sdk.remotemessage.TxStartRequestMessage();
     this.verifyValidAmount(request.getAmount());
 
@@ -1640,6 +2128,29 @@ CloverConnectorImpl.prototype.manualRefund = function(request) {
  * @return void
  */
 CloverConnectorImpl.prototype.refundPayment = function(request) {
+    if(! this.validateReadyRequest(
+            "In RefundPayment : RefundPaymentRequest - ",
+            sdk.remotepay.RefundPaymentResponse,
+            request,
+            this.delegateCloverConnectorListener.onRefundPaymentResponse.bind(this.delegateCloverConnectorListener) )) {
+        return;
+    }
+    if(! this.validatePaymentId(
+            "In RefundPayment : RefundPaymentRequest - ",
+            sdk.remotepay.RefundPaymentResponse,
+            request,
+            this.delegateCloverConnectorListener.onRefundPaymentResponse.bind(this.delegateCloverConnectorListener) )) {
+        return;
+    }
+    if(request.getAmount() <= 0 && !request.getFullRefund()) {
+        var response = new sdk.remotepay.RefundPaymentResponse();
+        this.populateRequestValidationFail(response);
+        response.setMessage("In RefundPayment : RefundPaymentRequest - " + "Amount must be greater than zero when FullRefund is set to false. " + request);
+        this.delegateCloverConnectorListener.onRefundPaymentResponse(response);
+
+        return;
+    }
+
     var protocolRequest = new sdk.remotemessage.RefundRequestMessage();
     // In the initial and unspecified version, an amount of '0' indicated
     // a full refund.  In the version 2 of the message, the flag 'fullRefund' was
@@ -1663,6 +2174,14 @@ CloverConnectorImpl.prototype.refundPayment = function(request) {
  * @return void
  */
 CloverConnectorImpl.prototype.openCashDrawer = function(reason) {
+    if(reason == null) {
+        var response = new sdk.remotepay.CloverDeviceErrorEvent();
+        response.setType(sdk.remotepay.ErrorType.VALIDATION);
+        response.setMessage("In OpenCashDrawer: The reason cannot be null.");
+        this.delegateCloverConnectorListener.onDeviceError(response);
+
+        return;
+    }
     var protocolRequest = new sdk.remotemessage.OpenCashDrawerMessage();
     protocolRequest.setReason(reason);
     this.sendMessage(this.messageBuilder.buildRemoteMessageObject(protocolRequest));
@@ -1675,6 +2194,15 @@ CloverConnectorImpl.prototype.openCashDrawer = function(reason) {
  * @return void
  */
 CloverConnectorImpl.prototype.printImage = function(bitmap) {
+    if(!bitmap) {
+        var errorResponse1 = new sdk.remotepay.CloverDeviceErrorEvent();
+        errorResponse1.setCode(sdk.remotepay.DeviceErrorEventCode.InvalidConfig);
+        errorResponse1.setType(sdk.remotepay.ErrorType.VALIDATION);
+        errorResponse1.setMessage("In PrintImage : Bitmap object cannot be null. ");
+        this.delegateCloverConnectorListener.onDeviceError(errorResponse1);
+
+        return;
+    }
     var protocolRequest = new sdk.remotemessage.ImagePrintMessage();
     protocolRequest.setPng(ImageUtil.getBase64Image(bitmap));
     this.sendMessage(this.messageBuilder.buildRemoteMessageObject(protocolRequest));
@@ -1686,6 +2214,15 @@ CloverConnectorImpl.prototype.printImage = function(bitmap) {
  * @return void
  */
 CloverConnectorImpl.prototype.printImageFromURL = function(imgUrl) {
+    if(!imgUrl) {
+        var errorResponse1 = new sdk.remotepay.CloverDeviceErrorEvent();
+        errorResponse1.setCode(sdk.remotepay.DeviceErrorEventCode.InvalidConfig);
+        errorResponse1.setType(sdk.remotepay.ErrorType.VALIDATION);
+        errorResponse1.setMessage("In PrintImageFromURL : imgUrl cannot be null. ");
+        this.delegateCloverConnectorListener.onDeviceError(errorResponse1);
+
+        return;
+    }
     var protocolRequest = new sdk.remotemessage.ImagePrintMessage();
     protocolRequest.setUrlString(imgUrl);
     this.sendMessage(this.messageBuilder.buildRemoteMessageObject(protocolRequest));
@@ -1697,21 +2234,17 @@ CloverConnectorImpl.prototype.printImageFromURL = function(imgUrl) {
  * @return void
  */
 CloverConnectorImpl.prototype.printText = function(messages) {
+    if(!messages) {
+        var errorResponse1 = new sdk.remotepay.CloverDeviceErrorEvent();
+        errorResponse1.setCode(sdk.remotepay.DeviceErrorEventCode.InvalidConfig);
+        errorResponse1.setType(sdk.remotepay.ErrorType.VALIDATION);
+        errorResponse1.setMessage("In PrintText : message list cannot be null. ");
+        this.delegateCloverConnectorListener.onDeviceError(errorResponse1);
+
+        return;
+    }
     var protocolRequest = new sdk.remotemessage.TextPrintMessage();
     protocolRequest.setTextLines(messages);
-    this.sendMessage(this.messageBuilder.buildRemoteMessageObject(protocolRequest));
-};
-
-/**
- * Reject a signature
- * @param {remotepay.VerifySignatureRequest} request
- * @return void
- */
-CloverConnectorImpl.prototype.rejectSignature = function(request) {
-    var payment = request.getPayment();
-    var protocolRequest = new sdk.remotemessage.SignatureVerifiedMessage();
-    protocolRequest.setPayment(payment);
-    protocolRequest.setVerified(false);
     this.sendMessage(this.messageBuilder.buildRemoteMessageObject(protocolRequest));
 };
 
@@ -1731,6 +2264,21 @@ CloverConnectorImpl.prototype.resetDevice = function() {
  * @return void
  */
 CloverConnectorImpl.prototype.sale = function(request) {
+    if(!this.validateSaleAuthPreauthManref(
+            "In Sale : SaleRequest - ",
+            sdk.remotepay.SaleResponse,
+            request,
+            this.delegateCloverConnectorListener.onSaleResponse.bind(this.delegateCloverConnectorListener))) {
+        return;
+    }
+    if(!this.validateTipAmount(
+            "In Sale : SaleRequest - ",
+            sdk.remotepay.SaleResponse,
+            request,
+            this.delegateCloverConnectorListener.onSaleResponse.bind(this.delegateCloverConnectorListener))) {
+        return;
+    }
+
     var protocolRequest = new sdk.remotemessage.TxStartRequestMessage();
     this.verifyValidAmount(request.getAmount());
 
@@ -1789,6 +2337,35 @@ CloverConnectorImpl.prototype.showWelcomeScreen = function() {
  * @return void
  */
 CloverConnectorImpl.prototype.tipAdjustAuth = function(request) {
+    if(! this.validateReadyRequest(
+            "In TipAdjustAuth : TipAdjustAuthRequest - ",
+            sdk.remotepay.TipAdjustAuthResponse,
+            request,
+            this.delegateCloverConnectorListener.onTipAdjustAuthResponse.bind(this.delegateCloverConnectorListener))) {
+        return;
+    }
+    if(! this.validateTipAmount(
+            "In TipAdjustAuth : TipAdjustAuthRequest - ",
+            sdk.remotepay.TipAdjustAuthResponse,
+            request,
+            this.delegateCloverConnectorListener.onTipAdjustAuthResponse.bind(this.delegateCloverConnectorListener))) {
+        return;
+    }
+    if(!this.validateSupportsTipAdjust(
+            "In TipAdjustAuth : TipAdjustAuthRequest - ",
+            sdk.remotepay.AuthResponse,
+            request,
+            this.delegateCloverConnectorListener.onAuthResponse.bind(this.delegateCloverConnectorListener))) {
+        return;
+    }
+    if(!this.validatePaymentId(
+            "In TipAdjustAuth : TipAdjustAuthRequest - ",
+            sdk.remotepay.AuthResponse,
+            request,
+            this.delegateCloverConnectorListener.onAuthResponse.bind(this.delegateCloverConnectorListener))) {
+        return;
+    }
+
     var protocolRequest = new sdk.remotemessage.TipAdjustMessage();
     this.verifyValidAmount(request.getTipAmount(), true);
     protocolRequest.setTipAmount(request.getTipAmount());
@@ -1804,6 +2381,14 @@ CloverConnectorImpl.prototype.tipAdjustAuth = function(request) {
  * @return void
  */
 CloverConnectorImpl.prototype.vaultCard = function(cardEntryMethods) {
+    if (!this.merchantInfo.getSupportsVaultCards()) {
+        var response = new sdk.remotepay.VaultCardResponse();
+        this.populateMerchantConfigurationUnsupported(response);
+        response.setMessage("In VaultCard: - Vault card is not supported by the merchant configured gateway.");
+        this.delegateCloverConnectorListener.onVaultCardResponse(response);
+
+        return;
+    }
     var protocolRequest = new sdk.remotemessage.VaultCardMessage();
     cardEntryMethods =
       cardEntryMethods===undefined ? this.configuration.cardEntryMethods :
@@ -1819,6 +2404,21 @@ CloverConnectorImpl.prototype.vaultCard = function(cardEntryMethods) {
  * @return void
  */
 CloverConnectorImpl.prototype.voidPayment = function(request) {
+    if(!this.validateReadyRequest(
+            "In VoidPayment : VoidPaymentRequest  - ",
+            sdk.remotepay.AuthResponse,
+            request,
+            this.delegateCloverConnectorListener.onAuthResponse.bind(this.delegateCloverConnectorListener))) {
+        return;
+    }
+    if(!this.validatePaymentId(
+            "In VoidPayment : VoidPaymentRequest  - ",
+            sdk.remotepay.AuthResponse,
+            request,
+            this.delegateCloverConnectorListener.onAuthResponse.bind(this.delegateCloverConnectorListener))) {
+        return;
+    }
+
     var protocolRequest = new sdk.remotemessage.VoidPaymentMessage();
 
     var payment = new sdk.payments.Payment();
@@ -1933,6 +2533,21 @@ CloverConnectorImpl.prototype.retrievePendingPayments = function() {
  * @return void
  */
 CloverConnectorImpl.prototype.readCardData = function(request) {
+    if(!this.validateReadyRequest(
+            "In ReadCardData : ReadCardDataRequest - ",
+            sdk.remotepay.ReadCardDataResponse,
+            request,
+            this.delegateCloverConnectorListener.onReadCardDataResponse.bind(this.delegateCloverConnectorListener))) {
+        return;
+    }
+    if (request.getCardEntryMethods() === 0) {
+        var response = new sdk.remotepay.ReadCardDataResponse();
+        this.populateRequestValidationFail(response);
+        response.setMessage("In ReadCardData : ReadCardDataRequest - " + "The CardEntryMethods field cannot be '" + request.getCardEntryMethods() + "'");
+        this.delegateCloverConnectorListener.onReadCardDataResponse(response);
+
+        return;
+    }
     var cardDataRequestMessage = new sdk.remotemessage.CardDataRequestMessage();
     var payIntent = new sdk.remotemessage.PayIntent();
     payIntent.setTransactionType(sdk.remotemessage.TransactionType.DATA);
