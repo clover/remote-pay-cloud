@@ -425,8 +425,12 @@ CloverConnectorImpl.prototype.mapDiscoveryResponse = function() {
 
         this.deviceSupportsAckMessages = discoveryResponse.supportsAcknowledgement;
 
-        this.isReady = discoveryResponse.ready;
-        this.delegateCloverConnectorListener.onReady(this.merchantInfo);
+        if(!this.isReady && discoveryResponse.ready) {
+            this.isReady = true;
+            this.delegateCloverConnectorListener.onReady(this.merchantInfo);
+        } else {
+            this.delegateCloverConnectorListener.onConnected();
+        }
     }.bind(this));
 };
 
@@ -1433,7 +1437,7 @@ CloverConnectorImpl.prototype.rejectPayment = function(payment, challenge) {
  * @return void
  */
 CloverConnectorImpl.prototype.auth = function(request) {
-    if(!this.validateSaleAuthPreauth(
+    if(!this.validateSaleAuthPreauthManref(
             "In Auth : AuthRequest - ",
             sdk.remotepay.AuthResponse,
             request,
@@ -1770,7 +1774,7 @@ CloverConnectorImpl.prototype.verifyValidAmount = function (amount, allowZero) {
  * @param {remotepay.PreAuthRequest} preAuthRequest
  * @return void
  */
-CloverConnectorImpl.prototype.preAuth = function(preAuthRequest) {
+CloverConnectorImpl.prototype.preAuth = function(request) {
     if(!this.validateSaleAuthPreauthManref(
             "In PreAuth : PreAuthRequest - ",
             sdk.remotepay.PreAuthResponse,
@@ -1788,12 +1792,12 @@ CloverConnectorImpl.prototype.preAuth = function(preAuthRequest) {
         return;
     }
     var protocolRequest = new sdk.remotemessage.TxStartRequestMessage();
-    this.verifyValidAmount(preAuthRequest.getAmount());
+    this.verifyValidAmount(request.getAmount());
 
-    var payIntent = this.populateBasePayIntent(preAuthRequest);
+    var payIntent = this.populateBasePayIntent(request);
 
     protocolRequest.setPayIntent(payIntent);
-    this.lastRequest = preAuthRequest;
+    this.lastRequest = request;
 
     this.sendMessage(this.messageBuilder.buildRemoteMessageObject(protocolRequest));
 };
@@ -1813,8 +1817,15 @@ CloverConnectorImpl.prototype.cancel = function() {
  * @param {remotepay.CapturePreAuthRequest} capturePreAuthRequest
  * @return void
  */
-CloverConnectorImpl.prototype.capturePreAuth = function(capturePreAuthRequest) {
-    if(!this.validateSaleAuthPreauthManref(
+CloverConnectorImpl.prototype.capturePreAuth = function(request) {
+    if(!this.validateReadyRequest(
+            "In CapturePreAuth : CapturePreAuthRequest - ",
+            sdk.remotepay.CapturePreAuthResponse,
+            request,
+            this.delegateCloverConnectorListener.onCapturePreAuthResponse.bind(this.delegateCloverConnectorListener))) {
+        return;
+    }
+    if(!this.validateAmount(
             "In CapturePreAuth : CapturePreAuthRequest - ",
             sdk.remotepay.CapturePreAuthResponse,
             request,
@@ -1836,11 +1847,11 @@ CloverConnectorImpl.prototype.capturePreAuth = function(capturePreAuthRequest) {
         return;
     }
     var protocolRequest = new sdk.remotemessage.CapturePreAuthMessage();
-    this.verifyValidAmount(capturePreAuthRequest.getAmount());
+    this.verifyValidAmount(request.getAmount());
 
-    protocolRequest.setAmount(capturePreAuthRequest.getAmount());
-    protocolRequest.setTipAmount(capturePreAuthRequest.getTipAmount());
-    protocolRequest.setPaymentId(capturePreAuthRequest.getPaymentId());
+    protocolRequest.setAmount(request.getAmount());
+    protocolRequest.setTipAmount(request.getTipAmount());
+    protocolRequest.setPaymentId(request.getPaymentId());
 
     this.sendMessage(this.messageBuilder.buildRemoteMessageObject(protocolRequest));
 };
