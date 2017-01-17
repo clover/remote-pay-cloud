@@ -425,10 +425,11 @@ CloverConnectorImpl.prototype.mapDiscoveryResponse = function() {
 
         this.deviceSupportsAckMessages = discoveryResponse.supportsAcknowledgement;
 
-        if(!this.isReady && discoveryResponse.ready) {
-            this.isReady = true;
+        this.isReady = discoveryResponse.ready;
+        if(discoveryResponse.ready) {
             this.delegateCloverConnectorListener.onReady(this.merchantInfo);
         } else {
+            // if this is called, the implication is that the device is NOT ready, even if it WAS ready before.
             this.delegateCloverConnectorListener.onConnected();
         }
     }.bind(this));
@@ -1724,7 +1725,7 @@ CloverConnectorImpl.prototype.validateSaleAuthPreauthManref = function(messagePr
         return false;
     }
     return true;
-}
+};
 
 /**
  * @private
@@ -1771,7 +1772,7 @@ CloverConnectorImpl.prototype.verifyValidAmount = function (amount, allowZero) {
 
 /**
  * Request a preauth operation.
- * @param {remotepay.PreAuthRequest} preAuthRequest
+ * @param {remotepay.PreAuthRequest} request
  * @return void
  */
 CloverConnectorImpl.prototype.preAuth = function(request) {
@@ -1814,7 +1815,7 @@ CloverConnectorImpl.prototype.cancel = function() {
 
 /**
  * Request a preauth be captured.
- * @param {remotepay.CapturePreAuthRequest} capturePreAuthRequest
+ * @param {remotepay.CapturePreAuthRequest} request
  * @return void
  */
 CloverConnectorImpl.prototype.capturePreAuth = function(request) {
