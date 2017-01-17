@@ -153,7 +153,9 @@ CloverConnectorImpl.prototype.sendMessage = function(message, handshaking) {
             try {
                 this.log.debug("sendMessage", message);
                 // If the device is null OR
-                // we are NOT handshaking, and we are not ready
+                // we are NOT handshaking, and we are not ready, then error.
+                // We need this because when we need to send the discoveryRequest even
+                // though we are not 'ready'.  The isReady flag is set using the discoveryResponse.
                 if(this.device == null || (!handshaking && !this.isReady)) {
                     var notConnectedErrorEvent = new sdk.remotepay.CloverDeviceErrorEvent();
                     notConnectedErrorEvent.setMessage("Device is not connected");
