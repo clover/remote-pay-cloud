@@ -21,6 +21,12 @@ The library requires the browser you use to support WebSockets. See [WebSocket B
 
 For more developer documentation and information about the Semi-Integration program, please visit our [semi-integration developer documents] (https://docs.clover.com/build/integration-overview-requirements/). 
 
+### Browser Versions Tested
+This library has been tested against the following Browser type and versions:
+
+* Chrome version 54
+* Firefox version 49
+
 ### Examples
 #### Application
 A sale/refund UI example project [Clover Cloud Connector Example](https://github.com/clover/clover-cloud-connector-example) is available for download and deployment, or direct deployment to a Heroku server.
@@ -31,6 +37,10 @@ A example project composed of small examples [Clover Cloud Connector Unit Exampl
 Please report back to us any questions/comments/concerns, by emailing semi-integrations@clover.com.
 
 ## Release Notes
+
+### Version 1.1.0
+
+SEMI-577 Add Declaration of support for Chrome version 54, Firefox version 49
 
 ### Version 1.1.0-rc6.2
 
