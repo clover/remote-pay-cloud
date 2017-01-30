@@ -40,7 +40,7 @@ Please report back to us any questions/comments/concerns, by emailing semi-integ
 
 ### Version 1.1.0
 
-SEMI-498 Add ready checking before attempting remote calls.  Add request validation.  Inhibit multiple 'onReady' callbacks
+SEMI-498 Add ready checking before attempting remote calls.  Add request validation.  Inhibit multiple 'onReady' callbacks.  Update to use new schema objects.
 SEMI-577 Add Declaration of support for Chrome version 54, Firefox version 49
 
 ### Version 1.1.0-rc6.2
