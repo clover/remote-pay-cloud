@@ -1751,8 +1751,8 @@ CloverConnectorImpl.prototype.populateBasePayIntent = function(request) {
       ? this.configuration.cardEntryMethods : request.getCardEntryMethods());
     payIntent.setDisableRestartTransactionWhenFailed(request.getDisableRestartTransactionOnFail() === undefined //
       ? this.configuration.disableRestartTransactionWhenFailed : request.getDisableRestartTransactionOnFail());
-    payIntent.setRemotePrint(request.getDisablePrinting() === undefined //
-      ? this.configuration.remotePrint : request.getDisablePrinting());
+    payIntent.setRemotePrint(request.getCloverShouldHandleReceipts() === undefined //
+      ? this.configuration.remotePrint : !request.getCloverShouldHandleReceipts());
     payIntent.setRequiresRemoteConfirmation(true);
 
     // employeeId? - "id": "DFLTEMPLOYEE"
