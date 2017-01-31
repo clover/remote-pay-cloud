@@ -38,6 +38,7 @@ Please report back to us any questions/comments/concerns, by emailing semi-integ
 
 ## Release Notes
 
+### Version 1.1.0
 ### Version 1.1.0-rc6.4
 
 SEMI-498 Revert update to use new schema objects.  New schema is slated for 1.2.
@@ -256,4 +257,4 @@ $(window).on('beforeunload ', function () {
 ## Generate Documentation
 API documentation is generated when `npm install` is run. 
 [Online Docs](http://clover.github.io/remote-pay-cloud/1.1.0-rc6.4/) and
-[Online API class Docs](http://clover.github.io/remote-pay-cloud-api/1.1.0-rc5.1/)
+[Online API class Docs](http://clover.github.io/remote-pay-cloud-api/1.1.0/)
