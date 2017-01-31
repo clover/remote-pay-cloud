@@ -29,7 +29,7 @@
     "preinstall": "scripts/generateDocs.sh"
   },
   "dependencies": {
-    "remote-pay-cloud-api": "1.1.0-rc5.1",
+    "remote-pay-cloud-api": "1.1.0",
     "eventemitter3": "~1.1.1",
     "jsdoc": "*"
   },
