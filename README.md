@@ -5,7 +5,7 @@
 See the package.json postversion script, which maps to scripts/postversion.sh
 Do not change this or the versioning may not reflect the npm version correctly.
 --->
-Current version: 1.1.0-rc6.4
+Current version: 1.1.0
 
 ## Overview
 
@@ -256,5 +256,5 @@ $(window).on('beforeunload ', function () {
 
 ## Generate Documentation
 API documentation is generated when `npm install` is run. 
-[Online Docs](http://clover.github.io/remote-pay-cloud/1.1.0-rc6.4/) and
+[Online Docs](http://clover.github.io/remote-pay-cloud/1.1.0/) and
 [Online API class Docs](http://clover.github.io/remote-pay-cloud-api/1.1.0/)
