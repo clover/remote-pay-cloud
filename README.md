@@ -5,7 +5,7 @@
 See the package.json postversion script, which maps to scripts/postversion.sh
 Do not change this or the versioning may not reflect the npm version correctly.
 --->
-Current version: 1.1.0-rc6.2
+Current version: 1.1.0-rc6.4
 
 ## Overview
 
@@ -38,9 +38,13 @@ Please report back to us any questions/comments/concerns, by emailing semi-integ
 
 ## Release Notes
 
-### Version 1.1.0
+### Version 1.1.0-rc6.4
 
-SEMI-498 Add ready checking before attempting remote calls.  Add request validation.  Inhibit multiple 'onReady' callbacks
+SEMI-498 Revert update to use new schema objects.  New schema is slated for 1.2.
+
+### Version 1.1.0-rc6.3 (deprecated)
+
+SEMI-498 Add ready checking before attempting remote calls.  Add request validation.  Inhibit multiple 'onReady' callbacks.  Update to use new schema objects.
 SEMI-577 Add Declaration of support for Chrome version 54, Firefox version 49
 
 ### Version 1.1.0-rc6.2
@@ -251,5 +255,5 @@ $(window).on('beforeunload ', function () {
 
 ## Generate Documentation
 API documentation is generated when `npm install` is run. 
-[Online Docs](http://clover.github.io/remote-pay-cloud/1.1.0-rc6.2/) and
+[Online Docs](http://clover.github.io/remote-pay-cloud/1.1.0-rc6.4/) and
 [Online API class Docs](http://clover.github.io/remote-pay-cloud-api/1.1.0-rc5.1/)

@@ -23,7 +23,7 @@ var LanMethod = require('./LanMethod.js');
 // !!NOTE!!  The following is automatically updated to reflect the npm version.
 // See the package.json postversion script, which maps to scripts/postversion.sh
 // Do not change this or the versioning may not reflect the npm version correctly.
-CLOVER_CLOUD_SDK_VERSION = "1.1.0-rc6.2";
+CLOVER_CLOUD_SDK_VERSION = "1.1.0-rc6.4";
 
 /**
  *  Interface to the Clover remote-pay API.
@@ -1751,8 +1751,18 @@ CloverConnectorImpl.prototype.populateBasePayIntent = function(request) {
       ? this.configuration.cardEntryMethods : request.getCardEntryMethods());
     payIntent.setDisableRestartTransactionWhenFailed(request.getDisableRestartTransactionOnFail() === undefined //
       ? this.configuration.disableRestartTransactionWhenFailed : request.getDisableRestartTransactionOnFail());
-    payIntent.setRemotePrint(request.getDisablePrinting() === undefined //
-      ? this.configuration.remotePrint : request.getDisablePrinting());
+    // The CloverShouldHandleReceipts flag will be available in the 1.2 version.  This was the result of
+    // updating the remote-pay-cloud-api version too soon.  Rather than back out other valuable changes,
+    // this was added to allow for forward (and backward) compatibility
+    if(request.hasOwnProperty("getCloverShouldHandleReceipts")) {
+        payIntent.setRemotePrint(request.getCloverShouldHandleReceipts() === undefined //
+            ? this.configuration.remotePrint : !request.getCloverShouldHandleReceipts());
+    } else if (request.hasOwnProperty("getDisablePrinting")) {
+        payIntent.setRemotePrint(request.getDisablePrinting() === undefined //
+            ? this.configuration.remotePrint : request.getDisablePrinting());
+    } else {
+        this.log.warn("Unable to determine remote print flag from request.  Expecting either 'DisablePrinting' or 'CloverShouldHandleReceipts'");
+    }
     payIntent.setRequiresRemoteConfirmation(true);
 
     // employeeId? - "id": "DFLTEMPLOYEE"
