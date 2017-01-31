@@ -1751,8 +1751,18 @@ CloverConnectorImpl.prototype.populateBasePayIntent = function(request) {
       ? this.configuration.cardEntryMethods : request.getCardEntryMethods());
     payIntent.setDisableRestartTransactionWhenFailed(request.getDisableRestartTransactionOnFail() === undefined //
       ? this.configuration.disableRestartTransactionWhenFailed : request.getDisableRestartTransactionOnFail());
-    payIntent.setRemotePrint(request.getCloverShouldHandleReceipts() === undefined //
-      ? this.configuration.remotePrint : !request.getCloverShouldHandleReceipts());
+    // The CloverShouldHandleReceipts flag will be available in the 1.2 version.  This was the result of
+    // updating the remote-pay-cloud-api version too soon.  Rather than back out other valuable changes,
+    // this was added to allow for forward (and backward) compatibility
+    if(request.hasOwnProperty("getCloverShouldHandleReceipts")) {
+        payIntent.setRemotePrint(request.getCloverShouldHandleReceipts() === undefined //
+            ? this.configuration.remotePrint : !request.getCloverShouldHandleReceipts());
+    } else if (request.hasOwnProperty("getDisablePrinting")) {
+        payIntent.setRemotePrint(request.getDisablePrinting() === undefined //
+            ? this.configuration.remotePrint : request.getDisablePrinting());
+    } else {
+        this.log.warn("Unable to determine remote print flag from request.  Expecting either 'DisablePrinting' or 'CloverShouldHandleReceipts'");
+    }
     payIntent.setRequiresRemoteConfirmation(true);
 
     // employeeId? - "id": "DFLTEMPLOYEE"
