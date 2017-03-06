@@ -43,6 +43,15 @@ CloverLib.DebugCloverConnectorListener = require("./DebugCloverConnectorListener
 CloverLib.Logger = require('./Logger.js');
 CloverLib.DebugConfig = require('./DebugConfig.js');
 
+// These exports expose the v1.2 CloverConnector and supporting objects
+CloverLib.version = '1.2.0';
+CloverLib.CloverConnector = require('./dist/com/clover/remote/client/CloverConnector.js').CloverConnector;
+CloverLib.CloverDeviceFactory = require('./dist/com/clover/remote/client/device/CloverDeviceFactory.js').CloverDeviceFactory;
+CloverLib.CloverTransport = require('./dist/com/clover/remote/client/transport/CloverTransport.js').CloverTransport;
+CloverLib.CloverTransportObserver = require('./dist/com/clover/remote/client/transport/CloverTransportObserver.js').CloverTransportObserver;
+CloverLib.WebSocketCloverTransport = require('./dist/com/clover/remote/client/transport/websocket/WebSocketCloverTransport.js').WebSocketCloverTransport;
+CloverLib.Logger = require('./dist/com/clover/remote/client/util/Logger.js').Logger;
+
 //
 // Expose the module.
 //
