@@ -1,4 +1,4 @@
-import sdk from 'remote-pay-cloud-api';
+import sdk = require('remote-pay-cloud-api');
 import CloverDevice from './CloverDevice';
 import CloverTransport from '../transport/CloverTransport';
 import CloverTransportObserver from '../transport/CloverTransportObserver';

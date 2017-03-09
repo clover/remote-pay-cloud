@@ -1,0 +1,14 @@
+{
+	"compilerOptions": {
+		"target": "es5",
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"declaration": true,
+		"declarationDir": "typings/",
+		"allowJs": true,
+		"sourceMap": true,
+		"lib": [
+			"es2015"
+		]
+	}
+}

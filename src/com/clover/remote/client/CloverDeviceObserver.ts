@@ -1,4 +1,4 @@
-import sdk from 'remote-pay-cloud-api';
+import sdk = require('remote-pay-cloud-api');
 import CloverDevice from './device/CloverDevice';
 
 /**
@@ -32,7 +32,7 @@ export interface CloverDeviceObserver {
 	 * @param {UiState.UiDirection} uiDirection 
 	 * @param {InputOption[]} inputOptions 
 	 */
-	onUiState(uiState: sdk.remotemessage.UiState, uiText: string, uiDirection: sdk.remotemessage.UiState.UiDirection, inputOptions: sdk.remotemessage.InputOption[]): void;
+	onUiState(uiState: sdk.remotemessage.UiState, uiText: string, uiDirection: sdk.remotemessage.UiState.UiDirection, inputOptions: Array<sdk.remotemessage.InputOption>): void;
 
 	/**
 	 * Tip Added
@@ -70,21 +70,21 @@ export interface CloverDeviceObserver {
 	 * @param {Payment} payment 
 	 * @param {Signature2} signature2 
 	 */
-	onFinishOk(payment: sdk.remotemessage.Payment, signature2: sdk.remotemessage.Signature2): void;
+	onFinishOk(payment: sdk.payments.Payment, signature2: sdk.base.Signature): void;
 
 	/**
 	 * Finish Ok
 	 * 
 	 * @param {Credit} credit 
 	 */
-	onFinishOk(credit: sdk.remotemessage.Credit): void;
+	onFinishOk(credit: sdk.payments.Credit): void;
 
 	/**
 	 * Finish Ok
 	 * 
 	 * @param {Refund} refund 
 	 */
-	onFinishOk(refund: sdk.remotemessage.Refund): void;
+	onFinishOk(refund: sdk.payments.Refund): void;
 
 	/**
 	 * Finish Cancel
@@ -97,7 +97,7 @@ export interface CloverDeviceObserver {
 	 * @param {Payment} payment 
 	 * @param {Signature2} signature 
 	 */
-	onVerifySignature(payment: sdk.remotemessage.Payment, signature: sdk.remotemessage.Signature2): void;
+	onVerifySignature(payment: sdk.payments.Payment, signature: sdk.base.Signature): void;
 
 	/**
 	 * Confirm Payment
@@ -105,7 +105,7 @@ export interface CloverDeviceObserver {
 	 * @param {Payment} payment 
 	 * @param {Challenge[]} challenges 
 	 */
-	onConfirmPayment(payment: sdk.remotemessage.Payment, challenges: sdk.remotemessage.Challenge[]): void;
+	onConfirmPayment(payment: sdk.payments.Payment, challenges: Array<sdk.base.Challenge>): void;
 
 	/**
 	 * Payment Voided
@@ -116,7 +116,7 @@ export interface CloverDeviceObserver {
 	 * @param {string} reason 
 	 * @param {string} message 
 	 */
-	onPaymentVoided(payment: sdk.remotemessage.Payment, voidReason: sdk.remotemessage.VoidReason, result: sdk.remotemessage.ResultStatus, reason: string, message: string): void;
+	onPaymentVoided(payment: sdk.payments.Payment, voidReason: sdk.order.VoidReason, result: sdk.remotemessage.ResultStatus, reason: string, message: string): void;
 
 	/**
 	 * Key Pressed
@@ -133,7 +133,7 @@ export interface CloverDeviceObserver {
 	 * @param {Refund} refund 
 	 * @param {TxState} code 
 	 */
-	onPaymentRefundResponse(orderId: string, paymentId: string, refund: sdk.remotemessage.Refund, code: sdk.remotemessage.TxState): void;
+	onPaymentRefundResponse(orderId: string, paymentId: string, refund: sdk.payments.Refund, code: sdk.remotemessage.TxState): void;
 
 	/**
 	 * Vault Card Response
@@ -142,7 +142,7 @@ export interface CloverDeviceObserver {
 	 * @param {string} code 
 	 * @param {string} reason 
 	 */
-	onVaultCardResponse(vaultedCard: sdk.remotemessage.VaultedCard, code: string, reason: string): void;
+	onVaultCardResponse(vaultedCard: sdk.payments.VaultedCard, code: string, reason: string): void;
 
 	/**
 	 * Capture Pre-Auth
@@ -158,11 +158,10 @@ export interface CloverDeviceObserver {
 	/**
 	 * Closeout Response
 	 * 
-	 * @param {ResultStatus} status 
-	 * @param {string} reason 
+	 * @param {ResultStatus} status base @param {string} reason 
 	 * @param {Batch} batch 
 	 */
-	onCloseoutResponse(status: sdk.remotemessage.ResultStatus, reason: string, batch: sdk.remotemessage.Batch): void;
+	onCloseoutResponse(status: sdk.remotemessage.ResultStatus, reason: string, batch: sdk.payments.Batch): void;
 
 	/**
 	 * Device Disconnected
@@ -200,14 +199,14 @@ export interface CloverDeviceObserver {
 	 * @param {Order} order 
 	 * @param {Refund} refund 
 	 */
-	onPrintRefundPayment(payment: sdk.remotemessage.Payment, order: sdk.remotemessage.Order, refund: sdk.remotemessage.Refund): void;
+	onPrintRefundPayment(payment: sdk.payments.Payment, order: sdk.order.Order, refund: sdk.payments.Refund): void;
 
 	/**
 	 * Print Merchant Receipt
 	 * 
 	 * @param {Payment} payment 
 	 */
-	onPrintMerchantReceipt(payment: sdk.remotemessage.Payment): void;
+	onPrintMerchantReceipt(payment: sdk.payments.Payment): void;
 
 	/**
 	 * Print Payment Decline
@@ -215,7 +214,7 @@ export interface CloverDeviceObserver {
 	 * @param {Payment} payment 
 	 * @param {string} reason 
 	 */
-	onPrintPaymentDecline(payment: sdk.remotemessage.Payment, reason: string): void;
+	onPrintPaymentDecline(payment: sdk.payments.Payment, reason: string): void;
 
 	/**
 	 * Print Payment
@@ -223,14 +222,14 @@ export interface CloverDeviceObserver {
 	 * @param {Payment} payment 
 	 * @param {Order} order 
 	 */
-	onPrintPayment(payment: sdk.remotemessage.Payment, order: sdk.remotemessage.Order): void;
+	onPrintPayment(payment: sdk.payments.Payment, order: sdk.order.Order): void;
 
 	/**
 	 * Print Credit
 	 * 
 	 * @param {Credit} credit 
 	 */
-	onPrintCredit(credit: sdk.remotemessage.Credit): void;
+	onPrintCredit(credit: sdk.payments.Credit): void;
 
 	/**
 	 * Print Credit Decline
@@ -238,7 +237,7 @@ export interface CloverDeviceObserver {
 	 * @param {Credit} credit 
 	 * @param {string} reason 
 	 */
-	onPrintCreditDecline(credit: sdk.remotemessage.Credit, reason: string): void;
+	onPrintCreditDecline(credit: sdk.payments.Credit, reason: string): void;
 
 	/**
 	 * Message Acknowledgement
@@ -253,7 +252,7 @@ export interface CloverDeviceObserver {
 	 * @param {boolean} success 
 	 * @param {PendingPaymentEntry[]} payments 
 	 */
-	onPendingPaymentsResponse(success: boolean, payments: sdk.remotemessage.PendingPaymentEntry[]): void;
+	onPendingPaymentsResponse(success: boolean, payments: Array<sdk.base.PendingPaymentEntry>): void;
 
 	/**
 	 * Read Card Response
@@ -262,7 +261,7 @@ export interface CloverDeviceObserver {
 	 * @param {string} reason 
 	 * @param {CardData} cardData 
 	 */
-	onReadCardResponse(status: sdk.remotemessage.ResultStatus, reason: string, cardData: sdk.remotemessage.CardData): void;
+	onReadCardResponse(status: sdk.remotemessage.ResultStatus, reason: string, cardData: sdk.base.CardData): void;
 }
 
 export default CloverDeviceObserver;

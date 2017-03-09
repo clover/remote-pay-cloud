@@ -1,4 +1,4 @@
-import {EventEmitter} from 'events';
+import { EventEmitter } from 'events';
 import DebugConfig = require('../../../../../../DebugConfig');
 
 export class Logger extends EventEmitter {
