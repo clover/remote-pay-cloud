@@ -1,4 +1,4 @@
-import CloverTransport from './CloverTransport';
+import {CloverTransport} from './CloverTransport';
 
 /**
  * Clover Transport Observer
@@ -32,7 +32,5 @@ export interface CloverTransportObserver {
      * 
      * @param {string} message - the raw message from the device
      */
-    onMessage(transport: string): void;
+    onMessage(message: string): void;
 }
-
-export default CloverTransportObserver;

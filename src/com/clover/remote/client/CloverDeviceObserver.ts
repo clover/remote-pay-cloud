@@ -1,5 +1,5 @@
 import sdk = require('remote-pay-cloud-api');
-import CloverDevice from './device/CloverDevice';
+import {CloverDevice} from './device/CloverDevice';
 
 /**
  * Clover Device Observer
@@ -263,5 +263,3 @@ export interface CloverDeviceObserver {
 	 */
 	onReadCardResponse(status: sdk.remotemessage.ResultStatus, reason: string, cardData: sdk.base.CardData): void;
 }
-
-export default CloverDeviceObserver;

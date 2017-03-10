@@ -1,11 +1,11 @@
 import sdk = require('remote-pay-cloud-api');
-import CloverConnectorBroadcaster from './CloverConnectorBroadcaster';
-import CloverDevice from './device/CloverDevice';
-import CloverDeviceConfiguration from './device/CloverDeviceConfiguration';
-import CloverDeviceFactory from './device/CloverDeviceFactory';
-import CloverDeviceObserver from './CloverDeviceObserver';
-import Logger from './util/Logger';
-import ResultCode from './messages/ResultCode';
+import {CloverConnectorBroadcaster} from './CloverConnectorBroadcaster';
+import {CloverDevice} from './device/CloverDevice';
+import {CloverDeviceConfiguration} from './device/CloverDeviceConfiguration';
+import {CloverDeviceFactory} from './device/CloverDeviceFactory';
+import {CloverDeviceObserver} from './CloverDeviceObserver';
+import {Logger} from './util/Logger';
+import {ResultCode} from './messages/ResultCode';
 
 /**
  * Clover Connector
@@ -61,8 +61,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 				this.configuration = JSON.parse(JSON.stringify(config));
 			}
 			catch(e) {
-				this.logger.error('Could not load configuration');
-				this.logger.error(e);
+				this.logger.error('Could not load configuration', e);
 				throw e;
 			}
 		}
@@ -79,8 +78,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 			this.configuration = JSON.parse(JSON.stringify(config));
 		}
 		catch(e) {
-			this.logger.error('Could not load configuration');
-			this.logger.error(e);
+			this.logger.error('Could not load configuration', e);
 			throw e;
 		}
 		this.deviceObserver = new CloverConnector.InnerDeviceObserver(this);
@@ -1073,6 +1071,7 @@ export namespace CloverConnector {
 			this.cloverConnector.broadcaster.notifyOnDeviceError(errorEvent);
 		}
 
+		// TODO: The Print Message objects are missing from the api
 		public onPrintRefundPayment(payment: sdk.remotepay.Payment, order: sdk.order.Order, refund: sdk.payments.Refund): void {
 			// this.cloverConnector.broadcaster.notifyOnPrintRefundPaymentReceipt(new PrintRefundPaymentReceiptMessage(payment, order, refund));
 		}
@@ -1170,5 +1169,3 @@ export namespace CloverConnector {
 		}
 	}
 }
-
-export default CloverConnector;

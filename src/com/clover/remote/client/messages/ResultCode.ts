@@ -9,5 +9,3 @@ export enum ResultCode {
   CANCEL, // this means the call was canceled for some reason, but could work if re-submitted
   ERROR // an error was encountered that wasn't expected or handled appropriately
 }
-
-export default ResultCode;

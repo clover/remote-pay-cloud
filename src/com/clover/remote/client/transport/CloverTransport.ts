@@ -1,4 +1,4 @@
-import CloverTransportObserver from './CloverTransportObserver';
+import {CloverTransportObserver} from './CloverTransportObserver';
 
 /**
  * Clover Transport
@@ -14,20 +14,6 @@ export abstract class CloverTransport {
 	ready: Boolean = false;
 
 	constructor() {
-		// This prevents developers from creating a new CloverTransport.
-		// This class is abstract and needs to be extended with a custom
-		// implementation.
-		if (this.constructor === CloverTransport) {
-			throw new TypeError('Abstract class "CloverTransport" cannot be instantiated directly.');
-		}
-
-		// Make sure the child class implements all abstract methods.
-		if (this.sendMessage === undefined) {
-			throw new TypeError('Classes extending this abstract class must implement the "sendMessage" method.');
-		}
-		if (this.dispose === undefined) {
-			throw new TypeError('Classes extending this abstract class must implement the "dispose" method.');
-		}
 	}
 
 	/**
@@ -74,13 +60,10 @@ export abstract class CloverTransport {
 	/**
 	 * Send a message
 	 * 
-	 * @abstract
 	 * @param {string} message - the message to send
 	 * @return int - status indicator of 0 or -1 where 0 is success and -1 is failure
 	 */
-	public sendMessage(message: string): number {
-		throw new Error('Abstract method not implemented');
-	}
+	public abstract sendMessage(message: string): number;
 
 	/**
 	 * Add new observer to receive notifications from the device
@@ -117,12 +100,6 @@ export abstract class CloverTransport {
 
 	/**
 	 * Properly dispose of this object
-	 * 
-	 * @abstract
 	 */
-	public dispose(): void {
-		throw new Error('Abstract method not implemented');
-	}
+	public abstract dispose(): void;
 }
-
-export default CloverTransport;

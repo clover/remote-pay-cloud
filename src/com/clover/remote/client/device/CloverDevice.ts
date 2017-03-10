@@ -1,6 +1,6 @@
 import sdk = require('remote-pay-cloud-api');
-import CloverTransport from '../transport/CloverTransport';
-import CloverDeviceObserver from '../CloverDeviceObserver';
+import {CloverTransport} from '../transport/CloverTransport';
+import {CloverDeviceObserver} from '../CloverDeviceObserver';
 
 /**
  * Clover Device
@@ -23,90 +23,6 @@ export abstract class CloverDevice {
 	 * @param {string} applicationId 
 	 */
 	constructor(packageName: string, transport: CloverTransport, applicationId: string) {
-		// This prevents developers from creating a new CloverDevice.
-		// This class is abstract and needs to be extended with a custom
-		// implementation.
-		if (this.constructor === CloverDevice) {
-			throw new TypeError('Abstract class "CloverDevice" cannot be instantiated directly.');
-		}
-
-		// Make sure the child class implements all abstract methods.
-		if (this.doDiscoveryRequest === undefined) {
-			throw new TypeError('Classes extending this abstract class must implement the "doDiscoveryRequest" method.');
-		}
-		if (this.doTxStart === undefined) {
-			throw new TypeError('Classes extending this abstract class must implement the "doTxStart" method.');
-		}
-		if (this.doKeyPress === undefined) {
-			throw new TypeError('Classes extending this abstract class must implement the "doKeyPress" method.');
-		}
-		if (this.doVoidPayment === undefined) {
-			throw new TypeError('Classes extending this abstract class must implement the "doVoidPayment" method.');
-		}
-		if (this.doCaptureAuth === undefined) {
-			throw new TypeError('Classes extending this abstract class must implement the "doCaptureAuth" method.');
-		}
-		if (this.doOrderUpdate === undefined) {
-			throw new TypeError('Classes extending this abstract class must implement the "doOrderUpdate" method.');
-		}
-		if (this.doSignatureVerified === undefined) {
-			throw new TypeError('Classes extending this abstract class must implement the "doSignatureVerified" method.');
-		}
-		if (this.doTerminalMessage === undefined) {
-			throw new TypeError('Classes extending this abstract class must implement the "doTerminalMessage" method.');
-		}
-		if (this.doPaymentRefund === undefined) {
-			throw new TypeError('Classes extending this abstract class must implement the "doPaymentRefund" method.');
-		}
-		if (this.doTipAdjustAuth === undefined) {
-			throw new TypeError('Classes extending this abstract class must implement the "doTipAdjustAuth" method.');
-		}
-		if (this.doPrintText === undefined) {
-			throw new TypeError('Classes extending this abstract class must implement the "doPrintText" method.');
-		}
-		if (this.doShowWelcomeScreen === undefined) {
-			throw new TypeError('Classes extending this abstract class must implement the "doShowWelcomeScreen" method.');
-		}
-		if (this.doShowPaymentReceiptScreen === undefined) {
-			throw new TypeError('Classes extending this abstract class must implement the "doShowPaymentReceiptScreen" method.');
-		}
-		if (this.doShowThankYouScreen === undefined) {
-			throw new TypeError('Classes extending this abstract class must implement the "doShowThankYouScreen" method.');
-		}
-		if (this.doOpenCashDrawer === undefined) {
-			throw new TypeError('Classes extending this abstract class must implement the "doOpenCashDrawer" method.');
-		}
-		if (this.doPrintImage === undefined) {
-			throw new TypeError('Classes extending this abstract class must implement the "doPrintImage" method.');
-		}
-		if (this.doPrintImage === undefined) {
-			throw new TypeError('Classes extending this abstract class must implement the "doPrintImage" method.');
-		}
-		if (this.dispose === undefined) {
-			throw new TypeError('Classes extending this abstract class must implement the "dispose" method.');
-		}
-		if (this.doCloseout === undefined) {
-			throw new TypeError('Classes extending this abstract class must implement the "doCloseout" method.');
-		}
-		if (this.doVaultCard === undefined) {
-			throw new TypeError('Classes extending this abstract class must implement the "doVaultCard" method.');
-		}
-		if (this.doResetDevice === undefined) {
-			throw new TypeError('Classes extending this abstract class must implement the "doResetDevice" method.');
-		}
-		if (this.doAcceptPayment === undefined) {
-			throw new TypeError('Classes extending this abstract class must implement the "doAcceptPayment" method.');
-		}
-		if (this.doRejectPayment === undefined) {
-			throw new TypeError('Classes extending this abstract class must implement the "doRejectPayment" method.');
-		}
-		if (this.doRetrievePendingPayments === undefined) {
-			throw new TypeError('Classes extending this abstract class must implement the "doRetrievePendingPayments" method.');
-		}
-		if (this.doReadCardData === undefined) {
-			throw new TypeError('Classes extending this abstract class must implement the "doReadCardData" method.');
-		}
-
 		this.packageName = packageName;
 		this.transport = transport;
 		this.applicationId = applicationId;
@@ -119,7 +35,7 @@ export abstract class CloverDevice {
 	 * 
 	 * @param {CloverDeviceObserver} observer - observer to add
 	 */
-	subscribe(observer: CloverDeviceObserver) {
+	public subscribe(observer: CloverDeviceObserver): void {
 		this.deviceObservers.push(observer);
 	}
 
@@ -128,7 +44,7 @@ export abstract class CloverDevice {
 	 * 
 	 * @param {CloverDeviceObserver} observer - observer to remove
 	 */
-	unsubscribe(observer: CloverDeviceObserver) {
+	public unsubscribe(observer: CloverDeviceObserver): void {
 		var indexOfObserver = this.deviceObservers.indexOf(observer);
 		if (indexOfObserver !== -1) {
 			this.deviceObservers.splice(indexOfObserver, 1);
@@ -138,9 +54,7 @@ export abstract class CloverDevice {
 	/**
 	 * Discovery request
 	 */
-	doDiscoveryRequest(): void {
-        throw new Error('Method not implemented');
-	}
+	public abstract doDiscoveryRequest(): void;
 
 	/**
 	 * Transaction Start
@@ -149,18 +63,14 @@ export abstract class CloverDevice {
 	 * @param {Order} order 
 	 * @param {boolean} suppressTipScreen 
 	 */
-	doTxStart(payIntent: sdk.remote.PayIntent, order: sdk.remote.Order, suppressTipScreen: boolean): void {
-        throw new Error('Method not implemented');
-	}
+	public abstract doTxStart(payIntent: sdk.remote.PayIntent, order: sdk.remote.Order, suppressTipScreen: boolean): void;
 
 	/**
 	 * Key Press
 	 * 
 	 * @param {KeyPress} keyPress 
 	 */
-	doKeyPress(keyPress: sdk.remote.KeyPress): void {
-        throw new Error('Method not implemented');
-	}
+	public abstract doKeyPress(keyPress: sdk.remote.KeyPress): void;
 
 	/**
 	 * Void Payment
@@ -168,9 +78,7 @@ export abstract class CloverDevice {
 	 * @param {Payment} payment 
 	 * @param {VoidReason} reason 
 	 */
-	doVoidPayment(payment: sdk.remote.Payment, reason: sdk.remote.VoidReason): void {
-        throw new Error('Method not implemented');
-	}
+	public abstract doVoidPayment(payment: sdk.remote.Payment, reason: sdk.remote.VoidReason): void;
 
 	/**
 	 * Capture Auth
@@ -179,9 +87,7 @@ export abstract class CloverDevice {
 	 * @param {number} amount 
 	 * @param {number} tipAmount 
 	 */
-	doCaptureAuth(paymentId: string, amount: number, tipAmount: number): void {
-        throw new Error('Method not implemented');
-	}
+	public abstract doCaptureAuth(paymentId: string, amount: number, tipAmount: number): void;
 
 	/**
 	 * Order Update
@@ -189,9 +95,7 @@ export abstract class CloverDevice {
 	 * @param {DisplayOrder} order 
 	 * @param {Object} orderOperation 
 	 */
-	doOrderUpdate(order: sdk.remote.DisplayOrder, orderOperation: Object): void {
-        throw new Error('Method not implemented');
-	}
+	public abstract doOrderUpdate(order: sdk.remote.DisplayOrder, orderOperation: Object): void;
 
 	/**
 	 * Signature Verified
@@ -199,18 +103,14 @@ export abstract class CloverDevice {
 	 * @param {Payment} payment 
 	 * @param {boolean} verified 
 	 */
-	doSignatureVerified(payment: sdk.remote.Payment, verified: boolean): void {
-        throw new Error('Method not implemented');
-	}
+	public abstract doSignatureVerified(payment: sdk.remote.Payment, verified: boolean): void;
 
 	/**
 	 * Terminal Message
 	 * 
 	 * @param {string} text 
 	 */
-	doTerminalMessage(text: string): void {
-        throw new Error('Method not implemented');
-	}
+	public abstract doTerminalMessage(text: string): void;
 
 	/**
 	 * Payment Refund
@@ -220,9 +120,7 @@ export abstract class CloverDevice {
 	 * @param {number} amount 
 	 * @param {boolean} fullRefund 
 	 */
-	doPaymentRefund(orderId: string, paymentId: string, amount: number, fullRefund: boolean): void {
-        throw new Error('Method not implemented');
-	}
+	public abstract doPaymentRefund(orderId: string, paymentId: string, amount: number, fullRefund: boolean): void;
 
 	/**
 	 * Tip Adjust Auth
@@ -231,25 +129,19 @@ export abstract class CloverDevice {
 	 * @param {string} paymentId 
 	 * @param {number} amount 
 	 */
-	doTipAdjustAuth(orderId: string, paymentId: string, amount: number): void {
-        throw new Error('Method not implemented');
-	}
+	public abstract doTipAdjustAuth(orderId: string, paymentId: string, amount: number): void;
 
 	/**
 	 * Print Text
 	 * 
-	 * @param {string[]} textLines 
+	 * @param {Array<string>} textLines 
 	 */
-	doPrintText(textLines: string[]): void {
-        throw new Error('Method not implemented');
-	}
+	public abstract doPrintText(textLines: Array<string>): void;
 
 	/**
 	 * Show Welcome Screen
 	 */
-	doShowWelcomeScreen(): void {
-        throw new Error('Method not implemented');
-	}
+	public abstract doShowWelcomeScreen(): void;
 
 	/**
 	 * Show Payment Receipt Screen
@@ -257,48 +149,38 @@ export abstract class CloverDevice {
 	 * @param {string} orderId 
 	 * @param {string} paymentId 
 	 */
-	doShowPaymentReceiptScreen(orderId: string, paymentId: string): void {
-        throw new Error('Method not implemented');
-	}
+	public abstract doShowPaymentReceiptScreen(orderId: string, paymentId: string): void;
 
 	/**
 	 * Show Thank You Screen
 	 */
-	doShowThankYouScreen(): void {
-        throw new Error('Method not implemented');
-	}
+	public abstract doShowThankYouScreen(): void;
 
 	/**
 	 * Open Cash Drawer
 	 * 
 	 * @param {string} reason 
 	 */
-	doOpenCashDrawer(reason: string): void {
-        throw new Error('Method not implemented');
-	}
+	public abstract doOpenCashDrawer(reason: string): void;
 
 	/**
 	 * Print Image (Bitmap)
 	 * 
 	 * @param {byte[]} bitmap 
 	 */
-	doPrintImage(bitmap: number[]): void;
+	public abstract doPrintImage(bitmap: number[]): void;
 	/**
 	 * Print Image (URL)
 	 * 
 	 * @param {string} url 
 	 */
-	doPrintImage(url: string): void;
-	doPrintImage(value: number[] | string): void {
-	    throw new Error('Method not implemented');
-	}
+	public abstract doPrintImage(url: string): void;
+	public abstract doPrintImage(value: number[] | string): void;
 
 	/**
 	 * Dispose
 	 */
-	dispose(): void {
-        throw new Error('Method not implemented');
-	}
+	public abstract dispose(): void;
 
 	/**
 	 * Closeout
@@ -306,34 +188,26 @@ export abstract class CloverDevice {
 	 * @param {boolean} allowOpenTabs 
 	 * @param {string} batchId 
 	 */
-	doCloseout(allowOpenTabs: boolean, batchId: string): void {
-        throw new Error('Method not implemented');
-	}
+	public abstract doCloseout(allowOpenTabs: boolean, batchId: string): void;
 
 	/**
 	 * Vault Card
 	 * 
 	 * @param {number} cardEntryMethods 
 	 */
-	doVaultCard(cardEntryMethods: number): void {
-        throw new Error('Method not implemented');
-	}
+	public abstract doVaultCard(cardEntryMethods: number): void;
 
 	/**
 	 * Reset Device
 	 */
-	doResetDevice(): void {
-        throw new Error('Method not implemented');
-	}
+	public abstract doResetDevice(): void;
 
 	/**
 	 * Accept Payment
 	 * 
 	 * @param {Payment} payment 
 	 */
-	doAcceptPayment(payment: sdk.remote.Payment): void {
-        throw new Error('Method not implemented');
-	}
+	public abstract doAcceptPayment(payment: sdk.remote.Payment): void;
 
 	/**
 	 * Reject Payment
@@ -341,32 +215,26 @@ export abstract class CloverDevice {
 	 * @param {Payment} payment 
 	 * @param {Challenge} challenge 
 	 */
-	doRejectPayment(payment: sdk.remote.Payment, challenge: sdk.remote.Challenge): void {
-        throw new Error('Method not implemented');
-	}
+	public abstract doRejectPayment(payment: sdk.remote.Payment, challenge: sdk.remote.Challenge): void;
 
 	/**
 	 * Retrieve Pending Payments
 	 */
-	doRetrievePendingPayments(): void {
-        throw new Error('Method not implemented');
-	}
+	public abstract doRetrievePendingPayments(): void;
 
 	/**
 	 * Read Cart Data
 	 * 
 	 * @param {PayIntent} payment 
 	 */
-	doReadCardData(payment: sdk.remote.PayIntent): void {
-        throw new Error('Method not implemented');
-	}
+	public abstract doReadCardData(payment: sdk.remote.PayIntent): void;
 
 	/**
 	 * Supports Acknowledgements
 	 * 
 	 * @param {boolean} supportsAck 
 	 */
-	setSupportsAcks(supportsAck: boolean): void {
+	public setSupportsAcks(supportsAck: boolean): void {
 		this.supportsAck = supportsAck;
 	}
 
@@ -375,9 +243,7 @@ export abstract class CloverDevice {
      * 
      * @returns boolean - Flag indicating if this device supports acks
 	 */
-	supportsAcks(): boolean {
+	public supportsAcks(): boolean {
 		return this.supportsAck;
 	}
 }
-
-export default CloverDevice;

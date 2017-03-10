@@ -1,4 +1,4 @@
-import CloverTransport from '../transport/CloverTransport';
+import {CloverTransport} from '../transport/CloverTransport';
 
 /**
  * Clover Device Configuration
@@ -42,5 +42,3 @@ export interface CloverDeviceConfiguration {
 	 */
 	getApplicationId(): string;
 }
-
-export default CloverDeviceConfiguration;

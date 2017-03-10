@@ -1,4 +1,4 @@
-import Logger from '../util/Logger';
+import {Logger} from '../util/Logger';
 
 /**
  * Clover Device Factory
@@ -21,7 +21,7 @@ export class CloverDeviceFactory {
 		// Try to get the requested clover device.
 		var cd = null;
 		try {
-			cd = require('./'+cloverDeviceName)(configuration);
+			cd = require('./' + cloverDeviceName)(configuration);
 		}
 		catch(e) {
 			Logger.create().error(e);
@@ -31,5 +31,3 @@ export class CloverDeviceFactory {
 		return cd;
 	}
 }
-
-export default CloverDeviceFactory;

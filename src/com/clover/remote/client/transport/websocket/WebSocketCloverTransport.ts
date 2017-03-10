@@ -1,7 +1,7 @@
 import CloverID = require('../../../../../../../CloverID');
-import CloverTransport from '../CloverTransport.js';
-import Logger from '../../util/Logger';
-import WebSocketClient from 'ws';
+import {CloverTransport} from '../CloverTransport.js';
+import {Logger} from '../../util/Logger';
+import {WebSocketCloverInterface} from './WebSocketCloverInterface';
 import http = require('http');
 
 /**
@@ -28,11 +28,16 @@ export class WebSocketCloverTransport extends CloverTransport {
 	private friendlyId: string;
 
 	// The websocket we will use
-	private webSocket: any = null;
+	// TODO: Create a custom websocket interface here
+	private webSocket: WebSocketCloverInterface;
 
 	// Flag to indicate if we are shutting down
 	private shutdown: boolean = false;
 
+	/**
+	 * @param {WebSocketCloverInterface} webSocket 
+	 */
+	public constructor(webSocket: WebSocketCloverInterface);
 	/**
 	 * @param {string} endpoint 
 	 * @param {number} heartbeatInterval 
@@ -42,25 +47,31 @@ export class WebSocketCloverTransport extends CloverTransport {
 	 * @param {string} serialNumber 
 	 * @param {string} authToken 
 	 */
-	constructor(endpoint: string, heartbeatInterval: number, reconnectDelay: number, retriesUntilDisconnect: number, posName: string, serialNumber: string, authToken: string, friendlyId?: string, allowOvertakeConnection?: boolean) {
+	public constructor(endpoint: string, heartbeatInterval: number, reconnectDelay: number, retriesUntilDisconnect: number, posName: string, serialNumber: string, authToken: string, friendlyId?: string, allowOvertakeConnection?: boolean);
+	constructor(endpointOrWebSocket: any, heartbeatInterval?: number, reconnectDelay?: number, retriesUntilDisconnect?: number, posName?: string, serialNumber?: string, authToken?: string, friendlyId?: string, allowOvertakeConnection?: boolean) {
 		super();
+		if (typeof endpointOrWebSocket == 'string') {
+			// Fill in the websocket config values
+			this.endpoint = endpointOrWebSocket;
+			this.heartbeatInterval = Math.max(10, heartbeatInterval);
+			this.reconnectDelay = Math.max(0, reconnectDelay);
+			this.retriesUntilDisconnect = Math.max(0, retriesUntilDisconnect);
+			this.posName = posName;
+			this.serialNumber = serialNumber;
+			this.authToken = authToken;
+			this.allowOvertakeConnection = allowOvertakeConnection;
+			this.friendlyId = new CloverID().getNewId();
+			if (friendlyId !== null) {
+				this.friendlyId = friendlyId;
+			}
 
-		// Fill in the websocket config values
-		this.endpoint = endpoint;
-		this.heartbeatInterval = Math.max(10, heartbeatInterval);
-		this.reconnectDelay = Math.max(0, reconnectDelay);
-		this.retriesUntilDisconnect = Math.max(0, retriesUntilDisconnect);
-		this.posName = posName;
-		this.serialNumber = serialNumber;
-		this.authToken = authToken;
-		this.allowOvertakeConnection = allowOvertakeConnection;
-		this.friendlyId = new CloverID().getNewId();
-		if (friendlyId !== null) {
-			this.friendlyId = friendlyId;
+			// Initialize the websocket
+			this.initialize(endpointOrWebSocket);
 		}
-
-		// Initialize the websocket
-		this.initialize(endpoint);
+		else {
+			// Use the websocket that was passed in.
+			this.webSocket = endpointOrWebSocket;
+		}
 	}
 
 	/**
@@ -72,7 +83,7 @@ export class WebSocketCloverTransport extends CloverTransport {
 		// Check to see if we have a websocket already
 		if (this.webSocket !== null) {
 			// Check to see if the websocket is open or connecting
-			if (this.webSocket.open || this.webSocket.connecting) {
+			if (this.webSocket.isOpen() || this.webSocket.isConnecting()) {
 				// Just wait for it to connect
 				return;
 			}
@@ -102,7 +113,7 @@ export class WebSocketCloverTransport extends CloverTransport {
 			path: WebSocketCloverTransport.WEBSOCKET_PATH,
 			method: 'OPTION'
 		};
-		this.logger.info('Calling: '+httpUrl);
+		this.logger.info('Calling: ' + httpUrl);
 		http.request(serverOptions, (res) => {
 			this.logger.info(res);
 			// // Create a new websocket
@@ -245,5 +256,3 @@ export class WebSocketCloverTransport extends CloverTransport {
 		this.clearWebSocket();
 	}
 }
-
-export default WebSocketCloverTransport;

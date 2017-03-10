@@ -3,35 +3,23 @@ const ts = require('gulp-typescript');
 const del = require('del');
 const sourcemaps = require('gulp-sourcemaps');
 
+var tsProject = ts.createProject('tsconfig.json', {
+	allowJs: true
+});
+
 gulp.task('clean:dist', function() {
 	return del([
 		'dist/**/*'
 	]);
 });
 
-gulp.task('build:src', () => {
-	return gulp.src(["src/**/*.ts"])
+gulp.task('build:src', ['clean:dist'], () => {
+	var tsResult = gulp.src(["src/**/*.ts"])
 		.pipe(sourcemaps.init())
-		.pipe(ts({
-			"module": "commonjs",
-			"target": "es5",
-			"noImplicitAny": false,
-			"sourceMap": false,
-			"allowJs": true
-		}))
+		.pipe(tsProject());
+	return tsResult.js
 		.pipe(sourcemaps.write('maps/'))
 		.pipe(gulp.dest('dist/'));
 });
 
 gulp.task('default', ['clean:dist', 'build:src']);
-
-// const gulp = require('gulp');
-// const babel = require('gulp-babel');
-
-// gulp.task('default', () => {
-// 	return gulp.src('src/**/*.js')
-// 		.pipe(babel({
-// 			presets: ['es2015']
-// 		}))
-// 		.pipe(gulp.dest('.'));
-// });

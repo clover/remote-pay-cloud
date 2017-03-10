@@ -1,6 +1,9 @@
 import { EventEmitter } from 'events';
 import DebugConfig = require('../../../../../../DebugConfig');
 
+// This is the same but will not work if DebugConfig is updated to ES6+
+// import {default as DebugConfig} from '../../../../../../DebugConfig';
+
 export class Logger extends EventEmitter {
 	enabled: boolean = false;
 
@@ -25,17 +28,15 @@ export class Logger extends EventEmitter {
 		}
 	}
 
-	public silly(any: any) {}
+	public silly(...any: any[]) {}
 
-	public verbose(any: any) {}
+	public verbose(...any: any[]) {}
 
-	public info(any: any) {}
+	public info(...any: any[]) {}
 
-	public warn(any: any) {}
+	public warn(...any: any[]) {}
 
-	public error(any: any) {}
+	public error(...any: any[]) {}
 
-	public debug(any: any) {}
+	public debug(...any: any[]) {}
 }
-
-export default Logger;
