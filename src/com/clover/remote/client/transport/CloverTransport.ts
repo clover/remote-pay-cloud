@@ -8,10 +8,10 @@ import {CloverTransportObserver} from './CloverTransportObserver';
  */
 export abstract class CloverTransport {
 	// List of observers to notify
-	observers: CloverTransportObserver[] = [];
+	protected observers: CloverTransportObserver[] = [];
 
 	// Flag to determine if the device is ready
-	ready: Boolean = false;
+	protected ready: Boolean = false;
 
 	constructor() {
 	}

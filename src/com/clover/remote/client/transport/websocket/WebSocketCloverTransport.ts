@@ -34,10 +34,13 @@ export class WebSocketCloverTransport extends CloverTransport {
 	// Flag to indicate if we are shutting down
 	private shutdown: boolean = false;
 
+	// Hold the reconnect timer
+	private reconnectTimer: NodeJS.Timer;
+
 	/**
 	 * @param {WebSocketCloverInterface} webSocket 
 	 */
-	public constructor(webSocket: WebSocketCloverInterface);
+	constructor(webSocket: WebSocketCloverInterface);
 	/**
 	 * @param {string} endpoint 
 	 * @param {number} heartbeatInterval 
@@ -47,7 +50,7 @@ export class WebSocketCloverTransport extends CloverTransport {
 	 * @param {string} serialNumber 
 	 * @param {string} authToken 
 	 */
-	public constructor(endpoint: string, heartbeatInterval: number, reconnectDelay: number, retriesUntilDisconnect: number, posName: string, serialNumber: string, authToken: string, friendlyId?: string, allowOvertakeConnection?: boolean);
+	constructor(endpoint: string, heartbeatInterval: number, reconnectDelay: number, retriesUntilDisconnect: number, posName: string, serialNumber: string, authToken: string, friendlyId?: string, allowOvertakeConnection?: boolean);
 	constructor(endpointOrWebSocket: any, heartbeatInterval?: number, reconnectDelay?: number, retriesUntilDisconnect?: number, posName?: string, serialNumber?: string, authToken?: string, friendlyId?: string, allowOvertakeConnection?: boolean) {
 		super();
 		if (typeof endpointOrWebSocket == 'string') {
@@ -71,6 +74,13 @@ export class WebSocketCloverTransport extends CloverTransport {
 		else {
 			// Use the websocket that was passed in.
 			this.webSocket = endpointOrWebSocket;
+			this.sendOptionRequest(this.webSocket.getEndpoint(), (res) => {
+				this.logger.info(res);
+				this.webSocket.onOpen = this.onOpen;
+				this.webSocket.onMessage = this.onMessage;
+				this.webSocket.onError = this.onError;
+				this.webSocket.onClose = this.onClose;
+			});
 		}
 	}
 
@@ -93,6 +103,27 @@ export class WebSocketCloverTransport extends CloverTransport {
 			}
 		}
 
+		// Send the option request and then initialize the websocket
+		this.sendOptionRequest(endpoint, (res) => {
+			this.logger.info(res);
+			// Create a new websocket
+			// TODO: this may not be applicable here
+			// this.webSocket = new WebSocketClient(endpoint);
+			// this.webSocket.onOpen = this.onOpen;
+			// this.webSocket.onMessage = this.onMessage;
+			// this.webSocket.onError = this.onError;
+			// this.webSocket.onClose = this.onClose;
+		});
+	}
+
+	/**
+	 * Send an OPTION request to the endpoint first to get
+	 * the required X-CLOVER-CONNECTED-ID header value.
+	 * 
+	 * @param endpoint 
+	 * @param callback 
+	 */
+	private sendOptionRequest(endpoint: string, callback: Function): void {
 		// Update the base address for a request call
 		let baseAddress = this.generateAddress(endpoint);
 		var httpUrl = null;
@@ -115,23 +146,15 @@ export class WebSocketCloverTransport extends CloverTransport {
 		};
 		this.logger.info('Calling: ' + httpUrl);
 		http.request(serverOptions, (res) => {
-			this.logger.info(res);
-			// // Create a new websocket
-			// this.webSocket = new WebSocketClient(endpoint);
-
-			// // Connect to the endpoint
-			// this.webSocket.on('open', () => {
-			// 	this.onOpen();
-			// });
-			// this.webSocket.on('close', () => {
-			// 	this.onClose();
-			// });
-			// this.webSocket.on('message', (data: string, flags: any) => {
-			// 	this.onMessage(data);
-			// });
+			callback.call(res);
 		});
 	}
 
+	/**
+	 * Add the friendly name and connect settings to the endpoint
+	 * 
+	 * @param baseAddress 
+	 */
 	private generateAddress(baseAddress: string): string {
         var connect = "?";
         if (baseAddress.indexOf("?") > -1){
@@ -153,7 +176,9 @@ export class WebSocketCloverTransport extends CloverTransport {
 		// Check to see if the websocket exists
 		if (this.webSocket !== null) {
 			// Clear the listeners
+			// TODO: Do we need to do this?
 		}
+
 		this.webSocket = null;
 	}
 
@@ -200,39 +225,63 @@ export class WebSocketCloverTransport extends CloverTransport {
 		}
 
 		// Try to reconnect the websocket
-		this.initialize(this.endpoint);
+		this.reconnectTimer = this.reconnectTimer || setTimeout(() => {
+			this.initialize(this.endpoint);
+		}, this.reconnectDelay);
 	}
 
 	/**
 	 * Websocket connection is open
+	 * 
+	 * @param {any} event
 	 */
-	public onOpen(): void {
+	public onOpen(event: any): void {
 		// Let the observers know that we are connected
+		this.logger.debug('WebSocket Connection Open...');
 		this.notifyDeviceConnected();
-		this.logger.debug('Open...');
+	}
+
+	/**
+	 * Websocket received message
+	 * 
+	 * @param {any} event
+	 */
+	public onMessage(event: any): void {
+		super.onMessage(event.toString());
+	}
+
+	/**
+	 * Websocket error occurred
+	 * 
+	 * @param {any} event 
+	 */
+	public onError(event: any): void {
+		// Let the observers know that we are no longer connected
+		this.notifyDeviceDisconnected();
+
+		// Try to reconnect
+		this.reconnect();
 	}
 
 	/**
 	 * Websocket connection is closed
+	 * 
+	 * @param {any} event
 	 */
-	public onClose(): void {
+	public onClose(event: any): void {
 		// Let the observers know that we are no longer connected
+		this.logger.debug('WebSocket Connection Closed...');
 		this.notifyDeviceDisconnected();
 		this.clearWebSocket();
-		this.logger.debug('Closed...');
 
 		// Check to see if we can reconnect
 		if (!this.shutdown) {
-			setTimeout((args) => {
-				this.reconnect();
-			}, this.reconnectDelay);
+			this.reconnect();
 		}
 	}
 
 	/**
 	 * Clean up and dispose
-	 * 
-	 * @override
 	 */
 	public dispose(): void {
 		// Set the shutdown flag

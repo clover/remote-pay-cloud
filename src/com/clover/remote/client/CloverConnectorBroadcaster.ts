@@ -2,7 +2,11 @@ import sdk = require('remote-pay-cloud-api');
 import {Logger} from './util/Logger';
 
 export class CloverConnectorBroadcaster extends Array<sdk.remotepay.ICloverConnectorListener> {
-	logger: Logger = Logger.create();
+	private logger: Logger = Logger.create();
+
+	constructor() {
+		super();
+	}
 
 	public clear(): void {
 		this.splice(0, this.length);

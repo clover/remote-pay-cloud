@@ -5,6 +5,13 @@
  */
 export interface WebSocketCloverInterface {
     /**
+     * Return the endpoint for this websocket
+     * 
+     * @returns endpoint
+     */
+    getEndpoint(): string;
+
+    /**
      * Handle connection open event
      * 
      * @param {any} event - The open event

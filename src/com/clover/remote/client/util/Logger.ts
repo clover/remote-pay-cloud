@@ -5,7 +5,11 @@ import DebugConfig = require('../../../../../../DebugConfig');
 // import {default as DebugConfig} from '../../../../../../DebugConfig';
 
 export class Logger extends EventEmitter {
-	enabled: boolean = false;
+	public enabled: boolean = false;
+
+	constructor() {
+		super();
+	}
 
 	public static create(): Logger {
 		let log = new Logger();

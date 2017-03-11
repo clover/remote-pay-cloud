@@ -27,28 +27,28 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 	private cardEntryMethods: number = CloverConnector.CARD_ENTRY_METHOD_MAG_STRIPE | CloverConnector.CARD_ENTRY_METHOD_ICC_CONTACT | CloverConnector.CARD_ENTRY_METHOD_NFC_CONTACTLESS; // | CARD_ENTRY_METHOD_MANUAL;
 
 	// Create a logger
-	logger: Logger = Logger.create();
+	private logger: Logger = Logger.create();
 
 	// The device we are connected to
-	device: CloverDevice;
+	public device: CloverDevice;
 
 	// Hold the current merchant info
-	merchantInfo: sdk.remotepay.MerchantInfo;
+	public merchantInfo: sdk.remotepay.MerchantInfo;
 
 	// The device observer for this connector
-	deviceObserver: sdk.remotepay.ICloverConnectorListener;
+	private deviceObserver: sdk.remotepay.ICloverConnectorListener;
 
 	// List of listeners to broadcast notifications to
-	broadcaster: CloverConnectorBroadcaster;
+	public broadcaster: CloverConnectorBroadcaster;
 
 	// Device Configuration for this connector
-	configuration: CloverDeviceConfiguration;
+	private configuration: CloverDeviceConfiguration;
 
 	// Flag indicating whether the device is ready or not
-	isReady: boolean = false;
+	public isReady: boolean = false;
 
 	// Hold the last request
-	lastRequest: any;
+	public lastRequest: any;
 
 	constructor(config: CloverDeviceConfiguration) {
 		// Set the cancel input option
