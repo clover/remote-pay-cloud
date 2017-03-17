@@ -1,4 +1,5 @@
 import {CloverTransportObserver} from './CloverTransportObserver';
+import {ObjectMessageSender} from './ObjectMessageSender';
 
 /**
  * Clover Transport
@@ -9,6 +10,9 @@ import {CloverTransportObserver} from './CloverTransportObserver';
 export abstract class CloverTransport {
 	// List of observers to notify
 	protected observers: CloverTransportObserver[] = [];
+
+	// Used to send remote messages, like pairing messages
+	protected objectMessageSender: ObjectMessageSender;
 
 	// Flag to determine if the device is ready
 	protected ready: Boolean = false;
@@ -96,6 +100,11 @@ export abstract class CloverTransport {
 	 */
 	public clearListeners(): void {
 		this.observers.splice(0, this.observers.length);
+	}
+
+
+	public setObjectMessageSender(objectMessageSender: ObjectMessageSender): void {
+		this.objectMessageSender = objectMessageSender;
 	}
 
 	/**

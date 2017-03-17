@@ -1,6 +1,7 @@
 import sdk = require('remote-pay-cloud-api');
 import {CloverDevice} from './CloverDevice';
 import {CloverTransport} from '../transport/CloverTransport';
+import {ObjectMessageSender} from '../transport/ObjectMessageSender';
 import {CloverTransportObserver} from '../transport/CloverTransportObserver';
 import {CloverDeviceConfiguration} from './CloverDeviceConfiguration';
 import { Logger } from '../util/Logger';
@@ -10,7 +11,7 @@ import { Logger } from '../util/Logger';
  * 
  * This is a default implementation of the clover device.
  */
-export class DefaultCloverDevice extends CloverDevice implements CloverTransportObserver {
+export class DefaultCloverDevice extends CloverDevice implements CloverTransportObserver, ObjectMessageSender {
     private static REMOTE_SDK: string = 'com.clover.cloverconnector.java:1.1.1.B';
 
     private logger: Logger = Logger.create();
@@ -33,6 +34,7 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
                 applicationId :
                 configOrPackageName.getApplicationId());
 		this.transport.subscribe(this);
+        this.transport.setObjectMessageSender(this);
 	}
 
     /**
@@ -645,7 +647,7 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
 	 * @param {boolean} fullRefund 
 	 */
 	public doPaymentRefund(orderId: string, paymentId: string, amount: number, fullRefund: boolean): void {
-        this.sendObjectMessage(new sdk.remotemessage.RefundRequestMessage(orderId, paymentId, amount, fullRefund), 2);
+        this.sendObjectMessage_opt_version(new sdk.remotemessage.RefundRequestMessage(orderId, paymentId, amount, fullRefund), 2);
     }
 
 	/**
@@ -737,9 +739,10 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
      * @param message 
      * @param version
      */
-    private sendObjectMessage(message: sdk.remotemessage.Message): string;
-    private sendObjectMessage(message: sdk.remotemessage.Message, version: number): string;
-    private sendObjectMessage(message: sdk.remotemessage.Message, version?: number): string {
+    public sendObjectMessage(message: sdk.remotemessage.Message): string {
+        return this.sendObjectMessage_opt_version(message);
+    }
+    private sendObjectMessage_opt_version(message: sdk.remotemessage.Message, version?: number): string {
         // Default to version 1
         if (version == null) version = 1;
 

@@ -1,307 +1,306 @@
+import sdk = require('remote-pay-cloud-api');
+import {PairingDeviceConfiguration} from '../PairingDeviceConfiguration';
+import {CloverDeviceConfiguration} from '../../device/CloverDeviceConfiguration';
+import {CloverDevice} from '../../device/CloverDevice';
+import {CloverWebSocketClient} from './CloverWebSocketClient';
+// import MethodToMessage = require('../../../../util/MethodToMessage.js');
+
 import CloverID = require('../../../../../../../CloverID');
-import {CloverTransport} from '../CloverTransport.js';
+import {CloverTransport} from '../CloverTransport';
 import {Logger} from '../../util/Logger';
-import {WebSocketCloverInterface} from './WebSocketCloverInterface';
 import http = require('http');
+import {CloverWebSocketClientListener} from "./CloverWebSocketClientListener";
+import {CloverTransportObserver} from '../CloverTransportObserver';
+import {WebSocketCloverDeviceConfiguration} from "../../device/WebSocketCloverDeviceConfiguration";
 
 /**
  * WebSocket Clover Transport
  * 
  * This is a websocket implementation of the Clover Transport.
  */
-export class WebSocketCloverTransport extends CloverTransport {
-	// Store the path for websocket calls
-	public static WEBSOCKET_PATH: string = "/support/remote_pay/cs";
+export class WebSocketCloverTransport extends CloverTransport implements CloverWebSocketClientListener {
 
 	// Create a logger
 	private logger: Logger = Logger.create();
 
-	// Websocket config values
-	private endpoint: string;
-	private heartbeatInterval: number;
-	private reconnectDelay: number;
-	private retriesUntilDisconnect: number;
 	private posName: string;
 	private serialNumber: string;
 	private authToken: string;
-	private allowOvertakeConnection: boolean;
-	private friendlyId: string;
 
-	// The websocket we will use
-	// TODO: Create a custom websocket interface here
-	private webSocket: WebSocketCloverInterface;
+	private reconnectDelay: number = 3000;
+	endpoint: string;
 
-	// Flag to indicate if we are shutting down
-	private shutdown: boolean = false;
+	pairingDeviceConfiguration: PairingDeviceConfiguration; // Network Pay display specific
 
-	// Hold the reconnect timer
-	private reconnectTimer: NodeJS.Timer;
+	webSocket: CloverWebSocketClient;
+	webSocketImplClass: any;
+
+	status: string = "Disconnected";
+	/**
+	 * prevent reconnects if shutdown was requested
+	 */
+	shutdown: boolean = false;
+
+	// KeyStore trustStore; // nope, browser handled.
+
+	isPairing: boolean = true;
+
+	device: CloverDevice;
 
 	/**
-	 * @param {WebSocketCloverInterface} webSocket 
+	 * A single thread/queue to process reconnect requests
 	 */
-	constructor(webSocket: WebSocketCloverInterface);
-	/**
-	 * @param {string} endpoint 
-	 * @param {number} heartbeatInterval 
-	 * @param {number} reconnectDelay 
-	 * @param {number} retriesUntilDisconnect 
-	 * @param {string} posName 
-	 * @param {string} serialNumber 
-	 * @param {string} authToken 
-	 */
-	constructor(endpoint: string, heartbeatInterval: number, reconnectDelay: number, retriesUntilDisconnect: number, posName: string, serialNumber: string, authToken: string, friendlyId?: string, allowOvertakeConnection?: boolean);
-	constructor(endpointOrWebSocket: any, heartbeatInterval?: number, reconnectDelay?: number, retriesUntilDisconnect?: number, posName?: string, serialNumber?: string, authToken?: string, friendlyId?: string, allowOvertakeConnection?: boolean) {
-		super();
-		if (typeof endpointOrWebSocket == 'string') {
-			// Fill in the websocket config values
-			this.endpoint = endpointOrWebSocket;
-			this.heartbeatInterval = Math.max(10, heartbeatInterval);
-			this.reconnectDelay = Math.max(0, reconnectDelay);
-			this.retriesUntilDisconnect = Math.max(0, retriesUntilDisconnect);
-			this.posName = posName;
-			this.serialNumber = serialNumber;
-			this.authToken = authToken;
-			this.allowOvertakeConnection = allowOvertakeConnection;
-			this.friendlyId = new CloverID().getNewId();
-			if (friendlyId !== null) {
-				this.friendlyId = friendlyId;
-			}
+	// ScheduledThreadPoolExecutor reconnectPool = new ScheduledThreadPoolExecutor(1);
 
-			// Initialize the websocket
-			this.initialize(endpointOrWebSocket);
-		}
-		else {
-			// Use the websocket that was passed in.
-			this.webSocket = endpointOrWebSocket;
-			this.sendOptionRequest(this.webSocket.getEndpoint(), (res) => {
-				this.logger.info(res);
-				this.webSocket.onOpen = this.onOpen;
-				this.webSocket.onMessage = this.onMessage;
-				this.webSocket.onError = this.onError;
-				this.webSocket.onClose = this.onClose;
-			});
-		}
-	}
 
-	/**
-	 * Initialize the websocket from an endpoint string
-	 * 
-	 * @param {string} endpoint - the endpoint for the websocket to connect to
-	 */
-	private initialize(endpoint: string): void {
-		// Check to see if we have a websocket already
-		if (this.webSocket !== null) {
-			// Check to see if the websocket is open or connecting
-			if (this.webSocket.isOpen() || this.webSocket.isConnecting()) {
-				// Just wait for it to connect
-				return;
-			}
-			else {
-				// Clear the websocket listeners
-				this.clearWebSocket();
-			}
-		}
-
-		// Send the option request and then initialize the websocket
-		this.sendOptionRequest(endpoint, (res) => {
-			this.logger.info(res);
-			// Create a new websocket
-			// TODO: this may not be applicable here
-			// this.webSocket = new WebSocketClient(endpoint);
-			// this.webSocket.onOpen = this.onOpen;
-			// this.webSocket.onMessage = this.onMessage;
-			// this.webSocket.onError = this.onError;
-			// this.webSocket.onClose = this.onClose;
-		});
-	}
-
-	/**
-	 * Send an OPTION request to the endpoint first to get
-	 * the required X-CLOVER-CONNECTED-ID header value.
-	 * 
-	 * @param endpoint 
-	 * @param callback 
-	 */
-	private sendOptionRequest(endpoint: string, callback: Function): void {
-		// Update the base address for a request call
-		let baseAddress = this.generateAddress(endpoint);
-		var httpUrl = null;
-		var proto = null;
-		if (baseAddress.indexOf("wss") > -1) {
-			httpUrl = baseAddress.replace('wss://', '');
-			proto = 'https';
-		} else {
-			httpUrl = baseAddress.replace('ws://', '');
-			proto = 'http';
-		}
-		httpUrl = httpUrl.substr(0, httpUrl.indexOf('/'));
-
-		// Make a request to the server first
-		let serverOptions = {
-			protocol: proto,
-			host: httpUrl,
-			path: WebSocketCloverTransport.WEBSOCKET_PATH,
-			method: 'OPTION'
-		};
-		this.logger.info('Calling: ' + httpUrl);
-		http.request(serverOptions, (res) => {
-			callback.call(res);
-		});
-	}
-
-	/**
-	 * Add the friendly name and connect settings to the endpoint
-	 * 
-	 * @param baseAddress 
-	 */
-	private generateAddress(baseAddress: string): string {
-        var connect = "?";
-        if (baseAddress.indexOf("?") > -1){
-            connect = "&";
+	reconnector = function() {
+        if (!this.shutdown) {
+            try {
+                this.initialize(this.endpoint);
+            } catch (e) {
+                this.reconnect();
+            }
         }
-        var generatedAddress = baseAddress + connect + "friendlyId=" + this.friendlyId;
-        if (this.allowOvertakeConnection) {
-            generatedAddress = generatedAddress + connect + "forceConnect=true";
-        } else {
-            generatedAddress = generatedAddress + connect + "forceConnect=false";
+    }.bind(this);
+
+    public reconnect(): void {
+        if (this.shutdown) {
+            this.logger.debug("Not attempting to reconnect, shutdown...");
+            return;
         }
-		return generatedAddress;
+        setTimeout(this.reconnector, this.reconnectDelay);
+    }
+
+    public static METHOD: string = "method";
+	public static PAYLOAD: string = "payload";
+
+    public constructor(endpoint:string,
+                       heartbeatInterval:number,
+                       reconnectDelay:number,
+                       retriesUntilDisconnect:number,
+                       posName:string,
+                       serialNumber:string,
+                       authToken:string,
+                       webSocketImplClass:any,
+                       friendlyId?:string,
+                       allowOvertakeConnection?:boolean) {
+	//public constructor(deviceConfiguration: WebSocketCloverDeviceConfiguration) {
+		super();  // implicit?
+		this.endpoint = endpoint;
+		// this.heartbeatInterval = Math.max(10, heartbeatInterval);
+		this.reconnectDelay = Math.max(0, reconnectDelay);
+		// this.maxPingRetriesBeforeDisconnect = Math.max(0, retriesUntilDisconnect);
+		this.posName = posName;
+		this.serialNumber = serialNumber;
+		this.authToken = authToken;
+		this.webSocketImplClass = webSocketImplClass;
+
+		this.initialize(this.endpoint);
 	}
 
-	/**
-	 * Clear the websocket listeners
-	 */
-	private clearWebSocket(): void {
-		// Check to see if the websocket exists
-		if (this.webSocket !== null) {
-			// Clear the listeners
-			// TODO: Do we need to do this?
-		}
-
-		this.webSocket = null;
-	}
-
-	/**
-	 * Send a message across the websocket
-	 * 
-	 * @override
-	 * @param {string} message - the message to send
-	 * @returns number - indicating success or failure
-	 */
 	public sendMessage(message: string): number {
-		// Make sure we have a connection
-		if (this.webSocket !== null && this.webSocket.isOpen()) {
-			try {
-				// Send the message
-				this.webSocket.send(message);
+		// let's see if we have connectivity
 
-				// Return success
-				return 0;
-			}
-			catch(e) {
-				// Reconnect
+		if(this.webSocket != null && this.webSocket.isOpen()) {
+			try {
+				this.webSocket.send(message);
+			} catch(e){
 				this.reconnect();
 			}
+			return 0;
+		} else {
+            this.reconnect();
 		}
-		else {
-			// Reconnect
-			this.reconnect();
-		}
-
-		// Return failure
 		return -1;
 	}
 
-	/**
-	 * Try to reconnect the websocket to the endpoint
-	 */
-	public reconnect(): void {
-		// Make sure we are not trying to shutdown first
-		if (this.shutdown) {
-			// Shutting down. Don't reconnect
-			this.logger.debug('Not attempting to reconnect, shutdown...');
-			return;
+	private clearWebsocket(): void { // synchronized
+		if (this.webSocket != null) {
+			this.webSocket.clearListener();
+		}
+		this.webSocket = null;
+	}
+
+	private initialize(deviceEndpoint: string): void  { // synchronized
+
+		if (this.webSocket != null) {
+			if (this.webSocket.isOpen() || this.webSocket.isConnecting()) {
+				return;
+			} else {
+				this.clearWebsocket();
+			}
 		}
 
-		// Try to reconnect the websocket
-		this.reconnectTimer = this.reconnectTimer || setTimeout(() => {
-			this.initialize(this.endpoint);
-		}, this.reconnectDelay);
+		this.webSocket = new CloverWebSocketClient(deviceEndpoint, this, 5000, this.webSocketImplClass);
+
+		this.webSocket.connect();
+		this.logger.debug('connection attempt done.');
 	}
 
-	/**
-	 * Websocket connection is open
-	 * 
-	 * @param {any} event
-	 */
-	public onOpen(event: any): void {
-		// Let the observers know that we are connected
-		this.logger.debug('WebSocket Connection Open...');
-		this.notifyDeviceConnected();
-	}
-
-	/**
-	 * Websocket received message
-	 * 
-	 * @param {any} event
-	 */
-	public onMessage(event: any): void {
-		super.onMessage(event.toString());
-	}
-
-	/**
-	 * Websocket error occurred
-	 * 
-	 * @param {any} event 
-	 */
-	public onError(event: any): void {
-		// Let the observers know that we are no longer connected
-		this.notifyDeviceDisconnected();
-
-		// Try to reconnect
-		this.reconnect();
-	}
-
-	/**
-	 * Websocket connection is closed
-	 * 
-	 * @param {any} event
-	 */
-	public onClose(event: any): void {
-		// Let the observers know that we are no longer connected
-		this.logger.debug('WebSocket Connection Closed...');
-		this.notifyDeviceDisconnected();
-		this.clearWebSocket();
-
-		// Check to see if we can reconnect
-		if (!this.shutdown) {
-			this.reconnect();
-		}
-	}
-
-	/**
-	 * Clean up and dispose
-	 */
-	public dispose(): void {
-		// Set the shutdown flag
+	public dispose():void {
 		this.shutdown = true;
-
-		// Check to see if we have a websocket
-		if (this.webSocket !== null) {
-			// Let the observers know that the device is disconnected
+		if (this.webSocket != null) {
 			this.notifyDeviceDisconnected();
-
 			try {
-				// Close the websocket
 				this.webSocket.close();
-			}
-			catch(e) {
-				this.logger.error(e);
+			} catch (e) {
+				this.logger.error('error disposing of transport.', e);
 			}
 		}
-
-		// Clear the listeners
-		this.clearWebSocket();
+		this.clearWebsocket();
 	}
+
+	public connectionError(ws: CloverWebSocketClient):void {
+		this.logger.debug('Not Responding...');
+
+		if (this.webSocket == ws) {
+			for (let observer of this.observers) {
+				this.logger.debug('onConnectionError');
+				observer.onDeviceDisconnected(this);
+			}
+		}
+		// this.reconnect();
+	}
+
+	public onNotResponding(ws: CloverWebSocketClient): void {
+		this.logger.debug('Not Responding...');
+		if (this.webSocket == ws) {
+			for (let observer of this.observers) {
+				this.logger.debug('onNotResponding');
+				observer.onDeviceDisconnected(this);
+			}
+		}
+	}
+
+	public onPingResponding(ws: CloverWebSocketClient): void {
+		this.logger.debug("Ping Responding");
+		if (this.webSocket == ws) {
+			for (let observer of this.observers) {
+				this.logger.debug("onPingResponding");
+				observer.onDeviceReady(this);
+			}
+		}
+	}
+
+	public onOpen(ws: CloverWebSocketClient): void {
+
+		this.logger.debug("Open...");
+		if (this.webSocket == ws) {
+			// notify connected
+			this.notifyDeviceConnected();
+			this.sendPairRequest();
+		}
+	}
+
+	private sendPairRequest(): void {
+		this.isPairing = true;
+        let prm: sdk.remotemessage.PairingRequestMessage = new sdk.remotemessage.PairingRequestMessage();
+		prm.setName(this.posName);
+		prm.setSerialNumber(this.serialNumber);
+		prm.setApplicationName(this.posName);
+		prm.setAuthenticationToken(this.authToken);
+
+		this.objectMessageSender.sendObjectMessage(prm);
+	}
+
+    public onClose(ws: CloverWebSocketClient, code: number, reason: string, remote: boolean): void {
+        this.logger.debug("onClose: " + reason + ", remote? " + remote);
+
+        if (this.webSocket == ws) {
+            if(!this.webSocket.isClosing()) {
+				this.webSocket.clearListener();
+				this.webSocket.close();
+            }
+			this.clearWebsocket();
+            for (let observer of this.observers) {
+                this.logger.debug("onClose");
+                observer.onDeviceDisconnected(this);
+            }
+            if(!this.shutdown) {
+				this.reconnect();
+            }
+        }
+    }
+
+    //private extractPayloadFromRemoteMessageJson(remoteMessageJson): any {
+    //    // Get the sdk.remotemessage.Message type for this message
+    //    var responseMessageType = MethodToMessage[remoteMessageJson.getMethod()];
+    //    // Create an instance of the message
+    //    var remotemessageMessage = new responseMessageType;
+    //    // Populate the message using the remoteMessageJson, which is a json object that is a
+    //    // sdk.remotemessage.RemoteMessage
+    //    this.remoteMessageParser.parseMessage(message, remotemessageMessage);
+    //    // remotemessageMessage is a sdk.remotemessage.Message that is populated.
+    //    return remotemessageMessage;
+    //}
+
+
+    /**
+     * Messed up way ts/js does function overloading
+     *
+     * @param ws
+     * @param message
+     */
+    public onMessage(ws: CloverWebSocketClient, message: string): void;
+    public onMessage(message: string): void;
+    public onMessage(wsOrMessage: any, messageOnly?: string): void {
+        if (typeof wsOrMessage == 'string') {
+            super.onMessage(wsOrMessage);
+        } else {
+            this.onMessage_cwscl(wsOrMessage, messageOnly);
+        }
+    }
+
+    public onMessage_cwscl(ws: CloverWebSocketClient, message: string): void { // CloverWebSocketClientListener
+        if (this.webSocket == ws) {
+            if(this.isPairing) {
+                var remoteMessageJson = JSON.parse(message);
+                // var remoteMessage: sdk.remotemessage.Message = this.extractPayloadFromRemoteMessageJson(remoteMessageJson);
+
+                if (sdk.remotemessage.METHOD.PAIRING_CODE.equals(remoteMessageJson.method)) {
+                    this.logger.debug("Got PAIRING_CODE");
+                    var pcm: sdk.remotemessage.PairingCodeMessage = <sdk.remotemessage.PairingCodeMessage>JSON.parse(remoteMessageJson.payload);
+                    var pairingCode:string = pcm.getPairingCode();
+                    this.pairingDeviceConfiguration.onPairingCode(pairingCode);
+                } else if (sdk.remotemessage.METHOD.PAIRING_RESPONSE.equals(remoteMessageJson.getMethod())) {
+                    this.logger.debug("Got PAIRING_RESPONSE");
+                    var response: sdk.remotemessage.PairingResponse = <sdk.remotemessage.PairingResponse>JSON.parse(remoteMessageJson.payload);
+                    if (sdk.remotemessage.PairingState.PAIRED.equals(response.pairingState) || sdk.remotemessage.PairingState.INITIAL.equals(response.pairingState)) {
+                        this.logger.debug("Got PAIRED pair response");
+                        this.isPairing = false;
+                        this.authToken = response.authenticationToken;
+
+                        try {
+                            this.pairingDeviceConfiguration.onPairingSuccess(this.authToken);
+                        } catch (e) {
+                            this.logger.debug("Error:" + e);
+                        }
+                        this.notifyDeviceReady();
+                    } else if (sdk.remotemessage.PairingState.FAILED.equals(remoteMessageJson.getMethod())) {
+                        this.logger.debug("Got FAILED pair response");
+                        this.isPairing = true;
+                        this.sendPairRequest();
+                    }
+                } else if (sdk.remotemessage.METHOD.ACK != remoteMessageJson.getMethod() || sdk.remotemessage.METHOD.UI_STATE != remoteMessageJson.getMethod()) {
+                    this.logger.debug("Unexpected method: '" + remoteMessageJson.getMethod() + "' while in pairing mode.");
+                }
+            } else {
+                for (let observer of this.observers) {
+                    this.logger.debug("Got message: " + message);
+                    observer.onMessage(message);
+                }
+            }
+        }
+    }
+
+    public onSendError(payloadText: string): void {
+        // TODO:
+        /*for (let observer of this.observers) {
+         CloverDeviceErrorEvent errorEvent = new CloverDeviceErrorEvent();
+         }*/
+    }
+
+    public setPairingDeviceConfiguration(pairingDeviceConfiguration: PairingDeviceConfiguration): void {
+        this.pairingDeviceConfiguration = pairingDeviceConfiguration;
+    }
 }

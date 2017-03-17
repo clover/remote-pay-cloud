@@ -11,6 +11,7 @@ export abstract class WebSocketCloverDeviceConfiguration implements CloverDevice
 	private reconnectDelay: number = 3000;
 	private pingRetryCountBeforeReconnect: number = 4;
 	private appId: string;
+	private webSocketImplClass: any;
 
 	/**
 	 *
@@ -19,15 +20,17 @@ export abstract class WebSocketCloverDeviceConfiguration implements CloverDevice
 	 * @param {string} posName - Displayed during pairing to display the POS name on the Mini. e.g. MyPOS
 	 * @param {string} serialNumber - Displayed during pairing to display the device identifier. e.g. 'Aisle 3' or 'POS-35153234'
 	 * @param {string} authToken - The authToken retrieved from a previous pairing activity, passed as an argument to onPairingSuccess. This will be null for the first connection
+	 * @param {Object} webSocketImplClass - the definition of the WebSocketInterface that will be used when connecting.
 	 * @param {number} heartbeatInterval - duration to wait for a PING before disconnecting
 	 * @param {number} reconnectDelay - duration to wait until a reconnect is attempted
 	 */
-	constructor(endpoint: string, applicationId: string, posName: string, serialNumber: string, authToken: string, heartbeatInterval?: number, reconnectDelay?: number) {
+	constructor(endpoint: string, applicationId: string, posName: string, serialNumber: string, authToken: string, webSocketImplClass:any, heartbeatInterval?: number, reconnectDelay?: number) {
 		this.uri = endpoint;
 		this.appId = applicationId;
 		this.posName = posName;
 		this.serialNumber = serialNumber;
 		this.authToken = authToken;
+		this.webSocketImplClass = webSocketImplClass;
 		if (heartbeatInterval) this.heartbeatInterval = Math.max(100, heartbeatInterval);
 		if (reconnectDelay) this.reconnectDelay = Math.max(100, reconnectDelay);
 	}
@@ -73,7 +76,14 @@ export abstract class WebSocketCloverDeviceConfiguration implements CloverDevice
 	}
 
 	public getCloverTransport(): CloverTransport {
-		let transport: WebSocketCloverTransport = new WebSocketCloverTransport(this.uri, this.heartbeatInterval, this.reconnectDelay, this.pingRetryCountBeforeReconnect, this.posName, this.serialNumber, this.authToken);
-		return transport;
+		return new WebSocketCloverTransport(
+			this.uri,
+			this.heartbeatInterval,
+			this.reconnectDelay,
+			this.pingRetryCountBeforeReconnect,
+			this.posName,
+			this.serialNumber,
+			this.authToken,
+			this.webSocketImplClass);
 	}
 }

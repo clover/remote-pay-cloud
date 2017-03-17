@@ -39,7 +39,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 	private deviceObserver: sdk.remotepay.ICloverConnectorListener;
 
 	// List of listeners to broadcast notifications to
-	public broadcaster: CloverConnectorBroadcaster;
+	public broadcaster: CloverConnectorBroadcaster = new CloverConnectorBroadcaster();
 
 	// Device Configuration for this connector
 	private configuration: CloverDeviceConfiguration;
@@ -85,13 +85,13 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 
 		// Get the device and subscribe to it.
 		this.device = CloverDeviceFactory.get(config);
-		if (this.device !== null) {
+		if (this.device != null) {
 			this.device.subscribe(this.deviceObserver);
 		}
 	}
 
 	public initializeConnection(): void {
-		if (this.device === null) {
+		if (this.device == null) {
 			this.initialize(this.configuration);
 		}
 	}
@@ -112,7 +112,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 	 */
 	public removeCloverConnectorListener(connectorListener: sdk.remotepay.ICloverConnectorListener): void {
 		var indexOfListener = this.broadcaster.indexOf(connectorListener);
-		if (indexOfListener !== -1) {
+		if (indexOfListener != -1) {
 			this.broadcaster.splice(indexOfListener, 1);
 		}
 	}

@@ -91,6 +91,7 @@ export abstract class DefaultCloverConnectorListener implements sdk.remotepay.IC
 	}
 
 	// TODO: These print messages need to be created in the api
+	/*
 	public onPrintManualRefundReceipt(pcm: PrintManualRefundReceiptMessage): void {
 
 	}
@@ -114,6 +115,7 @@ export abstract class DefaultCloverConnectorListener implements sdk.remotepay.IC
 	public onPrintRefundPaymentReceipt(pprrm: PrintRefundPaymentReceiptMessage): void {
 
 	}
+	*/
 
 	public onRetrievePendingPaymentsResponse(retrievePendingPaymentResponse: sdk.remotepay.RetrievePendingPaymentsResponse): void {
 

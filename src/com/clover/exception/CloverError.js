@@ -38,7 +38,6 @@ CloverError.CANCELED = "canceled";
 /** General Error */
 CloverError.ERROR = "error";
 
-
 //
 // Expose the module.
 //
