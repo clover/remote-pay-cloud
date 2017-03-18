@@ -211,6 +211,7 @@ CloverConnectorImpl.prototype.setupMappingOfProtocolMessages = function() {
     this.mapCardDataResponse();
     this.mapShutdown();
     this.mapReset();
+    this.mapRemoteError();
 };
 
 /**
@@ -361,6 +362,18 @@ CloverConnectorImpl.prototype.mapDeviceEvents = function() {
         // this.isReady = false;  For this connector, this may not be true yet.
         this.delegateCloverConnectorListener.onDeviceError(deviceErrorEvent);
     }.bind(this));
+};
+
+CloverConnectorImpl.prototype.mapRemoteError = function() {
+    this.device.on(LanMethod.REMOTE_ERROR,
+        function (message) {
+            // this will be added to the cloverconnectorlistener soon.
+            // this.delegateCloverConnectorListener.onRemoteError();
+            var deviceErrorEvent = new sdk.remotepay.CloverDeviceErrorEvent();
+            deviceErrorEvent.setType(sdk.remotepay.ErrorType.EXCEPTION);
+            deviceErrorEvent.setMessage(message);
+            this.delegateCloverConnectorListener.onDeviceError(deviceErrorEvent);
+        }.bind(this));
 };
 
 /**
@@ -1400,17 +1413,25 @@ CloverConnectorImpl.prototype.validateSignatureRequest = function(messagePrefix,
  * @return void
  */
 CloverConnectorImpl.prototype.acceptPayment = function(payment) {
-    if(payment == null || payment.getId() == null) {
+    try {
+        if (payment == null || payment.getId() == null) {
+            var response = new sdk.remotepay.CloverDeviceErrorEvent();
+            response.setType(sdk.remotepay.ErrorType.VALIDATION);
+            response.setMessage("In AcceptPayment: The Payment ID cannot be null.");
+            this.delegateCloverConnectorListener.onDeviceError(response);
+            this.resetDevice();
+            return;
+        }
+        var protocolRequest = new sdk.remotemessage.PaymentConfirmedMessage();
+        protocolRequest.setPayment(payment);
+        this.sendMessage(this.messageBuilder.buildRemoteMessageObject(protocolRequest));
+    } catch (e) {
         var response = new sdk.remotepay.CloverDeviceErrorEvent();
         response.setType(sdk.remotepay.ErrorType.VALIDATION);
-        response.setMessage("In AcceptPayment: The Payment ID cannot be null.");
+        response.setMessage("In AcceptPayment: error." + e);
         this.delegateCloverConnectorListener.onDeviceError(response);
-
-        return;
+        this.resetDevice();
     }
-    var protocolRequest = new sdk.remotemessage.PaymentConfirmedMessage();
-    protocolRequest.setPayment(payment);
-    this.sendMessage(this.messageBuilder.buildRemoteMessageObject(protocolRequest));
 };
 
 /**
