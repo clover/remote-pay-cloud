@@ -38,6 +38,10 @@ Please report back to us any questions/comments/concerns, by emailing semi-integ
 
 ## Release Notes
 
+### Version 1.2.0-rc1.0
+
+SEMI-554 Added internal support for remote error.  Fix "cloverShouldHandleReceipts" and "disablePrinting" check to look for correct property. Use 1.2.0-rc1.0 of remote-pay-cloud-api.
+
 ### Version 1.1.0
 ### Version 1.1.0-rc6.4
 
