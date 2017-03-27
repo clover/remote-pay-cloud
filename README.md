@@ -5,7 +5,7 @@
 See the package.json postversion script, which maps to scripts/postversion.sh
 Do not change this or the versioning may not reflect the npm version correctly.
 --->
-Current version: 1.1.0-rc6.4
+Current version: 1.2.0-rc1.0
 
 ## Overview
 
@@ -38,6 +38,11 @@ Please report back to us any questions/comments/concerns, by emailing semi-integ
 
 ## Release Notes
 
+### Version 1.2.0-rc1.0
+
+SEMI-554 Added internal support for remote error.  Fix "cloverShouldHandleReceipts" and "disablePrinting" check to look for correct property. Use 1.2.0-rc1.0 of remote-pay-cloud-api.
+
+### Version 1.1.0
 ### Version 1.1.0-rc6.4
 
 SEMI-498 Revert update to use new schema objects.  New schema is slated for 1.2.
@@ -255,5 +260,5 @@ $(window).on('beforeunload ', function () {
 
 ## Generate Documentation
 API documentation is generated when `npm install` is run. 
-[Online Docs](http://clover.github.io/remote-pay-cloud/1.1.0-rc6.4/) and
-[Online API class Docs](http://clover.github.io/remote-pay-cloud-api/1.1.0-rc5.1/)
+[Online Docs](http://clover.github.io/remote-pay-cloud/1.2.0-rc1.0/) and
+[Online API class Docs](http://clover.github.io/remote-pay-cloud-api/1.1.0/)

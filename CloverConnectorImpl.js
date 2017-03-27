@@ -23,7 +23,7 @@ var LanMethod = require('./LanMethod.js');
 // !!NOTE!!  The following is automatically updated to reflect the npm version.
 // See the package.json postversion script, which maps to scripts/postversion.sh
 // Do not change this or the versioning may not reflect the npm version correctly.
-CLOVER_CLOUD_SDK_VERSION = "1.1.0-rc6.4";
+CLOVER_CLOUD_SDK_VERSION = "1.2.0-rc1.0";
 
 /**
  *  Interface to the Clover remote-pay API.
@@ -211,6 +211,7 @@ CloverConnectorImpl.prototype.setupMappingOfProtocolMessages = function() {
     this.mapCardDataResponse();
     this.mapShutdown();
     this.mapReset();
+    this.mapRemoteError();
 };
 
 /**
@@ -361,6 +362,18 @@ CloverConnectorImpl.prototype.mapDeviceEvents = function() {
         // this.isReady = false;  For this connector, this may not be true yet.
         this.delegateCloverConnectorListener.onDeviceError(deviceErrorEvent);
     }.bind(this));
+};
+
+CloverConnectorImpl.prototype.mapRemoteError = function() {
+    this.device.on(LanMethod.REMOTE_ERROR,
+        function (message) {
+            // this will be added to the cloverconnectorlistener soon.
+            // this.delegateCloverConnectorListener.onRemoteError();
+            var deviceErrorEvent = new sdk.remotepay.CloverDeviceErrorEvent();
+            deviceErrorEvent.setType(sdk.remotepay.ErrorType.EXCEPTION);
+            deviceErrorEvent.setMessage(message);
+            this.delegateCloverConnectorListener.onDeviceError(deviceErrorEvent);
+        }.bind(this));
 };
 
 /**
@@ -1400,17 +1413,25 @@ CloverConnectorImpl.prototype.validateSignatureRequest = function(messagePrefix,
  * @return void
  */
 CloverConnectorImpl.prototype.acceptPayment = function(payment) {
-    if(payment == null || payment.getId() == null) {
+    try {
+        if (payment == null || payment.getId() == null) {
+            var response = new sdk.remotepay.CloverDeviceErrorEvent();
+            response.setType(sdk.remotepay.ErrorType.VALIDATION);
+            response.setMessage("In AcceptPayment: The Payment ID cannot be null.");
+            this.delegateCloverConnectorListener.onDeviceError(response);
+            this.resetDevice();
+            return;
+        }
+        var protocolRequest = new sdk.remotemessage.PaymentConfirmedMessage();
+        protocolRequest.setPayment(payment);
+        this.sendMessage(this.messageBuilder.buildRemoteMessageObject(protocolRequest));
+    } catch (e) {
         var response = new sdk.remotepay.CloverDeviceErrorEvent();
         response.setType(sdk.remotepay.ErrorType.VALIDATION);
-        response.setMessage("In AcceptPayment: The Payment ID cannot be null.");
+        response.setMessage("In AcceptPayment: error." + e);
         this.delegateCloverConnectorListener.onDeviceError(response);
-
-        return;
+        this.resetDevice();
     }
-    var protocolRequest = new sdk.remotemessage.PaymentConfirmedMessage();
-    protocolRequest.setPayment(payment);
-    this.sendMessage(this.messageBuilder.buildRemoteMessageObject(protocolRequest));
 };
 
 /**
@@ -1754,10 +1775,10 @@ CloverConnectorImpl.prototype.populateBasePayIntent = function(request) {
     // The CloverShouldHandleReceipts flag will be available in the 1.2 version.  This was the result of
     // updating the remote-pay-cloud-api version too soon.  Rather than back out other valuable changes,
     // this was added to allow for forward (and backward) compatibility
-    if(request.hasOwnProperty("getCloverShouldHandleReceipts")) {
+    if(request.hasOwnProperty("cloverShouldHandleReceipts")) {
         payIntent.setRemotePrint(request.getCloverShouldHandleReceipts() === undefined //
             ? this.configuration.remotePrint : !request.getCloverShouldHandleReceipts());
-    } else if (request.hasOwnProperty("getDisablePrinting")) {
+    } else if (request.hasOwnProperty("disablePrinting")) {
         payIntent.setRemotePrint(request.getDisablePrinting() === undefined //
             ? this.configuration.remotePrint : request.getDisablePrinting());
     } else {

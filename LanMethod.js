@@ -87,6 +87,8 @@ LanMethod.VAULT_CARD_RESPONSE = "VAULT_CARD_RESPONSE";
 LanMethod.CLOSEOUT_REQUEST = "CLOSEOUT_REQUEST";
 /** Message type to respond to closeout request */
 LanMethod.CLOSEOUT_RESPONSE = "CLOSEOUT_RESPONSE";
+/** Message type to respond to closeout request */
+LanMethod.REMOTE_ERROR = "REMOTE_ERROR";
 
 /**
  * The shutdown method type
