@@ -8,11 +8,11 @@ import {CloverTransport} from '../transport/CloverTransport';
  */
 export interface CloverDeviceConfiguration {
 	/**
-	 * Get Clover Device Type Name
+	 * Get Clover Device Type
 	 * 
-	 * @returns string - Device Type Name
+	 * @returns class - Device Type
 	 */
-	getCloverDeviceTypeName(): string;
+	getCloverDeviceType(): any;
 
 	/**
 	 * Get Message Package Name

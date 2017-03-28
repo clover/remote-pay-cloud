@@ -1,10 +1,14 @@
 import sdk = require('remote-pay-cloud-api');
+
+import {RemoteMessageParser} from '../../../json/RemoteMessageParser';
 import {CloverDevice} from './CloverDevice';
 import {CloverTransport} from '../transport/CloverTransport';
 import {ObjectMessageSender} from '../transport/ObjectMessageSender';
 import {CloverTransportObserver} from '../transport/CloverTransportObserver';
 import {CloverDeviceConfiguration} from './CloverDeviceConfiguration';
+import { ImageUtil } from '../util/ImageUtil';
 import { Logger } from '../util/Logger';
+
 
 /**
  * Default Clover Device
@@ -17,6 +21,8 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
     private logger: Logger = Logger.create();
 
     private static id: number = 0;
+
+    private messageParser: RemoteMessageParser = RemoteMessageParser.getDefaultInstance();
 
     private msgIdToTask: { [key: string]: Function; } = {};
 
@@ -77,48 +83,51 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
         this.logger.debug('onMessage: ' + message);
         try {
             // Parse the message
-            let rMessage: sdk.remotemessage.RemoteMessage = JSON.parse(message);
+            // let rMessage: sdk.remotemessage.RemoteMessage = JSON.parse(message);
+            let rMessage: sdk.remotemessage.RemoteMessage = this.messageParser.parseToRemoteMessage(message);
             let method: sdk.remotemessage.Method = null;
             try {
-                let msgType: sdk.remotemessage.RemoteMessage.Type = rMessage.type;
-                if (msgType == sdk.remotemessage.RemoteMessage.Type.PING) {
+                let msgType: sdk.remotemessage.RemoteMessageType = rMessage.type;
+                if (msgType == sdk.remotemessage.RemoteMessageType.PING) {
                     this.sendPong(rMessage);
                 }
-                else if (msgType == sdk.remotemessage.RemoteMessage.Type.COMMAND) {
+                else if (msgType == sdk.remotemessage.RemoteMessageType.COMMAND) {
                     method = sdk.remotemessage.Method[rMessage.method];
                     if (method == null) {
                         this.logger.error('Unsupported method type: ' + rMessage.method);
                     }
                     else {
+                        var sdkMessage: sdk.remotemessage.Message = this.messageParser.parseMessageFromRemoteMessageObj(rMessage);
+
                         switch(method) {
                             case sdk.remotemessage.Method.BREAK:
                                 break;
                             case sdk.remotemessage.Method.CASHBACK_SELECTED:
-                                this.notifyObserversCashbackSelected(<sdk.remotemessage.CashBackSelectedMessage>JSON.parse(rMessage.payload));
+                                this.notifyObserversCashbackSelected(sdkMessage);
                                 break;
                             case sdk.remotemessage.Method.ACK:
-                                this.notifyObserverAck(<sdk.remotemessage.AcknowledgementMessage>JSON.parse(rMessage.payload));
+                                this.notifyObserverAck(sdkMessage);
                                 break;
                             case sdk.remotemessage.Method.DISCOVERY_RESPONSE:
                                 this.logger.debug('Got a Discovery Response');
-                                this.notifyObserversReady(this.transport, <sdk.remotemessage.DiscoveryResponseMessage>JSON.parse(rMessage.payload));
+                                this.notifyObserversReady(this.transport, sdkMessage);
                                 break;
                             case sdk.remotemessage.Method.CONFIRM_PAYMENT_MESSAGE:
-                                this.notifyObserversConfirmPayment(<sdk.remotemessage.ConfirmPaymentMessage>JSON.parse(rMessage.payload));
+                                this.notifyObserversConfirmPayment(sdkMessage);
                                 break;
                             case sdk.remotemessage.Method.FINISH_CANCEL:
                                 this.notifyObserversFinishCancel();
                                 break;
                             case sdk.remotemessage.Method.FINISH_OK:
-                                this.notifyObserversFinishOk(<sdk.remotemessage.FinishOkMessage>JSON.parse(rMessage.payload));
+                                this.notifyObserversFinishOk(sdkMessage);
                                 break;
                             case sdk.remotemessage.Method.KEY_PRESS:
-                                this.notifyObserversKeyPressed(<sdk.remotemessage.KeyPressMessage>JSON.parse(rMessage.payload));
+                                this.notifyObserversKeyPressed(sdkMessage);
                                 break;
                             case sdk.remotemessage.Method.ORDER_ACTION_RESPONSE:
                                 break;
                             case sdk.remotemessage.Method.PARTIAL_AUTH:
-                                this.notifyObserversPartialAuth(<sdk.remotemessage.PartialAuthMessage>JSON.parse(rMessage.payload));
+                                this.notifyObserversPartialAuth(sdkMessage);
                                 break;
                             case sdk.remotemessage.Method.PAYMENT_VOIDED:
                                 // currently this only gets called during a TX, so falls outside our current process flow
@@ -126,43 +135,43 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
                                 //this.notifyObserversPaymentVoided(vpMessage.payment, vpMessage.voidReason, ResultStatus.SUCCESS, null, null);
                                 break;
                             case sdk.remotemessage.Method.TIP_ADDED:
-                                this.notifyObserversTipAdded(<sdk.remotemessage.TipAddedMessage>JSON.parse(rMessage.payload));
+                                this.notifyObserversTipAdded(sdkMessage);
                                 break;
                             case sdk.remotemessage.Method.TX_START_RESPONSE:
-                                this.notifyObserverTxStart(<sdk.remotemessage.TxStartResponseMessage>JSON.parse(rMessage.payload));
+                                this.notifyObserverTxStart(sdkMessage);
                                 break;
                             case sdk.remotemessage.Method.TX_STATE:
-                                this.notifyObserversTxState(<sdk.remotemessage.TxStateMessage>JSON.parse(rMessage.payload));
+                                this.notifyObserversTxState(sdkMessage);
                                 break;
                             case sdk.remotemessage.Method.UI_STATE:
-                                this.notifyObserversUiState(<sdk.remotemessage.UiStateMessage>JSON.parse(rMessage.payload));
+                                this.notifyObserversUiState(sdkMessage);
                                 break;
                             case sdk.remotemessage.Method.VERIFY_SIGNATURE:
-                                this.notifyObserversVerifySignature(<sdk.remotemessage.VerifySignatureMessage>JSON.parse(rMessage.payload));
+                                this.notifyObserversVerifySignature(sdkMessage);
                                 break;
                             case sdk.remotemessage.Method.REFUND_RESPONSE:
-                                this.notifyObserversPaymentRefundResponse(<sdk.remotemessage.RefundResponseMessage>JSON.parse(rMessage.payload));
+                                this.notifyObserversPaymentRefundResponse(sdkMessage);
                                 break;
                             case sdk.remotemessage.Method.REFUND_REQUEST:
                                 //Outbound no-op
                                 break;
                             case sdk.remotemessage.Method.TIP_ADJUST_RESPONSE:
-                                this.notifyObserversTipAdjusted(<sdk.remotemessage.TipAdjustResponseMessage>JSON.parse(rMessage.payload));
+                                this.notifyObserversTipAdjusted(sdkMessage);
                                 break;
                             case sdk.remotemessage.Method.VAULT_CARD_RESPONSE:
-                                this.notifyObserverVaultCardResponse(<sdk.remotemessage.VaultCardResponseMessage>JSON.parse(rMessage.payload));
+                                this.notifyObserverVaultCardResponse(sdkMessage);
                                 break;
                             case sdk.remotemessage.Method.CAPTURE_PREAUTH_RESPONSE:
-                                this.notifyObserversCapturePreAuth(<sdk.remotemessage.CapturePreAuthResponseMessage>JSON.parse(rMessage.payload));
+                                this.notifyObserversCapturePreAuth(sdkMessage);
                                 break;
                             case sdk.remotemessage.Method.CLOSEOUT_RESPONSE:
-                                this.notifyObserversCloseout(<sdk.remotemessage.CloseoutResponseMessage>JSON.parse(rMessage.payload));
+                                this.notifyObserversCloseout(sdkMessage);
                                 break;
                             case sdk.remotemessage.Method.RETRIEVE_PENDING_PAYMENTS_RESPONSE:
-                                this.notifyObserversPendingPaymentsResponse(<sdk.remotemessage.RetrievePendingPaymentsResponseMessage>JSON.parse(rMessage.payload));
+                                this.notifyObserversPendingPaymentsResponse(sdkMessage);
                                 break;
                             case sdk.remotemessage.Method.CARD_DATA_RESPONSE:
-                                this.notifyObserversReadCardData(<sdk.remotemessage.CardDataResponseMessage>JSON.parse(rMessage.payload));
+                                this.notifyObserversReadCardData(sdkMessage);
                                 break;
                             case sdk.remotemessage.Method.DISCOVERY_REQUEST:
                                 //Outbound no-op
@@ -186,22 +195,28 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
                                 //Outbound no-op
                                 break;
                             case sdk.remotemessage.Method.PRINT_CREDIT:
-                                this.notifyObserversPrintCredit(<sdk.remotemessage.CreditPrintMessage>JSON.parse(rMessage.payload));
+                                this.notifyObserversPrintCredit(sdkMessage);
                                 break;
                             case sdk.remotemessage.Method.PRINT_CREDIT_DECLINE:
-                                this.notifyObserversPrintCreditDecline(<sdk.remotemessage.DeclineCreditPrintMessage>JSON.parse(rMessage.payload));
+                                this.notifyObserversPrintCreditDecline(sdkMessage);
                                 break;
                             case sdk.remotemessage.Method.PRINT_PAYMENT:
-                                this.notifyObserversPrintPayment(<sdk.remotemessage.PaymentPrintMessage>JSON.parse(rMessage.payload));
+                                this.notifyObserversPrintPayment(sdkMessage);
                                 break;
                             case sdk.remotemessage.Method.PRINT_PAYMENT_DECLINE:
-                                this.notifyObserversPrintPaymentDecline(<sdk.remotemessage.DeclinePaymentPrintMessage>JSON.parse(rMessage.payload));
+                                this.notifyObserversPrintPaymentDecline(sdkMessage);
                                 break;
                             case sdk.remotemessage.Method.PRINT_PAYMENT_MERCHANT_COPY:
-                                this.notifyObserversPrintMerchantCopy(<sdk.remotemessage.PaymentPrintMerchantCopyMessage>JSON.parse(rMessage.payload));
+                                this.notifyObserversPrintMerchantCopy(sdkMessage);
                                 break;
                             case sdk.remotemessage.Method.REFUND_PRINT_PAYMENT:
-                                this.notifyObserversPrintMessage(<sdk.remotemessage.RefundPaymentPrintMessage>JSON.parse(rMessage.payload));
+                                this.notifyObserversPrintMessage(sdkMessage);
+                                break;
+                            case sdk.remotemessage.Method.ACTIVITY_RESPONSE:
+                                this.notifyObserversActivityResponse(sdkMessage);
+                                break;
+                            case sdk.remotemessage.Method.REMOTE_ERROR:
+                                this.notifyObserversRemoteError(sdkMessage);
                                 break;
                             case sdk.remotemessage.Method.SHOW_ORDER_SCREEN:
                                 //Outbound no-op
@@ -248,6 +263,9 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
                             case sdk.remotemessage.Method.CLOSEOUT_REQUEST:
                                 //Outbound no-op
                                 break;
+                            case sdk.remotemessage.Method.ACTIVITY_REQUEST:
+                                //Outbound no-op
+                                break;
                             default:
                                 this.logger.error('COMMAND not supported with method: ' + rMessage.method);
                                 break;
@@ -273,7 +291,11 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
      * @param pingMessage 
      */
     private sendPong(pingMessage: sdk.remotemessage.RemoteMessage): void {
-        let remoteMessage: sdk.remotemessage.RemoteMessage = new sdk.remotemessage.RemoteMessage(null, sdk.remotemessage.RemoteMessage.Type.PONG, this.packageName, null, null, DefaultCloverDevice.REMOTE_SDK, this.applicationId);
+        let remoteMessage: sdk.remotemessage.RemoteMessage = new sdk.remotemessage.RemoteMessage();
+        remoteMessage.setType(sdk.remotemessage.RemoteMessageType.PONG);
+        remoteMessage.setPackageName(this.packageName);
+        remoteMessage.setRemoteSourceSDK(DefaultCloverDevice.REMOTE_SDK);
+        remoteMessage.setRemoteApplicationID(this.applicationId);
         this.logger.debug('Sending PONG...');
         this.sendRemoteMessage(remoteMessage);
     }
@@ -313,7 +335,7 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
 
     private notifyObserverAck(ackMessage: sdk.remotemessage.AcknowledgementMessage): void {
         let ackTask = this.msgIdToTask[ackMessage.sourceMessageId];
-        if (ackTask !== null) {
+        if (ackTask) {
             delete this.msgIdToTask[ackMessage.sourceMessageId];
             ackTask.call(null);
         }
@@ -332,6 +354,23 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
     private notifyObserversPrintMessage(rppm: sdk.remotemessage.RefundPaymentPrintMessage): void {
         this.deviceObservers.forEach((obs) => {
             obs.onPrintRefundPayment(rppm.payment, rppm.order, rppm.refund);
+        });
+    }
+
+    private notifyObserversActivityResponse(message: sdk.remotemessage.ActivityResponseMessage): void {
+        this.deviceObservers.forEach((obs) => {
+            // todo:  Add activity response
+        });
+    }
+
+    private notifyObserversRemoteError(message: sdk.remotemessage.RemoteError): void {
+        this.deviceObservers.forEach((obs) => {
+            // todo:  Add remote error
+            let deviceErrorEvent:sdk.remotemessage.CloverDeviceErrorEvent = new sdk.remotemessage.CloverDeviceErrorEvent();
+            deviceErrorEvent.setCode(sdk.remotepay.CloverDeviceErrorEvent.UnknownError);
+            deviceErrorEvent.setMessage(JSON.stringify(message));
+            deviceErrorEvent.setType(sdk.remotepay.ErrorType.EXCEPTION);
+            obs.onDeviceError(deviceErrorEvent);
         });
     }
 
@@ -432,7 +471,7 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
 
     public notifyObserverVaultCardResponse(vaultCardResponseMessage: sdk.remotemessage.VaultCardResponseMessage): void {
         this.deviceObservers.forEach((obs) => {
-            obs.onVaultCardResponse(vaultCardResponseMessage.card, vaultCardResponseMessage.status.tostring(), vaultCardResponseMessage.reason);
+            obs.onVaultCardResponse(vaultCardResponseMessage.card, vaultCardResponseMessage.status.toString(), vaultCardResponseMessage.reason);
         });
     }
 
@@ -491,7 +530,11 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
 	 * @param {string} paymentId 
 	 */
 	public doShowPaymentReceiptScreen(orderId: string, paymentId: string): void {
-        this.sendObjectMessage(new sdk.remotemessage.ShowPaymentReceiptOptionsMessage(orderId, paymentId, 2));
+        let message: sdk.remotemessage.ShowPaymentReceiptOptionsMessage = new sdk.remotemessage.ShowPaymentReceiptOptionsMessage();
+        message.setOrderId(orderId);
+        message.setPaymentId(paymentId);
+        message.setVersion(2);
+        this.sendObjectMessage(message);
     }
 
 	/**
@@ -500,21 +543,26 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
 	 * @param {KeyPress} keyPress 
 	 */
 	public doKeyPress(keyPress: sdk.remotemessage.KeyPress): void {
-        this.sendObjectMessage(new sdk.remotemessage.KeyPressMessage(keyPress));
+        let message: sdk.remotemessage.KeyPressMessage = new sdk.remotemessage.KeyPressMessage();
+        message.setKeyPress(keyPress);
+        this.sendObjectMessage(message);
     }
 
 	/**
 	 * Show Thank You Screen
 	 */
 	public doShowThankYouScreen(): void {
-        this.sendObjectMessage(new sdk.remotemessage.ThankYouMessage());
+        let message: sdk.remotemessage.ThankYouMessage = new sdk.remotemessage.ThankYouMessage();
+        this.sendObjectMessage(message);
+
     }
 
 	/**
 	 * Show Welcome Screen
 	 */
 	public doShowWelcomeScreen(): void {
-        this.sendObjectMessage(new sdk.remotemessage.WelcomeMessage());
+        let message: sdk.remotemessage.WelcomeMessage = new sdk.remotemessage.WelcomeMessage();
+        this.sendObjectMessage(message);
     }
 
 	/**
@@ -524,14 +572,18 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
 	 * @param {boolean} verified 
 	 */
 	public doSignatureVerified(payment: sdk.payments.Payment, verified: boolean): void {
-        this.sendObjectMessage(new sdk.remotemessage.SignatureVerifiedMessage(payment, verified));
+        let message: sdk.remotemessage.SignatureVerifiedMessage = new sdk.remotemessage.SignatureVerifiedMessage();
+        message.setPayment(payment);
+        message.setVerified(verified);
+        this.sendObjectMessage(message);
     }
 
 	/**
 	 * Retrieve Pending Payments
 	 */
 	public doRetrievePendingPayments(): void {
-        this.sendObjectMessage(new sdk.remotemessage.RetrievePendingPaymentsMessage());
+        let message: sdk.remotemessage.RetrievePendingPaymentsMessage = new sdk.remotemessage.RetrievePendingPaymentsMessage();
+        this.sendObjectMessage(message);
     }
 
 	/**
@@ -540,7 +592,9 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
 	 * @param {string} text 
 	 */
 	public doTerminalMessage(text: string): void {
-        this.sendObjectMessage(new sdk.remotemessage.TerminalMessage(text));
+        let message: sdk.remotemessage.TerminalMessage = new sdk.remotemessage.TerminalMessage();
+        message.setText(text);
+        this.sendObjectMessage(message);
     }
 
 	/**
@@ -549,7 +603,9 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
 	 * @param {string} reason 
 	 */
 	public doOpenCashDrawer(reason: string): void {
-        this.sendObjectMessage(new sdk.remotemessage.OpenCashDrawerMessage(reason));
+        let message: sdk.remotemessage.OpenCashDrawerMessage = new sdk.remotemessage.OpenCashDrawerMessage();
+        message.setReason(reason);
+        this.sendObjectMessage(message);
     }
 
 	/**
@@ -559,7 +615,10 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
 	 * @param {string} batchId 
 	 */
 	public doCloseout(allowOpenTabs: boolean, batchId: string): void {
-        this.sendObjectMessage(new sdk.remotemessage.CloseoutRequestMessage(allowOpenTabs, batchId));
+        let message: sdk.remotemessage.CloseoutRequestMessage = new sdk.remotemessage.CloseoutRequestMessage();
+        message.setAllowOpenTabs(allowOpenTabs);
+        message.setBatchId(batchId);
+        this.sendObjectMessage(message);
     }
 
 	/**
@@ -570,7 +629,11 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
 	 * @param {boolean} suppressTipScreen 
 	 */
 	public doTxStart(payIntent: sdk.remotemessage.PayIntent, order: sdk.order.Order, suppressTipScreen: boolean): void {
-        this.sendObjectMessage(new sdk.remotemessage.TxStartRequestMessage(payIntent, order, suppressTipScreen));
+        let message: sdk.remotemessage.TxStartRequestMessage = new sdk.remotemessage.TxStartRequestMessage();
+        message.setPayIntent(payIntent);
+        message.setOrder(order);
+        message.setSuppressOnScreenTips(suppressTipScreen);
+        this.sendObjectMessage(message);
     }
 
 	/**
@@ -581,16 +644,22 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
 	 * @param {number} amount 
 	 */
 	public doTipAdjustAuth(orderId: string, paymentId: string, amount: number): void {
-        this.sendObjectMessage(new sdk.remotemessage.TipAdjustMessage(orderId, paymentId, amount));
+        let message: sdk.remotemessage.TipAdjustMessage = new sdk.remotemessage.TipAdjustMessage();
+        message.setOrderId(orderId);
+        message.setPaymentId(paymentId);
+        message.setTipAmount(amount);
+        this.sendObjectMessage(message);
     }
 
 	/**
 	 * Read Cart Data
 	 * 
-	 * @param {PayIntent} payment 
+	 * @param {PayIntent} payIntent
 	 */
-	public doReadCardData(payment: sdk.remotemessage.PayIntent): void {
-        this.sendObjectMessage(new sdk.remotemessage.CardDataRequestMessage(payment));
+	public doReadCardData(payIntent: sdk.remotemessage.PayIntent): void {
+        let message: sdk.remotemessage.CardDataRequestMessage = new sdk.remotemessage.CardDataRequestMessage();
+        message.setPayIntent(payIntent);
+        this.sendObjectMessage(message);
     }
 
 	/**
@@ -599,7 +668,9 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
 	 * @param {Array<string>} textLines 
 	 */
 	public doPrintText(textLines: Array<string>): void {
-        this.sendObjectMessage(new sdk.remotemessage.TextPrintMessage(textLines));
+        let message: sdk.remotemessage.TextPrintMessage = new sdk.remotemessage.TextPrintMessage();
+        message.setTextLines(textLines);
+        this.sendObjectMessage(message);
     }
 
 	/**
@@ -607,15 +678,21 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
 	 * 
 	 * @param {byte[]} bitmap 
 	 */
-	public doPrintImage(bitmap: number[]): void;
+	public doPrintImageObject(bitmap: HTMLImageElement): void {
+        let message: sdk.remotemessage.ImagePrintMessage = new sdk.remotemessage.ImagePrintMessage();
+        message.setPng(ImageUtil.getBase64Image(bitmap));
+        this.sendObjectMessage(message);
+    }
+
 	/**
 	 * Print Image (URL)
 	 * 
 	 * @param {string} url 
 	 */
-	public doPrintImage(url: string): void;
-	public doPrintImage(value: number[] | string): void {
-        this.sendObjectMessage(new sdk.remotemessage.ImagePrintMessage(value));
+	public doPrintImageUrl(url: string): void {
+        let message: sdk.remotemessage.ImagePrintMessage = new sdk.remotemessage.ImagePrintMessage();
+        message.setUrlString(url);
+        this.sendObjectMessage(message);
     }
 
 	/**
@@ -625,7 +702,12 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
 	 * @param {VoidReason} reason 
 	 */
 	public doVoidPayment(payment: sdk.payments.Payment, reason: sdk.order.VoidReason): void {
-        let msgId: string = this.sendObjectMessage(new sdk.remotemessage.VoidPaymentMessage(payment, reason));
+        let message: sdk.remotemessage.VoidPaymentMessage = new sdk.remotemessage.VoidPaymentMessage();
+        message.setPayment(payment);
+        message.setVoidReason(reason);
+        this.sendObjectMessage(message);
+
+        let msgId: string = this.sendObjectMessage(message);
 
         if (!this.supportsAcks()) {
             this.notifyObserversPaymentVoided(payment, reason, sdk.remotemessage.ResultStatus.SUCCESS, null, null);
@@ -647,7 +729,12 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
 	 * @param {boolean} fullRefund 
 	 */
 	public doPaymentRefund(orderId: string, paymentId: string, amount: number, fullRefund: boolean): void {
-        this.sendObjectMessage_opt_version(new sdk.remotemessage.RefundRequestMessage(orderId, paymentId, amount, fullRefund), 2);
+        let message: sdk.remotemessage.RefundRequestMessage = new sdk.remotemessage.RefundRequestMessage();
+        message.setOrderId(orderId);
+        message.setPaymentId(paymentId);
+        message.setAmount(amount);
+        message.setFullRefund(fullRefund);
+        this.sendObjectMessage_opt_version(message, 2);
     }
 
 	/**
@@ -656,7 +743,9 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
 	 * @param {number} cardEntryMethods 
 	 */
 	public doVaultCard(cardEntryMethods: number): void {
-        this.sendObjectMessage(new sdk.remotemessage.VaultCardMessage(cardEntryMethods));
+        let message: sdk.remotemessage.VaultCardMessage = new sdk.remotemessage.VaultCardMessage();
+        message.setCardEntryMethods(cardEntryMethods);
+        this.sendObjectMessage(message);
     }
 
 	/**
@@ -667,7 +756,11 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
 	 * @param {number} tipAmount 
 	 */
 	public doCaptureAuth(paymentId: string, amount: number, tipAmount: number): void {
-        this.sendObjectMessage(new sdk.remotemessage.CapturePreAuthMessage(paymentId, amount, tipAmount));
+        let message: sdk.remotemessage.CapturePreAuthMessage = new sdk.remotemessage.CapturePreAuthMessage();
+        message.setPaymentId(paymentId);
+        message.setAmount(amount);
+        message.setTipAmount(tipAmount);
+        this.sendObjectMessage(message);
     }
 
 	/**
@@ -676,7 +769,9 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
 	 * @param {Payment} payment 
 	 */
 	public doAcceptPayment(payment: sdk.payments.Payment): void {
-        this.sendObjectMessage(new sdk.remotemessage.PaymentConfirmedMessage(payment));
+        let message: sdk.remotemessage.PaymentConfirmedMessage = new sdk.remotemessage.PaymentConfirmedMessage();
+        message.setPayment(payment);
+        this.sendObjectMessage(message);
     }
 
 	/**
@@ -686,14 +781,19 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
 	 * @param {Challenge} challenge 
 	 */
 	public doRejectPayment(payment: sdk.payments.Payment, challenge: sdk.base.Challenge): void {
-        this.sendObjectMessage(new sdk.remotemessage.PaymentRejectedMessage(payment, challenge.reason));
+        let message: sdk.remotemessage.PaymentRejectedMessage = new sdk.remotemessage.PaymentRejectedMessage();
+        message.setPayment(payment);
+        message.setVoidReason(challenge.reason);
+        this.sendObjectMessage(message);
     }
 
 	/**
 	 * Discovery request
 	 */
 	public doDiscoveryRequest(): void {
-        this.sendObjectMessage(new sdk.remotemessage.DiscoverRequestMessage(false));
+        let drm:sdk.remotemessage.DiscoveryRequestMessage = new sdk.remotemessage.DiscoveryRequestMessage();
+        drm.setSupportsOrderModification(false);
+        this.sendObjectMessage(drm);
     }
 
 	/**
@@ -703,23 +803,31 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
 	 * @param {any} orderOperation 
 	 */
 	public doOrderUpdate(order: sdk.order.DisplayOrder, orderOperation: any): void {
-        if (orderOperation instanceof sdk.order.operation.DiscountsAddedOperation ||
-            orderOperation instanceof sdk.order.operation.DiscountsDeletedOperation ||
-            orderOperation instanceof sdk.order.operation.LineItemsAddedOperation ||
-            orderOperation instanceof sdk.order.operation.LineItemsDeletedOperation ||
-            orderOperation instanceof sdk.order.operation.OrderDeletedOperation) {
-            this.sendObjectMessage(new sdk.remotemessage.OrderUpdateMessage(order, orderOperation));
+        let message: sdk.remotemessage.OrderUpdateMessage = new sdk.remotemessage.OrderUpdateMessage();
+        message.setOrder(order);
+
+        if(orderOperation) {
+            if (orderOperation instanceof sdk.order.operation.DiscountsAddedOperation) {
+                message.setDiscountsAddedOperation(orderOperation);
+            } else if (orderOperation instanceof sdk.order.operation.DiscountsDeletedOperation) {
+                message.setDiscountsDeletedOperation(orderOperation);
+            } else if (orderOperation instanceof sdk.order.operation.LineItemsAddedOperation) {
+                message.setLineItemsAddedOperation(orderOperation);
+            } else if (orderOperation instanceof sdk.order.operation.LineItemsDeletedOperation) {
+                message.setLineItemsDeletedOperation(orderOperation);
+            } else if (orderOperation instanceof sdk.order.operation.OrderDeletedOperation) {
+                message.setOrderDeletedOperation(orderOperation);
+            }
         }
-        else {
-            this.sendObjectMessage(new sdk.remotemessage.OrderUpdateMessage(order));
-        }
+        this.sendObjectMessage(message);
     }
 
 	/**
 	 * Reset Device
 	 */
 	public doResetDevice(): void {
-        this.sendObjectMessage(new sdk.remotemessage.BreakMessage());
+        let message: sdk.remotemessage.BreakMessage = new sdk.remotemessage.BreakMessage();
+        this.sendObjectMessage(message);
     }
 
 	/**
@@ -753,9 +861,9 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
         }
 
         // Check the message method
-        this.logger.info(message.tostring());
+        this.logger.info(message.toString());
         if (message.method == null) {
-            this.logger.error('Invalid Message', new Error('Invalid Message: ' + message.tostring()));
+            this.logger.error('Invalid Message', new Error('Invalid Message: ' + message.toString()));
             return null;
         }
 
@@ -766,7 +874,15 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
         }
 
         let messageId: string = (++DefaultCloverDevice.id) + '';
-        let remoteMessage: sdk.remotemessage.RemoteMessage = new sdk.remotemessage.RemoteMessage(messageId, sdk.remotemessage.RemoteMessage.Type.COMMAND, this.packageName, message.method.tostring(), JSON.stringify(message), DefaultCloverDevice.REMOTE_SDK, this.applicationId);
+        let remoteMessage: sdk.remotemessage.RemoteMessage = new sdk.remotemessage.RemoteMessage();
+        remoteMessage.setId(messageId);
+        remoteMessage.setType(sdk.remotemessage.RemoteMessageType.COMMAND);
+        remoteMessage.setPackageName(this.packageName);
+        remoteMessage.setMethod(message.method.toString());
+        remoteMessage.setPayload(JSON.stringify(message));
+        remoteMessage.setRemoteSourceSDK(DefaultCloverDevice.REMOTE_SDK);
+        remoteMessage.setRemoteApplicationID(this.applicationId);
+
         this.sendRemoteMessage(remoteMessage);
         return messageId;
     }

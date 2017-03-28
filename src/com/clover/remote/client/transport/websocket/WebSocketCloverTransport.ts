@@ -1,14 +1,15 @@
 import sdk = require('remote-pay-cloud-api');
+import http = require('http');
+
+import {RemoteMessageParser} from '../../../../json/RemoteMessageParser';
+
 import {PairingDeviceConfiguration} from '../PairingDeviceConfiguration';
 import {CloverDeviceConfiguration} from '../../device/CloverDeviceConfiguration';
 import {CloverDevice} from '../../device/CloverDevice';
 import {CloverWebSocketClient} from './CloverWebSocketClient';
-// import MethodToMessage = require('../../../../util/MethodToMessage.js');
 
-import CloverID = require('../../../../../../../CloverID');
 import {CloverTransport} from '../CloverTransport';
 import {Logger} from '../../util/Logger';
-import http = require('http');
 import {CloverWebSocketClientListener} from "./CloverWebSocketClientListener";
 import {CloverTransportObserver} from '../CloverTransportObserver';
 import {WebSocketCloverDeviceConfiguration} from "../../device/WebSocketCloverDeviceConfiguration";
@@ -45,13 +46,7 @@ export class WebSocketCloverTransport extends CloverTransport implements CloverW
 
 	isPairing: boolean = true;
 
-	device: CloverDevice;
-
-	/**
-	 * A single thread/queue to process reconnect requests
-	 */
-	// ScheduledThreadPoolExecutor reconnectPool = new ScheduledThreadPoolExecutor(1);
-
+	messageParser : RemoteMessageParser;
 
 	reconnector = function() {
         if (!this.shutdown) {
@@ -94,6 +89,10 @@ export class WebSocketCloverTransport extends CloverTransport implements CloverW
 		this.serialNumber = serialNumber;
 		this.authToken = authToken;
 		this.webSocketImplClass = webSocketImplClass;
+
+		// from WebSocketCloverDeviceConfiguration.getMessagePackageName, which needs to be changeable
+		// 'com.clover.remote_protocol_broadcast.app'
+		this.messageParser = RemoteMessageParser.getDefaultInstance();
 
 		this.initialize(this.endpoint);
 	}
@@ -223,18 +222,20 @@ export class WebSocketCloverTransport extends CloverTransport implements CloverW
     }
 
     //private extractPayloadFromRemoteMessageJson(remoteMessageJson): any {
-    //    // Get the sdk.remotemessage.Message type for this message
-    //    var responseMessageType = MethodToMessage[remoteMessageJson.getMethod()];
-    //    // Create an instance of the message
-    //    var remotemessageMessage = new responseMessageType;
-    //    // Populate the message using the remoteMessageJson, which is a json object that is a
-    //    // sdk.remotemessage.RemoteMessage
-    //    this.remoteMessageParser.parseMessage(message, remotemessageMessage);
-    //    // remotemessageMessage is a sdk.remotemessage.Message that is populated.
-    //    return remotemessageMessage;
+		//// Get the sdk.remotemessage.Message type for this message
+		//var responseMessageType = MethodToMessage.getType(remoteMessageJson.method);
+		//// Create an instance of the message
+		//if(responseMessageType) {
+		//	var remotemessageMessage = new responseMessageType;
+		//	// Populate the message using the remoteMessageJson, which is a json object that is a
+		//	// sdk.remotemessage.RemoteMessage
+		//	this.messageParser.parseMessage(remoteMessageJson, remotemessageMessage, false);
+		//	// remotemessageMessage is a sdk.remotemessage.Message that is populated.
+		//	return remotemessageMessage;
+		//}
+		//return null;
     //}
-
-
+    //
     /**
      * Messed up way ts/js does function overloading
      *
@@ -254,36 +255,41 @@ export class WebSocketCloverTransport extends CloverTransport implements CloverW
     public onMessage_cwscl(ws: CloverWebSocketClient, message: string): void { // CloverWebSocketClientListener
         if (this.webSocket == ws) {
             if(this.isPairing) {
-                var remoteMessageJson = JSON.parse(message);
-                // var remoteMessage: sdk.remotemessage.Message = this.extractPayloadFromRemoteMessageJson(remoteMessageJson);
+                let remoteMessage: sdk.remotemessage.RemoteMessage = this.messageParser.parseToRemoteMessage(message);
+                var sdkMessage: sdk.remotemessage.Message = this.messageParser.parseMessageFromRemoteMessageObj(remoteMessage);
 
-                if (sdk.remotemessage.METHOD.PAIRING_CODE.equals(remoteMessageJson.method)) {
-                    this.logger.debug("Got PAIRING_CODE");
-                    var pcm: sdk.remotemessage.PairingCodeMessage = <sdk.remotemessage.PairingCodeMessage>JSON.parse(remoteMessageJson.payload);
-                    var pairingCode:string = pcm.getPairingCode();
-                    this.pairingDeviceConfiguration.onPairingCode(pairingCode);
-                } else if (sdk.remotemessage.METHOD.PAIRING_RESPONSE.equals(remoteMessageJson.getMethod())) {
-                    this.logger.debug("Got PAIRING_RESPONSE");
-                    var response: sdk.remotemessage.PairingResponse = <sdk.remotemessage.PairingResponse>JSON.parse(remoteMessageJson.payload);
-                    if (sdk.remotemessage.PairingState.PAIRED.equals(response.pairingState) || sdk.remotemessage.PairingState.INITIAL.equals(response.pairingState)) {
-                        this.logger.debug("Got PAIRED pair response");
-                        this.isPairing = false;
-                        this.authToken = response.authenticationToken;
+				if(sdkMessage) {
+					if (sdk.remotemessage.Method.PAIRING_CODE == sdkMessage.getMethod()) {
+						this.logger.debug("Got PAIRING_CODE");
+						var pcm:sdk.remotemessage.PairingCodeMessage = sdkMessage;
+						var pairingCode:string = pcm.getPairingCode();
+						this.pairingDeviceConfiguration.onPairingCode(pairingCode);
+					} else if (sdk.remotemessage.Method.PAIRING_RESPONSE == sdkMessage.getMethod()) {
+						this.logger.debug("Got PAIRING_RESPONSE");
+						var response:sdk.remotemessage.PairingResponse = sdkMessage;
+						if (sdk.remotemessage.PairingState.PAIRED == response.getPairingState() ||
+							sdk.remotemessage.PairingState.INITIAL == response.getPairingState()) {
+							this.logger.debug("Got PAIRED pair response");
+							this.isPairing = false;
+							this.authToken = response.getAuthenticationToken();
 
-                        try {
-                            this.pairingDeviceConfiguration.onPairingSuccess(this.authToken);
-                        } catch (e) {
-                            this.logger.debug("Error:" + e);
-                        }
-                        this.notifyDeviceReady();
-                    } else if (sdk.remotemessage.PairingState.FAILED.equals(remoteMessageJson.getMethod())) {
-                        this.logger.debug("Got FAILED pair response");
-                        this.isPairing = true;
-                        this.sendPairRequest();
-                    }
-                } else if (sdk.remotemessage.METHOD.ACK != remoteMessageJson.getMethod() || sdk.remotemessage.METHOD.UI_STATE != remoteMessageJson.getMethod()) {
-                    this.logger.debug("Unexpected method: '" + remoteMessageJson.getMethod() + "' while in pairing mode.");
-                }
+							try {
+								this.pairingDeviceConfiguration.onPairingSuccess(this.authToken);
+							} catch (e) {
+								this.logger.debug("Error:" + e);
+							}
+							this.notifyDeviceReady();
+						} else if (sdk.remotemessage.PairingState.FAILED == sdkMessage.getMethod()) {
+							this.logger.debug("Got FAILED pair response");
+							this.isPairing = true;
+							this.sendPairRequest();
+						}
+					} else if (sdk.remotemessage.Method.ACK != sdkMessage.getMethod() || sdk.remotemessage.Method.UI_STATE != sdkMessage.getMethod()) {
+						this.logger.debug("Unexpected method: '" + sdkMessage.getMethod() + "' while in pairing mode.");
+					}
+				} else {
+					this.logger.warn("Unrecognized message", message)
+				}
             } else {
                 for (let observer of this.observers) {
                     this.logger.debug("Got message: " + message);

@@ -16,12 +16,12 @@ export class CloverDeviceFactory {
 	 * @returns CloverDevice
 	 */
 	static get(configuration) {
-		var cloverDeviceName = configuration.getCloverDeviceTypeName();
+		var cloverDevice = configuration.getCloverDeviceType();
 
 		// Try to get the requested clover device.
 		var cd = null;
 		try {
-			cd = require('./' + cloverDeviceName)(configuration);
+			cd = new cloverDevice(configuration);
 		}
 		catch(e) {
 			Logger.create().error(e);

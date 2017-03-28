@@ -168,14 +168,14 @@ export abstract class CloverDevice {
 	 * 
 	 * @param {byte[]} bitmap 
 	 */
-	public abstract doPrintImage(bitmap: number[]): void;
+	public abstract doPrintImageObject(bitmap: HTMLImageElement): void;
+
 	/**
 	 * Print Image (URL)
 	 * 
 	 * @param {string} url 
 	 */
-	public abstract doPrintImage(url: string): void;
-	public abstract doPrintImage(value: number[] | string): void;
+	public abstract doPrintImageUrl(url: string): void;
 
 	/**
 	 * Dispose
@@ -232,7 +232,7 @@ export abstract class CloverDevice {
 	/**
 	 * Supports Acknowledgements
 	 * 
-	 * @param {boolean} supportsAck 
+	 * @param {boolean} supportsAck
 	 */
 	public setSupportsAcks(supportsAck: boolean): void {
 		this.supportsAck = supportsAck;

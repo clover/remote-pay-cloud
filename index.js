@@ -46,8 +46,8 @@ var CloverTransport = require('./dist/com/clover/remote/client/transport/CloverT
 var CloverTransportObserver = require('./dist/com/clover/remote/client/transport/CloverTransportObserver.js').CloverTransportObserver;
 var WebSocketCloverTransport = require('./dist/com/clover/remote/client/transport/websocket/WebSocketCloverTransport.js').WebSocketCloverTransport;
 var Logger = require('./dist/com/clover/remote/client/util/Logger.js').Logger;
-var WebSocketInterface = require('./dist/com/clover/websocket/WebSocketInterface.js').WebSocketInterface;
 var WebSocketState = require('./dist/com/clover/websocket/WebSocketState.js').WebSocketState;
+var CloverWebSocketInterface = require('./dist/com/clover/websocket/CloverWebSocketInterface.js').CloverWebSocketInterface;
 
 // Export all of the pieces.
 module.exports = {
@@ -59,8 +59,8 @@ module.exports = {
     CloverTransport: CloverTransport,
     CloverTransportObserver: CloverTransportObserver,
     WebSocketCloverTransport: WebSocketCloverTransport,
+    CloverWebSocketInterface: CloverWebSocketInterface,
     Logger: Logger,
-    WebSocketInterface: WebSocketInterface,
     WebSocketCloverDeviceConfiguration: WebSocketCloverDeviceConfiguration,
     WebSocketState: WebSocketState
 }

@@ -83,7 +83,6 @@ export enum WebSocketState
      */
     // CREATED,
 
-
     /**
      * An <a href="https://tools.ietf.org/html/rfc6455#section-4">opening
      * handshake</a> is being performed.

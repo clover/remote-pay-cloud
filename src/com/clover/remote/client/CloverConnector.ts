@@ -1,4 +1,5 @@
 import sdk = require('remote-pay-cloud-api');
+
 import {CloverConnectorBroadcaster} from './CloverConnectorBroadcaster';
 import {CloverDevice} from './device/CloverDevice';
 import {CloverDeviceConfiguration} from './device/CloverDeviceConfiguration';
@@ -6,6 +7,7 @@ import {CloverDeviceFactory} from './device/CloverDeviceFactory';
 import {CloverDeviceObserver} from './CloverDeviceObserver';
 import {Logger} from './util/Logger';
 import {ResultCode} from './messages/ResultCode';
+import {JSONToCustomObject} from '../../json/JSONToCustomObject';
 
 /**
  * Clover Connector
@@ -56,14 +58,18 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 
 		// Try to load the configuration.
 		if (config) {
-			try {
-				// Make sure we do not change the passed object, make a copy.
-				this.configuration = JSON.parse(JSON.stringify(config));
-			}
-			catch(e) {
-				this.logger.error('Could not load configuration', e);
-				throw e;
-			}
+
+			// The following changes the type!
+
+			//try {
+			//	// Make sure we do not change the passed object, make a copy.
+			//	this.configuration = JSON.parse(JSON.stringify(config));
+			//}
+			//catch(e) {
+			//	this.logger.error('Could not load configuration', e);
+			//	throw e;
+			//}
+			this.configuration = config;
 		}
 	}
 
@@ -73,14 +79,18 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 	 * @param {CloverDeviceConfiguration} config - the configuration for the connector
 	 */
 	public initialize(config: CloverDeviceConfiguration): void {
-		try {
-			// Make sure we do not change the passed object, make a copy.
-			this.configuration = JSON.parse(JSON.stringify(config));
-		}
-		catch(e) {
-			this.logger.error('Could not load configuration', e);
-			throw e;
-		}
+
+		// The following changes the type!
+
+		//try {
+		//	// Make sure we do not change the passed object, make a copy.
+		//	this.configuration = JSON.parse(JSON.stringify(config));
+		//}
+		//catch(e) {
+		//	this.logger.error('Could not load configuration', e);
+		//	throw e;
+		//}
+		this.configuration = config;
 		this.deviceObserver = new CloverConnector.InnerDeviceObserver(this);
 
 		// Get the device and subscribe to it.
@@ -553,7 +563,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 		}
 	}
 
-	public printImage(bitmap: number[]): void { //Bitmap img
+	public printImage(bitmap: HTMLImageElement): void { //Bitmap img
 		if (this.device == null || !this.isReady) {
 			this.broadcaster.notifyOnDeviceError(new sdk.remotepay.CloverDeviceErrorEvent(sdk.remotepay.CloverDeviceErrorEvent.CloverDeviceErrorType.COMMUNICATION_ERROR, 0, "In printImage: The Clover device is not connected."));
 		}
@@ -561,7 +571,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 			this.broadcaster.notifyOnDeviceError(new sdk.remotepay.CloverDeviceErrorEvent(sdk.remotepay.CloverDeviceErrorEvent.CloverDeviceErrorType.VALIDATION_ERROR, 0, "In printImage: Invalid argument.  Null is not allowed."));
 		}
 		else {
-			this.device.doPrintImage(bitmap);
+			this.device.doPrintImageObject(bitmap);
 		}
 	}
 
@@ -573,7 +583,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 			this.broadcaster.notifyOnDeviceError(new sdk.remotepay.CloverDeviceErrorEvent(sdk.remotepay.CloverDeviceErrorEvent.CloverDeviceErrorType.VALIDATION_ERROR, 0, "In printImageFromURL: Invalid argument.  Null is not allowed."));
 		}
 		else {
-			this.device.doPrintImage(url);
+			this.device.doPrintImageUrl(url);
 		}
 	}
 
@@ -740,15 +750,15 @@ export namespace CloverConnector {
 			}
 		}
 
-		public onUiState(uiState: sdk.remotemessage.UiState, uiText: string, uiDirection: sdk.remotemessage.UiState.UiDirection, inputOptions: Array<sdk.remotemessage.InputOption>): void {
+		public onUiState(uiState: sdk.remotemessage.UiState, uiText: string, uiDirection: sdk.remotemessage.UiDirection, inputOptions: Array<sdk.remotemessage.InputOption>): void {
 			let deviceEvent: sdk.remotepay.CloverDeviceEvent = new sdk.remotepay.CloverDeviceEvent();
 			deviceEvent.setInputOptions(inputOptions);
 			deviceEvent.setEventState(sdk.remotepay.DeviceEventState[uiState.toString()]);
 			deviceEvent.setMessage(uiText);
-			if (uiDirection == sdk.remotemessage.UiState.UiDirection.ENTER) {
+			if (uiDirection == sdk.remotemessage.UiDirection.ENTER) {
 				this.cloverConnector.broadcaster.notifyOnDeviceActivityStart(deviceEvent);
 			}
-			else if (uiDirection == sdk.remotemessage.UiState.UiDirection.EXIT) {
+			else if (uiDirection == sdk.remotemessage.UiDirection.EXIT) {
 				this.cloverConnector.broadcaster.notifyOnDeviceActivityEnd(deviceEvent);
 				if (uiState.toString() == sdk.remotepay.DeviceEventState.RECEIPT_OPTIONS.toString()) {
 					this.cloverConnector.device.doShowWelcomeScreen();
@@ -1054,9 +1064,25 @@ export namespace CloverConnector {
 			this.logger.debug('Ready');
 			this.cloverConnector.isReady = drm.ready;
 
-			let merchantInfo: sdk.remotepay.MerchantInfo = new sdk.remotepay.MerchantInfo(drm);
+            // Build merchant info from the discoveryrequest
+			let merchantInfo: sdk.remotepay.MerchantInfo = new sdk.remotepay.MerchantInfo();
+            merchantInfo.setMerchantID(drm.getMerchantId());
+            merchantInfo.setMerchantMID(drm.getMerchantMId());
+            merchantInfo.setMerchantName(drm.getMerchantName());
+            let deviceInfo: sdk.remotepay.DeviceInfo = new sdk.remotepay.DeviceInfo();
+            merchantInfo.setDeviceInfo(deviceInfo);
+            deviceInfo.setName(drm.getName());
+            deviceInfo.setModel(drm.getModel());
+            deviceInfo.setSerial(drm.getSerial());
+			deviceInfo.setSupportsAcks(drm.getSupportsAcknowledgement());
+            merchantInfo.setSupportsPreAuths(drm.getSupportsTipAdjust());
+            merchantInfo.setSupportsManualRefunds(drm.getSupportsManualRefund());
+            merchantInfo.setSupportsTipAdjust(drm.getSupportsTipAdjust());
+            merchantInfo.setSupportsAuths(drm.getSupportsTipAdjust());
+            merchantInfo.setSupportsVaultCards(drm.getSupportsManualRefund());
+
 			this.cloverConnector.merchantInfo = merchantInfo;
-			this.cloverConnector.device.setSupportsAcks(merchantInfo.deviceInfo.supportsAcks);
+			this.cloverConnector.device.setSupportsAcks(merchantInfo.deviceInfo.getSupportsAcks());
 
 			if (drm.ready) {
 				this.cloverConnector.device.doShowWelcomeScreen();
