@@ -41,13 +41,20 @@ var DebugConfig = require('./DebugConfig.js');
 var version = '1.2.0';
 var CloverConnector = require('./dist/com/clover/remote/client/CloverConnector.js').CloverConnector;
 var CloverDeviceFactory = require('./dist/com/clover/remote/client/device/CloverDeviceFactory.js').CloverDeviceFactory;
+
+var Logger = require('./dist/com/clover/remote/client/util/Logger.js').Logger;
+var HttpSupport = require('./dist/com/clover/util/HttpSupport.js').HttpSupport;
+
 var WebSocketCloverDeviceConfiguration = require('./dist/com/clover/remote/client/device/WebSocketCloverDeviceConfiguration.js').WebSocketCloverDeviceConfiguration;
+var WebSocketPairedCloverDeviceConfiguration = require('./dist/com/clover/remote/client/device/WebSocketPairedCloverDeviceConfiguration.js').WebSocketPairedCloverDeviceConfiguration;
+var WebSocketCloudCloverDeviceConfiguration = require('./dist/com/clover/remote/client/device/WebSocketCloudCloverDeviceConfiguration.js').WebSocketCloudCloverDeviceConfiguration;
+
 var CloverTransport = require('./dist/com/clover/remote/client/transport/CloverTransport.js').CloverTransport;
 var CloverTransportObserver = require('./dist/com/clover/remote/client/transport/CloverTransportObserver.js').CloverTransportObserver;
 var WebSocketCloverTransport = require('./dist/com/clover/remote/client/transport/websocket/WebSocketCloverTransport.js').WebSocketCloverTransport;
-var Logger = require('./dist/com/clover/remote/client/util/Logger.js').Logger;
 var WebSocketState = require('./dist/com/clover/websocket/WebSocketState.js').WebSocketState;
 var CloverWebSocketInterface = require('./dist/com/clover/websocket/CloverWebSocketInterface.js').CloverWebSocketInterface;
+var BrowserWebSocketImpl = require('./dist/com/clover/websocket/BrowserWebSocketImpl.js').BrowserWebSocketImpl;
 
 // Export all of the pieces.
 module.exports = {
@@ -60,8 +67,12 @@ module.exports = {
     CloverTransportObserver: CloverTransportObserver,
     WebSocketCloverTransport: WebSocketCloverTransport,
     CloverWebSocketInterface: CloverWebSocketInterface,
+    BrowserWebSocketImpl: BrowserWebSocketImpl,
     Logger: Logger,
+    HttpSupport: HttpSupport,
     WebSocketCloverDeviceConfiguration: WebSocketCloverDeviceConfiguration,
+    WebSocketPairedCloverDeviceConfiguration: WebSocketPairedCloverDeviceConfiguration,
+    WebSocketCloudCloverDeviceConfiguration: WebSocketCloudCloverDeviceConfiguration,
     WebSocketState: WebSocketState
 }
 

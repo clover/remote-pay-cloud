@@ -23,6 +23,10 @@ export class CloverWebSocketClient implements WebSocketListener {
         this.webSocketImplClass = webSocketImplClass;
     }
 
+    public getWebSocketState(): WebSocketState {
+        return (this.socket)?this.socket.getReadyState():null;
+    }
+
     public connect(): void {
         if(this.socket != null) {
             throw new Error("Socket already created. Must create a new CloverWebSocketClient");
@@ -53,11 +57,6 @@ export class CloverWebSocketClient implements WebSocketListener {
     public isClosing(): boolean {
         return this.socket.getState() == WebSocketState.CLOSING;
     }
-
-
-
-
-
 
     public onTextMessage(websocket: CloverWebSocketInterface, text: string): void{
         this.listener.onMessage(this, text);
@@ -93,11 +92,6 @@ export class CloverWebSocketClient implements WebSocketListener {
 
     public onUnexpectedError(websocket: CloverWebSocketInterface): void {
     }
-
-
-
-
-
 
     public send( message: string): void {
         this.socket.sendText(message);

@@ -4,35 +4,28 @@ import {CloverDeviceConfiguration} from './CloverDeviceConfiguration';
 import {DefaultCloverDevice} from './DefaultCloverDevice';
 import {PairingDeviceConfiguration} from '../transport/PairingDeviceConfiguration';
 
-export abstract class WebSocketCloverDeviceConfiguration implements PairingDeviceConfiguration, CloverDeviceConfiguration {
-	private posName: string;
-	private serialNumber: string;
-	private authToken: string;
-	private uri: string = null;
-	private heartbeatInterval: number = 1000;
-	private reconnectDelay: number = 3000;
-	private pingRetryCountBeforeReconnect: number = 4;
+export abstract class WebSocketCloverDeviceConfiguration implements CloverDeviceConfiguration {
+
+	protected heartbeatInterval: number = 1000;
+	protected reconnectDelay: number = 3000;
+	protected pingRetryCountBeforeReconnect: number = 4;
 	private appId: string;
-	private webSocketImplClass: any;
+	protected webSocketImplClass: any;
 
 	/**
 	 *
 	 * @param {string} endpoint - the endpoint of the Clover device. e.g. wss://192.168.1.15:12345/remote_pay
 	 * @param {string} applicationId - the applicationId that uniquely identifies the POS. e.g. com.company.MyPOS:2.3.1
-	 * @param {string} posName - Displayed during pairing to display the POS name on the Mini. e.g. MyPOS
-	 * @param {string} serialNumber - Displayed during pairing to display the device identifier. e.g. 'Aisle 3' or 'POS-35153234'
-	 * @param {string} authToken - The authToken retrieved from a previous pairing activity, passed as an argument to onPairingSuccess. This will be null for the first connection
 	 * @param {Object} webSocketFactoryFunction - the function that will return an instance of the CloverWebSocketInterface
 	 * 	that will be used when connecting.
 	 * @param {number} heartbeatInterval - duration to wait for a PING before disconnecting
 	 * @param {number} reconnectDelay - duration to wait until a reconnect is attempted
 	 */
-	constructor(endpoint: string, applicationId: string, posName: string, serialNumber: string, authToken: string, webSocketFactoryFunction:any, heartbeatInterval?: number, reconnectDelay?: number) {
-		this.uri = endpoint;
+	constructor(applicationId: string,
+				webSocketFactoryFunction:any,
+				heartbeatInterval?: number,
+				reconnectDelay?: number) {
 		this.appId = applicationId;
-		this.posName = posName;
-		this.serialNumber = serialNumber;
-		this.authToken = authToken;
 		this.webSocketImplClass = webSocketFactoryFunction;
 		if (heartbeatInterval) this.heartbeatInterval = Math.max(100, heartbeatInterval);
 		if (reconnectDelay) this.reconnectDelay = Math.max(100, reconnectDelay);
@@ -70,28 +63,17 @@ export abstract class WebSocketCloverDeviceConfiguration implements PairingDevic
 		return DefaultCloverDevice;
 	}
 
-	public getMessagePackageName(): string {
-		return 'com.clover.remote_protocol_broadcast.app';
-	}
-
 	public getName(): string {
-		return 'Clover Secure WebSocket Connector';
+		return 'Clover WebSocket Connector';
 	}
 
-	public getCloverTransport(): CloverTransport {
-		let transport = new WebSocketCloverTransport(
-			this.uri,
-			this.heartbeatInterval,
-			this.reconnectDelay,
-			this.pingRetryCountBeforeReconnect,
-			this.posName,
-			this.serialNumber,
-			this.authToken,
-			this.webSocketImplClass);
-		transport.setPairingDeviceConfiguration(this);
-		return transport;
-	}
+	/**
+	 * @override
+	 */
+	public abstract getMessagePackageName(): string;
 
-	abstract onPairingCode(pairingCode: string): void;
-	abstract onPairingSuccess(authToken: string): void;
+	/**
+	 * @override
+	 */
+	public abstract getCloverTransport(): CloverTransport;
 }

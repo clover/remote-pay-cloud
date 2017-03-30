@@ -3,6 +3,7 @@ import http = require('http');
 
 import {RemoteMessageParser} from '../../../../json/RemoteMessageParser';
 
+import {PairingDeviceConfiguration} from '../PairingDeviceConfiguration';
 import {CloverDeviceConfiguration} from '../../device/CloverDeviceConfiguration';
 import {CloverDevice} from '../../device/CloverDevice';
 import {CloverWebSocketClient} from './CloverWebSocketClient';
@@ -18,25 +19,21 @@ import {WebSocketCloverDeviceConfiguration} from "../../device/WebSocketCloverDe
  * 
  * This is a websocket implementation of the Clover Transport.
  */
-export abstract class WebSocketCloverTransport extends CloverTransport implements CloverWebSocketClientListener {
+export class WebSocketCloverTransport2 extends CloverTransport implements CloverWebSocketClientListener {
 
 	// Create a logger
-	protected logger: Logger = Logger.create();
+	private logger: Logger = Logger.create();
+
+	private posName: string;
+	private serialNumber: string;
+	private authToken: string;
 
 	private reconnectDelay: number = 3000;
+	endpoint: string;
+
+	pairingDeviceConfiguration: PairingDeviceConfiguration; // Network Pay display specific
 
 	webSocket: CloverWebSocketClient;
-
-	/**
-	 * This is the WebSocket implementation.  This is odd,
-	 * but it is how we can keep ourselves from being tied to a browser.
-	 *
-	 * A NodeJS app that uses this library would pass in a different
-	 * object than a browser implementation.  NodeJS has an object that
-	 * satisfies the requirements of the WebSocket (looks the same).
-	 *
-	 * https://www.npmjs.com/package/websocket
-	 */
 	webSocketImplClass: any;
 
 	status: string = "Disconnected";
@@ -45,12 +42,16 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
 	 */
 	shutdown: boolean = false;
 
+	// KeyStore trustStore; // nope, browser handled.
+
+	isPairing: boolean = true;
+
 	messageParser : RemoteMessageParser;
 
 	reconnector = function() {
         if (!this.shutdown) {
             try {
-                this.initialize();
+                this.initialize(this.endpoint);
             } catch (e) {
                 this.reconnect();
             }
@@ -68,20 +69,32 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
     public static METHOD: string = "method";
 	public static PAYLOAD: string = "payload";
 
-    public constructor(heartbeatInterval:number,
+    public constructor(endpoint:string,
+                       heartbeatInterval:number,
                        reconnectDelay:number,
                        retriesUntilDisconnect:number,
-                       webSocketImplClass:any) {
-		super();
+                       posName:string,
+                       serialNumber:string,
+                       authToken:string,
+                       webSocketImplClass:any,
+                       friendlyId?:string,
+                       allowOvertakeConnection?:boolean) {
+	//public constructor(deviceConfiguration: WebSocketCloverDeviceConfiguration) {
+		super();  // implicit?
+		this.endpoint = endpoint;
+		// this.heartbeatInterval = Math.max(10, heartbeatInterval);
 		this.reconnectDelay = Math.max(0, reconnectDelay);
+		// this.maxPingRetriesBeforeDisconnect = Math.max(0, retriesUntilDisconnect);
+		this.posName = posName;
+		this.serialNumber = serialNumber;
+		this.authToken = authToken;
 		this.webSocketImplClass = webSocketImplClass;
+
 		// from WebSocketCloverDeviceConfiguration.getMessagePackageName, which needs to be changeable
 		// 'com.clover.remote_protocol_broadcast.app'
 		this.messageParser = RemoteMessageParser.getDefaultInstance();
 
-		// The subclasses need to set some values before this is called.  They call it
-		// when they are good and ready!
-		// this.initialize();
+		this.initialize(this.endpoint);
 	}
 
 	public sendMessage(message: string): number {
@@ -107,15 +120,8 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
 		this.webSocket = null;
 	}
 
+	private initialize(deviceEndpoint: string): void  { // synchronized
 
-	protected abstract initialize(): void
-
-	/**
-	 * Called from subclasses at the end of the constructor.
-	 *
-	 * @param deviceEndpoint
-     */
-	protected initializeWithUri(deviceEndpoint: string): void  { // synchronized
 		if (this.webSocket != null) {
 			if (this.webSocket.isOpen() || this.webSocket.isConnecting()) {
 				return;
@@ -123,7 +129,9 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
 				this.clearWebsocket();
 			}
 		}
+
 		this.webSocket = new CloverWebSocketClient(deviceEndpoint, this, 5000, this.webSocketImplClass);
+
 		this.webSocket.connect();
 		this.logger.debug('connection attempt done.');
 	}
@@ -141,13 +149,13 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
 		this.clearWebsocket();
 	}
 
-	public connectionError(ws: CloverWebSocketClient, message?:string):void {
+	public connectionError(ws: CloverWebSocketClient):void {
 		this.logger.debug('Not Responding...');
 
 		if (this.webSocket == ws) {
 			for (let observer of this.observers) {
 				this.logger.debug('onConnectionError');
-				observer.onDeviceDisconnected(this, message);
+				observer.onDeviceDisconnected(this);
 			}
 		}
 		// this.reconnect();
@@ -174,24 +182,25 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
 	}
 
 	public onOpen(ws: CloverWebSocketClient): void {
+
 		this.logger.debug("Open...");
 		if (this.webSocket == ws) {
 			// notify connected
 			this.notifyDeviceConnected();
-			// this.sendPairRequest(); // for paired interfaces
+			this.sendPairRequest();
 		}
 	}
 
-	//private sendPairRequest(): void {
-	//	this.isPairing = true;
-     //   let prm: sdk.remotemessage.PairingRequestMessage = new sdk.remotemessage.PairingRequestMessage();
-	//	prm.setName(this.posName);
-	//	prm.setSerialNumber(this.serialNumber);
-	//	prm.setApplicationName(this.posName);
-	//	prm.setAuthenticationToken(this.authToken);
-    //
-	//	this.objectMessageSender.sendObjectMessage(prm);
-	//}
+	private sendPairRequest(): void {
+		this.isPairing = true;
+        let prm: sdk.remotemessage.PairingRequestMessage = new sdk.remotemessage.PairingRequestMessage();
+		prm.setName(this.posName);
+		prm.setSerialNumber(this.serialNumber);
+		prm.setApplicationName(this.posName);
+		prm.setAuthenticationToken(this.authToken);
+
+		this.objectMessageSender.sendObjectMessage(prm);
+	}
 
     public onClose(ws: CloverWebSocketClient, code: number, reason: string, remote: boolean): void {
         this.logger.debug("onClose: " + reason + ", remote? " + remote);
@@ -230,10 +239,48 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
 
     public onMessage_cwscl(ws: CloverWebSocketClient, message: string): void { // CloverWebSocketClientListener
         if (this.webSocket == ws) {
-			for (let observer of this.observers) {
-				this.logger.debug("Got message: " + message);
-				observer.onMessage(message);
-			}
+            if(this.isPairing) {
+                let remoteMessage: sdk.remotemessage.RemoteMessage = this.messageParser.parseToRemoteMessage(message);
+                var sdkMessage: sdk.remotemessage.Message = this.messageParser.parseMessageFromRemoteMessageObj(remoteMessage);
+
+				if(sdkMessage) {
+					if (sdk.remotemessage.Method.PAIRING_CODE == sdkMessage.getMethod()) {
+						this.logger.debug("Got PAIRING_CODE");
+						var pcm:sdk.remotemessage.PairingCodeMessage = sdkMessage;
+						var pairingCode:string = pcm.getPairingCode();
+						this.pairingDeviceConfiguration.onPairingCode(pairingCode);
+					} else if (sdk.remotemessage.Method.PAIRING_RESPONSE == sdkMessage.getMethod()) {
+						this.logger.debug("Got PAIRING_RESPONSE");
+						var response:sdk.remotemessage.PairingResponse = sdkMessage;
+						if (sdk.remotemessage.PairingState.PAIRED == response.getPairingState() ||
+							sdk.remotemessage.PairingState.INITIAL == response.getPairingState()) {
+							this.logger.debug("Got PAIRED pair response");
+							this.isPairing = false;
+							this.authToken = response.getAuthenticationToken();
+
+							try {
+								this.pairingDeviceConfiguration.onPairingSuccess(this.authToken);
+							} catch (e) {
+								this.logger.debug("Error:" + e);
+							}
+							this.notifyDeviceReady();
+						} else if (sdk.remotemessage.PairingState.FAILED == sdkMessage.getMethod()) {
+							this.logger.debug("Got FAILED pair response");
+							this.isPairing = true;
+							this.sendPairRequest();
+						}
+					} else if (sdk.remotemessage.Method.ACK != sdkMessage.getMethod() || sdk.remotemessage.Method.UI_STATE != sdkMessage.getMethod()) {
+						this.logger.debug("Unexpected method: '" + sdkMessage.getMethod() + "' while in pairing mode.");
+					}
+				} else {
+					this.logger.warn("Unrecognized message", message)
+				}
+            } else {
+                for (let observer of this.observers) {
+                    this.logger.debug("Got message: " + message);
+                    observer.onMessage(message);
+                }
+            }
         }
     }
 
@@ -242,5 +289,9 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
         /*for (let observer of this.observers) {
          CloverDeviceErrorEvent errorEvent = new CloverDeviceErrorEvent();
          }*/
+    }
+
+    public setPairingDeviceConfiguration(pairingDeviceConfiguration: PairingDeviceConfiguration): void {
+        this.pairingDeviceConfiguration = pairingDeviceConfiguration;
     }
 }

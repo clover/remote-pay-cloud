@@ -24,8 +24,9 @@ export interface CloverTransportObserver {
      * Device is not there anymore
      * 
      * @param {CloverTransport} transport - the transport holding the notifications
+     * @param {string} message - an optional message
      */
-    onDeviceDisconnected(transport: CloverTransport): void;
+    onDeviceDisconnected(transport: CloverTransport, message?:string): void;
 
     /**
      * Called when a raw message is received from the device
