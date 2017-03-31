@@ -59,26 +59,25 @@ export abstract class CloverDevice {
 	/**
 	 * Transaction Start
 	 * 
-	 * @param {PayIntent} payIntent 
-	 * @param {Order} order 
-	 * @param {boolean} suppressTipScreen 
+	 * @param {sdk.remotemessage.PayIntent} payIntent
+	 * @param {sdk.order.Order} order
 	 */
-	public abstract doTxStart(payIntent: sdk.remote.PayIntent, order: sdk.remote.Order, suppressTipScreen: boolean): void;
+	public abstract doTxStart(payIntent: sdk.remotemessage.PayIntent, order: sdk.order.Order): void;
 
 	/**
 	 * Key Press
 	 * 
-	 * @param {KeyPress} keyPress 
+	 * @param {sdk.remotemessage.KeyPress} keyPress
 	 */
-	public abstract doKeyPress(keyPress: sdk.remote.KeyPress): void;
+	public abstract doKeyPress(keyPress: sdk.remotemessage.KeyPress): void;
 
 	/**
 	 * Void Payment
 	 * 
-	 * @param {Payment} payment 
-	 * @param {VoidReason} reason 
+	 * @param {sdk.payments.Payment} payment
+	 * @param {sdk.order.VoidReason} reason
 	 */
-	public abstract doVoidPayment(payment: sdk.remote.Payment, reason: sdk.remote.VoidReason): void;
+	public abstract doVoidPayment(payment: sdk.payments.Payment, reason: sdk.order.VoidReason): void;
 
 	/**
 	 * Capture Auth
@@ -92,18 +91,18 @@ export abstract class CloverDevice {
 	/**
 	 * Order Update
 	 * 
-	 * @param {DisplayOrder} order 
+	 * @param {sdk.order.DisplayOrder} order
 	 * @param {Object} orderOperation 
 	 */
-	public abstract doOrderUpdate(order: sdk.remote.DisplayOrder, orderOperation: Object): void;
+	public abstract doOrderUpdate(order: sdk.order.DisplayOrder, orderOperation: Object): void;
 
 	/**
 	 * Signature Verified
 	 * 
-	 * @param {Payment} payment 
+	 * @param {sdk.payments.Payment} payment
 	 * @param {boolean} verified 
 	 */
-	public abstract doSignatureVerified(payment: sdk.remote.Payment, verified: boolean): void;
+	public abstract doSignatureVerified(payment: sdk.payments.Payment, verified: boolean): void;
 
 	/**
 	 * Terminal Message
@@ -205,17 +204,17 @@ export abstract class CloverDevice {
 	/**
 	 * Accept Payment
 	 * 
-	 * @param {Payment} payment 
+	 * @param {sdk.payments.Payment} payment
 	 */
-	public abstract doAcceptPayment(payment: sdk.remote.Payment): void;
+	public abstract doAcceptPayment(payment: sdk.payments.Payment): void;
 
 	/**
 	 * Reject Payment
 	 * 
-	 * @param {Payment} payment 
-	 * @param {Challenge} challenge 
+	 * @param {sdk.payments.Payment} payment
+	 * @param {sdk.base.Challenge} challenge
 	 */
-	public abstract doRejectPayment(payment: sdk.remote.Payment, challenge: sdk.remote.Challenge): void;
+	public abstract doRejectPayment(payment: sdk.remotepay.Payment, challenge: sdk.base.Challenge): void;
 
 	/**
 	 * Retrieve Pending Payments
@@ -225,9 +224,9 @@ export abstract class CloverDevice {
 	/**
 	 * Read Cart Data
 	 * 
-	 * @param {PayIntent} payment 
+	 * @param {sdk.remotemessage.PayIntent} payment
 	 */
-	public abstract doReadCardData(payment: sdk.remote.PayIntent): void;
+	public abstract doReadCardData(payment: sdk.remotemessage.PayIntent): void;
 
 	/**
 	 * Supports Acknowledgements

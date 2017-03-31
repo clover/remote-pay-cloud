@@ -9,6 +9,8 @@ import {Logger} from './util/Logger';
 import {ResultCode} from './messages/ResultCode';
 import {JSONToCustomObject} from '../../json/JSONToCustomObject';
 
+import {PayIntent} from '../../util/PayIntent/Builder';
+
 /**
  * Clover Connector
  * 
@@ -26,7 +28,10 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 	public static CANCEL_INPUT_OPTION: sdk.remotemessage.InputOption;
 
 	// manual is not enabled by default
-	private cardEntryMethods: number = CloverConnector.CARD_ENTRY_METHOD_MAG_STRIPE | CloverConnector.CARD_ENTRY_METHOD_ICC_CONTACT | CloverConnector.CARD_ENTRY_METHOD_NFC_CONTACTLESS; // | CARD_ENTRY_METHOD_MANUAL;
+	private cardEntryMethods: number =
+		CloverConnector.CARD_ENTRY_METHOD_MAG_STRIPE |
+		CloverConnector.CARD_ENTRY_METHOD_ICC_CONTACT |
+		CloverConnector.CARD_ENTRY_METHOD_NFC_CONTACTLESS; // | CARD_ENTRY_METHOD_MANUAL;
 
 	// Create a logger
 	private logger: Logger = Logger.create();
@@ -109,7 +114,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 	/**
 	 * Add new listener to receive broadcast notifications
 	 * 
-	 * @param {ICloverConnectorListener} connectorListener - the listener to add
+	 * @param {sdk.remotepay.ICloverConnectorListener} connectorListener - the listener to add
 	 */
 	public addCloverConnectorListener(connectorListener: sdk.remotepay.ICloverConnectorListener): void {
 		this.broadcaster.push(connectorListener);
@@ -118,7 +123,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 	/**
 	 * Remove a listener
 	 * 
-	 * @param {ICloverConnectorListener} connectorListener - the listener to remove
+	 * @param {sdk.remotepay.ICloverConnectorListener} connectorListener - the listener to remove
 	 */
 	public removeCloverConnectorListener(connectorListener: sdk.remotepay.ICloverConnectorListener): void {
 		var indexOfListener = this.broadcaster.indexOf(connectorListener);
@@ -163,82 +168,103 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 	 * A common PayIntent builder method for Sale, Auth and PreAuth
 	 *
 	 * @param request
+     * @param suppressTipScreen
 	 */
 	private saleAuth(request: sdk.remotepay.TransactionRequest, suppressTipScreen: boolean): void {
 		if (this.device !== null && this.isReady) {
 			this.lastRequest = request;
 
-			let builder: sdk.remotemessage.PayIntent.Builder = new sdk.remotemessage.PayIntent.Builder();
-			builder.transactionType(request.getType()); // difference between sale, auth and auth(preAuth)
-			builder.amount(request.getAmount());
-			builder.cardEntryMethods(request.getCardEntryMethods() !== null ? request.getCardEntryMethods() : this.cardEntryMethods);
-			if (request.getDisablePrinting() !== null) {
-				builder.remotePrint(request.getDisablePrinting());
-			}
+			// let builder: sdk.remotemessage.PayIntent.Builder = new sdk.remotemessage.PayIntent.Builder();
+			let builder: PayIntent.Builder = new PayIntent.Builder();
+			let transactionSettings:sdk.payments.TransactionSettings = new sdk.payments.TransactionSettings();
+
+			builder.setTransactionType(request.getType()); // difference between sale, auth and auth(preAuth)
+			builder.setAmount(request.getAmount());
+			builder.setVaultedCard(request.getVaultedCard());
+			builder.setExternalPaymentId(request.getExternalId().trim());
+			builder.setRequiresRemoteConfirmation(true);
 			if (request.getCardNotPresent() !== null) {
-				builder.cardNotPresent(request.getCardNotPresent());
+				builder.setCardNotPresent(request.getCardNotPresent());
+			}
+			transactionSettings.setCardEntryMethods(request.getCardEntryMethods() !== null ? request.getCardEntryMethods() : this.cardEntryMethods);
+			if (request.getDisablePrinting() !== null) {
+				transactionSettings.setCloverShouldHandleReceipts(!request.getDisablePrinting());
 			}
 			if (request.getDisableRestartTransactionOnFail() !== null) {
-				builder.disableRestartTransactionWhenFailed(request.getDisableRestartTransactionOnFail());
+				transactionSettings.setDisableRestartTransactionWhenFailed(request.getDisableRestartTransactionOnFail());
 			}
-			builder.vaultedCard(request.getVaultedCard());
-			builder.externalPaymentId(request.getExternalId().trim());
-			builder.requiresRemoteConfirmation(true);
+			transactionSettings.setSignatureEntryLocation(request.getSignatureEntryLocation());
+			transactionSettings.setSignatureThreshold(request.getSignatureThreshold());
+			transactionSettings.setDisableReceiptSelection(request.getDisableReceiptSelection());
+			transactionSettings.setDisableDuplicateCheck(request.getDisableDuplicateChecking());
+			transactionSettings.setAutoAcceptPaymentConfirmations(request.getAutoAcceptPaymentConfirmations());
+			transactionSettings.setAutoAcceptSignature(request.getAutoAcceptSignature());
 
 			if (request instanceof sdk.remotepay.PreAuthRequest) {
 				// nothing extra as of now
 			}
 			else if (request instanceof sdk.remotepay.AuthRequest) {
 				let req: sdk.remotepay.AuthRequest = request;
+				if (req.getTaxAmount() !== null) {
+					builder.setTaxAmount(req.getTaxAmount());
+				}
+
 				if (req.getTippableAmount() !== null) {
-					builder.tippableAmount(req.getTippableAmount());
+					transactionSettings.setTippableAmount(req.getTippableAmount());
 				}
 				if (req.getAllowOfflinePayment() !== null) {
-					builder.allowOfflinePayment(req.getAllowOfflinePayment());
+					transactionSettings.setAllowOfflinePayment(req.getAllowOfflinePayment());
 				}
 				if (req.getApproveOfflinePaymentWithoutPrompt() !== null) {
-					builder.approveOfflinePaymentWithoutPrompt(req.getApproveOfflinePaymentWithoutPrompt());
+					transactionSettings.setApproveOfflinePaymentWithoutPrompt(req.getApproveOfflinePaymentWithoutPrompt());
 				}
 				if (req.getDisableCashback() !== null) {
-					builder.disableCashback(req.getDisableCashback());
+					transactionSettings.setDisableCashback(req.getDisableCashback());
 				}
-				if (req.getTaxAmount() !== null) {
-					builder.taxAmount(req.getTaxAmount());
-				}
+				transactionSettings.setTipMode(sdk.payments.TipMode.ON_PAPER); // overriding TipMode, since it's an Auth request
 			}
 			else if (request instanceof sdk.remotepay.SaleRequest) {
 				let req: sdk.remotepay.SaleRequest = request;
 				// shared with AuthRequest
 				if (req.getAllowOfflinePayment() !== null) {
-					builder.allowOfflinePayment(req.getAllowOfflinePayment());
+					transactionSettings.setAllowOfflinePayment(req.getAllowOfflinePayment());
 				}
 				if (req.getApproveOfflinePaymentWithoutPrompt() !== null) {
-					builder.approveOfflinePaymentWithoutPrompt(req.getApproveOfflinePaymentWithoutPrompt());
+					transactionSettings.setApproveOfflinePaymentWithoutPrompt(req.getApproveOfflinePaymentWithoutPrompt());
 				}
 				if (req.getDisableCashback() !== null) {
-					builder.disableCashback(req.getDisableCashback());
+					transactionSettings.setDisableCashback(req.getDisableCashback());
 				}
 				if (req.getTaxAmount() !== null) {
-					builder.taxAmount(req.getTaxAmount());
+					builder.setTaxAmount(req.getTaxAmount());
 				}
 				// SaleRequest
 				if (req.getTippableAmount() !== null) {
-					builder.tippableAmount(req.getTippableAmount());
+					transactionSettings.setTippableAmount(req.getTippableAmount());
 				}
 				if (req.getTipAmount() !== null) {
-					builder.tipAmount(req.getTipAmount());
+					builder.setTipAmount(req.getTipAmount());
 				}
-
-				// sale could pass in the tipAmount and not override on the screen,
-				// but that is the exceptional case
-				if (req.getDisableTipOnScreen() !== null) {
-					suppressTipScreen = req.getDisableTipOnScreen();
+				if (req.getTipMode() != null) {
+					transactionSettings.setTipMode(CloverConnector.getV3TipModeFromRequestTipMode(req.getTipMode()));
 				}
 			}
 
+			builder.setTransactionSettings(transactionSettings);
 			let payIntent: sdk.remotemessage.PayIntent = builder.build();
-			this.device.doTxStart(payIntent, null, suppressTipScreen); //
+			this.device.doTxStart(payIntent, null); //
 		}
+	}
+
+	private static getV3TipModeFromRequestTipMode(saleTipMode: sdk.payments.TipMode): sdk.payments.TipMode {
+		let allowedTipModes:Array<sdk.payments.TipMode> = [
+			sdk.payments.TipMode.TIP_PROVIDED,
+			sdk.payments.TipMode.ON_SCREEN_BEFORE_PAYMENT,
+			sdk.payments.TipMode.NO_TIP];
+		if(allowedTipModes.indexOf(saleTipMode) > -1) {
+			return saleTipMode;
+		}
+		return null;
 	}
 
 	public acceptSignature(request: sdk.remotepay.VerifySignatureRequest): void {
@@ -467,6 +493,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 	}
 
 	public manualRefund(request: sdk.remotepay.ManualRefundRequest): void { // NakedRefund is a Transaction, with just negative amount
+		let transactionSettings:sdk.payments.TransactionSettings = new sdk.payments.TransactionSettings();
 		this.lastRequest = request;
 		if (this.device == null || !this.isReady) {
 			this.deviceObserver.onFinishCancel(ResultCode.ERROR, "Device connection Error", "In manualRefund: ManualRefundRequest - The Clover device is not connected.");
@@ -487,23 +514,33 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 			this.deviceObserver.onFinishCancel(ResultCode.UNSUPPORTED, "Merchant Configuration Validation Error", "In manualRefund: ManualRefundRequest - Vault Card support is not enabled for the payment gateway. Original Request = " + request);
 		}
 		else {
-			let builder: sdk.remotepay.PayIntent.Builder = new sdk.remotepay.PayIntent.Builder();
-			builder.amount(-Math.abs(request.getAmount()))
-				.cardEntryMethods(request.getCardEntryMethods() !== null ? request.getCardEntryMethods() : this.cardEntryMethods)
-				.transactionType(sdk.remotepay.PayIntent.TransactionType.PAYMENT.CREDIT)
-				.vaultedCard(request.getVaultedCard())
-				.externalPaymentId(request.getExternalId());
+			let builder: PayIntent.Builder = new PayIntent.Builder();
+			builder.setAmount(-Math.abs(request.getAmount()))
+				.setTransactionType(sdk.remotepay.TransactionType.CREDIT)
+				.setVaultedCard(request.getVaultedCard())
+				.setExternalPaymentId(request.getExternalId());
 
+			transactionSettings.setCardEntryMethods(request.getCardEntryMethods() != null ? request.getCardEntryMethods() : this.cardEntryMethods);
 			if (request.getDisablePrinting() !== null) {
-				builder.remotePrint(request.getDisablePrinting());
+				transactionSettings.setCloverShouldHandleReceipts(request.getDisablePrinting());
 			}
 
 			if (request.getDisableRestartTransactionOnFail() !== null) {
-				builder.disableRestartTransactionWhenFailed(request.getDisableRestartTransactionOnFail());
+				transactionSettings.setDisableRestartTransactionOnFailure(request.getDisableRestartTransactionOnFail());
 			}
+			if(request.getSignatureEntryLocation() != null) {
+				transactionSettings.setSignatureEntryLocation(request.getSignatureEntryLocation());
+			}
+			if(request.getSignatureThreshold() != null) {
+				transactionSettings.setSignatureThreshold(request.getSignatureThreshold());
+			}
+			if(request.getDisableReceiptSelection() != null) {
+				transactionSettings.setDisableReceiptSelection(request.getDisableReceiptSelection());
+			}
+			builder.setTransactionSettings(transactionSettings);
 
 			let payIntent: sdk.remotepay.PayIntent = builder.build();
-			this.device.doTxStart(payIntent, null, true);
+			this.device.doTxStart(payIntent, null);
 		}
 	}
 

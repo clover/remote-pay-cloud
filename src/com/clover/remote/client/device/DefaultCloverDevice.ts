@@ -325,7 +325,8 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
     /**
      * Notify the observers that the device is ready
      * 
-     * @param transport 
+     * @param transport
+     * @param drm
      */
     private notifyObserversReady(transport: CloverTransport, drm: sdk.remotemessage.DiscoveryResponseMessage): void {
 		this.deviceObservers.forEach((obs) => {
@@ -540,7 +541,7 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
 	/**
 	 * Key Press
 	 * 
-	 * @param {KeyPress} keyPress 
+	 * @param {sdk.remotemessage.KeyPress} keyPress
 	 */
 	public doKeyPress(keyPress: sdk.remotemessage.KeyPress): void {
         let message: sdk.remotemessage.KeyPressMessage = new sdk.remotemessage.KeyPressMessage();
@@ -568,7 +569,7 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
 	/**
 	 * Signature Verified
 	 * 
-	 * @param {Payment} payment 
+	 * @param {sdk.payments.Payment} payment
 	 * @param {boolean} verified 
 	 */
 	public doSignatureVerified(payment: sdk.payments.Payment, verified: boolean): void {
@@ -624,15 +625,13 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
 	/**
 	 * Transaction Start
 	 * 
-	 * @param {PayIntent} payIntent 
-	 * @param {Order} order 
-	 * @param {boolean} suppressTipScreen 
+	 * @param {sdk.remotemessage.PayIntent} payIntent
+	 * @param {sdk.remotemessage.Order} order
 	 */
-	public doTxStart(payIntent: sdk.remotemessage.PayIntent, order: sdk.order.Order, suppressTipScreen: boolean): void {
+	public doTxStart(payIntent: sdk.remotemessage.PayIntent, order: sdk.order.Order): void {
         let message: sdk.remotemessage.TxStartRequestMessage = new sdk.remotemessage.TxStartRequestMessage();
         message.setPayIntent(payIntent);
         message.setOrder(order);
-        message.setSuppressOnScreenTips(suppressTipScreen);
         this.sendObjectMessage(message);
     }
 
@@ -676,7 +675,7 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
 	/**
 	 * Print Image (Bitmap)
 	 * 
-	 * @param {byte[]} bitmap 
+	 * @param {HTMLImageElement} bitmap
 	 */
 	public doPrintImageObject(bitmap: HTMLImageElement): void {
         let message: sdk.remotemessage.ImagePrintMessage = new sdk.remotemessage.ImagePrintMessage();
@@ -698,8 +697,8 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
 	/**
 	 * Void Payment
 	 * 
-	 * @param {Payment} payment 
-	 * @param {VoidReason} reason 
+	 * @param {sdk.payments.Payment} payment
+	 * @param {sdk.order.VoidReason} reason
 	 */
 	public doVoidPayment(payment: sdk.payments.Payment, reason: sdk.order.VoidReason): void {
         let message: sdk.remotemessage.VoidPaymentMessage = new sdk.remotemessage.VoidPaymentMessage();
@@ -844,8 +843,8 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
     /**
      * Send the message to the device using the transport
      * 
-     * @param message 
-     * @param version
+     * @param {sdk.remotemessage.Message} message
+     * @param {number} [version]
      */
     public sendObjectMessage(message: sdk.remotemessage.Message): string {
         return this.sendObjectMessage_opt_version(message);
