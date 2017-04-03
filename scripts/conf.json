@@ -4,8 +4,8 @@
     "dictionaries": ["jsdoc","closure"]
   },
   "source": {
-    "include": ["."],
-    "exclude": ["node_modules"],
+    "include": [".", "dist"],
+    "exclude": ["node_modules", "docs", "maps", "scripts", "src"],
     "includePattern": ".+\\.js(doc)?$",
     "excludePattern": "(^|\\/|\\\\)_"
   },
@@ -13,5 +13,8 @@
   "templates": {
     "cleverLinks": false,
     "monospaceLinks": false
+  },
+  "opts": {
+    "recurse": true
   }
 }
