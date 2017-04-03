@@ -19,7 +19,7 @@ The API is available on [GitHub](https://github.com/clover/remote-pay-cloud) for
 
 The library requires the browser you use to support WebSockets. See [WebSocket Browser Support](http://caniuse.com/#feat=websockets).
 
-For more developer documentation and information about the Semi-Integration program, please visit our [semi-integration developer documents] (https://docs.clover.com/build/integration-overview-requirements/). 
+For more developer documentation and information about the Semi-Integration program, please visit our [semi-integration developer documents] (https://docs.clover.com/build/integration-overview-requirements/).
 
 ### Browser Versions Tested
 This library has been tested against the following Browser type and versions:
@@ -85,9 +85,9 @@ require("remote-pay-cloud").DebugConfig.loggingEnabled = true;
 
 A deprecated beta version of the Connector (Clover.js) is included in this version with `require` directive syntax, but will removed in the future.
 
-### Version [BETA](https://github.com/clover/remote-pay-cloud-BETA/tree/BETA_Final) 
+### Version [BETA](https://github.com/clover/remote-pay-cloud-BETA/tree/BETA_Final)
 
-The beta version includes the earliest library as well as a server with examples of the functions. 
+The beta version includes the earliest library as well as a server with examples of the functions.
 
 ---
 
@@ -113,7 +113,7 @@ var connector = new clover.CloverConnectorFactory().createICloverConnector({
     "domain": "https://sandbox.dev.clover.com/"
 });
 
-ExampleCloverConnectorListener  = function(cloverConnector) {
+var ExampleCloverConnectorListener = function(cloverConnector) {
     clover.remotepay.ICloverConnectorListener.call(this);
     this.cloverConnector = cloverConnector;
 };
@@ -127,10 +127,16 @@ ExampleCloverConnectorListener.prototype.onReady = function (merchantInfo) {
     saleRequest.setAmount(10000);
     this.cloverConnector.sale(saleRequest);
 };
+
 ExampleCloverConnectorListener.prototype.onVerifySignatureRequest = function (request) {
     log.info(request);
     this.cloverConnector.acceptSignature(request);
 };
+
+ExampleCloverConnectorListener.prototype.onConfirmPaymentRequest = function (request) {
+  this.cloverConnector.acceptPayment(request.payment);
+};
+
 ExampleCloverConnectorListener.prototype.onSaleResponse = function (response) {
     log.info(response);
     connector.dispose();
@@ -198,11 +204,11 @@ Examples of configurations that can be used when creating the Clover Connector o
 ```
 
 #### Define a listener that will listen for events produced byt the Clover Connector.
-The functions implemented will be called as the connector encounters the events.  These functions can be found in the clover.remotepay.ICloverConnectorListener. 
+The functions implemented will be called as the connector encounters the events.  These functions can be found in the clover.remotepay.ICloverConnectorListener.
 ```
 // This overrides/implements the constructor function.  This example
 // expects that a clover connector implementation instance is passed to the created listener.
-ExampleCloverConnectorListener  = function(cloverConnector) {
+var ExampleCloverConnectorListener = function(cloverConnector) {
     clover.remotepay.ICloverConnectorListener.call(this);
     this.cloverConnector = cloverConnector;
 };
@@ -226,8 +232,14 @@ ExampleCloverConnectorListener.prototype.onVerifySignatureRequest = function (re
     this.cloverConnector.acceptSignature(request);
 };
 
+// The ICloverConnectorListener function that is called when the device detects a possible duplicate transaction,
+// due to the same card being used in a short period of time. This example accepts the duplicate payment challenge, sight unseen
+ExampleCloverConnectorListener.prototype.onConfirmPaymentRequest = function (request) {
+  this.cloverConnector.acceptPayment(request.payment);
+};
+
 // The ICloverConnectorListener function that is called when a sale request is completed.
-// This example logs the response, and disposes of the connector.  If the response is not an expected 
+// This example logs the response, and disposes of the connector.  If the response is not an expected
 // type, it will log an error.
 ExampleCloverConnectorListener.prototype.onSaleResponse = function (response) {
     log.info(response);
@@ -259,6 +271,6 @@ $(window).on('beforeunload ', function () {
 ```
 
 ## Generate Documentation
-API documentation is generated when `npm install` is run. 
+API documentation is generated when `npm install` is run.
 [Online Docs](http://clover.github.io/remote-pay-cloud/1.2.0-rc1.0/) and
 [Online API class Docs](http://clover.github.io/remote-pay-cloud-api/1.1.0/)
