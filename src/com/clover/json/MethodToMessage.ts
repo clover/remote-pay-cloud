@@ -20,6 +20,7 @@ export class MethodToMessage {
         MethodToMessage.methodToType[remotemessage.Method.CLOSEOUT_REQUEST] = remotemessage.CloseoutRequestMessage;
         MethodToMessage.methodToType[remotemessage.Method.CAPTURE_PREAUTH_RESPONSE] = remotemessage.CapturePreAuthResponseMessage;
         MethodToMessage.methodToType[remotemessage.Method.CAPTURE_PREAUTH] = remotemessage.CapturePreAuthMessage;
+        MethodToMessage.methodToType[remotemessage.Method.CONFIRM_PAYMENT_MESSAGE] = remotemessage.ConfirmPaymentMessage;
         MethodToMessage.methodToType[remotemessage.Method.LAST_MSG_REQUEST] = remotemessage.LastMessageRequestMessage;
         MethodToMessage.methodToType[remotemessage.Method.LAST_MSG_RESPONSE] = remotemessage.LastMessageResponseMessage;
         MethodToMessage.methodToType[remotemessage.Method.TIP_ADJUST] = remotemessage.TipAdjustMessage;
@@ -66,6 +67,7 @@ export class MethodToMessage {
         MethodToMessage.methodToType[remotemessage.Method.ORDER_ACTION_RESPONSE] = remotemessage.OrderActionResponseMessage;
         MethodToMessage.methodToType[remotemessage.Method.VAULT_CARD] = remotemessage.VaultCardMessage;
         MethodToMessage.methodToType[remotemessage.Method.VAULT_CARD_RESPONSE] = remotemessage.VaultCardResponseMessage;
+        MethodToMessage.methodToType[remotemessage.Method.LOG_MESSAGE] = remotemessage.LogMessage;
         MethodToMessage.methodToType[remotemessage.Method.RETRIEVE_PENDING_PAYMENTS] = remotemessage.RetrievePendingPaymentsMessage;
         MethodToMessage.methodToType[remotemessage.Method.RETRIEVE_PENDING_PAYMENTS_RESPONSE] = remotemessage.RetrievePendingPaymentsResponseMessage;
         MethodToMessage.methodToType[remotemessage.Method.CARD_DATA] = remotemessage.CardDataRequestMessage;
@@ -76,5 +78,8 @@ export class MethodToMessage {
         MethodToMessage.methodToType[remotemessage.Method.REMOTE_ERROR] = remotemessage.RemoteError;
         MethodToMessage.methodToType[remotemessage.Method.ACTIVITY_REQUEST] = remotemessage.ActivityRequest;
         MethodToMessage.methodToType[remotemessage.Method.ACTIVITY_RESPONSE] = remotemessage.ActivityResponseMessage;
+        MethodToMessage.methodToType[remotemessage.Method.SHUTDOWN] = remotemessage.ShutDownMessage;
+        MethodToMessage.methodToType[remotemessage.Method.RESET] = remotemessage.ResetMessage;
+        MethodToMessage.methodToType[remotemessage.Method.FORCECONNECT] = remotemessage.ForceConnectMessage;
     }
 }

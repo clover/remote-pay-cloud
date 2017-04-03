@@ -38,7 +38,7 @@ export class CloverConnectorBroadcaster
 		this.logger.debug('Sending TipAdded notification to listeners');
 		this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
 			try {
-				listener.onTipAdded(new sdk.remotemessages.TipAddedMessage(tip));
+				listener.onTipAdded(new sdk.remotemessage.TipAddedMessage(tip));
 			}
 			catch(e) {
 				this.logger.error(e);
@@ -46,7 +46,7 @@ export class CloverConnectorBroadcaster
 		});
 	}
 
-	public notifyOnRefundPaymentResponse(refundPaymentResponse: sdk.remotemessages.RefundPaymentResponse): void {
+	public notifyOnRefundPaymentResponse(refundPaymentResponse: sdk.remotemessage.RefundPaymentResponse): void {
 		this.logger.debug('Sending RefundPaymentResponse notification to listeners');
 		this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
 			try {
@@ -58,7 +58,7 @@ export class CloverConnectorBroadcaster
 		});
 	}
 
-	public notifyCloseout(closeoutResponse: sdk.remotemessages.CloseoutResponse): void {
+	public notifyCloseout(closeoutResponse: sdk.remotemessage.CloseoutResponse): void {
 		this.logger.debug('Sending Closeout notification to listeners');
 		this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
 			try {
@@ -70,7 +70,7 @@ export class CloverConnectorBroadcaster
 		});
 	}
 
-	public notifyOnDeviceActivityStart(deviceEvent: sdk.remotemessages.CloverDeviceEvent): void {
+	public notifyOnDeviceActivityStart(deviceEvent: sdk.remotemessage.CloverDeviceEvent): void {
 		this.logger.debug('Sending DeviceActivityStart notification to listeners');
 		this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
 			try {
@@ -82,7 +82,7 @@ export class CloverConnectorBroadcaster
 		});
 	}
 
-	public notifyOnDeviceActivityEnd(deviceEvent: sdk.remotemessages.CloverDeviceEvent): void {
+	public notifyOnDeviceActivityEnd(deviceEvent: sdk.remotemessage.CloverDeviceEvent): void {
 		this.logger.debug('Sending DeviceActivityEnd notification to listeners');
 		this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
 			try {
@@ -94,7 +94,7 @@ export class CloverConnectorBroadcaster
 		});
 	}
 
-	public notifyOnSaleResponse(response: sdk.remotemessages.SaleResponse): void {
+	public notifyOnSaleResponse(response: sdk.remotemessage.SaleResponse): void {
 		this.logger.debug('Sending SaleResponse notification to listeners');
 		this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
 			try {
@@ -106,7 +106,7 @@ export class CloverConnectorBroadcaster
 		});
 	}
 
-	public notifyOnAuthResponse(response: sdk.remotemessages.AuthResponse): void {
+	public notifyOnAuthResponse(response: sdk.remotemessage.AuthResponse): void {
 		this.logger.debug('Sending AuthResponse notification to listeners');
 		this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
 			try {
@@ -118,7 +118,7 @@ export class CloverConnectorBroadcaster
 		});
 	}
 
-	public notifyOnManualRefundResponse(response: sdk.remotemessages.ManualRefundResponse): void {
+	public notifyOnManualRefundResponse(response: sdk.remotemessage.ManualRefundResponse): void {
 		this.logger.debug('Sending ManualRefundResponse notification to listeners');
 		this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
 			try {
@@ -130,7 +130,7 @@ export class CloverConnectorBroadcaster
 		});
 	}
 
-	public notifyOnVerifySignatureRequest(request: sdk.remotemessages.VerifySignatureRequest): void {
+	public notifyOnVerifySignatureRequest(request: sdk.remotemessage.VerifySignatureRequest): void {
 		this.logger.debug('Sending VerifySignatureRequest notification to listeners');
 		this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
 			try {
@@ -142,7 +142,7 @@ export class CloverConnectorBroadcaster
 		});
 	}
 
-	public notifyOnVoidPaymentResponse(response: sdk.remotemessages.VoidPaymentResponse): void {
+	public notifyOnVoidPaymentResponse(response: sdk.remotemessage.VoidPaymentResponse): void {
 		this.logger.debug('Sending VoidPaymentResponse notification to listeners');
 		this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
 			try {
@@ -180,7 +180,7 @@ export class CloverConnectorBroadcaster
 		});
 	}
 
-	public notifyOnReady(merchantInfo: sdk.remotemessages.MerchantInfo): void {
+	public notifyOnReady(merchantInfo: sdk.remotemessage.MerchantInfo): void {
 		this.logger.debug('Sending Ready notification to listeners');
 		this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
 			try {
@@ -193,7 +193,7 @@ export class CloverConnectorBroadcaster
 		});
 	}
 
-	public notifyOnTipAdjustAuthResponse(response: sdk.remotemessages.TipAdjustAuthResponse): void {
+	public notifyOnTipAdjustAuthResponse(response: sdk.remotemessage.TipAdjustAuthResponse): void {
 		this.logger.debug('Sending TipAdjustAuthResponse notification to listeners');
 		this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
 			try {
@@ -205,7 +205,7 @@ export class CloverConnectorBroadcaster
 		});
 	}
 
-	public notifyOnVaultCardRespose(ccr: sdk.remotemessages.VaultCardResponse): void {
+	public notifyOnVaultCardRespose(ccr: sdk.remotemessage.VaultCardResponse): void {
 		this.logger.debug('Sending VaultCardResponse notification to listeners');
 		this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
 			try {
@@ -217,7 +217,7 @@ export class CloverConnectorBroadcaster
 		});
 	}
 
-	public notifyOnPreAuthResponse(response: sdk.remotemessages.PreAuthResponse): void {
+	public notifyOnPreAuthResponse(response: sdk.remotemessage.PreAuthResponse): void {
 		this.logger.debug('Sending PreAuthResponse notification to listeners');
 		this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
 			try {
@@ -229,7 +229,7 @@ export class CloverConnectorBroadcaster
 		});
 	}
 
-	public notifyOnCapturePreAuth(response: sdk.remotemessages.CapturePreAuthResponse): void {
+	public notifyOnCapturePreAuth(response: sdk.remotemessage.CapturePreAuthResponse): void {
 		this.logger.debug('Sending CapturePreAuth notification to listeners');
 		this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
 			try {
@@ -241,7 +241,7 @@ export class CloverConnectorBroadcaster
 		});
 	}
 
-	public notifyOnDeviceError(errorEvent: sdk.remotemessages.CloverDeviceErrorEvent): void {
+	public notifyOnDeviceError(errorEvent: sdk.remotemessage.CloverDeviceErrorEvent): void {
 		this.logger.debug('Sending DeviceError notification to listeners');
 		this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
 			try {
@@ -253,7 +253,7 @@ export class CloverConnectorBroadcaster
 		});
 	}
 
-	public notifyOnPrintRefundPaymentReceipt(printRefundPaymentReceiptMessage: sdk.remotemessages.PrintRefundPaymentReceiptMessage): void {
+	public notifyOnPrintRefundPaymentReceipt(printRefundPaymentReceiptMessage: sdk.remotemessage.PrintRefundPaymentReceiptMessage): void {
 		this.logger.debug('Sending PrintRefundPaymentReceipt notification to listeners');
 		this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
 			try {
@@ -265,7 +265,7 @@ export class CloverConnectorBroadcaster
 		});
 	}
 
-	public notifyOnPrintPaymentMerchantCopyReceipt(printPaymentMerchantCopyReceiptMessage: sdk.remotemessages.PrintPaymentMerchantCopyReceiptMessage): void {
+	public notifyOnPrintPaymentMerchantCopyReceipt(printPaymentMerchantCopyReceiptMessage: sdk.remotemessage.PrintPaymentMerchantCopyReceiptMessage): void {
 		this.logger.debug('Sending PrintPaymentMerchantCopyReceipt notification to listeners');
 		this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
 			try {
@@ -277,7 +277,7 @@ export class CloverConnectorBroadcaster
 		});
 	}
 
-	public notifyOnPrintPaymentDeclineReceipt(printPaymentDeclineReceiptMessage: sdk.remotemessages.PrintPaymentDeclineReceiptMessage): void {
+	public notifyOnPrintPaymentDeclineReceipt(printPaymentDeclineReceiptMessage: sdk.remotemessage.PrintPaymentDeclineReceiptMessage): void {
 		this.logger.debug('Sending PrintPaymentDeclineReceipt notification to listeners');
 		this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
 			try {
@@ -289,7 +289,7 @@ export class CloverConnectorBroadcaster
 		});
 	}
 
-	public notifyOnPrintPaymentReceipt(printPaymentReceiptMessage: sdk.remotemessages.PrintPaymentReceiptMessage): void {
+	public notifyOnPrintPaymentReceipt(printPaymentReceiptMessage: sdk.remotemessage.PrintPaymentReceiptMessage): void {
 		this.logger.debug('Sending PrintPaymentReceipt notification to listeners');
 		this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
 			try {
@@ -301,7 +301,7 @@ export class CloverConnectorBroadcaster
 		});
 	}
 
-	public notifyOnPrintCreditReceipt(printManualRefundReceiptMessage: sdk.remotemessages.PrintManualRefundReceiptMessage): void {
+	public notifyOnPrintCreditReceipt(printManualRefundReceiptMessage: sdk.remotemessage.PrintManualRefundReceiptMessage): void {
 		this.logger.debug('Sending PrintCreditReceipt notification to listeners');
 		this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
 			try {
@@ -313,7 +313,7 @@ export class CloverConnectorBroadcaster
 		});
 	}
 
-	public notifyOnPrintCreditDeclineReceipt(printManualRefundDeclineReceiptMessage: sdk.remotemessages.PrintManualRefundDeclineReceiptMessage): void {
+	public notifyOnPrintCreditDeclineReceipt(printManualRefundDeclineReceiptMessage: sdk.remotemessage.PrintManualRefundDeclineReceiptMessage): void {
 		this.logger.debug('Sending PrintCreditDeclineReceipt notification to listeners');
 		this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
 			try {
@@ -325,7 +325,7 @@ export class CloverConnectorBroadcaster
 		});
 	}
 
-	public notifyOnConfirmPaymentRequest(confirmPaymentRequest: sdk.remotemessages.ConfirmPaymentRequest): void {
+	public notifyOnConfirmPaymentRequest(confirmPaymentRequest: sdk.remotemessage.ConfirmPaymentRequest): void {
 		this.logger.debug('Sending ConfirmPaymentRequest notification to listeners');
 		this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
 			try {
@@ -337,7 +337,7 @@ export class CloverConnectorBroadcaster
 		});
 	}
 
-	public notifyOnRetrievePendingPaymentResponse(rppr: sdk.remotemessages.RetrievePendingPaymentsResponse): void {
+	public notifyOnRetrievePendingPaymentResponse(rppr: sdk.remotemessage.RetrievePendingPaymentsResponse): void {
 		this.logger.debug('Sending RetrievePendingPaymentResponse notification to listeners');
 		this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
 			try {
@@ -349,7 +349,7 @@ export class CloverConnectorBroadcaster
 		});
 	}
 
-	public notifyOnReadCardDataResponse(rcdr: sdk.remotemessages.ReadCardDataResponse): void {
+	public notifyOnReadCardDataResponse(rcdr: sdk.remotemessage.ReadCardDataResponse): void {
 		this.logger.debug('Sending ReadCardDataResponse notification to listeners');
 		this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
 			try {

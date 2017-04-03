@@ -56,8 +56,27 @@ var WebSocketState = require('./dist/com/clover/websocket/WebSocketState.js').We
 var CloverWebSocketInterface = require('./dist/com/clover/websocket/CloverWebSocketInterface.js').CloverWebSocketInterface;
 var BrowserWebSocketImpl = require('./dist/com/clover/websocket/BrowserWebSocketImpl.js').BrowserWebSocketImpl;
 
+
+var CloverConnectorFactoryBuilder = require('./dist/com/clover/remote/client/CloverConnectorFactoryBuilder.js').CloverConnectorFactoryBuilder;
+var ICloverConnectorFactory = require('./dist/com/clover/remote/client/ICloverConnectorFactory.js').ICloverConnectorFactory;
+// Following is exported explicitly because of backwards compatibility
+var CloverConnectorFactory = require('./dist/com/clover/remote/client/CloverConnectorFactory.js').CloverConnectorFactory;
+var CardEntryMethods = require('./dist/com/clover/remote/client/CardEntryMethods.js').CardEntryMethods;
+
+
 // Export all of the pieces.
 module.exports = {
+    base: base,
+    customers: customers,
+    device: device,
+    hours: hours,
+    inventory: inventory,
+    order: order,
+    payments: payments,
+    printer: printer,
+    remotepay: remotepay,
+    remotemessage: remotemessage,
+
     CloverID: CloverID,
     DebugConfig: DebugConfig,
     version: version,
@@ -73,8 +92,12 @@ module.exports = {
     WebSocketCloverDeviceConfiguration: WebSocketCloverDeviceConfiguration,
     WebSocketPairedCloverDeviceConfiguration: WebSocketPairedCloverDeviceConfiguration,
     WebSocketCloudCloverDeviceConfiguration: WebSocketCloudCloverDeviceConfiguration,
-    WebSocketState: WebSocketState
-}
+    WebSocketState: WebSocketState,
+    CloverConnectorFactoryBuilder: CloverConnectorFactoryBuilder,
+    ICloverConnectorFactory: ICloverConnectorFactory,
+    CloverConnectorFactory: CloverConnectorFactory,
+    CardEntryMethods: CardEntryMethods
+};
 
 //
 // Expose the module.

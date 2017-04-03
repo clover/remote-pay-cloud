@@ -61,7 +61,7 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
         this.friendlyId = friendlyId;
         this.forceConnect = forceConnect;
 
-		this.initialize();
+        this.initialize();
 	}
 
 	/**
@@ -129,6 +129,9 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
             if (this.friendlyId == connectedId) {
                 // Do anything here?  This is already connected.
                 this.logger.debug("Trying to connect, but already connected to friendlyId '" + this.friendlyId + "'");
+                if(this.webSocket) {
+                    this.webSocket.close();
+                }
             } else {
                 this.connectionError(this.webSocket, "Device is already connected to '" + this.friendlyId + "'");
                 return;

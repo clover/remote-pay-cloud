@@ -111,4 +111,9 @@ export abstract class CloverTransport {
 	 * Properly dispose of this object
 	 */
 	public abstract dispose(): void;
+
+	/**
+	 * Request a disconnect then reconnect
+	 */
+	public abstract reset(): void
 }

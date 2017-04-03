@@ -68,9 +68,12 @@ export class Endpoints {
      */
     public static getOAuthURL(domain:string, clientId:string, merchantId?:string, redirectUri?:string): string {
         var variables = {};
+        if(domain.slice(-1) == '/') {
+            domain = domain.slice(0, domain.length-1);
+        }
         variables[Endpoints.DOMAIN_KEY] = domain;
         variables[Endpoints.OAUTH_CLIENT_ID_KEY] = clientId;
-        let oauthEndpointPath: string = Endpoints.DOMAIN_PATH + Endpoints.OAUTH_CLIENT_ID_SUFFIX;
+        let oauthEndpointPath: string = Endpoints.DOMAIN_PATH + Endpoints.OAUTH_PATH + Endpoints.OAUTH_CLIENT_ID_SUFFIX;
         if(merchantId) {
             variables[Endpoints.OAUTH_MERCHANT_ID_KEY] = merchantId;
             oauthEndpointPath += Endpoints.OAUTH_MERCHANT_ID_SUFFIX;

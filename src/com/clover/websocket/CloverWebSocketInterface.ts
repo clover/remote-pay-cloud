@@ -112,6 +112,7 @@ export abstract class CloverWebSocketInterface {
 
 
     public sendClose(code?: number, reason?: string): CloverWebSocketInterface {
+        this.logger.debug("Close sent code ", code, " reason ", reason);
         this.webSocket.close(code, reason);
         return this;
     }

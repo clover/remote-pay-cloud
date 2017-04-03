@@ -65,7 +65,21 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
         setTimeout(this.reconnector, this.reconnectDelay);
     }
 
-    public static METHOD: string = "method";
+	/**
+	 *
+     */
+	public reset(): void {
+		try {
+			// By sending this close, the "onClose" will be fired, which will try to reconnect.
+			this.webSocket.close(
+				WebSocketCloverTransport.CloverWebSocketCloseCode.RESET_CLOSE_CODE.code,
+				WebSocketCloverTransport.CloverWebSocketCloseCode.RESET_CLOSE_CODE.reason);
+		} catch (e) {
+			this.logger.error('error resetting transport.', e);
+		}
+	}
+
+	public static METHOD: string = "method";
 	public static PAYLOAD: string = "payload";
 
     public constructor(heartbeatInterval:number,
@@ -182,24 +196,15 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
 		}
 	}
 
-	//private sendPairRequest(): void {
-	//	this.isPairing = true;
-     //   let prm: sdk.remotemessage.PairingRequestMessage = new sdk.remotemessage.PairingRequestMessage();
-	//	prm.setName(this.posName);
-	//	prm.setSerialNumber(this.serialNumber);
-	//	prm.setApplicationName(this.posName);
-	//	prm.setAuthenticationToken(this.authToken);
-    //
-	//	this.objectMessageSender.sendObjectMessage(prm);
-	//}
-
     public onClose(ws: CloverWebSocketClient, code: number, reason: string, remote: boolean): void {
         this.logger.debug("onClose: " + reason + ", remote? " + remote);
 
         if (this.webSocket == ws) {
             if(!this.webSocket.isClosing()) {
 				this.webSocket.clearListener();
-				this.webSocket.close();
+				if(!this.webSocket.isClosed()) {
+					this.webSocket.close();
+				}
             }
 			this.clearWebsocket();
             for (let observer of this.observers) {
@@ -244,3 +249,21 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
          }*/
     }
 }
+
+export namespace WebSocketCloverTransport {
+	export class CloverWebSocketCloseCode {
+		// See https://tools.ietf.org/html/rfc6455#section-7.4
+
+		public code:number;
+		public reason:string;
+
+		// Using 4000 as a reset code.
+		static RESET_CLOSE_CODE:CloverWebSocketCloseCode = new CloverWebSocketCloseCode(4000, "Reset requested");
+
+		constructor(code:number, reason:string) {
+			this.code = code;
+			this.reason = reason;
+		}
+	}
+}
+

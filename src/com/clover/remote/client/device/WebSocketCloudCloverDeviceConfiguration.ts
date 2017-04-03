@@ -2,10 +2,12 @@ import {WebSocketCloudCloverTransport} from '../transport/websocket/WebSocketClo
 import {CloverTransport} from '../transport/CloverTransport';
 import {CloverDeviceConfiguration} from './CloverDeviceConfiguration';
 import {DefaultCloverDevice} from './DefaultCloverDevice';
+import {WebsocketCloudCloverDevice} from './WebsocketCloudCloverDevice';
+
 import {WebSocketCloverDeviceConfiguration} from './WebSocketCloverDeviceConfiguration';
 import {HttpSupport} from '../../../../clover/util/HttpSupport';
 
-export abstract class WebSocketCloudCloverDeviceConfiguration extends WebSocketCloverDeviceConfiguration {
+export class WebSocketCloudCloverDeviceConfiguration extends WebSocketCloverDeviceConfiguration {
 
 	private cloverServer:string;
 	private accessToken:string;
@@ -17,7 +19,6 @@ export abstract class WebSocketCloudCloverDeviceConfiguration extends WebSocketC
 
 	/**
 	 *
-	 * @param {string} endpoint - the endpoint of the Clover device. e.g. wss://192.168.1.15:12345/remote_pay
 	 * @param {string} applicationId - the applicationId that uniquely identifies the POS.
 	 * 	e.g. com.company.MyPOS:2.3.1 for the first connection
 	 * @param {Object} webSocketFactoryFunction - the function that will return an instance of the CloverWebSocketInterface
@@ -63,6 +64,10 @@ export abstract class WebSocketCloudCloverDeviceConfiguration extends WebSocketC
 
 	public getName(): string {
 		return 'Clover Cloud WebSocket Connector';
+	}
+
+	public getCloverDeviceType(): any {
+		return WebsocketCloudCloverDevice;
 	}
 
 	public getCloverTransport():CloverTransport {

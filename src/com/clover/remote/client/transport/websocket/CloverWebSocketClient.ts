@@ -42,8 +42,8 @@ export class CloverWebSocketClient implements WebSocketListener {
             this.listener.connectionError(this);
         }
     }
-    public close(): void {
-        this.socket.sendClose();
+    public close(code?: number, reason?: string): void {
+        this.socket.sendClose(code, reason);
     }
 
     public isConnecting(): boolean {
@@ -56,6 +56,10 @@ export class CloverWebSocketClient implements WebSocketListener {
 
     public isClosing(): boolean {
         return this.socket.getState() == WebSocketState.CLOSING;
+    }
+
+    public isClosed(): boolean {
+        return this.socket.getState() == WebSocketState.CLOSED;
     }
 
     public onTextMessage(websocket: CloverWebSocketInterface, text: string): void{
