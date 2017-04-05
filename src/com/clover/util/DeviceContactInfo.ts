@@ -1,5 +1,5 @@
 /**
- * Helper class
+ * Helper class.  Used when sending notifications to a device.
  */
 export class DeviceContactInfo {
 

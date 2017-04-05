@@ -165,9 +165,9 @@ export abstract class CloverDevice {
 	/**
 	 * Print Image (Bitmap)
 	 * 
-	 * @param {byte[]} bitmap 
+	 * @param {any} bitmap
 	 */
-	public abstract doPrintImageObject(bitmap: HTMLImageElement): void;
+	public abstract doPrintImageObject(bitmap: any): void;
 
 	/**
 	 * Print Image (URL)

@@ -1,6 +1,9 @@
 import sdk = require('remote-pay-cloud-api');
 
-
+/**
+ * Used to more closely match patterns used in other SDK's to allow for easier maintenance.
+ *
+ */
 export namespace PayIntent {
     export class Builder {
         private action:string;

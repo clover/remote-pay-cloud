@@ -4,6 +4,7 @@ import {CloverDeviceConfiguration} from './CloverDeviceConfiguration';
 import {DefaultCloverDevice} from './DefaultCloverDevice';
 import {PairingDeviceConfiguration} from '../transport/PairingDeviceConfiguration';
 import {WebSocketCloverDeviceConfiguration} from './WebSocketCloverDeviceConfiguration';
+import {IImageUtil} from  '../../../util/IImageUtil';
 
 /**
  * This is the base class that is used when connecting directly to a device via the "Network Pay Display".
@@ -27,8 +28,9 @@ export abstract class WebSocketPairedCloverDeviceConfiguration extends WebSocket
 	 * @param {string} authToken - The authToken retrieved from a previous pairing activity, passed as an argument to onPairingSuccess. This will be null for the first connection
 	 * @param {Object} webSocketFactoryFunction - the function that will return an instance of the CloverWebSocketInterface
 	 * 	that will be used when connecting.
-	 * @param {number} heartbeatInterval - duration to wait for a PING before disconnecting
-	 * @param {number} reconnectDelay - duration to wait until a reconnect is attempted
+	 * @param {IImageUtil} imageUtil - utility to translate images into base64 strings.
+	 * @param {number} [heartbeatInterval] - duration to wait for a PING before disconnecting
+	 * @param {number} [reconnectDelay] - duration to wait until a reconnect is attempted
 	 */
 	constructor(endpoint: string,
 				applicationId: string,
@@ -36,10 +38,12 @@ export abstract class WebSocketPairedCloverDeviceConfiguration extends WebSocket
 				serialNumber: string,
 				authToken: string,
 				webSocketFactoryFunction:any,
+				imageUtil: IImageUtil,
 				heartbeatInterval?: number,
 				reconnectDelay?: number) {
 		super(applicationId,
 			webSocketFactoryFunction,
+			imageUtil,
 			heartbeatInterval,
 			reconnectDelay);
 		this.uri = endpoint;

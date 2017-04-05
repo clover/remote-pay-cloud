@@ -17,9 +17,11 @@ import {CloverTransportObserver} from '../CloverTransportObserver';
 import {WebSocketCloverDeviceConfiguration} from "../../device/WebSocketCloverDeviceConfiguration";
 
 /**
- * WebSocket Clover Transport
- * 
- * This is a websocket implementation of the Clover Transport.
+ * WebSocket Paired Clover Transport
+ *
+ * Implements code that is used to pair with a device.  Depending on the application running on a device,
+ * a pairing protocol may be needed to successfully connect.  This implementation sends the pairing request
+ * when the websocket is opened.
  */
 export class WebSocketPairedCloverTransport extends WebSocketCloverTransport {
 

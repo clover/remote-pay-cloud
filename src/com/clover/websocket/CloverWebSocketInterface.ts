@@ -3,6 +3,9 @@ import {WebSocketState} from './WebSocketState';
 import {Logger} from '../remote/client/util/Logger';
 
 /**
+ * Used to abstract implementation details to allow for NodeJS and
+ * Browser usage of the library.
+ *
  * WebSocket Clover Interface.  Abstracts the WebSocket implementation so that the library is not tied to a
  * Browser implementation.
  * 

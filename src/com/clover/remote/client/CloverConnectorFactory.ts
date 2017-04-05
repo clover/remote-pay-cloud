@@ -6,6 +6,8 @@ import {HttpSupport} from '../../util/HttpSupport';
 import {ICloverConnectorFactory} from './ICloverConnectorFactory';
 import {CloverConnector} from './CloverConnector';
 import {BrowserWebSocketImpl} from '../../websocket/BrowserWebSocketImpl';
+import {IImageUtil} from '../../util/IImageUtil';
+import {ImageUtil} from '../../util/ImageUtil';
 
 /**
  * This is for backwards compatibility.  It will not work for non-browser!!!
@@ -19,7 +21,6 @@ export class CloverConnectorFactory implements ICloverConnectorFactory {
     public createICloverConnector(configuration:any):sdk.remotepay.ICloverConnector {
         return new LegacyCloverConnector(configuration);
     }
-
 }
 
 /**
@@ -43,11 +44,13 @@ export class LegacyCloverConnector extends CloverConnector {
     static accessTokenKey:string = '#' + LegacyCloverConnector._accessTokenKey;
     static URL_MERCHANT_ID_KEY:string = "merchant_id";
     private httpSupport:HttpSupport;
+    private imageUtil: IImageUtil;
 
     constructor(legacyConfiguration:any) {
         super(null);
 
         this.httpSupport = new HttpSupport(XMLHttpRequest);
+        this.imageUtil = new ImageUtil();
         this.legacyConfiguration = legacyConfiguration;
     }
 
@@ -63,16 +66,17 @@ export class LegacyCloverConnector extends CloverConnector {
      *  object configuration.
      */
     protected generateNewConfigurationAndInitialize(rawConfiguration:any):void {
-        let newConfig: WebSocketCloudCloverDeviceConfiguration = new WebSocketCloudCloverDeviceConfiguration(
-                    rawConfiguration.remoteApplicationId,
-                    BrowserWebSocketImpl.createInstance,
-                    rawConfiguration.domain,
-                    rawConfiguration.oauthToken,
-                    this.httpSupport,
-                    rawConfiguration.merchantId,
-                    rawConfiguration.deviceId,
-                    rawConfiguration.friendlyId,
-                    rawConfiguration.forceConnect);
+        let newConfig:WebSocketCloudCloverDeviceConfiguration = new WebSocketCloudCloverDeviceConfiguration(
+            rawConfiguration.remoteApplicationId,
+            BrowserWebSocketImpl.createInstance,
+            this.imageUtil,
+            rawConfiguration.domain,
+            rawConfiguration.oauthToken,
+            this.httpSupport,
+            rawConfiguration.merchantId,
+            rawConfiguration.deviceId,
+            rawConfiguration.friendlyId,
+            rawConfiguration.forceConnect);
         if (this.device == null) {
             this.initialize(newConfig);
         }
@@ -86,7 +90,7 @@ export class LegacyCloverConnector extends CloverConnector {
      */
     protected initializeLegacyConnection(configuration:any) {
 
-        if(configuration.oauthToken) {
+        if (configuration.oauthToken) {
             this.onceWeHaveTheAccessToken(configuration);
         } else {
             // We MUST have the domain and clientId, or we are unable to go on.

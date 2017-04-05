@@ -1,4 +1,5 @@
 import {CloverTransport} from '../transport/CloverTransport';
+import {IImageUtil} from '../../../util/IImageUtil';
 
 /**
  * Clover Device Configuration
@@ -41,4 +42,11 @@ export interface CloverDeviceConfiguration {
 	 * @returns string - Application ID
 	 */
 	getApplicationId(): string;
+
+	/**
+	 * Get Image Utility
+	 *
+	 * @returns IImageUtil - Image Utility
+	 */
+	getImageUtil(): IImageUtil;
 }

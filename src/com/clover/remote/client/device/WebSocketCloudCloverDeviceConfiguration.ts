@@ -5,7 +5,8 @@ import {DefaultCloverDevice} from './DefaultCloverDevice';
 import {WebsocketCloudCloverDevice} from './WebsocketCloudCloverDevice';
 
 import {WebSocketCloverDeviceConfiguration} from './WebSocketCloverDeviceConfiguration';
-import {HttpSupport} from '../../../../clover/util/HttpSupport';
+import {HttpSupport} from '../../../util/HttpSupport';
+import {IImageUtil} from  '../../../util/IImageUtil';
 
 
 /**
@@ -28,6 +29,7 @@ export class WebSocketCloudCloverDeviceConfiguration extends WebSocketCloverDevi
 	 * @param {Object} webSocketFactoryFunction - the function that will return an instance of the
      *  CloverWebSocketInterface that will be used when connecting.  For Browser implementations, this can be
      *  BrowserWebSocketImpl.createInstance.  For NodeJS implementations, this will be defined differently.
+	 * @param {IImageUtil} imageUtil - utility to translate images into base64 strings.
 	 * @param {string} cloverServer the base url for the clover server used in the cloud connection.
 	 * 	EX:  https://www.clover.com, http://localhost:9000
 	 * @param {string} accessToken - the OAuth access token that will be used when contacting the clover server
@@ -43,6 +45,7 @@ export class WebSocketCloudCloverDeviceConfiguration extends WebSocketCloverDevi
 	 */
 	constructor(applicationId: string,
 				webSocketFactoryFunction:any,
+				imageUtil: IImageUtil,
 				cloverServer:string,
 				accessToken:string,
 				httpSupport:HttpSupport,
@@ -54,6 +57,7 @@ export class WebSocketCloudCloverDeviceConfiguration extends WebSocketCloverDevi
 				reconnectDelay?: number) {
 		super(applicationId,
 			webSocketFactoryFunction,
+			imageUtil,
 			heartbeatInterval,
 			reconnectDelay);
 		this.cloverServer = cloverServer;

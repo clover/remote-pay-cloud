@@ -1,5 +1,9 @@
 import sdk = require('remote-pay-cloud-api');
 
+/**
+ * A default implementation of the ICloverConnectorListener interface.  It
+ * can be used to aid in development of a full listener.
+ */
 export abstract class DefaultCloverConnectorListener implements sdk.remotepay.ICloverConnectorListener {
 	protected cloverConnector: sdk.remotepay.ICloverConnector;
 	protected merchantInfo: sdk.remotepay.MerchantInfo;

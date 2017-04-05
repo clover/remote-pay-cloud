@@ -5,7 +5,7 @@ import {CloverTransport} from '../transport/CloverTransport';
 import {ObjectMessageSender} from '../transport/ObjectMessageSender';
 import {CloverTransportObserver} from '../transport/CloverTransportObserver';
 import {CloverDeviceConfiguration} from './CloverDeviceConfiguration';
-import {ImageUtil} from '../util/ImageUtil';
+import {IImageUtil} from '../../../util/IImageUtil';
 import {Logger} from '../util/Logger';
 import {Version} from '../../../Version';
 
@@ -14,7 +14,7 @@ import {Version} from '../../../Version';
  * 
  * This is a default implementation of the clover device.
  */
-export class DefaultCloverDevice extends CloverDevice implements CloverTransportObserver, ObjectMessageSender {
+export abstract class DefaultCloverDevice extends CloverDevice implements CloverTransportObserver, ObjectMessageSender {
 
     private static REMOTE_SDK: string = Version.CLOVER_CLOUD_SDK + ":" + Version.CLOVER_CLOUD_SDK_VERSION;
 
@@ -26,11 +26,14 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
 
     private msgIdToTask: { [key: string]: Function; } = {};
 
+    private imageUtil: IImageUtil;
+
     constructor(configuration: CloverDeviceConfiguration) {
         super(
             configuration.getMessagePackageName(),
             configuration.getCloverTransport(),
             configuration.getApplicationId());
+        this.imageUtil = configuration.getImageUtil();
 		this.transport.subscribe(this);
         this.transport.setObjectMessageSender(this);
 	}
@@ -698,11 +701,12 @@ export class DefaultCloverDevice extends CloverDevice implements CloverTransport
 	/**
 	 * Print Image (Bitmap)
 	 * 
-	 * @param {HTMLImageElement} bitmap
+	 * @param {any} bitmap
 	 */
-	public doPrintImageObject(bitmap: HTMLImageElement): void {
+	public doPrintImageObject(bitmap: any): void {
         let message: sdk.remotemessage.ImagePrintMessage = new sdk.remotemessage.ImagePrintMessage();
-        message.setPng(ImageUtil.getBase64Image(bitmap));
+        // bitmap - HTMLImageElement
+        message.setPng(this.imageUtil.getBase64Image(bitmap));
         this.sendObjectMessage(message);
     }
 

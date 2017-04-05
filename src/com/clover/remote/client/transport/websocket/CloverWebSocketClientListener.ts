@@ -1,5 +1,8 @@
 import {CloverWebSocketClient} from './CloverWebSocketClient';
 
+/**
+ * A websocket listener interface definition.
+ */
 export interface CloverWebSocketClientListener {
     onOpen(ws: CloverWebSocketClient);
 
