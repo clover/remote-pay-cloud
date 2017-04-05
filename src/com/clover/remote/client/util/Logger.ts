@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-import DebugConfig = require('../../../../../../DebugConfig');
+import {DebugConfig} from './DebugConfig';
 
 // This is the same but will not work if DebugConfig is updated to ES6+
 // import {default as DebugConfig} from '../../../../../../DebugConfig';
