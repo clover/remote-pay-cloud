@@ -40,6 +40,8 @@ Please report back to us any questions/comments/concerns, by emailing semi-integ
 
 ### Version 1.2.0-rc1.0
 
+SEMI-689  Initial 1.2 implementation.  Redesign of internal classes and many processes.  Support for 'per-transaction' settings. Update to use version 1.2.0-rc1.0 of remote-pay-cloud-api classes.  Addition of REMOTE_ERROR handling.  Increased request validation before communication.  Added ability to direct connect to device via 'Network Pay Display' app.  Added 'displayPaymentReceiptOptions' to replace deprecated 'showPaymentReceiptOptions'.  Removed dependency on browser for connector objects produced using 1.2 factory objects.
+
 SEMI-554 Added internal support for remote error.  Fix "cloverShouldHandleReceipts" and "disablePrinting" check to look for correct property. Use 1.2.0-rc1.0 of remote-pay-cloud-api.
 
 ### Version 1.1.0

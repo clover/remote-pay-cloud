@@ -74,6 +74,13 @@ export class WebSocketPairedCloverTransport extends WebSocketCloverTransport {
 		this.objectMessageSender.sendObjectMessage(prm);
 	}
 
+	/**
+	 * Handles routing pairing messages.  Routes PAIRING_CODE and PairingResponse PAIRED/INITIAL messages to the
+	 * configured PairingDeviceConfiguration
+	 *
+	 * @param ws
+	 * @param message
+     */
     public onMessage_cwscl(ws: CloverWebSocketClient, message: string): void { // CloverWebSocketClientListener
         if (this.webSocket == ws) {
             if(this.isPairing) {

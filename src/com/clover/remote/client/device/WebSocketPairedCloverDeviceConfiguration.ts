@@ -5,7 +5,12 @@ import {DefaultCloverDevice} from './DefaultCloverDevice';
 import {PairingDeviceConfiguration} from '../transport/PairingDeviceConfiguration';
 import {WebSocketCloverDeviceConfiguration} from './WebSocketCloverDeviceConfiguration';
 
-
+/**
+ * This is the base class that is used when connecting directly to a device via the "Network Pay Display".
+ *
+ * A pairing scheme is used when connecting, so the function callbacks for when a pairing code is received,
+ * and when the pairing completes must be implemented here.
+ */
 export abstract class WebSocketPairedCloverDeviceConfiguration extends WebSocketCloverDeviceConfiguration implements PairingDeviceConfiguration {
 
 	private uri: string = null;

@@ -2,6 +2,7 @@ import sdk = require('remote-pay-cloud-api');
 import {Logger} from './util/Logger';
 
 export class CloverConnectorBroadcaster
+	// *JavaScript Implementation Note*:
 	// The following causes type issues.
 	//	extends Array<sdk.remotepay.ICloverConnectorListener>
 {

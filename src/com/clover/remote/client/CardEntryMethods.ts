@@ -1,4 +1,7 @@
-
+/**
+ * Defines card entry method constants used in device communication.
+ *
+ */
 export class CardEntryMethods {
     private static KIOSK_CARD_ENTRY_METHODS: number			= 1 << 15;
 

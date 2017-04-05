@@ -3,6 +3,9 @@ import sdk = require('remote-pay-cloud-api');
 import {CloverDeviceConfiguration} from './CloverDeviceConfiguration';
 import {DefaultCloverDevice} from './DefaultCloverDevice';
 
+/**
+ * Device definition that has Cloud specific implementation details.
+ */
 export class WebsocketCloudCloverDevice extends DefaultCloverDevice {
 
     constructor(configuration:CloverDeviceConfiguration) {
@@ -17,18 +20,8 @@ export class WebsocketCloudCloverDevice extends DefaultCloverDevice {
     public dispose(): void {
         let remoteMessage: sdk.remotemessage.RemoteMessage = this.buildRemoteMessageToSend(new sdk.remotemessage.ShutDownMessage());
         let msgId: string = remoteMessage.getId();
-
-        // If this supports acknowledgement, then wait for the message to be acknowledged before
-        // closing the websocket.  Otherwise close it immediately.
-        // if (!this.supportsAcks()) {
-            this.sendRemoteMessage(remoteMessage);
-            super.dispose();
-        //} else {
-        //    this.addTaskForAck(msgId, () => {
-        //        super.dispose();
-        //    });
-        //    this.sendRemoteMessage(remoteMessage);
-        //}
+        this.sendRemoteMessage(remoteMessage);
+        super.dispose();
     }
 
     private disposeWithoutMessage(): void {
@@ -36,7 +29,8 @@ export class WebsocketCloudCloverDevice extends DefaultCloverDevice {
     }
 
     /**
-     * Cloud connections can be interrupted by another terminal
+     * Cloud connections can be interrupted by another terminal.  This handles this unique case by
+     * disconnecting without sending the shutdown command to the device.
      *
      * @param rMessage
      */
@@ -56,6 +50,10 @@ export class WebsocketCloudCloverDevice extends DefaultCloverDevice {
         }
     }
 
+    /**
+     * Reports that this connection has been severed via a onDeviceError() notification
+     * @param message
+     */
     private notifyObserversForceConnect(message: sdk.remotemessage.ForceConnectMessage): void {
         this.deviceObservers.forEach((obs) => {
             let deviceErrorEvent:sdk.remotepay.CloverDeviceErrorEvent = new sdk.remotepay.CloverDeviceErrorEvent();
@@ -67,7 +65,9 @@ export class WebsocketCloudCloverDevice extends DefaultCloverDevice {
     }
 
     /**
-     * Currently only the cloud will send this message.
+     * Handles the "RESET" message that originates from the server.  This message is a request that the connection be
+     * severed and re-established.  This is done because open long-lived connections can cause load balancers or
+     * other proxy type servers to hang when an attempt to restart them is made.
      *
      * @param rMessage
      */

@@ -59,17 +59,6 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 
 		// Try to load the configuration.
 		if (config) {
-
-			// The following changes the type!
-
-			//try {
-			//	// Make sure we do not change the passed object, make a copy.
-			//	this.configuration = JSON.parse(JSON.stringify(config));
-			//}
-			//catch(e) {
-			//	this.logger.error('Could not load configuration', e);
-			//	throw e;
-			//}
 			this.configuration = config;
 		}
 	}
@@ -80,17 +69,6 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 	 * @param {CloverDeviceConfiguration} config - the configuration for the connector
 	 */
 	public initialize(config: CloverDeviceConfiguration): void {
-
-		// The following changes the type!
-
-		//try {
-		//	// Make sure we do not change the passed object, make a copy.
-		//	this.configuration = JSON.parse(JSON.stringify(config));
-		//}
-		//catch(e) {
-		//	this.logger.error('Could not load configuration', e);
-		//	throw e;
-		//}
 		this.configuration = config;
 		this.deviceObserver = new CloverConnector.InnerDeviceObserver(this);
 

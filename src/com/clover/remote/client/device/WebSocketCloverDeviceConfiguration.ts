@@ -4,6 +4,10 @@ import {CloverDeviceConfiguration} from './CloverDeviceConfiguration';
 import {DefaultCloverDevice} from './DefaultCloverDevice';
 import {PairingDeviceConfiguration} from '../transport/PairingDeviceConfiguration';
 
+
+/**
+ * The base for WebSocket device configurations.
+ */
 export abstract class WebSocketCloverDeviceConfiguration implements CloverDeviceConfiguration {
 
 	protected heartbeatInterval: number = 1000;
@@ -13,8 +17,6 @@ export abstract class WebSocketCloverDeviceConfiguration implements CloverDevice
 	protected webSocketImplClass: any;
 
 	/**
-	 *
-	 * @param {string} endpoint - the endpoint of the Clover device. e.g. wss://192.168.1.15:12345/remote_pay
 	 * @param {string} applicationId - the applicationId that uniquely identifies the POS. e.g. com.company.MyPOS:2.3.1
 	 * @param {Object} webSocketFactoryFunction - the function that will return an instance of the CloverWebSocketInterface
 	 * 	that will be used when connecting.
