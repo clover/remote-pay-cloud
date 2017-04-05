@@ -219,7 +219,7 @@ export class StandAloneExampleWebsocketPairedCloverDeviceConfiguration extends C
     public constructor() {
         super(
             "wss://Clover-C030UQ50550081.local.:12345/remote_pay",
-            "test.js.test",
+            "test.js.test:0.0.1",
             "My_Pos_System",
             "8675309142856", 
             null, 
