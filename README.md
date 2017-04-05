@@ -9,32 +9,29 @@ Current version: 1.2.0-rc1.0
 
 ## Overview
 
-This SDK provides an API to allow your web application using Javascript to interface with a Clover® Mini device (https://www.clover.com/pos-hardware/mini)
+This SDK provides an API to allow your application using Javascript to interface with a Clover® Mini device (https://www.clover.com/pos-hardware/mini)
 
-The API is available on [GitHub](https://github.com/clover/remote-pay-cloud) for download, and can be used in conjunction with the proper browser framework from a NodeJS `require` directive, [hosted on NPM](https://www.npmjs.com/package/remote-pay-cloud)
+The API is available on [GitHub](https://github.com/clover/remote-pay-cloud) for download, and can be used:
+
+* in conjunction with the proper browser framework from a NodeJS `require` directive, [hosted on NPM](https://www.npmjs.com/package/remote-pay-cloud)
+* in conjunction with a server based NodeJS application by including a compatible [WebSocket](https://www.npmjs.com/package/websocket) and [XMLHttpRequest](https://www.npmjs.com/package/xmlhttprequest) library.
 
 1. The remotepay/ICloverConnector is the high-level API with methods like `Sale()`, `VoidTransaction()`, `ManualRefund()`, etc.
 2. The remotepay/ICloverConnectorListener is the high-level listener API that defines callback methods like `onSaleResponse`, `onRefundPaymentResponse`, etc.
-3. The API includes objects that map to standard Clover objects such as `Payment`, `CardTransaction`, `Order`, etc.  These objects will match those defined in  [clover-android-sdk](https://github.com/clover/clover-android-sdk)
+3. The API includes objects that map to standard Clover objects such as `Payment`, `CardTransaction`, `Order`, etc.  These objects will match those defined in [clover-android-sdk](https://github.com/clover/clover-android-sdk)
 
-The library requires the browser you use to support WebSockets. See [WebSocket Browser Support](http://caniuse.com/#feat=websockets).
+If used from a browser, the library requires the browser you use to support WebSockets. See [WebSocket Browser Support](http://caniuse.com/#feat=websockets).
 
 For more developer documentation and information about the Semi-Integration program, please visit our [semi-integration developer documents] (https://docs.clover.com/build/integration-overview-requirements/). 
 
-### Browser Versions Tested
-This library has been tested against the following Browser type and versions:
+## Examples
+### Application
+A sale/refund UI example project that connects to a device via the Clover cloud [Clover Cloud Connector Example](https://github.com/clover/clover-cloud-connector-example) is available for download and deployment, or direct deployment to a Heroku server.
 
-* Chrome version 54
-* Firefox version 49
+### Example Framework
+A example project composed of small examples that connect to a device via the Clover cloud - [Clover Cloud Connector Unit Examples](https://github.com/clover/clover-cloud-connector-unit-examples) is available for download and deployment, or direct deployment to a Heroku server.
 
-### Examples
-#### Application
-A sale/refund UI example project [Clover Cloud Connector Example](https://github.com/clover/clover-cloud-connector-example) is available for download and deployment, or direct deployment to a Heroku server.
-
-#### Example Framework
-A example project composed of small examples [Clover Cloud Connector Unit Examples](https://github.com/clover/clover-cloud-connector-unit-examples) is available for download and deployment, or direct deployment to a Heroku server.
-
-Please report back to us any questions/comments/concerns, by emailing semi-integrations@clover.com.
+Please report any questions/comments/concerns to us by emailing semi-integrations@clover.com.
 
 ---
 
@@ -42,9 +39,12 @@ Please report back to us any questions/comments/concerns, by emailing semi-integ
 
 Clover's cloud connector API.  Published as an NPM package.  Intended for use in a browser environment.
 
-## At a Glance
+## Javascript
+<details>
 
-### Make a sale.
+### At a Glance
+
+#### Make a sale.
 ```
 var $ = require('jQuery');
 
@@ -101,12 +101,12 @@ $(window).on('beforeunload ', function () {
 });
 ```
 
-### To make a payment using the High Level Cloud API
-#### Import the libraries needed to create the clover object.
+#### To make a payment using the High Level Cloud API
+##### Import the libraries needed to create the clover object.
 ```
 var clover = require("remote-pay-cloud");
 ```
-#### Create the Clover Connector object.
+##### Create the Clover Connector object.
 This will require gathering the configuration information to create the connector.  In this example, the configuration is hard coded.  The creation of the connector is done using the connector factory.
 ```
 var connector = new clover.CloverConnectorFactory().createICloverConnector({
@@ -144,7 +144,7 @@ Examples of configurations that can be used when creating the Clover Connector o
 }
 ```
 
-#### Define a listener that will listen for events produced byt the Clover Connector.
+##### Define a listener that will listen for events produced byt the Clover Connector.
 The functions implemented will be called as the connector encounters the events.  These functions can be found in the clover.remotepay.ICloverConnectorListener. 
 ```
 // This overrides/implements the constructor function.  This example
@@ -186,14 +186,14 @@ ExampleCloverConnectorListener.prototype.onSaleResponse = function (response) {
 };
 ```
 
-#### Add the listener instance to the connector, and initialize the connection to the device.
+##### Add the listener instance to the connector, and initialize the connection to the device.
 ```
 var connectorListener = new ExampleCloverConnectorListener(connector);
 connector.addCloverConnectorListener(connectorListener);
 connector.initializeConnection();
 ```
 
-#### Clean up the connection on exit of the window.  This should be done with all connectors.
+##### Clean up the connection on exit of the window.  This should be done with all connectors.
 This example uses jQuery to add a hook for the window `beforeunload` event that ensures that the connector is displosed of.
 ```
 $(window).on('beforeunload ', function () {
@@ -204,65 +204,76 @@ $(window).on('beforeunload ', function () {
     }
 });
 ```
+</details>
 
-## Generate Documentation
+## Typescript
+<details>
+</details>
+
+# Browser Versions Tested
+This library has been tested against the following Browser type and versions:
+
+* Chrome version 54
+* Firefox version 49
+
+# Generate Documentation
 API documentation is generated when `npm install` is run. 
 [Online Docs](http://clover.github.io/remote-pay-cloud/1.2.0-rc1.0/) and
 [Online API class Docs](http://clover.github.io/remote-pay-cloud-api/1.1.0/)
 
-## Release Notes
+# Release Notes
 <details>
 
-### Version 1.2.0-rc1.0
+## Version 1.2.0-rc1.0
 
 SEMI-689  Initial 1.2 implementation.  Redesign of internal classes and many processes.  Support for 'per-transaction' settings. Update to use version 1.2.0-rc1.0 of remote-pay-cloud-api classes.  Addition of REMOTE_ERROR handling.  Increased request validation before communication.  Added ability to direct connect to device via 'Network Pay Display' app.  Added 'displayPaymentReceiptOptions' to replace deprecated 'showPaymentReceiptOptions'.  Removed dependency on browser for connector objects produced using 1.2 factory objects.
 
 SEMI-554 Added internal support for remote error.  Fix "cloverShouldHandleReceipts" and "disablePrinting" check to look for correct property. Use 1.2.0-rc1.0 of remote-pay-cloud-api.
 
-### Version 1.1.0
-### Version 1.1.0-rc6.4
+## Version 1.1.0
+## Version 1.1.0-rc6.4
 
 SEMI-498 Revert update to use new schema objects.  New schema is slated for 1.2.
 
-### Version 1.1.0-rc6.3 (deprecated)
+## Version 1.1.0-rc6.3 (deprecated)
 
 SEMI-498 Add ready checking before attempting remote calls.  Add request validation.  Inhibit multiple 'onReady' callbacks.  Update to use new schema objects.
 SEMI-577 Add Declaration of support for Chrome version 54, Firefox version 49
 
-### Version 1.1.0-rc6.2
+## Version 1.1.0-rc6.2
 
 SEMI-541 Update remote pay cloud API classes to ver 1.1.0-rc5.1
 
-### Version 1.1.0-rc6.1
+## Version 1.1.0-rc6.1
 
 * SVR-899 Handle reconnect requests from the server.
 
-### Version 1.1.0-rc6.0
+## Version 1.1.0-rc6.0
 
 * PAY-1258 Fix documentation.  Set up flow to capture "REFUND_RESPONSE" and extract any additional failure info.  Fix namespace issues.  Change flow to depend on ACK messages (when supported).  Extend ping/pong timeout check.
 
-### Version 1.1.0-rc5.1
+## Version 1.1.0-rc5.1
 
 * SEMI-493: Allow suppression of log messages. Log messages are now suppressed by default.  To enable default logging:
 ```
 require("remote-pay-cloud").DebugConfig.loggingEnabled = true;
 ```
 
-### Version 1.1.0-rc5.0
+## Version 1.1.0-rc5.0
 
 * SEMI-438: Remove dependency on 'prototype.js'
 
-### Version 1.1.0-RC2
+## Version 1.1.0-RC2
 
 * SEMI-457: Add remoteApplicationId to required configuration.
 * SEMI-434: Add ability to read card data.
 * SEMI-423: Added backwards compatibility For older versions of android remote-pay ACK messages.
 
-### Version 1.1.0-RC1
+## Version 1.1.0-RC1
 
 A deprecated beta version of the Connector (Clover.js) is included in this version with `require` directive syntax, but will removed in the future.
 
-### Version [BETA](https://github.com/clover/remote-pay-cloud-BETA/tree/BETA_Final) 
+## Version [BETA](https://github.com/clover/remote-pay-cloud-BETA/tree/BETA_Final) 
 
 The beta version includes the earliest library as well as a server with examples of the functions. 
 </details>

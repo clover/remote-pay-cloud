@@ -32,6 +32,7 @@ export class CloverConnectorFactoryBuilder {
             if(configuration[CloverConnectorFactoryBuilder.FACTORY_VERSION] == CloverConnectorFactoryBuilder.VERSION_12) {
                 return new CloverConnectorFactoryV2();
             }
+            console.error("Factory version specified, but not found!", configuration);
         } else {
             // Technically the oldest version, only supports browser compatible connectors.
             return new CloverConnectorFactory();

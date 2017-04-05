@@ -1,14 +1,13 @@
 import sdk = require('remote-pay-cloud-api');
-
 import {RemoteMessageParser} from '../../../json/RemoteMessageParser';
 import {CloverDevice} from './CloverDevice';
 import {CloverTransport} from '../transport/CloverTransport';
 import {ObjectMessageSender} from '../transport/ObjectMessageSender';
 import {CloverTransportObserver} from '../transport/CloverTransportObserver';
 import {CloverDeviceConfiguration} from './CloverDeviceConfiguration';
-import { ImageUtil } from '../util/ImageUtil';
-import { Logger } from '../util/Logger';
-
+import {ImageUtil} from '../util/ImageUtil';
+import {Logger} from '../util/Logger';
+import {Version} from '../../../Version';
 
 /**
  * Default Clover Device
@@ -16,7 +15,8 @@ import { Logger } from '../util/Logger';
  * This is a default implementation of the clover device.
  */
 export class DefaultCloverDevice extends CloverDevice implements CloverTransportObserver, ObjectMessageSender {
-    private static REMOTE_SDK: string = 'com.clover.cloverconnector.java:1.1.1.B';
+
+    private static REMOTE_SDK: string = Version.CLOVER_CLOUD_SDK + ":" + Version.CLOVER_CLOUD_SDK_VERSION;
 
     protected logger: Logger = Logger.create();
 
