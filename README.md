@@ -5,7 +5,7 @@
 See the package.json postversion script, which maps to scripts/postversion.sh
 Do not change this or the versioning may not reflect the npm version correctly.
 --->
-Current version: 1.2.0-rc1.0
+Current version: 1.2.0-rc1.1
 
 ## Overview
 
@@ -218,7 +218,7 @@ This library has been tested against the following Browser type and versions:
 
 # Generate Documentation
 API documentation is generated when `npm install` is run. 
-[Online Docs](http://clover.github.io/remote-pay-cloud/1.2.0-rc1.0/) and
+[Online Docs](http://clover.github.io/remote-pay-cloud/1.2.0-rc1.1/) and
 [Online API class Docs](http://clover.github.io/remote-pay-cloud-api/1.1.0/)
 
 # Release Notes
