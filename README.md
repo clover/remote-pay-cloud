@@ -316,11 +316,12 @@ import * as Clover from 'remote-pay-cloud';
 ##### Create the Clover Device Configuration object.
 Depending on the mode of confiuration, you may choose to use a WebSocketPairedCloverDeviceConfiguration, or a WebSocketCloudCloverDeviceConfiguration.
 ```
-export class StandAloneExampleWebsocketPairedCloverDeviceConfiguration extends Clover.WebSocketPairedCloverDeviceConfiguration {
+export class StandAloneExampleWebsocketPairedCloverDeviceConfiguration extends 
+                 Clover.WebSocketPairedCloverDeviceConfiguration {
 ...
 }
 ```
-There are many ways the Clover Connector object can be configured.  THis includes a direct connection with a browser as shown here, connecting using a browser via the cloud similar to the above example, and connecting using a NodeJS application. 
+There are many ways the Clover Connector object can be configured.  This includes a direct connection with a browser as shown here, connecting using a browser via the cloud similar to the above example, and connecting using a NodeJS application. 
 
 ##### Define a listener that will listen for events produced byt the Clover Connector.
 The functions implemented will be called as the connector encounters the events.  These functions can be found in the clover.remotepay.ICloverConnectorListener. 
@@ -333,17 +334,17 @@ export class StandAloneExampleCloverConnectorListener extends Clover.remotepay.I
 The factory can be obtained using the builder.  If unspecified, the factory will produce 1.1.0 compatibile connectors.  Here we specify the 1.2 version.
 ```
 let configuration = {};
-configuration[Clover.CloverConnectorFactoryBuilder.FACTORY_VERSION] = Clover.CloverConnectorFactoryBuilder.VERSION_12;
-let connectorFactory: Clover.ICloverConnectorFactory = Clover.CloverConnectorFactoryBuilder.createICloverConnectorFactory(
-    configuration
-);
+configuration[Clover.CloverConnectorFactoryBuilder.FACTORY_VERSION] = 
+      Clover.CloverConnectorFactoryBuilder.VERSION_12;
+let connectorFactory: Clover.ICloverConnectorFactory = 
+      Clover.CloverConnectorFactoryBuilder.createICloverConnectorFactory(configuration);
 ```
-
 ##### Create the Clover Connector object.
 Using the configuration object you created, call the fectory function to get an instance of a Clover Connector.
 ```
 let cloverConnector: Clover.remotepay.ICloverConnector =
-    connectorFactory.createICloverConnector( new StandAloneExampleWebsocketPairedCloverDeviceConfiguration());
+    connectorFactory.createICloverConnector(
+      new StandAloneExampleWebsocketPairedCloverDeviceConfiguration());
 ```
 ##### Add the listener instance to the connector, and initialize the connection to the device.
 ```
@@ -371,7 +372,7 @@ This library has been tested against the following Browser type and versions:
 # Generate Documentation
 API documentation is generated when `npm install` is run. 
 [Online Docs](http://clover.github.io/remote-pay-cloud/1.2.0-rc1.0/) and
-[Online API class Docs](http://clover.github.io/remote-pay-cloud-api/1.1.0/)
+[Online API class Docs](http://clover.github.io/remote-pay-cloud-api/1.2.0-rc1.0/)
 
 # Release Notes
 
