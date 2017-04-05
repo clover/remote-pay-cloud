@@ -37,7 +37,7 @@ Please report any questions/comments/concerns to us by emailing semi-integration
 
 # Quickstart
 
-Clover's cloud connector API.  Published as an NPM package.  Intended for use in a browser environment.
+Clover's cloud connector API.  Published as an NPM package.  Intended for use in a browser environment, or in a NodeJS application.
 
 ## Javascript
 This shows how you can make a connection using plain javascript in the browser to a Clover device using the Cloud Pay Display.
@@ -101,7 +101,7 @@ $(window).on('beforeunload ', function () {
 });
 ```
 
-#### To make a payment using the High Level Cloud API
+#### Breakdown
 ##### Import the libraries needed to create the clover object.
 ```
 var clover = require("remote-pay-cloud");
@@ -208,11 +208,13 @@ $(window).on('beforeunload ', function () {
 ## Typescript
 This shows how you can make a connection using typescript in the browser to a Clover device using the Network Pay Display.
 
+### At a Glance
+
+#### Make a sale.
 ```
 var $ = require('jQuery');
 import * as Clover from 'remote-pay-cloud';
 
-// This is a hardcoded configuration to create a connector that communicates directly with a device.
 export class StandAloneExampleWebsocketPairedCloverDeviceConfiguration extends Clover.WebSocketPairedCloverDeviceConfiguration {
     public constructor() {
         super(
@@ -304,6 +306,60 @@ $(window).on('beforeunload ', function () {
 });
 
 cloverConnector.initializeConnection();
+```
+
+#### Breakdown
+##### Import the libraries needed to create the clover object.
+```
+import * as Clover from 'remote-pay-cloud';
+```
+##### Create the Clover Device Configuration object.
+Depending on the mode of confiuration, you may choose to use a WebSocketPairedCloverDeviceConfiguration, or a WebSocketCloudCloverDeviceConfiguration.
+```
+export class StandAloneExampleWebsocketPairedCloverDeviceConfiguration extends Clover.WebSocketPairedCloverDeviceConfiguration {
+...
+}
+```
+There are many ways the Clover Connector object can be configured.  THis includes a direct connection with a browser as shown here, connecting using a browser via the cloud similar to the above example, and connecting using a NodeJS application. 
+
+##### Define a listener that will listen for events produced byt the Clover Connector.
+The functions implemented will be called as the connector encounters the events.  These functions can be found in the clover.remotepay.ICloverConnectorListener. 
+```
+export class StandAloneExampleCloverConnectorListener extends Clover.remotepay.ICloverConnectorListener {
+...
+}
+```
+##### Create the Clover Connector Factory object.
+The factory can be obtained using the builder.  If unspecified, the factory will produce 1.1.0 compatibile connectors.  Here we specify the 1.2 version.
+```
+let configuration = {};
+configuration[Clover.CloverConnectorFactoryBuilder.FACTORY_VERSION] = Clover.CloverConnectorFactoryBuilder.VERSION_12;
+let connectorFactory: Clover.ICloverConnectorFactory = Clover.CloverConnectorFactoryBuilder.createICloverConnectorFactory(
+    configuration
+);
+```
+
+##### Create the Clover Connector object.
+Using the configuration object you created, call the fectory function to get an instance of a Clover Connector.
+```
+let cloverConnector: Clover.remotepay.ICloverConnector =
+    connectorFactory.createICloverConnector( new StandAloneExampleWebsocketPairedCloverDeviceConfiguration());
+```
+##### Add the listener instance to the connector, and initialize the connection to the device.
+```
+cloverConnector.addCloverConnectorListener(new StandAloneExampleCloverConnectorListener(cloverConnector));
+cloverConnector.initializeConnection();
+```
+##### Clean up the connection on exit of the window.  This should be done with all connectors.
+This example uses jQuery to add a hook for the window `beforeunload` event that ensures that the connector is displosed of.
+```
+$(window).on('beforeunload ', function () {
+    try {
+        connector.dispose();
+    } catch (e) {
+        console.log(e);
+    }
+});
 ```
 
 # Browser Versions Tested
