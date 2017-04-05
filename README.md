@@ -40,7 +40,7 @@ Please report any questions/comments/concerns to us by emailing semi-integration
 Clover's cloud connector API.  Published as an NPM package.  Intended for use in a browser environment.
 
 ## Javascript
-<details>
+This shows how you can make a connection using plain javascript in the browser to a Clover device using the Cloud Pay Display.
 
 ### At a Glance
 
@@ -204,11 +204,107 @@ $(window).on('beforeunload ', function () {
     }
 });
 ```
-</details>
 
 ## Typescript
-<details>
-</details>
+This shows how you can make a connection using typescript in the browser to a Clover device using the Network Pay Display.
+
+```
+var $ = require('jQuery');
+import * as Clover from 'remote-pay-cloud';
+
+// This is a hardcoded configuration to create a connector that communicates directly with a device.
+export class StandAloneExampleWebsocketPairedCloverDeviceConfiguration extends Clover.WebSocketPairedCloverDeviceConfiguration {
+    public constructor() {
+        super(
+            "wss://Clover-C030UQ50550081.local.:12345/remote_pay",
+            "test.js.test",
+            "My_Pos_System",
+            "8675309142856", 
+            null, 
+            Clover.BrowserWebSocketImpl.createInstance 
+        );
+    }
+
+    public onPairingCode(pairingCode: string): void {
+        console.log("Pairing code is " + pairingCode + " you will need to enter this on the device.");
+    }
+
+    public onPairingSuccess(authToken: string): void {
+        console.log("Pairing succeeded, authToken is " + authToken);
+
+    }
+}
+
+export class StandAloneExampleCloverConnectorListener extends Clover.remotepay.ICloverConnectorListener {
+    protected cloverConnector: Clover.remotepay.ICloverConnector;
+    private testStarted: boolean;
+
+    constructor(cloverConnector: Clover.remotepay.ICloverConnector) {
+        super();
+
+        this.cloverConnector = cloverConnector;
+        this.testStarted = false;
+    }
+    protected onReady(merchantInfo: Clover.remotepay.MerchantInfo): void {
+        console.log("In onReady, starting test", merchantInfo);
+        if(!this.testStarted) {
+            this.testStarted = true;
+        }
+        let saleRequest:Clover.remotepay.SaleRequest = new Clover.remotepay.SaleRequest();
+        saleRequest.setExternalId(Clover.CloverID.getNewId());
+        saleRequest.setAmount(10);
+        console.log({message: "Sending sale", request: saleRequest});
+        this.cloverConnector.sale(saleRequest);
+
+    }
+    public onSaleResponse(response:Clover.remotepay.SaleResponse): void {
+        try{
+            console.log({message: "Sale response received", response: response});
+            if (!response.getIsSale()) {
+                console.error("Response is not a sale!");
+            }
+            console.log("Test Completed.  Cleaning up.");
+            this.cloverConnector.showWelcomeScreen();
+            this.cloverConnector.dispose();
+        } catch (e) {
+            console.error(e);
+        }
+    }
+    protected onConfirmPaymentRequest(request: Clover.remotepay.ConfirmPaymentRequest): void {
+        console.log({message: "Automatically accepting payment", request: request});
+        this.cloverConnector.acceptPayment(request.getPayment());
+    }
+    protected onVerifySignatureRequest(request: Clover.remotepay.onVerifySignatureRequest): void {
+        console.log({message: "Automatically accepting signature", request: request});
+        this.cloverConnector.acceptSignature(request);
+    }
+    protected onDeviceError(deviceErrorEvent: Clover.remotepay.CloverDeviceErrorEvent): void {
+        console.error("onDeviceError", deviceErrorEvent);
+    }
+}
+
+
+let configuration = {};
+configuration[Clover.CloverConnectorFactoryBuilder.FACTORY_VERSION] = Clover.CloverConnectorFactoryBuilder.VERSION_12;
+let connectorFactory: Clover.ICloverConnectorFactory = Clover.CloverConnectorFactoryBuilder.createICloverConnectorFactory(
+    configuration
+);
+
+let cloverConnector: Clover.remotepay.ICloverConnector =
+    connectorFactory.createICloverConnector( new StandAloneExampleWebsocketPairedCloverDeviceConfiguration());
+
+cloverConnector.addCloverConnectorListener(new StandAloneExampleCloverConnectorListener(cloverConnector));
+
+$(window).on('beforeunload ', function () {
+    try {
+        cloverConnector.dispose();
+    } catch (e) {
+        console.log(e);
+    }
+});
+
+cloverConnector.initializeConnection();
+```
 
 # Browser Versions Tested
 This library has been tested against the following Browser type and versions:
@@ -222,7 +318,6 @@ API documentation is generated when `npm install` is run.
 [Online API class Docs](http://clover.github.io/remote-pay-cloud-api/1.1.0/)
 
 # Release Notes
-<details>
 
 ## Version 1.2.0-rc1.0
 
@@ -276,4 +371,3 @@ A deprecated beta version of the Connector (Clover.js) is included in this versi
 ## Version [BETA](https://github.com/clover/remote-pay-cloud-BETA/tree/BETA_Final) 
 
 The beta version includes the earliest library as well as a server with examples of the functions. 
-</details>
