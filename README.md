@@ -32,6 +32,67 @@ A sale/refund UI example project that connects to a device via the Clover cloud 
 A example project composed of small examples that connect to a device via the Clover cloud - [Clover Cloud Connector Unit Examples](https://github.com/clover/clover-cloud-connector-unit-examples) is available for download and deployment, or direct deployment to a Heroku server.
 
 Please report any questions/comments/concerns to us by emailing semi-integrations@clover.com.
+### Examples
+#### Application
+A sale/refund UI example project [Clover Cloud Connector Example](https://github.com/clover/clover-cloud-connector-example) is available for download and deployment, or direct deployment to a Heroku server.
+
+#### Example Framework
+A example project composed of small examples [Clover Cloud Connector Unit Examples](https://github.com/clover/clover-cloud-connector-unit-examples) is available for download and deployment, or direct deployment to a Heroku server.
+
+Please report back to us any questions/comments/concerns, by emailing semi-integrations@clover.com.
+
+## Release Notes
+
+### Version 1.2.0-rc1.0
+
+SEMI-554 Added internal support for remote error.  Fix "cloverShouldHandleReceipts" and "disablePrinting" check to look for correct property. Use 1.2.0-rc1.0 of remote-pay-cloud-api.
+
+### Version 1.1.0
+### Version 1.1.0-rc6.4
+
+SEMI-498 Revert update to use new schema objects.  New schema is slated for 1.2.
+
+### Version 1.1.0-rc6.3 (deprecated)
+
+SEMI-498 Add ready checking before attempting remote calls.  Add request validation.  Inhibit multiple 'onReady' callbacks.  Update to use new schema objects.
+SEMI-577 Add Declaration of support for Chrome version 54, Firefox version 49
+
+### Version 1.1.0-rc6.2
+
+SEMI-541 Update remote pay cloud API classes to ver 1.1.0-rc5.1
+
+### Version 1.1.0-rc6.1
+
+* SVR-899 Handle reconnect requests from the server.
+
+### Version 1.1.0-rc6.0
+
+* PAY-1258 Fix documentation.  Set up flow to capture "REFUND_RESPONSE" and extract any additional failure info.  Fix namespace issues.  Change flow to depend on ACK messages (when supported).  Extend ping/pong timeout check.
+
+### Version 1.1.0-rc5.1
+
+* SEMI-493: Allow suppression of log messages. Log messages are now suppressed by default.  To enable default logging:
+```
+require("remote-pay-cloud").DebugConfig.loggingEnabled = true;
+```
+
+### Version 1.1.0-rc5.0
+
+* SEMI-438: Remove dependency on 'prototype.js'
+
+### Version 1.1.0-RC2
+
+* SEMI-457: Add remoteApplicationId to required configuration.
+* SEMI-434: Add ability to read card data.
+* SEMI-423: Added backwards compatibility For older versions of android remote-pay ACK messages.
+
+### Version 1.1.0-RC1
+
+A deprecated beta version of the Connector (Clover.js) is included in this version with `require` directive syntax, but will removed in the future.
+
+### Version [BETA](https://github.com/clover/remote-pay-cloud-BETA/tree/BETA_Final)
+
+The beta version includes the earliest library as well as a server with examples of the functions.
 
 ---
 
@@ -60,7 +121,7 @@ var connector = new clover.CloverConnectorFactory().createICloverConnector({
     "domain": "https://sandbox.dev.clover.com/"
 });
 
-ExampleCloverConnectorListener  = function(cloverConnector) {
+var ExampleCloverConnectorListener = function(cloverConnector) {
     clover.remotepay.ICloverConnectorListener.call(this);
     this.cloverConnector = cloverConnector;
 };
@@ -74,10 +135,16 @@ ExampleCloverConnectorListener.prototype.onReady = function (merchantInfo) {
     saleRequest.setAmount(10000);
     this.cloverConnector.sale(saleRequest);
 };
+
 ExampleCloverConnectorListener.prototype.onVerifySignatureRequest = function (request) {
     log.info(request);
     this.cloverConnector.acceptSignature(request);
 };
+
+ExampleCloverConnectorListener.prototype.onConfirmPaymentRequest = function (request) {
+  this.cloverConnector.acceptPayment(request.payment);
+};
+
 ExampleCloverConnectorListener.prototype.onSaleResponse = function (response) {
     log.info(response);
     connector.dispose();
@@ -149,7 +216,7 @@ The functions implemented will be called as the connector encounters the events.
 ```
 // This overrides/implements the constructor function.  This example
 // expects that a clover connector implementation instance is passed to the created listener.
-ExampleCloverConnectorListener  = function(cloverConnector) {
+var ExampleCloverConnectorListener = function(cloverConnector) {
     clover.remotepay.ICloverConnectorListener.call(this);
     this.cloverConnector = cloverConnector;
 };
@@ -173,8 +240,14 @@ ExampleCloverConnectorListener.prototype.onVerifySignatureRequest = function (re
     this.cloverConnector.acceptSignature(request);
 };
 
+// The ICloverConnectorListener function that is called when the device detects a possible duplicate transaction,
+// due to the same card being used in a short period of time. This example accepts the duplicate payment challenge, sight unseen
+ExampleCloverConnectorListener.prototype.onConfirmPaymentRequest = function (request) {
+  this.cloverConnector.acceptPayment(request.payment);
+};
+
 // The ICloverConnectorListener function that is called when a sale request is completed.
-// This example logs the response, and disposes of the connector.  If the response is not an expected 
+// This example logs the response, and disposes of the connector.  If the response is not an expected
 // type, it will log an error.
 ExampleCloverConnectorListener.prototype.onSaleResponse = function (response) {
     log.info(response);
