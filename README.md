@@ -31,68 +31,7 @@ A sale/refund UI example project that connects to a device via the Clover cloud 
 ### Example Framework
 A example project composed of small examples that connect to a device via the Clover cloud - [Clover Cloud Connector Unit Examples](https://github.com/clover/clover-cloud-connector-unit-examples) is available for download and deployment, or direct deployment to a Heroku server.
 
-Please report any questions/comments/concerns to us by emailing semi-integrations@clover.com.
-### Examples
-#### Application
-A sale/refund UI example project [Clover Cloud Connector Example](https://github.com/clover/clover-cloud-connector-example) is available for download and deployment, or direct deployment to a Heroku server.
-
-#### Example Framework
-A example project composed of small examples [Clover Cloud Connector Unit Examples](https://github.com/clover/clover-cloud-connector-unit-examples) is available for download and deployment, or direct deployment to a Heroku server.
-
-Please report back to us any questions/comments/concerns, by emailing semi-integrations@clover.com.
-
-## Release Notes
-
-### Version 1.2.0-rc1.0
-
-SEMI-554 Added internal support for remote error.  Fix "cloverShouldHandleReceipts" and "disablePrinting" check to look for correct property. Use 1.2.0-rc1.0 of remote-pay-cloud-api.
-
-### Version 1.1.0
-### Version 1.1.0-rc6.4
-
-SEMI-498 Revert update to use new schema objects.  New schema is slated for 1.2.
-
-### Version 1.1.0-rc6.3 (deprecated)
-
-SEMI-498 Add ready checking before attempting remote calls.  Add request validation.  Inhibit multiple 'onReady' callbacks.  Update to use new schema objects.
-SEMI-577 Add Declaration of support for Chrome version 54, Firefox version 49
-
-### Version 1.1.0-rc6.2
-
-SEMI-541 Update remote pay cloud API classes to ver 1.1.0-rc5.1
-
-### Version 1.1.0-rc6.1
-
-* SVR-899 Handle reconnect requests from the server.
-
-### Version 1.1.0-rc6.0
-
-* PAY-1258 Fix documentation.  Set up flow to capture "REFUND_RESPONSE" and extract any additional failure info.  Fix namespace issues.  Change flow to depend on ACK messages (when supported).  Extend ping/pong timeout check.
-
-### Version 1.1.0-rc5.1
-
-* SEMI-493: Allow suppression of log messages. Log messages are now suppressed by default.  To enable default logging:
-```
-require("remote-pay-cloud").DebugConfig.loggingEnabled = true;
-```
-
-### Version 1.1.0-rc5.0
-
-* SEMI-438: Remove dependency on 'prototype.js'
-
-### Version 1.1.0-RC2
-
-* SEMI-457: Add remoteApplicationId to required configuration.
-* SEMI-434: Add ability to read card data.
-* SEMI-423: Added backwards compatibility For older versions of android remote-pay ACK messages.
-
-### Version 1.1.0-RC1
-
-A deprecated beta version of the Connector (Clover.js) is included in this version with `require` directive syntax, but will removed in the future.
-
-### Version [BETA](https://github.com/clover/remote-pay-cloud-BETA/tree/BETA_Final)
-
-The beta version includes the earliest library as well as a server with examples of the functions.
+Please report any questions/comments/concerns to us by emailing [semi-integrations@clover.com](mailto:semi-integrations@clover.com).
 
 ---
 
@@ -358,7 +297,6 @@ export class StandAloneExampleCloverConnectorListener extends Clover.remotepay.I
     }
 }
 
-
 let configuration = {};
 configuration[Clover.CloverConnectorFactoryBuilder.FACTORY_VERSION] = Clover.CloverConnectorFactoryBuilder.VERSION_12;
 let connectorFactory: Clover.ICloverConnectorFactory = Clover.CloverConnectorFactoryBuilder.createICloverConnectorFactory(
@@ -387,7 +325,7 @@ cloverConnector.initializeConnection();
 import * as Clover from 'remote-pay-cloud';
 ```
 ##### Create the Clover Device Configuration object.
-Depending on the mode of confiuration, you may choose to use a WebSocketPairedCloverDeviceConfiguration, or a WebSocketCloudCloverDeviceConfiguration.
+Depending on the mode of configuration, you may choose to use a WebSocketPairedCloverDeviceConfiguration, or a WebSocketCloudCloverDeviceConfiguration.
 ```
 export class StandAloneExampleWebsocketPairedCloverDeviceConfiguration extends 
                  Clover.WebSocketPairedCloverDeviceConfiguration {
@@ -404,7 +342,7 @@ export class StandAloneExampleCloverConnectorListener extends Clover.remotepay.I
 }
 ```
 ##### Create the Clover Connector Factory object.
-The factory can be obtained using the builder.  If unspecified, the factory will produce 1.1.0 compatibile connectors.  Here we specify the 1.2 version.
+The factory can be obtained using the builder.  If unspecified, the factory will produce 1.1.0 compatible connectors.  Here we specify the 1.2 version.
 ```
 let configuration = {};
 configuration[Clover.CloverConnectorFactoryBuilder.FACTORY_VERSION] = 
@@ -413,7 +351,7 @@ let connectorFactory: Clover.ICloverConnectorFactory =
       Clover.CloverConnectorFactoryBuilder.createICloverConnectorFactory(configuration);
 ```
 ##### Create the Clover Connector object.
-Using the configuration object you created, call the fectory function to get an instance of a Clover Connector.
+Using the configuration object you created, call the factory function to get an instance of a Clover Connector.
 ```
 let cloverConnector: Clover.remotepay.ICloverConnector =
     connectorFactory.createICloverConnector(
