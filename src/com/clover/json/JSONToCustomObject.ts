@@ -1,5 +1,11 @@
 import {Logger} from '../../clover/remote/client/util/Logger';
 
+
+/**
+ * A generic parser to take annotated javascript objects and populate them with
+ * raw json data.
+ *
+ */
 export class JSONToCustomObject {
 
     // Create a logger

@@ -1,4 +1,5 @@
 const gulp = require('gulp');
+const typedoc = require("gulp-typedoc");
 const ts = require('gulp-typescript');
 const del = require('del');
 const sourcemaps = require('gulp-sourcemaps');
@@ -22,4 +23,16 @@ gulp.task('build:src', ['clean:dist'], () => {
 		.pipe(gulp.dest('dist/'));
 });
 
-gulp.task('default', ['clean:dist', 'build:src']);
+gulp.task("typedoc", function() {
+	return gulp
+		.src(["src/**/*.ts"])
+		.pipe(typedoc({
+			module: "commonjs",
+			target: "es5",
+			out: "docs/",
+			name: "Clover SDK for Javascript Integration"
+		}))
+		;
+});
+
+gulp.task('default', ['clean:dist', 'build:src', "typedoc"]);

@@ -35,7 +35,6 @@ var remotemessage = sdk.remotemessage;
 //var DebugCloverConnectorListener = require("./DebugCloverConnectorListener.js");
 
 //var Logger = require('./Logger.js');
-var DebugConfig = require('./DebugConfig.js');
 
 // These exports expose the v1.2 CloverConnector and supporting objects
 var version = '1.2.0';
@@ -43,7 +42,9 @@ var CloverConnector = require('./dist/com/clover/remote/client/CloverConnector.j
 var CloverDeviceFactory = require('./dist/com/clover/remote/client/device/CloverDeviceFactory.js').CloverDeviceFactory;
 
 var Logger = require('./dist/com/clover/remote/client/util/Logger.js').Logger;
+var DebugConfig = require('./dist/com/clover/remote/client/util/DebugConfig.js').DebugConfig;
 var HttpSupport = require('./dist/com/clover/util/HttpSupport.js').HttpSupport;
+var ImageUtil = require('./dist/com/clover/util/ImageUtil.js').ImageUtil;
 
 var WebSocketCloverDeviceConfiguration = require('./dist/com/clover/remote/client/device/WebSocketCloverDeviceConfiguration.js').WebSocketCloverDeviceConfiguration;
 var WebSocketPairedCloverDeviceConfiguration = require('./dist/com/clover/remote/client/device/WebSocketPairedCloverDeviceConfiguration.js').WebSocketPairedCloverDeviceConfiguration;
@@ -87,6 +88,7 @@ module.exports = {
     WebSocketCloverTransport: WebSocketCloverTransport,
     CloverWebSocketInterface: CloverWebSocketInterface,
     BrowserWebSocketImpl: BrowserWebSocketImpl,
+    ImageUtil: ImageUtil,
     Logger: Logger,
     HttpSupport: HttpSupport,
     WebSocketCloverDeviceConfiguration: WebSocketCloverDeviceConfiguration,

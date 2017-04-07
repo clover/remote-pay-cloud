@@ -2,6 +2,11 @@ import sdk = require('remote-pay-cloud-api');
 
 var remotemessage = sdk.remotemessage;
 
+
+/**
+ * Maps constant message types to specific message class types.
+ *
+ */
 export class MethodToMessage {
 
     private static methodToType = null;

@@ -1,9 +1,13 @@
-import { WebSocketCloverTransport } from '../transport/websocket/WebSocketCloverTransport';
+import {WebSocketCloverTransport} from '../transport/websocket/WebSocketCloverTransport';
 import {CloverTransport} from '../transport/CloverTransport';
 import {CloverDeviceConfiguration} from './CloverDeviceConfiguration';
 import {DefaultCloverDevice} from './DefaultCloverDevice';
 import {PairingDeviceConfiguration} from '../transport/PairingDeviceConfiguration';
+import {IImageUtil} from  '../../../util/IImageUtil';
 
+/**
+ * The base for WebSocket device configurations.
+ */
 export abstract class WebSocketCloverDeviceConfiguration implements CloverDeviceConfiguration {
 
 	protected heartbeatInterval: number = 1000;
@@ -11,20 +15,22 @@ export abstract class WebSocketCloverDeviceConfiguration implements CloverDevice
 	protected pingRetryCountBeforeReconnect: number = 4;
 	private appId: string;
 	protected webSocketImplClass: any;
+	protected imageUtil: IImageUtil;
 
 	/**
-	 *
-	 * @param {string} endpoint - the endpoint of the Clover device. e.g. wss://192.168.1.15:12345/remote_pay
 	 * @param {string} applicationId - the applicationId that uniquely identifies the POS. e.g. com.company.MyPOS:2.3.1
 	 * @param {Object} webSocketFactoryFunction - the function that will return an instance of the CloverWebSocketInterface
 	 * 	that will be used when connecting.
-	 * @param {number} heartbeatInterval - duration to wait for a PING before disconnecting
-	 * @param {number} reconnectDelay - duration to wait until a reconnect is attempted
+	 * @param {IImageUtil} imageUtil - utility to translate images into base64 strings.
+	 * @param {number} [heartbeatInterval] - duration to wait for a PING before disconnecting
+	 * @param {number} [reconnectDelay] - duration to wait until a reconnect is attempted
 	 */
 	constructor(applicationId: string,
 				webSocketFactoryFunction:any,
+				imageUtil: IImageUtil,
 				heartbeatInterval?: number,
 				reconnectDelay?: number) {
+		this.imageUtil = imageUtil;
 		this.appId = applicationId;
 		this.webSocketImplClass = webSocketFactoryFunction;
 		if (heartbeatInterval) this.heartbeatInterval = Math.max(100, heartbeatInterval);
@@ -70,10 +76,18 @@ export abstract class WebSocketCloverDeviceConfiguration implements CloverDevice
 	/**
 	 * @override
 	 */
+	public getImageUtil(): IImageUtil {
+		return this.imageUtil;
+	}
+
+	/**
+	 * @override
+	 */
 	public abstract getMessagePackageName(): string;
 
 	/**
 	 * @override
 	 */
 	public abstract getCloverTransport(): CloverTransport;
+
 }

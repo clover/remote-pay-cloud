@@ -1,5 +1,6 @@
+import {IImageUtil} from './IImageUtil';
 
-export class ImageUtil {
+export class ImageUtil implements IImageUtil {
 
     /**
      *  Appropriate for browsers.
@@ -8,7 +9,7 @@ export class ImageUtil {
      *  <pre>var img = document.getElementById("img_id");</pre>
      * @returns {string} a base 64 encoded string of the image.
      */
-    static getBase64Image(img: HTMLImageElement): string {
+    public getBase64Image(img: HTMLImageElement): string {
         // Create an empty canvas element
         var canvas = document.createElement("canvas");
         canvas.width = img.width;

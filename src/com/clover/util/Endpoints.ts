@@ -1,8 +1,8 @@
 /**
  * Utility to centralize endpoints.
  *
- * This simplifies building urls to contact services.  If we need to add
- * a call to a service on the server, we should build it here.
+ * This simplifies building urls to contact services.  If there is a need to add
+ * a call to a service on the server, it should be added here.
  *
  */
 export class Endpoints {

@@ -4,7 +4,10 @@ import {CloverWebSocketClientListener} from './CloverWebSocketClientListener';
 import {WebSocketState} from '../../../../websocket/WebSocketState';
 import {Logger} from '../../util/Logger';
 
-
+/**
+ * The implementation of the websocket listener.  The websocket connection is
+ * initiated from this class, and many of the low level functionality is housed here.
+ */
 export class CloverWebSocketClient implements WebSocketListener {
     private endpoint: string; // URI
     listener: CloverWebSocketClientListener;

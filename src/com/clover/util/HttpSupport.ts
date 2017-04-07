@@ -1,7 +1,8 @@
 import {Logger} from '../remote/client/util/Logger';
 
 /**
- * Simple class to use the xmlhttp interface
+ * Interface used to abstract implementation details to allow for NodeJS and
+ * Browser usage of the library.
  *
  */
 export class HttpSupport {
