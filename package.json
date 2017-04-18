@@ -31,10 +31,7 @@
   "dependencies": {
     "eventemitter3": "1.1.1",
     "jsdoc": "3.4.3",
-    "remote-pay-cloud-api": "1.2.0-rc1.0"
-  },
-  "devDependencies": {
-    "@types/node": "7.0.5",
+    "remote-pay-cloud-api": "1.2.0-rc1.0",
     "del": "2.2.2",
     "gulp": "3.9.1",
     "gulp-sourcemaps": "2.4.1",
@@ -42,5 +39,8 @@
     "gulp-typescript": "3.1.5",
     "typedoc": "^0.5.10",
     "typescript": "2.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "7.0.5"
   }
 }
