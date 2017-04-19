@@ -1,0 +1,2018 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>LegacyCloverConnector | Clover SDK for Javascript Integration</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">Clover SDK for Javascript Integration</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="../modules/_remote_client_cloverconnectorfactory_.html">&quot;remote/client/CloverConnectorFactory&quot;</a>
+				</li>
+				<li>
+					<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html">LegacyCloverConnector</a>
+				</li>
+			</ul>
+			<h1>Class LegacyCloverConnector</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>This connector uses Browser specific objects to work in a manner compatible with the
+						1.1.0 implementation of the ICloverConnector.</p>
+					</div>
+					<p>It uses the domain &amp;&amp; clientId to get the oauthtoken, then gets the merchantId,
+						and the deviceId.  This process may involve redirection of the page, and XHR requests,
+					all of which are performed using default Browser objects.</p>
+					<p>Once these values have been obtained, a new WebSocketCloudCloverDeviceConfiguration is
+					generated using the default Browser WebSocket implementation, and the connector is initialized.</p>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<a href="_remote_client_cloverconnector_.cloverconnector.html" class="tsd-signature-type">CloverConnector</a>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">LegacyCloverConnector</span>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel">
+				<h3>Implements</h3>
+				<ul class="tsd-hierarchy">
+					<li><span class="tsd-signature-type">any</span></li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Modules</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-module tsd-parent-kind-class"><a href="../modules/_remote_client_cloverconnectorfactory_.legacycloverconnector.cloverconnector.html" class="tsd-kind-icon">Clover<wbr>Connector</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#broadcaster" class="tsd-kind-icon">broadcaster</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#device" class="tsd-kind-icon">device</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#httpsupport" class="tsd-kind-icon">http<wbr>Support</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#imageutil" class="tsd-kind-icon">image<wbr>Util</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#isready" class="tsd-kind-icon">is<wbr>Ready</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#lastrequest" class="tsd-kind-icon">last<wbr>Request</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#legacyconfiguration" class="tsd-kind-icon">legacy<wbr>Configuration</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#logger" class="tsd-kind-icon">logger</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#merchantinfo" class="tsd-kind-icon">merchant<wbr>Info</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#urlparamsinfo" class="tsd-kind-icon">url<wbr>Params<wbr>Info</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-static"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#cancel_input_option" class="tsd-kind-icon">CANCEL_<wbr>INPUT_<wbr>OPTION</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#url_merchant_id_key" class="tsd-kind-icon">URL_<wbr>MERCHANT_<wbr>ID_<wbr>KEY</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#_accesstokenkey" class="tsd-kind-icon">_access<wbr>Token<wbr>Key</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#accesstokenkey" class="tsd-kind-icon">access<wbr>Token<wbr>Key</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#acceptpayment" class="tsd-kind-icon">accept<wbr>Payment</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#acceptsignature" class="tsd-kind-icon">accept<wbr>Signature</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#addcloverconnectorlistener" class="tsd-kind-icon">add<wbr>Clover<wbr>Connector<wbr>Listener</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#auth" class="tsd-kind-icon">auth</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#cancel" class="tsd-kind-icon">cancel</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#capturepreauth" class="tsd-kind-icon">capture<wbr>Pre<wbr>Auth</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#closeout" class="tsd-kind-icon">closeout</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#displaypaymentreceiptoptions" class="tsd-kind-icon">display<wbr>Payment<wbr>Receipt<wbr>Options</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#dispose" class="tsd-kind-icon">dispose</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#generatenewconfigurationandinitialize" class="tsd-kind-icon">generate<wbr>New<wbr>Configuration<wbr>And<wbr>Initialize</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#getaccesstoken" class="tsd-kind-icon">get<wbr>Access<wbr>Token</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#getdeviceid" class="tsd-kind-icon">get<wbr>Device<wbr>Id</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#getmerchantid" class="tsd-kind-icon">get<wbr>Merchant<wbr>Id</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#handledeviceresult" class="tsd-kind-icon">handle<wbr>Device<wbr>Result</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#initialize" class="tsd-kind-icon">initialize</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#initializeconnection" class="tsd-kind-icon">initialize<wbr>Connection</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#initializelegacyconnection" class="tsd-kind-icon">initialize<wbr>Legacy<wbr>Connection</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#invokeinputoption" class="tsd-kind-icon">invoke<wbr>Input<wbr>Option</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#manualrefund" class="tsd-kind-icon">manual<wbr>Refund</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#notifydeviceerror" class="tsd-kind-icon">notify<wbr>Device<wbr>Error</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#notifydevicenotconnected" class="tsd-kind-icon">notify<wbr>Device<wbr>Not<wbr>Connected</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#notifyinvaliddata" class="tsd-kind-icon">notify<wbr>Invalid<wbr>Data</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#oncewehavetheaccesstoken" class="tsd-kind-icon">once<wbr>WeHave<wbr>The<wbr>Access<wbr>Token</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#opencashdrawer" class="tsd-kind-icon">open<wbr>Cash<wbr>Drawer</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#parsestuff" class="tsd-kind-icon">parse<wbr>Stuff</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#parseurl" class="tsd-kind-icon">parseURL</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#parsewindowurl" class="tsd-kind-icon">parse<wbr>WindowURL</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#preauth" class="tsd-kind-icon">pre<wbr>Auth</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#printimage" class="tsd-kind-icon">print<wbr>Image</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#printimagefromurl" class="tsd-kind-icon">print<wbr>Image<wbr>FromURL</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#printtext" class="tsd-kind-icon">print<wbr>Text</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#readcarddata" class="tsd-kind-icon">read<wbr>Card<wbr>Data</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#refundpayment" class="tsd-kind-icon">refund<wbr>Payment</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#rejectpayment" class="tsd-kind-icon">reject<wbr>Payment</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#rejectsignature" class="tsd-kind-icon">reject<wbr>Signature</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#removecloverconnectorlistener" class="tsd-kind-icon">remove<wbr>Clover<wbr>Connector<wbr>Listener</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#removedisplayorder" class="tsd-kind-icon">remove<wbr>Display<wbr>Order</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#resetdevice" class="tsd-kind-icon">reset<wbr>Device</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#retrievependingpayments" class="tsd-kind-icon">retrieve<wbr>Pending<wbr>Payments</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#sale" class="tsd-kind-icon">sale</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#showdisplayorder" class="tsd-kind-icon">show<wbr>Display<wbr>Order</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#showmessage" class="tsd-kind-icon">show<wbr>Message</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#showpaymentreceiptoptions" class="tsd-kind-icon">show<wbr>Payment<wbr>Receipt<wbr>Options</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#showthankyouscreen" class="tsd-kind-icon">show<wbr>Thank<wbr>You<wbr>Screen</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#showwelcomescreen" class="tsd-kind-icon">show<wbr>Welcome<wbr>Screen</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#tipadjustauth" class="tsd-kind-icon">tip<wbr>Adjust<wbr>Auth</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#vaultcard" class="tsd-kind-icon">vault<wbr>Card</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#voidpayment" class="tsd-kind-icon">void<wbr>Payment</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-static"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#buildmapofserialtodevice" class="tsd-kind-icon">build<wbr>Map<wbr>OfSerial<wbr>ToDevice</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#populatebaseresponse" class="tsd-kind-icon">populate<wbr>Base<wbr>Response</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#populatepaymentresponse" class="tsd-kind-icon">populate<wbr>Payment<wbr>Response</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-static"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#redirect" class="tsd-kind-icon">redirect</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Legacy<wbr>Clover<wbr>Connector<span class="tsd-signature-symbol">(</span>legacyConfiguration<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html" class="tsd-signature-type">LegacyCloverConnector</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#constructor">constructor</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnectorFactory.ts#L47">remote/client/CloverConnectorFactory.ts:47</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>legacyConfiguration: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html" class="tsd-signature-type">LegacyCloverConnector</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="broadcaster" class="tsd-anchor"></a>
+					<h3>broadcaster</h3>
+					<div class="tsd-signature tsd-kind-icon">broadcaster<span class="tsd-signature-symbol">:</span> <a href="_remote_client_cloverconnectorbroadcaster_.cloverconnectorbroadcaster.html" class="tsd-signature-type">CloverConnectorBroadcaster</a><span class="tsd-signature-symbol"> =&nbsp;new CloverConnectorBroadcaster()</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#broadcaster">broadcaster</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L42">remote/client/CloverConnector.ts:42</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="device" class="tsd-anchor"></a>
+					<h3>device</h3>
+					<div class="tsd-signature tsd-kind-icon">device<span class="tsd-signature-symbol">:</span> <a href="_remote_client_device_cloverdevice_.cloverdevice.html" class="tsd-signature-type">CloverDevice</a></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#device">device</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L33">remote/client/CloverConnector.ts:33</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="httpsupport" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> http<wbr>Support</h3>
+					<div class="tsd-signature tsd-kind-icon">http<wbr>Support<span class="tsd-signature-symbol">:</span> <a href="_util_httpsupport_.httpsupport.html" class="tsd-signature-type">HttpSupport</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnectorFactory.ts#L46">remote/client/CloverConnectorFactory.ts:46</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="imageutil" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> image<wbr>Util</h3>
+					<div class="tsd-signature tsd-kind-icon">image<wbr>Util<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_util_iimageutil_.iimageutil.html" class="tsd-signature-type">IImageUtil</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnectorFactory.ts#L47">remote/client/CloverConnectorFactory.ts:47</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="isready" class="tsd-anchor"></a>
+					<h3>is<wbr>Ready</h3>
+					<div class="tsd-signature tsd-kind-icon">is<wbr>Ready<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#isready">isReady</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L48">remote/client/CloverConnector.ts:48</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="lastrequest" class="tsd-anchor"></a>
+					<h3>last<wbr>Request</h3>
+					<div class="tsd-signature tsd-kind-icon">last<wbr>Request<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#lastrequest">lastRequest</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L51">remote/client/CloverConnector.ts:51</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="legacyconfiguration" class="tsd-anchor"></a>
+					<h3>legacy<wbr>Configuration</h3>
+					<div class="tsd-signature tsd-kind-icon">legacy<wbr>Configuration<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnectorFactory.ts#L40">remote/client/CloverConnectorFactory.ts:40</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+					<a name="logger" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> logger</h3>
+					<div class="tsd-signature tsd-kind-icon">logger<span class="tsd-signature-symbol">:</span> <a href="_remote_client_util_logger_.logger.html" class="tsd-signature-type">Logger</a><span class="tsd-signature-symbol"> =&nbsp;Logger.create()</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#logger">logger</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L30">remote/client/CloverConnector.ts:30</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="merchantinfo" class="tsd-anchor"></a>
+					<h3>merchant<wbr>Info</h3>
+					<div class="tsd-signature tsd-kind-icon">merchant<wbr>Info<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">sdk.remotepay.MerchantInfo</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#merchantinfo">merchantInfo</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L36">remote/client/CloverConnector.ts:36</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="urlparamsinfo" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> url<wbr>Params<wbr>Info</h3>
+					<div class="tsd-signature tsd-kind-icon">url<wbr>Params<wbr>Info<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;null</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnectorFactory.ts#L42">remote/client/CloverConnectorFactory.ts:42</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-index-signature">
+								<h5><span class="tsd-signature-symbol">[</span>key: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-static">
+					<a name="cancel_input_option" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> CANCEL_<wbr>INPUT_<wbr>OPTION</h3>
+					<div class="tsd-signature tsd-kind-icon">CANCEL_<wbr>INPUT_<wbr>OPTION<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">sdk.remotemessage.InputOption</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#cancel_input_option">CANCEL_INPUT_OPTION</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L24">remote/client/CloverConnector.ts:24</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="url_merchant_id_key" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> URL_<wbr>MERCHANT_<wbr>ID_<wbr>KEY</h3>
+					<div class="tsd-signature tsd-kind-icon">URL_<wbr>MERCHANT_<wbr>ID_<wbr>KEY<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;merchant_id&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnectorFactory.ts#L45">remote/client/CloverConnectorFactory.ts:45</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="_accesstokenkey" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> _access<wbr>Token<wbr>Key</h3>
+					<div class="tsd-signature tsd-kind-icon">_access<wbr>Token<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;access_token&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnectorFactory.ts#L43">remote/client/CloverConnectorFactory.ts:43</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="accesstokenkey" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> access<wbr>Token<wbr>Key</h3>
+					<div class="tsd-signature tsd-kind-icon">access<wbr>Token<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&#x27;#&#x27; + LegacyCloverConnector._accessTokenKey</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnectorFactory.ts#L44">remote/client/CloverConnectorFactory.ts:44</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="acceptpayment" class="tsd-anchor"></a>
+					<h3>accept<wbr>Payment</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">accept<wbr>Payment<span class="tsd-signature-symbol">(</span>payment<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">sdk.payments.Payment</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#acceptpayment">acceptPayment</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L292">remote/client/CloverConnector.ts:292</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>payment: <span class="tsd-signature-type">sdk.payments.Payment</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="acceptsignature" class="tsd-anchor"></a>
+					<h3>accept<wbr>Signature</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">accept<wbr>Signature<span class="tsd-signature-symbol">(</span>request<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">sdk.remotepay.VerifySignatureRequest</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#acceptsignature">acceptSignature</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L266">remote/client/CloverConnector.ts:266</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>request: <span class="tsd-signature-type">sdk.remotepay.VerifySignatureRequest</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="addcloverconnectorlistener" class="tsd-anchor"></a>
+					<h3>add<wbr>Clover<wbr>Connector<wbr>Listener</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Clover<wbr>Connector<wbr>Listener<span class="tsd-signature-symbol">(</span>connectorListener<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">sdk.remotepay.ICloverConnectorListener</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#addcloverconnectorlistener">addCloverConnectorListener</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L93">remote/client/CloverConnector.ts:93</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Add new listener to receive broadcast notifications</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>connectorListener: <span class="tsd-signature-type">sdk.remotepay.ICloverConnectorListener</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the listener to add</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="auth" class="tsd-anchor"></a>
+					<h3>auth</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">auth<span class="tsd-signature-symbol">(</span>request<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">sdk.remotepay.AuthRequest</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#auth">auth</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L320">remote/client/CloverConnector.ts:320</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>request: <span class="tsd-signature-type">sdk.remotepay.AuthRequest</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="cancel" class="tsd-anchor"></a>
+					<h3>cancel</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">cancel<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#cancel">cancel</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L629">remote/client/CloverConnector.ts:629</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="capturepreauth" class="tsd-anchor"></a>
+					<h3>capture<wbr>Pre<wbr>Auth</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">capture<wbr>Pre<wbr>Auth<span class="tsd-signature-symbol">(</span>request<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">sdk.remotepay.CapturePreAuthRequest</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#capturepreauth">capturePreAuth</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L400">remote/client/CloverConnector.ts:400</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>request: <span class="tsd-signature-type">sdk.remotepay.CapturePreAuthRequest</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="closeout" class="tsd-anchor"></a>
+					<h3>closeout</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">closeout<span class="tsd-signature-symbol">(</span>request<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">sdk.remotepay.CloseoutRequest</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#closeout">closeout</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L620">remote/client/CloverConnector.ts:620</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>request: <span class="tsd-signature-type">sdk.remotepay.CloseoutRequest</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="displaypaymentreceiptoptions" class="tsd-anchor"></a>
+					<h3>display<wbr>Payment<wbr>Receipt<wbr>Options</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">display<wbr>Payment<wbr>Receipt<wbr>Options<span class="tsd-signature-symbol">(</span>orderId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, paymentId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#displaypaymentreceiptoptions">displayPaymentReceiptOptions</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L712">remote/client/CloverConnector.ts:712</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>orderId: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>paymentId: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="dispose" class="tsd-anchor"></a>
+					<h3>dispose</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">dispose<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#dispose">dispose</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L762">remote/client/CloverConnector.ts:762</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+					<a name="generatenewconfigurationandinitialize" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> generate<wbr>New<wbr>Configuration<wbr>And<wbr>Initialize</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+						<li class="tsd-signature tsd-kind-icon">generate<wbr>New<wbr>Configuration<wbr>And<wbr>Initialize<span class="tsd-signature-symbol">(</span>rawConfiguration<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnectorFactory.ts#L68">remote/client/CloverConnectorFactory.ts:68</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Generates a WebSocketCloudCloverDeviceConfiguration with a &quot;raw&quot; configuration</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>rawConfiguration: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>a Json object that has values that can be used to construct the
+										object configuration.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="getaccesstoken" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> get<wbr>Access<wbr>Token</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Access<wbr>Token<span class="tsd-signature-symbol">(</span>configuration<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnectorFactory.ts#L263">remote/client/CloverConnectorFactory.ts:263</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get the access token, either from the configuration or from the window URL, or redirect.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>configuration: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="getdeviceid" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> get<wbr>Device<wbr>Id</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Device<wbr>Id<span class="tsd-signature-symbol">(</span>configuration<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnectorFactory.ts#L136">remote/client/CloverConnectorFactory.ts:136</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Gets the deviceId, calling the webservice to get the device list if necessary.
+										If the deviceId is not set, and the deviceSerialId is not set, then this will call
+										notify of an error. If the deviceId is not set, and the deviceSerialId is set then
+										the call to get the devices is made the result is used to build a mapping that is
+									passed to handleDeviceResult.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>configuration: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the raw configuration object</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="getmerchantid" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> get<wbr>Merchant<wbr>Id</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Merchant<wbr>Id<span class="tsd-signature-symbol">(</span>configuration<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnectorFactory.ts#L231">remote/client/CloverConnectorFactory.ts:231</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get the merchantId or redirect.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>configuration: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+					<a name="handledeviceresult" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> handle<wbr>Device<wbr>Result</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+						<li class="tsd-signature tsd-kind-icon">handle<wbr>Device<wbr>Result<span class="tsd-signature-symbol">(</span>devices<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, configuration<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnectorFactory.ts#L200">remote/client/CloverConnectorFactory.ts:200</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Uses the mapping of devices to find the correct deviceId to use in the configuration.
+									This then moves on to generateNewConfigurationAndInitialize.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>devices: <span class="tsd-signature-type">any</span></h5>
+								</li>
+								<li>
+									<h5>configuration: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="initialize" class="tsd-anchor"></a>
+					<h3>initialize</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">initialize<span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">: </span><a href="../interfaces/_remote_client_device_cloverdeviceconfiguration_.cloverdeviceconfiguration.html" class="tsd-signature-type">CloverDeviceConfiguration</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#initialize">initialize</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L71">remote/client/CloverConnector.ts:71</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Initialize the connector with a new config</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>config: <a href="../interfaces/_remote_client_device_cloverdeviceconfiguration_.cloverdeviceconfiguration.html" class="tsd-signature-type">CloverDeviceConfiguration</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the configuration for the connector</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+					<a name="initializeconnection" class="tsd-anchor"></a>
+					<h3>initialize<wbr>Connection</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">initialize<wbr>Connection<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#initializeconnection">initializeConnection</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnectorFactory.ts#L57">remote/client/CloverConnectorFactory.ts:57</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+					<a name="initializelegacyconnection" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> initialize<wbr>Legacy<wbr>Connection</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+						<li class="tsd-signature tsd-kind-icon">initialize<wbr>Legacy<wbr>Connection<span class="tsd-signature-symbol">(</span>configuration<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnectorFactory.ts#L91">remote/client/CloverConnectorFactory.ts:91</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Checks for a oauth token, does a redirect based on the configuration domain and
+									clientid if necessary, then moves on to #onceWeHaveTheAccessToken(...)</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>configuration: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the raw configuration object</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="invokeinputoption" class="tsd-anchor"></a>
+					<h3>invoke<wbr>Input<wbr>Option</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">invoke<wbr>Input<wbr>Option<span class="tsd-signature-symbol">(</span>io<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">sdk.remotemessage.InputOption</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#invokeinputoption">invokeInputOption</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L769">remote/client/CloverConnector.ts:769</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>io: <span class="tsd-signature-type">sdk.remotemessage.InputOption</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="manualrefund" class="tsd-anchor"></a>
+					<h3>manual<wbr>Refund</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">manual<wbr>Refund<span class="tsd-signature-symbol">(</span>request<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">sdk.remotepay.ManualRefundRequest</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#manualrefund">manualRefund</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L540">remote/client/CloverConnector.ts:540</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>request: <span class="tsd-signature-type">sdk.remotepay.ManualRefundRequest</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="notifydeviceerror" class="tsd-anchor"></a>
+					<h3>notify<wbr>Device<wbr>Error</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">notify<wbr>Device<wbr>Error<span class="tsd-signature-symbol">(</span>errorType<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">sdk.remotepay.ErrorType</span>, errorCode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">sdk.remotepay.DeviceErrorEventCode</span>, message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#notifydeviceerror">notifyDeviceError</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L258">remote/client/CloverConnector.ts:258</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>errorType: <span class="tsd-signature-type">sdk.remotepay.ErrorType</span></h5>
+								</li>
+								<li>
+									<h5>errorCode: <span class="tsd-signature-type">sdk.remotepay.DeviceErrorEventCode</span></h5>
+								</li>
+								<li>
+									<h5>message: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="notifydevicenotconnected" class="tsd-anchor"></a>
+					<h3>notify<wbr>Device<wbr>Not<wbr>Connected</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">notify<wbr>Device<wbr>Not<wbr>Connected<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#notifydevicenotconnected">notifyDeviceNotConnected</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L246">remote/client/CloverConnector.ts:246</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>message: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="notifyinvaliddata" class="tsd-anchor"></a>
+					<h3>notify<wbr>Invalid<wbr>Data</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">notify<wbr>Invalid<wbr>Data<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#notifyinvaliddata">notifyInvalidData</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L252">remote/client/CloverConnector.ts:252</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>message: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="oncewehavetheaccesstoken" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> once<wbr>WeHave<wbr>The<wbr>Access<wbr>Token</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">once<wbr>WeHave<wbr>The<wbr>Access<wbr>Token<span class="tsd-signature-symbol">(</span>configuration<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnectorFactory.ts#L116">remote/client/CloverConnectorFactory.ts:116</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Gets the merchantId, redirecting if necessary, then moves on to #getDeviceId(...)</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>configuration: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the raw configuration object</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="opencashdrawer" class="tsd-anchor"></a>
+					<h3>open<wbr>Cash<wbr>Drawer</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">open<wbr>Cash<wbr>Drawer<span class="tsd-signature-symbol">(</span>reason<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#opencashdrawer">openCashDrawer</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L727">remote/client/CloverConnector.ts:727</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>reason: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="parsestuff" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> parse<wbr>Stuff</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">parse<wbr>Stuff<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnectorFactory.ts#L299">remote/client/CloverConnectorFactory.ts:299</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>params: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="parseurl" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> parseURL</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">parseURL<span class="tsd-signature-symbol">(</span>windowLocationObject<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Location</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnectorFactory.ts#L289">remote/client/CloverConnectorFactory.ts:289</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>windowLocationObject: <span class="tsd-signature-type">Location</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="parsewindowurl" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> parse<wbr>WindowURL</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">parse<wbr>WindowURL<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnectorFactory.ts#L283">remote/client/CloverConnectorFactory.ts:283</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="preauth" class="tsd-anchor"></a>
+					<h3>pre<wbr>Auth</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">pre<wbr>Auth<span class="tsd-signature-symbol">(</span>request<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">sdk.remotepay.PreAuthRequest</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#preauth">preAuth</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L356">remote/client/CloverConnector.ts:356</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>request: <span class="tsd-signature-type">sdk.remotepay.PreAuthRequest</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="printimage" class="tsd-anchor"></a>
+					<h3>print<wbr>Image</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">print<wbr>Image<span class="tsd-signature-symbol">(</span>bitmap<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">HTMLImageElement</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#printimage">printImage</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L648">remote/client/CloverConnector.ts:648</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>bitmap: <span class="tsd-signature-type">HTMLImageElement</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="printimagefromurl" class="tsd-anchor"></a>
+					<h3>print<wbr>Image<wbr>FromURL</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">print<wbr>Image<wbr>FromURL<span class="tsd-signature-symbol">(</span>url<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#printimagefromurl">printImageFromURL</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L660">remote/client/CloverConnector.ts:660</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>url: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="printtext" class="tsd-anchor"></a>
+					<h3>print<wbr>Text</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">print<wbr>Text<span class="tsd-signature-symbol">(</span>messages<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#printtext">printText</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L638">remote/client/CloverConnector.ts:638</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>messages: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="readcarddata" class="tsd-anchor"></a>
+					<h3>read<wbr>Card<wbr>Data</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">read<wbr>Card<wbr>Data<span class="tsd-signature-symbol">(</span>request<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">sdk.remotepay.ReadCardDataRequest</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#readcarddata">readCardData</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L601">remote/client/CloverConnector.ts:601</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>request: <span class="tsd-signature-type">sdk.remotepay.ReadCardDataRequest</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="refundpayment" class="tsd-anchor"></a>
+					<h3>refund<wbr>Payment</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">refund<wbr>Payment<span class="tsd-signature-symbol">(</span>request<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">sdk.remotepay.RefundPaymentRequest</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#refundpayment">refundPayment</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L498">remote/client/CloverConnector.ts:498</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>request: <span class="tsd-signature-type">sdk.remotepay.RefundPaymentRequest</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="rejectpayment" class="tsd-anchor"></a>
+					<h3>reject<wbr>Payment</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">reject<wbr>Payment<span class="tsd-signature-symbol">(</span>payment<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">sdk.payments.Payment</span>, challenge<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">sdk.base.Challenge</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#rejectpayment">rejectPayment</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L305">remote/client/CloverConnector.ts:305</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>payment: <span class="tsd-signature-type">sdk.payments.Payment</span></h5>
+								</li>
+								<li>
+									<h5>challenge: <span class="tsd-signature-type">sdk.base.Challenge</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="rejectsignature" class="tsd-anchor"></a>
+					<h3>reject<wbr>Signature</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">reject<wbr>Signature<span class="tsd-signature-symbol">(</span>request<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">sdk.remotepay.VerifySignatureRequest</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#rejectsignature">rejectSignature</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L279">remote/client/CloverConnector.ts:279</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>request: <span class="tsd-signature-type">sdk.remotepay.VerifySignatureRequest</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="removecloverconnectorlistener" class="tsd-anchor"></a>
+					<h3>remove<wbr>Clover<wbr>Connector<wbr>Listener</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Clover<wbr>Connector<wbr>Listener<span class="tsd-signature-symbol">(</span>connectorListener<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">sdk.remotepay.ICloverConnectorListener</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#removecloverconnectorlistener">removeCloverConnectorListener</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L102">remote/client/CloverConnector.ts:102</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Remove a listener</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>connectorListener: <span class="tsd-signature-type">sdk.remotepay.ICloverConnectorListener</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the listener to remove</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="removedisplayorder" class="tsd-anchor"></a>
+					<h3>remove<wbr>Display<wbr>Order</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Display<wbr>Order<span class="tsd-signature-symbol">(</span>order<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">sdk.order.DisplayOrder</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#removedisplayorder">removeDisplayOrder</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L748">remote/client/CloverConnector.ts:748</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>order: <span class="tsd-signature-type">sdk.order.DisplayOrder</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="resetdevice" class="tsd-anchor"></a>
+					<h3>reset<wbr>Device</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">reset<wbr>Device<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#resetdevice">resetDevice</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L778">remote/client/CloverConnector.ts:778</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="retrievependingpayments" class="tsd-anchor"></a>
+					<h3>retrieve<wbr>Pending<wbr>Payments</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">retrieve<wbr>Pending<wbr>Payments<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#retrievependingpayments">retrievePendingPayments</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L592">remote/client/CloverConnector.ts:592</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="sale" class="tsd-anchor"></a>
+					<h3>sale</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">sale<span class="tsd-signature-symbol">(</span>request<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">sdk.remotepay.SaleRequest</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#sale">sale</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L109">remote/client/CloverConnector.ts:109</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>request: <span class="tsd-signature-type">sdk.remotepay.SaleRequest</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="showdisplayorder" class="tsd-anchor"></a>
+					<h3>show<wbr>Display<wbr>Order</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">show<wbr>Display<wbr>Order<span class="tsd-signature-symbol">(</span>order<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">sdk.order.DisplayOrder</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#showdisplayorder">showDisplayOrder</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L736">remote/client/CloverConnector.ts:736</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>order: <span class="tsd-signature-type">sdk.order.DisplayOrder</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="showmessage" class="tsd-anchor"></a>
+					<h3>show<wbr>Message</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">show<wbr>Message<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#showmessage">showMessage</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L672">remote/client/CloverConnector.ts:672</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>message: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="showpaymentreceiptoptions" class="tsd-anchor"></a>
+					<h3>show<wbr>Payment<wbr>Receipt<wbr>Options</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">show<wbr>Payment<wbr>Receipt<wbr>Options<span class="tsd-signature-symbol">(</span>orderId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, paymentId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#showpaymentreceiptoptions">showPaymentReceiptOptions</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L708">remote/client/CloverConnector.ts:708</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Incompatibility between sdks!  Old cloud had this.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>deprecated</dt>
+									<dd></dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>orderId: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>paymentId: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="showthankyouscreen" class="tsd-anchor"></a>
+					<h3>show<wbr>Thank<wbr>You<wbr>Screen</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">show<wbr>Thank<wbr>You<wbr>Screen<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#showthankyouscreen">showThankYouScreen</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L692">remote/client/CloverConnector.ts:692</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="showwelcomescreen" class="tsd-anchor"></a>
+					<h3>show<wbr>Welcome<wbr>Screen</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">show<wbr>Welcome<wbr>Screen<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#showwelcomescreen">showWelcomeScreen</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L684">remote/client/CloverConnector.ts:684</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="tipadjustauth" class="tsd-anchor"></a>
+					<h3>tip<wbr>Adjust<wbr>Auth</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">tip<wbr>Adjust<wbr>Auth<span class="tsd-signature-symbol">(</span>request<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">sdk.remotepay.TipAdjustAuthRequest</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#tipadjustauth">tipAdjustAuth</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L443">remote/client/CloverConnector.ts:443</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>request: <span class="tsd-signature-type">sdk.remotepay.TipAdjustAuthRequest</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="vaultcard" class="tsd-anchor"></a>
+					<h3>vault<wbr>Card</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">vault<wbr>Card<span class="tsd-signature-symbol">(</span>cardEntryMethods<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#vaultcard">vaultCard</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L464">remote/client/CloverConnector.ts:464</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>cardEntryMethods: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="voidpayment" class="tsd-anchor"></a>
+					<h3>void<wbr>Payment</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">void<wbr>Payment<span class="tsd-signature-symbol">(</span>request<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">sdk.remotepay.VoidPaymentRequest</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#voidpayment">voidPayment</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L476">remote/client/CloverConnector.ts:476</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>request: <span class="tsd-signature-type">sdk.remotepay.VoidPaymentRequest</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-static">
+					<a name="buildmapofserialtodevice" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagProtected">Protected</span> build<wbr>Map<wbr>OfSerial<wbr>ToDevice</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">build<wbr>Map<wbr>OfSerial<wbr>ToDevice<span class="tsd-signature-symbol">(</span>devicesVX<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnectorFactory.ts#L171">remote/client/CloverConnectorFactory.ts:171</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Builds a mapping of the passed set of devices, from the device serial number to the device.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>devicesVX: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<p>the mapping from the device serial number to the device</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static">
+					<a name="populatebaseresponse" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> populate<wbr>Base<wbr>Response</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">populate<wbr>Base<wbr>Response<span class="tsd-signature-symbol">(</span>response<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">sdk.remotepay.BaseResponse</span>, success<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span>, result<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">sdk.remotepay.ResponseCode</span>, reason<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, message<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#populatebaseresponse">populateBaseResponse</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L791">remote/client/CloverConnector.ts:791</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>response: <span class="tsd-signature-type">sdk.remotepay.BaseResponse</span></h5>
+								</li>
+								<li>
+									<h5>success: <span class="tsd-signature-type">boolean</span></h5>
+								</li>
+								<li>
+									<h5>result: <span class="tsd-signature-type">sdk.remotepay.ResponseCode</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> reason: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> message: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static">
+					<a name="populatepaymentresponse" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> populate<wbr>Payment<wbr>Response</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">populate<wbr>Payment<wbr>Response<span class="tsd-signature-symbol">(</span>response<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">sdk.remotepay.PaymentResponse</span>, success<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span>, result<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">sdk.remotepay.ResponseCode</span>, payment<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">sdk.payments.Payment</span>, signature<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">sdk.base.Signature</span>, reason<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, message<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_remote_client_cloverconnector_.cloverconnector.html">CloverConnector</a>.<a href="_remote_client_cloverconnector_.cloverconnector.html#populatepaymentresponse">populatePaymentResponse</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnector.ts#L802">remote/client/CloverConnector.ts:802</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>response: <span class="tsd-signature-type">sdk.remotepay.PaymentResponse</span></h5>
+								</li>
+								<li>
+									<h5>success: <span class="tsd-signature-type">boolean</span></h5>
+								</li>
+								<li>
+									<h5>result: <span class="tsd-signature-type">sdk.remotepay.ResponseCode</span></h5>
+								</li>
+								<li>
+									<h5>payment: <span class="tsd-signature-type">sdk.payments.Payment</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> signature: <span class="tsd-signature-type">sdk.base.Signature</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> reason: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> message: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-static">
+					<a name="redirect" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagPrivate">Private</span> redirect</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">redirect<span class="tsd-signature-symbol">(</span>configuration<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/52c20f0/src/com/clover/remote/client/CloverConnectorFactory.ts#L277">remote/client/CloverConnectorFactory.ts:277</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>configuration: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+					<li class="current tsd-kind-external-module">
+						<a href="../modules/_remote_client_cloverconnectorfactory_.html">"remote/client/<wbr>Clover<wbr>Connector<wbr>Factory"</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+						<a href="_remote_client_cloverconnectorfactory_.cloverconnectorfactory.html" class="tsd-kind-icon">Clover<wbr>Connector<wbr>Factory</a>
+					</li>
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class tsd-parent-kind-external-module">
+						<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html" class="tsd-kind-icon">Legacy<wbr>Clover<wbr>Connector</a>
+						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#broadcaster" class="tsd-kind-icon">broadcaster</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#device" class="tsd-kind-icon">device</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#httpsupport" class="tsd-kind-icon">http<wbr>Support</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#imageutil" class="tsd-kind-icon">image<wbr>Util</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#isready" class="tsd-kind-icon">is<wbr>Ready</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#lastrequest" class="tsd-kind-icon">last<wbr>Request</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#legacyconfiguration" class="tsd-kind-icon">legacy<wbr>Configuration</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#logger" class="tsd-kind-icon">logger</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#merchantinfo" class="tsd-kind-icon">merchant<wbr>Info</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#urlparamsinfo" class="tsd-kind-icon">url<wbr>Params<wbr>Info</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-static">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#cancel_input_option" class="tsd-kind-icon">CANCEL_<wbr>INPUT_<wbr>OPTION</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#url_merchant_id_key" class="tsd-kind-icon">URL_<wbr>MERCHANT_<wbr>ID_<wbr>KEY</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#_accesstokenkey" class="tsd-kind-icon">_access<wbr>Token<wbr>Key</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#accesstokenkey" class="tsd-kind-icon">access<wbr>Token<wbr>Key</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#acceptpayment" class="tsd-kind-icon">accept<wbr>Payment</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#acceptsignature" class="tsd-kind-icon">accept<wbr>Signature</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#addcloverconnectorlistener" class="tsd-kind-icon">add<wbr>Clover<wbr>Connector<wbr>Listener</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#auth" class="tsd-kind-icon">auth</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#cancel" class="tsd-kind-icon">cancel</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#capturepreauth" class="tsd-kind-icon">capture<wbr>Pre<wbr>Auth</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#closeout" class="tsd-kind-icon">closeout</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#displaypaymentreceiptoptions" class="tsd-kind-icon">display<wbr>Payment<wbr>Receipt<wbr>Options</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#dispose" class="tsd-kind-icon">dispose</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#generatenewconfigurationandinitialize" class="tsd-kind-icon">generate<wbr>New<wbr>Configuration<wbr>And<wbr>Initialize</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#getaccesstoken" class="tsd-kind-icon">get<wbr>Access<wbr>Token</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#getdeviceid" class="tsd-kind-icon">get<wbr>Device<wbr>Id</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#getmerchantid" class="tsd-kind-icon">get<wbr>Merchant<wbr>Id</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#handledeviceresult" class="tsd-kind-icon">handle<wbr>Device<wbr>Result</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#initialize" class="tsd-kind-icon">initialize</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#initializeconnection" class="tsd-kind-icon">initialize<wbr>Connection</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#initializelegacyconnection" class="tsd-kind-icon">initialize<wbr>Legacy<wbr>Connection</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#invokeinputoption" class="tsd-kind-icon">invoke<wbr>Input<wbr>Option</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#manualrefund" class="tsd-kind-icon">manual<wbr>Refund</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#notifydeviceerror" class="tsd-kind-icon">notify<wbr>Device<wbr>Error</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#notifydevicenotconnected" class="tsd-kind-icon">notify<wbr>Device<wbr>Not<wbr>Connected</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#notifyinvaliddata" class="tsd-kind-icon">notify<wbr>Invalid<wbr>Data</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#oncewehavetheaccesstoken" class="tsd-kind-icon">once<wbr>WeHave<wbr>The<wbr>Access<wbr>Token</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#opencashdrawer" class="tsd-kind-icon">open<wbr>Cash<wbr>Drawer</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#parsestuff" class="tsd-kind-icon">parse<wbr>Stuff</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#parseurl" class="tsd-kind-icon">parseURL</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#parsewindowurl" class="tsd-kind-icon">parse<wbr>WindowURL</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#preauth" class="tsd-kind-icon">pre<wbr>Auth</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#printimage" class="tsd-kind-icon">print<wbr>Image</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#printimagefromurl" class="tsd-kind-icon">print<wbr>Image<wbr>FromURL</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#printtext" class="tsd-kind-icon">print<wbr>Text</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#readcarddata" class="tsd-kind-icon">read<wbr>Card<wbr>Data</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#refundpayment" class="tsd-kind-icon">refund<wbr>Payment</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#rejectpayment" class="tsd-kind-icon">reject<wbr>Payment</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#rejectsignature" class="tsd-kind-icon">reject<wbr>Signature</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#removecloverconnectorlistener" class="tsd-kind-icon">remove<wbr>Clover<wbr>Connector<wbr>Listener</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#removedisplayorder" class="tsd-kind-icon">remove<wbr>Display<wbr>Order</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#resetdevice" class="tsd-kind-icon">reset<wbr>Device</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#retrievependingpayments" class="tsd-kind-icon">retrieve<wbr>Pending<wbr>Payments</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#sale" class="tsd-kind-icon">sale</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#showdisplayorder" class="tsd-kind-icon">show<wbr>Display<wbr>Order</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#showmessage" class="tsd-kind-icon">show<wbr>Message</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#showpaymentreceiptoptions" class="tsd-kind-icon">show<wbr>Payment<wbr>Receipt<wbr>Options</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#showthankyouscreen" class="tsd-kind-icon">show<wbr>Thank<wbr>You<wbr>Screen</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#showwelcomescreen" class="tsd-kind-icon">show<wbr>Welcome<wbr>Screen</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#tipadjustauth" class="tsd-kind-icon">tip<wbr>Adjust<wbr>Auth</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#vaultcard" class="tsd-kind-icon">vault<wbr>Card</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#voidpayment" class="tsd-kind-icon">void<wbr>Payment</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-static">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#buildmapofserialtodevice" class="tsd-kind-icon">build<wbr>Map<wbr>OfSerial<wbr>ToDevice</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#populatebaseresponse" class="tsd-kind-icon">populate<wbr>Base<wbr>Response</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#populatepaymentresponse" class="tsd-kind-icon">populate<wbr>Payment<wbr>Response</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-static">
+								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html#redirect" class="tsd-kind-icon">redirect</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
