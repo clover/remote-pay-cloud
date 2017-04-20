@@ -159,6 +159,9 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
                 case sdk.remotemessage.Method.CARD_DATA_RESPONSE:
                     this.notifyObserversReadCardData(sdkMessage);
                     break;
+                case ACTIVITY_RESPONSE:
+                    this.notifyObserversActivityResponse(sdkMessage);
+                    break;
                 case sdk.remotemessage.Method.DISCOVERY_REQUEST:
                     //Outbound no-op
                     break;
@@ -369,6 +372,15 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         // go ahead and notify listeners of the ACK
         this.deviceObservers.forEach((obs) => {
             obs.onMessageAck(ackMessage.sourceMessageId);
+        });
+    }
+
+    private notifyObserversActivityResponse(arm: sdk.remotemessage.ActivityResponseMessage): void {
+        this.deviceObservers.forEach((obs) => {
+            let status:sdk.remotemessage.ResultStatus = arm.resultCode == -1 ?
+                sdk.remotemessage.ResultStatus.SUCCESS :
+                sdk.remotemessage.ResultStatus.CANCEL;
+            obs.onActivityResponse(status, arm.action, arm.payload, arm.failReason);
         });
     }
 
@@ -721,7 +733,16 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         this.sendObjectMessage(message);
     }
 
-	/**
+    public doStartActivity(action:string, payload:string, nonBlocking:boolean):void {
+        let request:sdk.remotemessage.ActivityRequest = new sdk.remotemessage.ActivityRequest();
+        request.setAcyion(action);
+        request.setPayload(payload);
+        request.setNonBlocking(nonBlocking);
+        request.setForceLaunch(false);
+        this.sendObjectMessage(ar);
+    }
+
+    /**
 	 * Void Payment
 	 * 
 	 * @param {sdk.payments.Payment} payment

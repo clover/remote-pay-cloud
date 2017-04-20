@@ -229,6 +229,11 @@ export abstract class CloverDevice {
 	public abstract doReadCardData(payment: sdk.remotemessage.PayIntent): void;
 
 	/**
+	 * Start a custom Activity
+	 */
+	public abstract doStartActivity(action:string, payload:string, nonBlocking:boolean): void;
+
+	/**
 	 * Supports Acknowledgements
 	 * 
 	 * @param {boolean} supportsAck

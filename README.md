@@ -150,7 +150,7 @@ Examples of configurations that can be used when creating the Clover Connector o
 }
 ```
 
-##### Define a listener that will listen for events produced byt the Clover Connector.
+##### Define a listener that will listen for events produced by the Clover Connector.
 The functions implemented will be called as the connector encounters the events.  These functions can be found in the clover.remotepay.ICloverConnectorListener. 
 ```
 // This overrides/implements the constructor function.  This example
