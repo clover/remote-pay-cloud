@@ -222,16 +222,42 @@ export abstract class CloverDevice {
 	public abstract doRetrievePendingPayments(): void;
 
 	/**
-	 * Read Cart Data
+	 * Read Card Data
 	 * 
 	 * @param {sdk.remotemessage.PayIntent} payment
 	 */
 	public abstract doReadCardData(payment: sdk.remotemessage.PayIntent): void;
 
 	/**
-	 * Start a custom Activity
+	 * Send a message to a running custom activity
+	 *
+	 * @param {string} actionId - the id used when the custom action was started
+	 * @param {string} payload - the message content, unrestricted format
 	 */
+	public abstract doSendMessageToActivity(actionId:string, payload:string): void;
+
+	/**
+	 * Start a custom Activity
+	 *
+	 * @param action - the id to use when starting the activity
+	 * @param payload - information to pass to the activity when it is started
+	 * @param nonBlocking - if true, the activity may be finished externally
+     */
 	public abstract doStartActivity(action:string, payload:string, nonBlocking:boolean): void;
+
+	/**
+	 * Get the status of the device.
+	 *
+	 * @param {sdk.remotepay.RetrieveDeviceStatusRequest} request - the status request
+     */
+	public abstract doRetrieveDeviceStatus(request: sdk.remotepay.RetrieveDeviceStatusRequest): void;
+
+	/**
+	 * Get a payment that was taken on this device in the last 24 hours.
+	 *
+	 * @param {string} externalPaymentId
+     */
+	public abstract doGetPayment(externalPaymentId: string): void;
 
 	/**
 	 * Supports Acknowledgements
