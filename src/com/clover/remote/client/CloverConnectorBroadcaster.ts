@@ -414,11 +414,11 @@ export class CloverConnectorBroadcaster
 		});
 	}
 
-	public notifyOnGetPaymentResponse(response: sdk.remotepay.GetPaymentResponse): void {
-		this.logger.debug('Sending GetPaymentResponse notification to listeners');
+	public notifyOnRetrievePaymentResponse(response: sdk.remotepay.RetrievePaymentResponse): void {
+		this.logger.debug('Sending RetrievePaymentResponse notification to listeners');
 		this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
 			try {
-				listener.onGetPaymentResponse(response);
+				listener.onRetrievePaymentResponse(response);
 			}
 			catch(e) {
 				this.logger.error(e);

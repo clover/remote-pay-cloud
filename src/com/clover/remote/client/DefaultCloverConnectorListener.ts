@@ -125,6 +125,6 @@ export abstract class DefaultCloverConnectorListener implements sdk.remotepay.IC
     public onResetDeviceResponse(response:sdk.remotepay.ResetDeviceResponse):void {
     }
 
-    public onGetPaymentResponse(response:sdk.remotepay.GetPaymentResponse):void {
+    public onRetrievePaymentResponse(response:sdk.remotepay.RetrievePaymentResponse):void {
     }
 }

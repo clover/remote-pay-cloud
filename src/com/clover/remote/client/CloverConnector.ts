@@ -628,16 +628,16 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 		}
 	}
 
-	public getPayment(request: sdk.remotepay.GetPaymentRequest): void {
+	public retrievePayment(request: sdk.remotepay.RetrievePaymentRequest): void {
 		if (!this.device || !this.isReady) {
-			this.notifyDeviceNotConnected("In getPayment");
+			this.notifyDeviceNotConnected("In retrievePayment");
 		} else if (request == null) {
-			this.notifyInvalidData("In getPayment: Invalid argument. Null is not allowed.");
+			this.notifyInvalidData("In retrievePayment: Invalid argument. Null is not allowed.");
 		} else if (!request.getExternalPaymentId()) {
-			this.notifyInvalidData("In getPayment: GetPaymentRequest - The externalPaymentId is null.  It must be set.");
+			this.notifyInvalidData("In retrievePayment: RetrievePaymentRequest - The externalPaymentId is null.  It must be set.");
 		}
 		else {
-			this.device.doGetPayment(request.getExternalPaymentId());
+			this.device.doRetrievePayment(request.getExternalPaymentId());
 		}
 	}
 
@@ -1249,7 +1249,7 @@ export namespace CloverConnector {
 			this.cloverConnector.device.setSupportsAcks(merchantInfo.deviceInfo.getSupportsAcks());
 
 			if (drm.ready) {
-				this.cloverConnector.device.doShowWelcomeScreen();
+				// this.cloverConnector.device.doShowWelcomeScreen(); SEMI-889
 				this.cloverConnector.broadcaster.notifyOnReady(merchantInfo);
 			}
 			else {
@@ -1373,16 +1373,16 @@ export namespace CloverConnector {
 			this.cloverConnector.broadcaster.notifyOnResetDeviceResponse(response);
 		}
 
-		public onGetPaymentResponse(result:sdk.remotepay.ResponseCode, reason: string, externalPaymentId: string, queryStatus:sdk.remotemessage.QueryStatus, payment:sdk.payments.Payment): void {
+		public onRetrievePaymentResponse(result:sdk.remotepay.ResponseCode, reason: string, externalPaymentId: string, queryStatus:sdk.remotemessage.QueryStatus, payment:sdk.payments.Payment): void {
 			let success: boolean = (status == sdk.remotepay.ResponseCode.SUCCESS);
 
-			let response:sdk.remotepay.GetPaymentResponse  = new sdk.remotepay.GetPaymentResponse();
+			let response:sdk.remotepay.RetrievePaymentResponse  = new sdk.remotepay.RetrievePaymentResponse();
 			CloverConnector.populateBaseResponse(response, success, result,
 				reason);
 			response.setExternalPaymentId(externalPaymentId);
 			response.setQueryStatus(queryStatus);
 			response.setPayment(payment);
-			this.cloverConnector.broadcaster.notifyOnResetDeviceResponse(response);
+			this.cloverConnector.broadcaster.notifyOnRetrievePaymentResponse(response);
 		}
 	}
 

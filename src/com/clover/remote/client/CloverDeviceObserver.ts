@@ -317,5 +317,5 @@ export interface CloverDeviceObserver {
 	 * @param reason
 	 * @param payment
      */
-	 onGetPaymentResponse(result:sdk.remotepay.ResponseCode, reason: string, externalPaymentId: string, queryStatus:sdk.remotemessage.QueryStatus, payment:sdk.payments.Payment): void;
+	 onRetrievePaymentResponse(result:sdk.remotepay.ResponseCode, reason: string, externalPaymentId: string, queryStatus:sdk.remotemessage.QueryStatus, payment:sdk.payments.Payment): void;
 }

@@ -257,7 +257,7 @@ export abstract class CloverDevice {
 	 *
 	 * @param {string} externalPaymentId
      */
-	public abstract doGetPayment(externalPaymentId: string): void;
+	public abstract doRetrievePayment(externalPaymentId: string): void;
 
 	/**
 	 * Supports Acknowledgements

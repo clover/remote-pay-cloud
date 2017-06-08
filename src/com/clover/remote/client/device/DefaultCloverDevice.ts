@@ -84,7 +84,9 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         }
         else {
             var sdkMessage: sdk.remotemessage.Message = this.messageParser.parseMessageFromRemoteMessageObj(rMessage);
-
+            if (sdkMessage == null) {
+                this.logger.error('Error parsing message: ' + JSON.stringify(rMessage));
+            }
             switch(method) {
                 case sdk.remotemessage.Method.BREAK:
                     break;
@@ -163,7 +165,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
                     this.notifyObserverActivityMessage(sdkMessage);
                     break;
                 case sdk.remotemessage.Method.GET_PAYMENT_RESPONSE:
-                    this.notifyObserversGetPaymentResponse(sdkMessage);
+                    this.notifyObserversRetrievePaymentResponse(sdkMessage);
                     break;
                 case sdk.remotemessage.Method.DISCOVERY_REQUEST:
                     //Outbound no-op
@@ -416,19 +418,19 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
 
     private notifyObserversRetrieveDeviceStatusResponse(message: sdk.remotemessage.RetrieveDeviceStatusResponseMessage): void {
         this.deviceObservers.forEach((obs) => {
-            obs.onDeviceStatusResponse(ResultCode.SUCCESS, message.reason, message.state, message.data);
+            obs.onDeviceStatusResponse(sdk.remotepay.ResponseCode.SUCCESS, message.reason, message.state, message.data);
         });
     }
 
-    private notifyObserversGetPaymentResponse(message: sdk.remotemessage.GetPaymentResponseMessage): void {
+    private notifyObserversRetrievePaymentResponse(message: sdk.remotemessage.RetrievePaymentResponseMessage): void {
         this.deviceObservers.forEach((obs) => {
-            obs.onGetPaymentResponse(ResultCode.SUCCESS, message.reason, message.externalPaymentId, message.queryStatus, message.payment);
+            obs.onRetrievePaymentResponse(sdk.remotepay.ResponseCode.SUCCESS, message.reason, message.externalPaymentId, message.queryStatus, message.payment);
         });
     }
 
     private notifyObserversResetDeviceResponse(message: sdk.remotemessage.ResetDeviceResponseMessage): void {
         this.deviceObservers.forEach((obs) => {
-            obs.onResetDeviceResponse(ResultCode.SUCCESS, message.reason, message.state);
+            obs.onResetDeviceResponse(sdk.remotepay.ResponseCode.SUCCESS, message.reason, message.state);
         });
     }
 
@@ -739,7 +741,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         let message:sdk.remotemessage.ActivityMessageToActivity = new sdk.remotemessage.ActivityMessageToActivity();
         message.setAction(actionId);
         message.setPayload(payload);
-        this.sendObjectMessage(msg);
+        this.sendObjectMessage(message);
     }
 
     /**
@@ -935,8 +937,8 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         this.sendObjectMessage(message);
     }
 
-    public doGetPayment(externalPaymentId: string): void {
-        let message: sdk.remotemessage.GetPaymentRequestMessage = new sdk.remotemessage.GetPaymentRequestMessage();
+    public doRetrievePayment(externalPaymentId: string): void {
+        let message: sdk.remotemessage.RetrievePaymentRequestMessage = new sdk.remotemessage.RetrievePaymentRequestMessage();
         message.setExternalPaymentId(externalPaymentId);
         this.sendObjectMessage(message);
     }
