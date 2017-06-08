@@ -387,6 +387,8 @@ API documentation is generated when `npm install` is run.
 
 # Release Notes
 
+SEMI-777 Addition of custom activity support.
+
 ## Version 1.2.0
 ## Version 1.2.0-rc1.1
 
