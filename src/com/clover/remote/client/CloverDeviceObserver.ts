@@ -262,4 +262,60 @@ export interface CloverDeviceObserver {
 	 * @param {CardData} cardData 
 	 */
 	onReadCardResponse(status: sdk.remotemessage.ResultStatus, reason: string, cardData: sdk.base.CardData): void;
+
+	/**
+	 * The result of an activity
+	 *
+	 * @param status
+	 * @param action
+	 * @param payload
+     * @param reason
+     */
+	onActivityResponse(status:sdk.remotemessage.ResultStatus, action:string, payload:string, reason:string): void;
+
+	/**
+	 * A message sent to the sdk from a running custom activity
+	 *
+	 * @param actionId
+	 * @param payload
+     */
+	onMessageFromActivity(actionId: string, payload: string): void;
+
+	/**
+	 * The result of a custom activity (after it has finished)
+	 *
+	 * @param status
+	 * @param payload
+	 * @param failReason
+	 * @param actionId
+     */
+	onActivityResponse(status:sdk.remotemessage.ResultStatus, payload: string, failReason: string, actionId: string): void;
+
+	/**
+	 * The result of a request for device status
+	 *
+	 * @param result
+	 * @param reason
+	 * @param state
+     * @param data
+     */
+	onDeviceStatusResponse(result:sdk.remotepay.ResponseCode, reason: string, state:sdk.remotemessage.ExternalDeviceState, data:sdk.remotemessage.ExternalDeviceStateData): void;
+
+	/**
+	 * The result of a request for the device to reset
+	 *
+	 * @param result
+	 * @param reason
+	 * @param state
+     */
+	onResetDeviceResponse(result:sdk.remotepay.ResponseCode, reason: string, state:sdk.remotemessage.ExternalDeviceState): void;
+
+	/**
+	 * The result of a request to get a single payment.
+	 *
+	 * @param result
+	 * @param reason
+	 * @param payment
+     */
+	 onRetrievePaymentResponse(result:sdk.remotepay.ResponseCode, reason: string, externalPaymentId: string, queryStatus:sdk.remotemessage.QueryStatus, payment:sdk.payments.Payment): void;
 }
