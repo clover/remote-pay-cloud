@@ -387,6 +387,7 @@ API documentation is generated when `npm install` is run.
 
 # Release Notes
 
+SEMI-795 Addition of retrievePayment functionality.
 SEMI-777 Addition of custom activity support.
 
 ## Version 1.2.0
