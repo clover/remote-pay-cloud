@@ -164,9 +164,6 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
                 case sdk.remotemessage.Method.ACTIVITY_MESSAGE_FROM_ACTIVITY:
                     this.notifyObserverActivityMessage(sdkMessage);
                     break;
-                case sdk.remotemessage.Method.GET_PAYMENT_RESPONSE:
-                    this.notifyObserversRetrievePaymentResponse(sdkMessage);
-                    break;
                 case sdk.remotemessage.Method.DISCOVERY_REQUEST:
                     //Outbound no-op
                     break;
@@ -218,6 +215,9 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
                 case sdk.remotemessage.Method.RESET_DEVICE_RESPONSE:
                     this.notifyObserversResetDeviceResponse(sdkMessage);
                     break;
+                case sdk.remotemessage.Method.RETRIEVE_PAYMENT_RESPONSE:
+                    this.notifyObserversRetrievePaymentResponse(sdkMessage);
+                    break;
                 case sdk.remotemessage.Method.SHOW_ORDER_SCREEN:
                     //Outbound no-op
                     break;
@@ -266,7 +266,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
                 case sdk.remotemessage.Method.ACTIVITY_REQUEST:
                     //Outbound no-op
                     break;
-                case sdk.remotemessage.Method.GET_PAYMENT_REQUEST:
+                case sdk.remotemessage.Method.RETRIEVE_PAYMENT_REQUEST:
                     //Outbound no-op
                     break;
                 default:
