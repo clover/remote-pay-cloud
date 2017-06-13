@@ -88,7 +88,7 @@ export class MethodToMessage {
         MethodToMessage.methodToType[remotemessage.Method.FORCECONNECT] = remotemessage.ForceConnectMessage;
         MethodToMessage.methodToType[remotemessage.Method.RETRIEVE_DEVICE_STATUS_REQUEST] = remotemessage.RetrieveDeviceStatusRequestMessage;
         MethodToMessage.methodToType[remotemessage.Method.RETRIEVE_DEVICE_STATUS_RESPONSE] = remotemessage.RetrieveDeviceStatusResponseMessage;
-        MethodToMessage.methodToType[remotemessage.Method.RESET_RESPONSE] = remotemessage.ResetDeviceResponseMessage;
+        MethodToMessage.methodToType[remotemessage.Method.RESET_DEVICE_RESPONSE] = remotemessage.ResetDeviceResponseMessage;
         MethodToMessage.methodToType[remotemessage.Method.ACTIVITY_MESSAGE_TO_ACTIVITY] = remotemessage.ActivityMessageToActivity;
         MethodToMessage.methodToType[remotemessage.Method.ACTIVITY_MESSAGE_FROM_ACTIVITY] = remotemessage.ActivityMessageFromActivity;
         MethodToMessage.methodToType[remotemessage.Method.RETRIEVE_PAYMENT_RESPONSE] = remotemessage.RetrievePaymentResponseMessage;

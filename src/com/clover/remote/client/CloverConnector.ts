@@ -1364,7 +1364,7 @@ export namespace CloverConnector {
 		}
 
 		public onResetDeviceResponse(result:sdk.remotepay.ResponseCode, reason: string, state:sdk.remotemessage.ExternalDeviceState): void {
-			let success: boolean = (status == sdk.remotepay.ResponseCode.SUCCESS);
+			let success: boolean = (result == sdk.remotepay.ResponseCode.SUCCESS);
 
 			let response:sdk.remotepay.ResetDeviceResponse  = new sdk.remotepay.ResetDeviceResponse();
 			CloverConnector.populateBaseResponse(response, success, result,
