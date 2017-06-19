@@ -377,7 +377,7 @@ $(window).on('beforeunload ', function () {
 # Browser Versions Tested
 This library has been tested against the following Browser type and versions:
 
-* Chrome version 54
+* Chrome version 54-58
 * Firefox version 49
 
 # Generate Documentation
@@ -388,6 +388,29 @@ API documentation is generated when `npm install` is run.
 # Release Notes
 
 ## Version 1.3.0-rc1.0
+* Added support for Custom Activities
+  * ICloverConnector
+    * Added
+      * startCustomActivity
+  * ICloverConnectorListener
+    * Added
+      * onCustomActivityResponse
+      
+  * CustomActivity
+    * apk must be approved and then installed via the Clover App Market
+    * clover-cfp-sdk library
+      * Added CloverCFPActivity that can be extended
+      * Added constants for getting/retrieving activity payload CloverCFP interface
+      * Working with Custom Activities...
+        * The action of the activity, as defined in the AndroidManifest, should be passed in as part of the request
+        * A single text payload can be passed in to the request and retrieved in the intent via com.clover.remote.cfp.CFPActivity.EXTRA_PAYLOAD constant. e.g. "com.clover.remote.terminal.remotecontrol.extra.EXTRA_PAYLOAD"
+        * The CustomActivityResponse (onCustomActivityResponse) contains a single text payload, populated from the com.clover.remote.cfp.EXTRA_PAYLOAD extra in the result Intent
+        * Block vs Non-Blocking Activities
+            * A blocking CustomActivity (CustomActivityRequest.setNonBlocking(boolean)) will either need to finish itself, or can be exited via ICloverConnector.resetDevice()
+               * For example: Don't want a Sale request to interrupt Collect Customer Information Custom Activity
+            * A non-blocking CustomActivity will finish when a new request is made
+               * For example: Want a Sale request to interrupt showing Ads Custom Activity
+
 
 SEMI-795 Addition of retrievePayment functionality.
 SEMI-777 Addition of custom activity support.
