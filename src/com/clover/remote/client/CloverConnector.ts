@@ -946,12 +946,7 @@ export namespace CloverConnector {
 				else {
 					this.onAuthTipAdjustedHandler(resultStatusOrPaymentId, reasonOrTipAmount, messageOrSuccess, sdk.remotepay.ResponseCode.FAIL, 'Failure', 'TipAdjustAuth failed to process for payment ID: ' + resultStatusOrPaymentId);
 				}
-			}
-				/*
-			else if (resultStatusOrPaymentId instanceof sdk.remotemessage.ResultStatus) {
-				this.onAuthTipAdjusted(resultStatusOrPaymentId == sdk.remotemessage.ResultStatus.SUCCESS ? sdk.remotepay.ResponseCode.SUCCESS : sdk.remotepay.ResponseCode.FAIL, reasonOrTipAmount, messageOrSuccess);
-			}*/
-			else {
+			}  else {
 				this.onAuthTipAdjustedHandler(null, 0, false, resultStatusOrPaymentId, reasonOrTipAmount, messageOrSuccess);
 			}
 		}
