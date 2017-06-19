@@ -11,6 +11,7 @@ import {Logger} from './util/Logger';
 import {JSONToCustomObject} from '../../json/JSONToCustomObject';
 
 import {PayIntent} from '../../util/PayIntent/Builder';
+import TxTypeRequestInfo = CloverConnector.TxTypeRequestInfo;
 
 
 /**
@@ -117,16 +118,16 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
             this.deviceObserver.onFinishCancelSale(sdk.remotepay.ResponseCode.FAIL, "Invalid Argument.", "In sale: SaleRequest - The request that was passed in for processing is null.");
 		}
 		else if (request.getAmount() <= 0) {
-			this.deviceObserver.onFinishCancel(sdk.remotepay.ResponseCode.FAIL, "Request Validation Error", "In sale: SaleRequest - The request amount cannot be zero. Original Request = " + request);
+			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.FAIL, "Request Validation Error", "In sale: SaleRequest - The request amount cannot be zero. Original Request = " + request, TxTypeRequestInfo.SALE_REQUEST);
 		}
 		else if (request.getTipAmount() && request.getTipAmount() < 0) {
-			this.deviceObserver.onFinishCancel(sdk.remotepay.ResponseCode.FAIL, "Request Validation Error", "In sale: SaleRequest - The tip amount cannot be less than zero. Original Request = " + request);
+			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.FAIL, "Request Validation Error", "In sale: SaleRequest - The tip amount cannot be less than zero. Original Request = " + request, TxTypeRequestInfo.SALE_REQUEST);
 		}
 		else if (request.getExternalId() == null || request.getExternalId().trim().length == 0 || request.getExternalId().trim().length > 32){
-			this.deviceObserver.onFinishCancel(sdk.remotepay.ResponseCode.FAIL, "Invalid Argument.", "In sale: SaleRequest - The externalId is required and the max length is 32 characters. Original Request = " + request);
+			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.FAIL, "Invalid Argument.", "In sale: SaleRequest - The externalId is required and the max length is 32 characters. Original Request = " + request, TxTypeRequestInfo.SALE_REQUEST);
 		}
 		else if (request.getVaultedCard() && !this.merchantInfo.supportsVaultCards) {
-			this.deviceObserver.onFinishCancel(sdk.remotepay.ResponseCode.UNSUPPORTED, "Merchant Configuration Validation Error", "In sale: SaleRequest - Vault Card support is not enabled for the payment gateway. Original Request = " + request);
+			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.UNSUPPORTED, "Merchant Configuration Validation Error", "In sale: SaleRequest - Vault Card support is not enabled for the payment gateway. Original Request = " + request, TxTypeRequestInfo.SALE_REQUEST);
 		} else {
 			if (request.getTipAmount() == null) {
 				request.setTipAmount(0);
@@ -136,7 +137,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 			}
 			catch(e) {
                 this.logger.debug("Error in sale", e);
-				this.deviceObserver.onFinishCancel(sdk.remotepay.ResponseCode.ERROR, e, null);
+				this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.ERROR, e, null, TxTypeRequestInfo.SALE_REQUEST);
 			}
 		}
 	}
@@ -330,25 +331,25 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
             this.deviceObserver.onFinishCancelAuth(sdk.remotepay.ResponseCode.FAIL,
                 "Invalid Argument.", "In auth: AuthRequest - The request that was passed in for processing is null.");
 		} else if(request.getAmount() <= 0) {
-			this.deviceObserver.onFinishCancel(
+			this.deviceObserver.onFinishCancel_rmm(
                 sdk.remotepay.ResponseCode.FAIL, "Request Validation Error", "In auth: AuthRequest - " +
-                "The request amount cannot be zero. Original Request = " + request);
+                "The request amount cannot be zero. Original Request = " + request, TxTypeRequestInfo.AUTH_REQUEST);
 		} else if (request.getExternalId() == null || request.getExternalId().trim().length == 0 || 
             request.getExternalId().trim().length > 32){
-			this.deviceObserver.onFinishCancel(sdk.remotepay.ResponseCode.FAIL, 
+			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.FAIL,
                 "Invalid Argument.", "In auth: AuthRequest - The externalId is invalid. It is " +
-                "required and the max length is 32. Original Request = " + request);
+                "required and the max length is 32. Original Request = " + request, TxTypeRequestInfo.AUTH_REQUEST);
 		} else if (request.getVaultedCard() && !this.merchantInfo.supportsVaultCards) {
-			this.deviceObserver.onFinishCancel(sdk.remotepay.ResponseCode.UNSUPPORTED, 
+			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.UNSUPPORTED,
                 "Merchant Configuration Validation Error", "In auth: AuthRequest - " +
-                "Vault Card support is not enabled for the payment gateway. Original Request = " + request);
+                "Vault Card support is not enabled for the payment gateway. Original Request = " + request, TxTypeRequestInfo.AUTH_REQUEST);
 		} else {
 			try {
 				this.saleAuth(request, true);
 			}
 			catch(e) {
                 this.logger.debug("Error in auth", e);
-                this.deviceObserver.onFinishCancel(sdk.remotepay.ResponseCode.ERROR, e, null);
+                this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.ERROR, e, null, TxTypeRequestInfo.AUTH_REQUEST);
 			}
 		}
 	}
@@ -370,20 +371,20 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
                "The request that was passed in for processing is null.");
 		}
 		else if (request.getAmount() <= 0) {
-			this.deviceObserver.onFinishCancel(sdk.remotepay.ResponseCode.FAIL, 
+			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.FAIL,
                 "Request Validation Error", "In preAuth: PreAuthRequest - " +
-                "The request amount cannot be zero. Original Request = " + request);
+                "The request amount cannot be zero. Original Request = " + request, TxTypeRequestInfo.PREAUTH_REQUEST);
 		}
 		else if (request.getExternalId() == null || request.getExternalId().trim().length == 0 || 
             request.getExternalId().trim().length > 32){
-			this.deviceObserver.onFinishCancel(sdk.remotepay.ResponseCode.FAIL, 
+			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.FAIL,
                 "Invalid Argument.", "In preAuth: PreAuthRequest - The externalId is invalid. " +
-                "It is required and the max length is 32. Original Request = " + request);
+                "It is required and the max length is 32. Original Request = " + request, TxTypeRequestInfo.PREAUTH_REQUEST);
 		}
 		else if (request.getVaultedCard() && !this.merchantInfo.supportsVaultCards) {
-			this.deviceObserver.onFinishCancel(sdk.remotepay.ResponseCode.UNSUPPORTED, 
+			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.UNSUPPORTED,
                 "Merchant Configuration Validation Error", "In preAuth: PreAuthRequest - " +
-                "Vault Card support is not enabled for the payment gateway. Original Request = " + request);
+                "Vault Card support is not enabled for the payment gateway. Original Request = " + request, TxTypeRequestInfo.PREAUTH_REQUEST);
 		}
 		else {
 			try {
@@ -392,7 +393,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 			catch(e) {
 				this.lastRequest = null;
                 this.logger.debug("Error in preAuth", e);
-				this.deviceObserver.onFinishCancel(sdk.remotepay.ResponseCode.ERROR, e, null);
+				this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.ERROR, e, null, TxTypeRequestInfo.PREAUTH_REQUEST);
 			}
 		}
 	}
@@ -503,7 +504,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
                 "Device Connection Error",
                 "In refundPayment: RefundPaymentRequest - The Clover device is not connected.");
 			this.deviceObserver.lastPRR = response;
-			this.deviceObserver.onFinishCancel();
+			this.deviceObserver.onFinishCancel(TxTypeRequestInfo.REFUND_REQUEST);
 		}
 		else if (request == null) {
 			let response: sdk.remotepay.RefundPaymentResponse = new sdk.remotepay.RefundPaymentResponse();
@@ -512,7 +513,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 			    "Request Validation Error",
                 "In refundPayment: RefundPaymentRequest - The request that was passed in for processing is empty.");
 			this.deviceObserver.lastPRR = response;
-			this.deviceObserver.onFinishCancel();
+			this.deviceObserver.onFinishCancel(TxTypeRequestInfo.REFUND_REQUEST);
 		}
 		else if (request.getPaymentId() == null) {
 			let response: sdk.remotepay.RefundPaymentResponse = new sdk.remotepay.RefundPaymentResponse();
@@ -521,7 +522,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 			    "Request Validation Error",
                 "In refundPayment: RefundPaymentRequest PaymentID cannot be empty. " + request);
 			this.deviceObserver.lastPRR = response;
-			this.deviceObserver.onFinishCancel();
+			this.deviceObserver.onFinishCancel(TxTypeRequestInfo.REFUND_REQUEST);
 		}
 		else if (request.getAmount() <= 0 && !request.getFullRefund()) {
 			let response: sdk.remotepay.RefundPaymentResponse = new sdk.remotepay.RefundPaymentResponse();
@@ -530,7 +531,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 			    "Request Validation Error",
                 "In refundPayment: RefundPaymentRequest Amount must be greater than zero when FullRefund is set to false. " + request);
 			this.deviceObserver.lastPRR = response;
-			this.deviceObserver.onFinishCancel();
+			this.deviceObserver.onFinishCancel(TxTypeRequestInfo.REFUND_REQUEST);
 		}
 		else {
 			this.device.doPaymentRefund(request.getOrderId(), request.getPaymentId(), request.getAmount(), request.getFullRefund());
@@ -541,22 +542,22 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 		let transactionSettings:sdk.payments.TransactionSettings = new sdk.payments.TransactionSettings();
 		this.lastRequest = request;
 		if (!this.device || !this.isReady) {
-			this.deviceObserver.onFinishCancel(sdk.remotepay.ResponseCode.ERROR, "Device connection Error", "In manualRefund: ManualRefundRequest - The Clover device is not connected.");
+			this.deviceObserver.onFinishCancelManualRefund(sdk.remotepay.ResponseCode.ERROR, "Device connection Error", "In manualRefund: ManualRefundRequest - The Clover device is not connected.");
 		}
 		else if (!this.merchantInfo.supportsManualRefunds) {
-			this.deviceObserver.onFinishCancel(sdk.remotepay.ResponseCode.UNSUPPORTED, "Merchant Configuration Validation Error", "In manualRefund: ManualRefundRequest - Manual Refunds are not enabled for the payment gateway. Original Request = " + request);
+			this.deviceObserver.onFinishCancelManualRefund(sdk.remotepay.ResponseCode.UNSUPPORTED, "Merchant Configuration Validation Error", "In manualRefund: ManualRefundRequest - Manual Refunds are not enabled for the payment gateway. Original Request = " + request);
 		}
 		else if (request == null) {
             this.deviceObserver.onFinishCancelManualRefund(sdk.remotepay.ResponseCode.FAIL, "Invalid Argument.", "In manualRefund: ManualRefundRequest - The request that was passed in for processing is null.");
 		}
 		else if (request.getAmount() <= 0) {
-			this.deviceObserver.onFinishCancel(sdk.remotepay.ResponseCode.FAIL, "Request Validation Error", "In manualRefund: ManualRefundRequest - The request amount cannot be zero. Original Request = " + request);
+			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.FAIL, "Request Validation Error", "In manualRefund: ManualRefundRequest - The request amount cannot be zero. Original Request = " + request, TxTypeRequestInfo.CREDIT_REQUEST);
 		}
 		else if (request.getExternalId() == null || request.getExternalId().trim().length == 0 || request.getExternalId().trim().length > 32) {
-			this.deviceObserver.onFinishCancel(sdk.remotepay.ResponseCode.FAIL, "Invalid Argument.", "In manualRefund: ManualRefundRequest - The externalId is invalid. It is required and the max length is 32. Original Request = " + request);
+			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.FAIL, "Invalid Argument.", "In manualRefund: ManualRefundRequest - The externalId is invalid. It is required and the max length is 32. Original Request = " + request, TxTypeRequestInfo.CREDIT_REQUEST);
 		}
 		else if (request.getVaultedCard() && !this.merchantInfo.supportsVaultCards) {
-			this.deviceObserver.onFinishCancel(sdk.remotepay.ResponseCode.UNSUPPORTED, "Merchant Configuration Validation Error", "In manualRefund: ManualRefundRequest - Vault Card support is not enabled for the payment gateway. Original Request = " + request);
+			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.UNSUPPORTED, "Merchant Configuration Validation Error", "In manualRefund: ManualRefundRequest - Vault Card support is not enabled for the payment gateway. Original Request = " + request, TxTypeRequestInfo.CREDIT_REQUEST);
 		}
 		else {
 			let builder: PayIntent.Builder = new PayIntent.Builder();
@@ -865,6 +866,14 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 }
 
 export namespace CloverConnector {
+	export class TxTypeRequestInfo {
+		public static SALE_REQUEST:string = "SALE";
+		public static AUTH_REQUEST:string = "AUTH";
+		public static PREAUTH_REQUEST:string = "PREAUTH";
+		public static CREDIT_REQUEST:string = "CREDIT";
+		public static REFUND_REQUEST:string = "REFUND";
+	}
+
 	export class InnerDeviceObserver implements CloverDeviceObserver {
 		// Create a logger
 		logger: Logger = Logger.create();
@@ -882,32 +891,55 @@ export namespace CloverConnector {
 		public onTxState(txState: sdk.remotemessage.TxState): void {
 		}
 
-		public onTxStartResponse(result: sdk.remotemessage.TxStartResponseResult, externalId: string): void {
+		private getMessageTypeFromLastRequest(lastRequest: any): string {
+			if (lastRequest instanceof sdk.remotepay.PreAuthRequest) {
+				return TxTypeRequestInfo.PREAUTH_REQUEST;
+			}
+			else if (lastRequest instanceof sdk.remotepay.AuthRequest) {
+				return TxTypeRequestInfo.AUTH_REQUEST;
+			}
+			else if (lastRequest instanceof sdk.remotepay.SaleRequest) {
+				return TxTypeRequestInfo.SALE_REQUEST;
+			}
+			else if (lastRequest instanceof sdk.remotepay.ManualRefundRequest) {
+				return TxTypeRequestInfo.CREDIT_REQUEST;
+			}
+			return null;
+		}
+
+		public onTxStartResponse(result: sdk.remotemessage.TxStartResponseResult, externalId: string, requestInfo:string): void {
 			if (result == sdk.remotemessage.TxStartResponseResult.SUCCESS) return;
 
 			let duplicate: boolean = (result == sdk.remotemessage.TxStartResponseResult.DUPLICATE);
 			let code: sdk.remotepay.ResponseCode = duplicate ? sdk.remotepay.ResponseCode.CANCEL : sdk.remotepay.ResponseCode.FAIL;
 			let message: string = duplicate ? "The provided transaction id of " + externalId + " has already been processed and cannot be resubmitted." : null;
 			try {
-				if (this.cloverConnector.lastRequest instanceof sdk.remotepay.PreAuthRequest) {
+				// The old (deprecated) way to get the type.  Here for backwards compatibility
+				if (requestInfo == null) {
+					requestInfo = this.getMessageTypeFromLastRequest(this.cloverConnector.lastRequest);
+				}
+				// Use the requestInfo if it exists, to determine the request type
+				if (requestInfo == TxTypeRequestInfo.PREAUTH_REQUEST) {
 					let response: sdk.remotepay.PreAuthResponse = new sdk.remotepay.PreAuthResponse();
                     CloverConnector.populateBaseResponse(response, false, code, result, message);
 					this.cloverConnector.broadcaster.notifyOnPreAuthResponse(response);
 				}
-				else if (this.cloverConnector.lastRequest instanceof sdk.remotepay.AuthRequest) {
+				else if (requestInfo == TxTypeRequestInfo.AUTH_REQUEST) {
 					let response: sdk.remotepay.AuthResponse = new sdk.remotepay.AuthResponse();
                     CloverConnector.populateBaseResponse(response, false, code, result, message);
 					this.cloverConnector.broadcaster.notifyOnAuthResponse(response);
 				}
-				else if (this.cloverConnector.lastRequest instanceof sdk.remotepay.SaleRequest) {
+				else if (requestInfo == TxTypeRequestInfo.SALE_REQUEST) {
 					let response: sdk.remotepay.SaleResponse = new sdk.remotepay.SaleResponse();
                     CloverConnector.populateBaseResponse(response, false, code, result, message);
 					this.cloverConnector.broadcaster.notifyOnSaleResponse(response);
 				}
-				else if (this.cloverConnector.lastRequest instanceof sdk.remotepay.ManualRefundRequest) {
+				else if (requestInfo == TxTypeRequestInfo.CREDIT_REQUEST) {
 					let response: sdk.remotepay.ManualRefundResponse = new sdk.remotepay.ManualRefundResponse();
                     CloverConnector.populateBaseResponse(response, false, code, result, message);
 					this.cloverConnector.broadcaster.notifyOnManualRefundResponse(response);
+				} else {
+					this.logger.error("Could not determine request type. requestInfo = " + requestInfo + " lastRequest = " + this.cloverConnector.lastRequest);
 				}
 			}
 			finally {
@@ -971,115 +1003,140 @@ export namespace CloverConnector {
 			//TODO: For future use
 		}
 
-		public onFinishOk(payment: sdk.payments.Payment, signature: sdk.base.Signature): void;
-		public onFinishOk(credit: sdk.payments.Credit): void;
-		public onFinishOk(refund: sdk.payments.Refund): void;
-		public onFinishOk(paymentCreditOrRefund: any, signature?: sdk.base.Signature): void {
-			if (paymentCreditOrRefund instanceof sdk.payments.Payment /* && signature */) {
-				try {
-					this.cloverConnector.device.doShowThankYouScreen(); //need to do this first, so Listener implementation can replace the screen as desired
-					if (this.cloverConnector.lastRequest instanceof sdk.remotepay.PreAuthRequest) {
-						let response: sdk.remotepay.PreAuthResponse = new sdk.remotepay.PreAuthResponse();
-                        CloverConnector.populatePaymentResponse(response, true, sdk.remotepay.ResponseCode.SUCCESS, paymentCreditOrRefund, signature);
-						this.cloverConnector.broadcaster.notifyOnPreAuthResponse(response);
-						this.cloverConnector.lastRequest = null;
-					}
-					else if (this.cloverConnector.lastRequest instanceof sdk.remotepay.AuthRequest) {
-						let response: sdk.remotepay.AuthResponse = new sdk.remotepay.AuthResponse();
-                        CloverConnector.populatePaymentResponse(response, true, sdk.remotepay.ResponseCode.SUCCESS, paymentCreditOrRefund, signature);
-						this.cloverConnector.broadcaster.notifyOnAuthResponse(response);
-						this.cloverConnector.lastRequest = null;
-					}
-					else if (this.cloverConnector.lastRequest instanceof sdk.remotepay.SaleRequest) {
-						let response: sdk.remotepay.SaleResponse = new sdk.remotepay.SaleResponse();
-                        CloverConnector.populatePaymentResponse(response, true, sdk.remotepay.ResponseCode.SUCCESS, paymentCreditOrRefund, signature);
-						this.cloverConnector.broadcaster.notifyOnSaleResponse(response);
-						this.cloverConnector.lastRequest = null;
-					}
-					else if (this.cloverConnector.lastRequest == null) {
-						this.cloverConnector.device.doShowWelcomeScreen();
-					}
-					else {
-						this.logger.error("Failed to pair this response: " + paymentCreditOrRefund);
-					}
+		public onFinishOkPayment(payment: sdk.payments.Payment, signature: sdk.base.Signature, requestInfo:string): void {
+			try {
+				this.cloverConnector.device.doShowThankYouScreen(); //need to do this first, so Listener implementation can replace the screen as desired
+				let lastRequest:any = this.cloverConnector.lastRequest;
+				this.cloverConnector.lastRequest = null;
+				if (!requestInfo) {
+					// This is deprecated logic and should be removed at some point in the future
+					// when we are comfortable that there are no longer any backward compatibility issues
+					requestInfo = this.getMessageTypeFromLastRequest(lastRequest);
 				}
-				finally {
-					// do nothing for now...
+				if (requestInfo == TxTypeRequestInfo.PREAUTH_REQUEST) {
+					let response: sdk.remotepay.PreAuthResponse = new sdk.remotepay.PreAuthResponse();
+					CloverConnector.populatePaymentResponse(response, true, sdk.remotepay.ResponseCode.SUCCESS, payment, signature);
+					this.cloverConnector.broadcaster.notifyOnPreAuthResponse(response);
+					this.cloverConnector.lastRequest = null;
+				}
+				else if (requestInfo == TxTypeRequestInfo.AUTH_REQUEST) {
+					let response: sdk.remotepay.AuthResponse = new sdk.remotepay.AuthResponse();
+					CloverConnector.populatePaymentResponse(response, true, sdk.remotepay.ResponseCode.SUCCESS, payment, signature);
+					this.cloverConnector.broadcaster.notifyOnAuthResponse(response);
+					this.cloverConnector.lastRequest = null;
+				}
+				else if (requestInfo == TxTypeRequestInfo.SALE_REQUEST) {
+					let response: sdk.remotepay.SaleResponse = new sdk.remotepay.SaleResponse();
+					CloverConnector.populatePaymentResponse(response, true, sdk.remotepay.ResponseCode.SUCCESS, payment, signature);
+					this.cloverConnector.broadcaster.notifyOnSaleResponse(response);
+					this.cloverConnector.lastRequest = null;
+				}
+				else {
+					this.logger.error("Failed to pair this response: " + payment);
 				}
 			}
-			else if (paymentCreditOrRefund instanceof sdk.payments.Credit) {
-				try {
-					this.cloverConnector.device.doShowWelcomeScreen();
-					this.cloverConnector.lastRequest = null;
-					let response: sdk.remotepay.ManualRefundResponse = new sdk.remotepay.ManualRefundResponse();
-                    CloverConnector.populateBaseResponse(response, true, sdk.remotepay.ResponseCode.SUCCESS);
-                    response.setCredit(paymentCreditOrRefund);
-                    this.cloverConnector.broadcaster.notifyOnManualRefundResponse(response);
-				}
-				finally {}
-			}
-			else {
-				try {
-					this.cloverConnector.device.doShowWelcomeScreen();
-					this.cloverConnector.lastRequest = null;
-					let lastRefundResponse: sdk.remotepay.RefundPaymentResponse = this.lastPRR;
-					this.lastPRR = null;
-
-					// Since finishOk is the more appropriate/consistent location in the "flow" to
-					// publish the RefundResponse (like SaleResponse, AuthResponse, etc., rather
-					// than after the server call, which calls onPaymetRefund),
-					// we will hold on to the response from
-					// onRefundResponse (Which has more information than just the refund) and publish it here
-					if (lastRefundResponse) {
-						if (lastRefundResponse.getRefund().getId() == paymentCreditOrRefund.getId()) {
-							this.cloverConnector.broadcaster.notifyOnRefundPaymentResponse(lastRefundResponse);
-						}
-						else {
-							this.logger.error("The last PaymentRefundResponse has a different refund than this refund in finishOk");
-						}
-					}
-					else {
-						this.logger.error("Shouldn't get an onFinishOk with having gotten an onPaymentRefund!");
-					}
-				}
-				finally {}
+			finally {
+				// do nothing for now...
 			}
 		}
 
-		public onFinishCancel(): void;
-		public onFinishCancel(result: sdk.remotepay.ResponseCode, reason: string, message: string): void;
-		public onFinishCancel(result?: sdk.remotepay.ResponseCode, reason?: string, message?: string): void {
-			if (!result) {
-				this.onFinishCancel(sdk.remotepay.ResponseCode.CANCEL, null, null);
-				return;
-			}
-
+		public onFinishOkCredit(credit: sdk.payments.Credit): void {
 			try {
 				this.cloverConnector.device.doShowWelcomeScreen();
-                let lastReq: any = this.cloverConnector.lastRequest;
 				this.cloverConnector.lastRequest = null;
-				if (lastReq instanceof sdk.remotepay.PreAuthRequest) {
-                    this.onFinishCancelPreAuth(result, reason, message);
+				let response: sdk.remotepay.ManualRefundResponse = new sdk.remotepay.ManualRefundResponse();
+				CloverConnector.populateBaseResponse(response, true, sdk.remotepay.ResponseCode.SUCCESS);
+				response.setCredit(credit);
+				this.cloverConnector.broadcaster.notifyOnManualRefundResponse(response);
+			}
+			finally {}
+		}
+
+		public onFinishOkRefund(refund: sdk.payments.Refund): void {
+			try {
+				this.cloverConnector.device.doShowWelcomeScreen();
+				this.cloverConnector.lastRequest = null;
+				let lastRefundResponse: sdk.remotepay.RefundPaymentResponse = this.lastPRR;
+				this.lastPRR = null;
+
+				// Since finishOk is the more appropriate/consistent location in the "flow" to
+				// publish the RefundResponse (like SaleResponse, AuthResponse, etc., rather
+				// than after the server call, which calls onPaymetRefund),
+				// we will hold on to the response from
+				// onRefundResponse (Which has more information than just the refund) and publish it here
+				if (lastRefundResponse) {
+					if (lastRefundResponse.getRefund().getId() == refund.getId()) {
+						this.cloverConnector.broadcaster.notifyOnRefundPaymentResponse(lastRefundResponse);
+					}
+					else {
+						this.logger.error("The last PaymentRefundResponse has a different refund than this refund in finishOk");
+					}
 				}
-				else if (lastReq instanceof sdk.remotepay.SaleRequest) {
-                    this.onFinishCancelSale(result, reason, message);
+				else {
+					this.logger.error("Shouldn't get an onFinishOk with having gotten an onPaymentRefund!");
 				}
-				else if (lastReq instanceof sdk.remotepay.AuthRequest) {
-                    this.onFinishCancelAuth(result, reason, message);
+			}
+			finally {}
+		}
+
+		public onFinishOk(payment: sdk.payments.Payment, signature: sdk.base.Signature, requestInfo:string): void;
+		public onFinishOk(credit: sdk.payments.Credit): void;
+		public onFinishOk(refund: sdk.payments.Refund): void;
+		public onFinishOk(paymentCreditOrRefund: any, signature?: sdk.base.Signature, requestInfo?:string): void {
+			if (paymentCreditOrRefund instanceof sdk.payments.Payment /* && signature */) {
+				this.onFinishOkPayment(paymentCreditOrRefund, signature, requestInfo);
+			}
+			else if (paymentCreditOrRefund instanceof sdk.payments.Credit) {
+				this.onFinishOkCredit(paymentCreditOrRefund);
+			}
+			else {
+				this.onFinishOkRefund(paymentCreditOrRefund);
+			}
+		}
+
+		public onFinishCancel_rmm(result: sdk.remotepay.ResponseCode, reason: string, message: string, requestInfo:string) {
+			try {
+				if(this.cloverConnector.device) {
+					this.cloverConnector.device.doShowWelcomeScreen();
 				}
-				else if (lastReq instanceof sdk.remotepay.ManualRefundRequest) {
-                    this.onFinishCancelManualRefund(result, reason, message);
+				let lastReq: any = this.cloverConnector.lastRequest;
+				this.cloverConnector.lastRequest = null;
+				if (!requestInfo) {
+					requestInfo = this.getMessageTypeFromLastRequest(lastReq);
+					if (!requestInfo && (this.lastPRR instanceof sdk.remotepay.RefundPaymentResponse)) {
+						requestInfo = TxTypeRequestInfo.REFUND_REQUEST;
+					} else {
+						this.logger.error('onFinishCancel called, requestInfo was null, and ' +
+							'could not determine the type of the message from the last request ' +
+							'or last refund response', arguments);
+					}
 				}
-				else if (this.lastPRR instanceof sdk.remotepay.RefundPaymentResponse) {
+				if (requestInfo == TxTypeRequestInfo.PREAUTH_REQUEST) {
+					this.onFinishCancelPreAuth(result, reason, message);
+				}
+				else if (requestInfo == TxTypeRequestInfo.SALE_REQUEST) {
+					this.onFinishCancelSale(result, reason, message);
+				}
+				else if (requestInfo == TxTypeRequestInfo.AUTH_REQUEST) {
+					this.onFinishCancelAuth(result, reason, message);
+				}
+				else if (requestInfo == TxTypeRequestInfo.CREDIT_REQUEST) {
+					this.onFinishCancelManualRefund(result, reason, message);
+				}
+				else if (requestInfo == TxTypeRequestInfo.REFUND_REQUEST) {
 					this.cloverConnector.broadcaster.notifyOnRefundPaymentResponse(this.lastPRR);
 					this.lastPRR = null;
 				} else {
-                    this.logger.error('onFinishCancel called, but could not determine how to respond!', arguments);
-                }
+					this.logger.error('onFinishCancel called, but could not determine how to respond!', arguments);
+				}
 			}
 			finally {
 				// do nothing
 			}
+		}
+
+		public onFinishCancel(requestInfo:string): void {
+			this.onFinishCancel_rmm(sdk.remotepay.ResponseCode.CANCEL, null, null, requestInfo);
 		}
 
         public onFinishCancelPreAuth(result: sdk.remotepay.ResponseCode, reason?: string, message?: string): void {
