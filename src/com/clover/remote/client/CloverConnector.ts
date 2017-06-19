@@ -968,7 +968,6 @@ export namespace CloverConnector {
 
 		public onAuthTipAdjusted(paymentId: string, tipAmount: number, success: boolean): void;
 		public onAuthTipAdjusted(result: sdk.remotepay.ResponseCode, reason: string, message: string): void;
-//		public onAuthTipAdjusted(status: sdk.remotemessage.ResultStatus, reason: string, message: string): void;
 		public onAuthTipAdjusted(resultStatusOrPaymentId: any, reasonOrTipAmount: any, messageOrSuccess: any): void {
 			if (typeof resultStatusOrPaymentId == 'string') {
 				if (messageOrSuccess) {
@@ -1300,7 +1299,6 @@ export namespace CloverConnector {
 			this.cloverConnector.device.setSupportsAcks(merchantInfo.deviceInfo.getSupportsAcks());
 
 			if (drm.ready) {
-				// this.cloverConnector.device.doShowWelcomeScreen(); SEMI-889
 				this.cloverConnector.broadcaster.notifyOnReady(merchantInfo);
 			}
 			else {
