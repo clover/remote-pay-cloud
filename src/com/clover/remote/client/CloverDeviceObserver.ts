@@ -22,7 +22,7 @@ export interface CloverDeviceObserver {
 	 * @param {TxStartResponseResult} result 
 	 * @param {string} externalId 
 	 */
-	onTxStartResponse(result: sdk.remotemessage.TxStartResponseResult, externalId: string): void;
+	onTxStartResponse(result: sdk.remotemessage.TxStartResponseResult, externalId: string, requestInfo:string): void;
 
 	/**
 	 * UI State change
@@ -70,7 +70,7 @@ export interface CloverDeviceObserver {
 	 * @param {Payment} payment 
 	 * @param {Signature2} signature2 
 	 */
-	onFinishOk(payment: sdk.payments.Payment, signature2: sdk.base.Signature): void;
+	onFinishOk(payment: sdk.payments.Payment, signature2: sdk.base.Signature, requestInfo:string): void;
 
 	/**
 	 * Finish Ok
@@ -89,7 +89,7 @@ export interface CloverDeviceObserver {
 	/**
 	 * Finish Cancel
 	 */
-	onFinishCancel(): void;
+	onFinishCancel(requestInfo:string): void;
 
 	/**
 	 * Verify Signature

@@ -104,7 +104,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
                     this.notifyObserversConfirmPayment(sdkMessage);
                     break;
                 case sdk.remotemessage.Method.FINISH_CANCEL:
-                    this.notifyObserversFinishCancel();
+                    this.notifyObserversFinishCancel(sdkMessage);
                     break;
                 case sdk.remotemessage.Method.FINISH_OK:
                     this.notifyObserversFinishOk(sdkMessage);
@@ -506,7 +506,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
 
     public notifyObserverTxStart(txsrm: sdk.remotemessage.TxStartResponseMessage): void {
         this.deviceObservers.forEach((obs) => {
-            obs.onTxStartResponse(txsrm.result, txsrm.externalPaymentId);
+            obs.onTxStartResponse(txsrm.result, txsrm.externalPaymentId, txsrm.requestInfo);
         });
     }
 
@@ -576,16 +576,16 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         });
     }
 
-    public notifyObserversFinishCancel(): void {
+    public notifyObserversFinishCancel(msg: sdk.remotemessage.FinishCancelMessage): void {
         this.deviceObservers.forEach((obs) => {
-            obs.onFinishCancel();
+            obs.onFinishCancel(msg.requestInfo);
         });
     }
 
     public notifyObserversFinishOk(msg: sdk.remotemessage.FinishOkMessage): void {
         this.deviceObservers.forEach((obs) => {
             if (msg.payment) {
-                obs.onFinishOk(msg.payment, msg.signature);
+                obs.onFinishOk(msg.payment, msg.signature, msg.requestInfo);
             } else if (msg.credit) {
                 obs.onFinishOk(msg.credit);
             } else if (msg.refund) {
