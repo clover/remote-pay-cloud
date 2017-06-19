@@ -377,7 +377,7 @@ $(window).on('beforeunload ', function () {
 # Browser Versions Tested
 This library has been tested against the following Browser type and versions:
 
-* Chrome version 54
+* Chrome version 54-58
 * Firefox version 49
 
 # Generate Documentation
@@ -388,34 +388,57 @@ API documentation is generated when `npm install` is run.
 # Release Notes
 
 ## Version 1.3.0-rc1.0
+* Added support for Custom Activities
+  * ICloverConnector
+    * Added
+      * startCustomActivity
+  * ICloverConnectorListener
+    * Added
+      * onCustomActivityResponse
+      
+  * CustomActivity
+    * apk must be approved and then installed via the Clover App Market
+    * clover-cfp-sdk library
+      * Added CloverCFPActivity that can be extended
+      * Added constants for getting/retrieving activity payload CloverCFP interface
+      * Working with Custom Activities...
+        * The action of the activity, as defined in the AndroidManifest, should be passed in as part of the request
+        * A single text payload can be passed in to the request and retrieved in the intent via com.clover.remote.cfp.CFPActivity.EXTRA_PAYLOAD constant. e.g. "com.clover.remote.terminal.remotecontrol.extra.EXTRA_PAYLOAD"
+        * The CustomActivityResponse (onCustomActivityResponse) contains a single text payload, populated from the com.clover.remote.cfp.EXTRA_PAYLOAD extra in the result Intent
+        * Block vs Non-Blocking Activities
+            * A blocking CustomActivity (CustomActivityRequest.setNonBlocking(boolean)) will either need to finish itself, or can be exited via ICloverConnector.resetDevice()
+               * For example: Don't want a Sale request to interrupt Collect Customer Information Custom Activity
+            * A non-blocking CustomActivity will finish when a new request is made
+               * For example: Want a Sale request to interrupt showing Ads Custom Activity
 
-SEMI-795 Addition of retrievePayment functionality.
-SEMI-777 Addition of custom activity support.
+* SEMI-889 Remove automatic transition to welcome screen when device is ready
+* SEMI-695 Addition of response to `resetDevice` call.
+* SEMI-795 Addition of retrievePayment functionality.
+* SEMI-777 Addition of custom activity support.
 
 ## Version 1.2.0
 ## Version 1.2.0-rc1.1
 
-SEMI-792  Installation script fix.  Move dev-dependencies to dependencies.
+* SEMI-792  Installation script fix.  Move dev-dependencies to dependencies.
 
 ## Version 1.2.0-rc1.0
 
-SEMI-689  Initial 1.2 implementation.  Redesign of internal classes and many processes.  Support for 'per-transaction' settings. Update to use version 1.2.0-rc1.0 of remote-pay-cloud-api classes.  Addition of REMOTE_ERROR handling.  Increased request validation before communication.  Added ability to direct connect to device via 'Network Pay Display' app.  Added 'displayPaymentReceiptOptions' to replace deprecated 'showPaymentReceiptOptions'.  Removed dependency on browser for connector objects produced using 1.2 factory objects.
-
-SEMI-554 Added internal support for remote error.  Fix "cloverShouldHandleReceipts" and "disablePrinting" check to look for correct property. Use 1.2.0-rc1.0 of remote-pay-cloud-api.
+* SEMI-689  Initial 1.2 implementation.  Redesign of internal classes and many processes.  Support for 'per-transaction' settings. Update to use version 1.2.0-rc1.0 of remote-pay-cloud-api classes.  Addition of REMOTE_ERROR handling.  Increased request validation before communication.  Added ability to direct connect to device via 'Network Pay Display' app.  Added 'displayPaymentReceiptOptions' to replace deprecated 'showPaymentReceiptOptions'.  Removed dependency on browser for connector objects produced using 1.2 factory objects.
+* SEMI-554 Added internal support for remote error.  Fix "cloverShouldHandleReceipts" and "disablePrinting" check to look for correct property. Use 1.2.0-rc1.0 of remote-pay-cloud-api.
 
 ## Version 1.1.0
 ## Version 1.1.0-rc6.4
 
-SEMI-498 Revert update to use new schema objects.  New schema is slated for 1.2.
+* SEMI-498 Revert update to use new schema objects.  New schema is slated for 1.2.
 
 ## Version 1.1.0-rc6.3 (deprecated)
 
-SEMI-498 Add ready checking before attempting remote calls.  Add request validation.  Inhibit multiple 'onReady' callbacks.  Update to use new schema objects.
-SEMI-577 Add Declaration of support for Chrome version 54, Firefox version 49
+* SEMI-498 Add ready checking before attempting remote calls.  Add request validation.  Inhibit multiple 'onReady' callbacks.  Update to use new schema objects.
+* SEMI-577 Add Declaration of support for Chrome version 54, Firefox version 49
 
 ## Version 1.1.0-rc6.2
 
-SEMI-541 Update remote pay cloud API classes to ver 1.1.0-rc5.1
+* SEMI-541 Update remote pay cloud API classes to ver 1.1.0-rc5.1
 
 ## Version 1.1.0-rc6.1
 
