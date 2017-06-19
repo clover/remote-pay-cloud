@@ -411,6 +411,7 @@ API documentation is generated when `npm install` is run.
             * A non-blocking CustomActivity will finish when a new request is made
                * For example: Want a Sale request to interrupt showing Ads Custom Activity
 
+* SEMI-889 Remove automatic transition to welcome screen when device is ready
 * SEMI-695 Addition of response to `resetDevice` call.
 * SEMI-795 Addition of retrievePayment functionality.
 * SEMI-777 Addition of custom activity support.

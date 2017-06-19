@@ -937,7 +937,6 @@ export namespace CloverConnector {
 
 		public onAuthTipAdjusted(paymentId: string, tipAmount: number, success: boolean): void;
 		public onAuthTipAdjusted(result: sdk.remotepay.ResponseCode, reason: string, message: string): void;
-//		public onAuthTipAdjusted(status: sdk.remotemessage.ResultStatus, reason: string, message: string): void;
 		public onAuthTipAdjusted(resultStatusOrPaymentId: any, reasonOrTipAmount: any, messageOrSuccess: any): void {
 			if (typeof resultStatusOrPaymentId == 'string') {
 				if (messageOrSuccess) {
@@ -970,7 +969,7 @@ export namespace CloverConnector {
 		public onFinishOk(credit: sdk.payments.Credit): void;
 		public onFinishOk(refund: sdk.payments.Refund): void;
 		public onFinishOk(paymentCreditOrRefund: any, signature?: sdk.base.Signature): void {
-			if (paymentCreditOrRefund instanceof sdk.payments.Payment /* && signature */) {
+			if (paymentCreditOrRefund instanceof sdk.payments.Payment ) {
 				try {
 					this.cloverConnector.device.doShowThankYouScreen(); //need to do this first, so Listener implementation can replace the screen as desired
 					if (this.cloverConnector.lastRequest instanceof sdk.remotepay.PreAuthRequest) {
@@ -1244,7 +1243,6 @@ export namespace CloverConnector {
 			this.cloverConnector.device.setSupportsAcks(merchantInfo.deviceInfo.getSupportsAcks());
 
 			if (drm.ready) {
-				// this.cloverConnector.device.doShowWelcomeScreen(); SEMI-889
 				this.cloverConnector.broadcaster.notifyOnReady(merchantInfo);
 			}
 			else {
