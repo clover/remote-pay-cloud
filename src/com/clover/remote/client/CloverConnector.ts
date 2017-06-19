@@ -11,7 +11,6 @@ import {Logger} from './util/Logger';
 import {JSONToCustomObject} from '../../json/JSONToCustomObject';
 
 import {PayIntent} from '../../util/PayIntent/Builder';
-import TxTypeRequestInfo = CloverConnector.TxTypeRequestInfo;
 
 
 /**
@@ -118,16 +117,16 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
             this.deviceObserver.onFinishCancelSale(sdk.remotepay.ResponseCode.FAIL, "Invalid Argument.", "In sale: SaleRequest - The request that was passed in for processing is null.");
 		}
 		else if (request.getAmount() <= 0) {
-			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.FAIL, "Request Validation Error", "In sale: SaleRequest - The request amount cannot be zero. Original Request = " + request, TxTypeRequestInfo.SALE_REQUEST);
+			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.FAIL, "Request Validation Error", "In sale: SaleRequest - The request amount cannot be zero. Original Request = " + request, CloverConnector.TxTypeRequestInfo.SALE_REQUEST);
 		}
 		else if (request.getTipAmount() && request.getTipAmount() < 0) {
-			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.FAIL, "Request Validation Error", "In sale: SaleRequest - The tip amount cannot be less than zero. Original Request = " + request, TxTypeRequestInfo.SALE_REQUEST);
+			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.FAIL, "Request Validation Error", "In sale: SaleRequest - The tip amount cannot be less than zero. Original Request = " + request, CloverConnector.TxTypeRequestInfo.SALE_REQUEST);
 		}
 		else if (request.getExternalId() == null || request.getExternalId().trim().length == 0 || request.getExternalId().trim().length > 32){
-			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.FAIL, "Invalid Argument.", "In sale: SaleRequest - The externalId is required and the max length is 32 characters. Original Request = " + request, TxTypeRequestInfo.SALE_REQUEST);
+			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.FAIL, "Invalid Argument.", "In sale: SaleRequest - The externalId is required and the max length is 32 characters. Original Request = " + request, CloverConnector.TxTypeRequestInfo.SALE_REQUEST);
 		}
 		else if (request.getVaultedCard() && !this.merchantInfo.supportsVaultCards) {
-			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.UNSUPPORTED, "Merchant Configuration Validation Error", "In sale: SaleRequest - Vault Card support is not enabled for the payment gateway. Original Request = " + request, TxTypeRequestInfo.SALE_REQUEST);
+			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.UNSUPPORTED, "Merchant Configuration Validation Error", "In sale: SaleRequest - Vault Card support is not enabled for the payment gateway. Original Request = " + request, CloverConnector.TxTypeRequestInfo.SALE_REQUEST);
 		} else {
 			if (request.getTipAmount() == null) {
 				request.setTipAmount(0);
@@ -137,7 +136,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 			}
 			catch(e) {
                 this.logger.debug("Error in sale", e);
-				this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.ERROR, e, null, TxTypeRequestInfo.SALE_REQUEST);
+				this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.ERROR, e, null, CloverConnector.TxTypeRequestInfo.SALE_REQUEST);
 			}
 		}
 	}
@@ -333,23 +332,23 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 		} else if(request.getAmount() <= 0) {
 			this.deviceObserver.onFinishCancel_rmm(
                 sdk.remotepay.ResponseCode.FAIL, "Request Validation Error", "In auth: AuthRequest - " +
-                "The request amount cannot be zero. Original Request = " + request, TxTypeRequestInfo.AUTH_REQUEST);
+                "The request amount cannot be zero. Original Request = " + request, CloverConnector.TxTypeRequestInfo.AUTH_REQUEST);
 		} else if (request.getExternalId() == null || request.getExternalId().trim().length == 0 || 
             request.getExternalId().trim().length > 32){
 			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.FAIL,
                 "Invalid Argument.", "In auth: AuthRequest - The externalId is invalid. It is " +
-                "required and the max length is 32. Original Request = " + request, TxTypeRequestInfo.AUTH_REQUEST);
+                "required and the max length is 32. Original Request = " + request, CloverConnector.TxTypeRequestInfo.AUTH_REQUEST);
 		} else if (request.getVaultedCard() && !this.merchantInfo.supportsVaultCards) {
 			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.UNSUPPORTED,
                 "Merchant Configuration Validation Error", "In auth: AuthRequest - " +
-                "Vault Card support is not enabled for the payment gateway. Original Request = " + request, TxTypeRequestInfo.AUTH_REQUEST);
+                "Vault Card support is not enabled for the payment gateway. Original Request = " + request, CloverConnector.TxTypeRequestInfo.AUTH_REQUEST);
 		} else {
 			try {
 				this.saleAuth(request, true);
 			}
 			catch(e) {
                 this.logger.debug("Error in auth", e);
-                this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.ERROR, e, null, TxTypeRequestInfo.AUTH_REQUEST);
+                this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.ERROR, e, null, CloverConnector.TxTypeRequestInfo.AUTH_REQUEST);
 			}
 		}
 	}
@@ -373,18 +372,18 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 		else if (request.getAmount() <= 0) {
 			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.FAIL,
                 "Request Validation Error", "In preAuth: PreAuthRequest - " +
-                "The request amount cannot be zero. Original Request = " + request, TxTypeRequestInfo.PREAUTH_REQUEST);
+                "The request amount cannot be zero. Original Request = " + request, CloverConnector.TxTypeRequestInfo.PREAUTH_REQUEST);
 		}
 		else if (request.getExternalId() == null || request.getExternalId().trim().length == 0 || 
             request.getExternalId().trim().length > 32){
 			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.FAIL,
                 "Invalid Argument.", "In preAuth: PreAuthRequest - The externalId is invalid. " +
-                "It is required and the max length is 32. Original Request = " + request, TxTypeRequestInfo.PREAUTH_REQUEST);
+                "It is required and the max length is 32. Original Request = " + request, CloverConnector.TxTypeRequestInfo.PREAUTH_REQUEST);
 		}
 		else if (request.getVaultedCard() && !this.merchantInfo.supportsVaultCards) {
 			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.UNSUPPORTED,
                 "Merchant Configuration Validation Error", "In preAuth: PreAuthRequest - " +
-                "Vault Card support is not enabled for the payment gateway. Original Request = " + request, TxTypeRequestInfo.PREAUTH_REQUEST);
+                "Vault Card support is not enabled for the payment gateway. Original Request = " + request, CloverConnector.TxTypeRequestInfo.PREAUTH_REQUEST);
 		}
 		else {
 			try {
@@ -393,7 +392,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 			catch(e) {
 				this.lastRequest = null;
                 this.logger.debug("Error in preAuth", e);
-				this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.ERROR, e, null, TxTypeRequestInfo.PREAUTH_REQUEST);
+				this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.ERROR, e, null, CloverConnector.TxTypeRequestInfo.PREAUTH_REQUEST);
 			}
 		}
 	}
@@ -504,7 +503,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
                 "Device Connection Error",
                 "In refundPayment: RefundPaymentRequest - The Clover device is not connected.");
 			this.deviceObserver.lastPRR = response;
-			this.deviceObserver.onFinishCancel(TxTypeRequestInfo.REFUND_REQUEST);
+			this.deviceObserver.onFinishCancel(CloverConnector.TxTypeRequestInfo.REFUND_REQUEST);
 		}
 		else if (request == null) {
 			let response: sdk.remotepay.RefundPaymentResponse = new sdk.remotepay.RefundPaymentResponse();
@@ -513,7 +512,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 			    "Request Validation Error",
                 "In refundPayment: RefundPaymentRequest - The request that was passed in for processing is empty.");
 			this.deviceObserver.lastPRR = response;
-			this.deviceObserver.onFinishCancel(TxTypeRequestInfo.REFUND_REQUEST);
+			this.deviceObserver.onFinishCancel(CloverConnector.TxTypeRequestInfo.REFUND_REQUEST);
 		}
 		else if (request.getPaymentId() == null) {
 			let response: sdk.remotepay.RefundPaymentResponse = new sdk.remotepay.RefundPaymentResponse();
@@ -522,7 +521,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 			    "Request Validation Error",
                 "In refundPayment: RefundPaymentRequest PaymentID cannot be empty. " + request);
 			this.deviceObserver.lastPRR = response;
-			this.deviceObserver.onFinishCancel(TxTypeRequestInfo.REFUND_REQUEST);
+			this.deviceObserver.onFinishCancel(CloverConnector.TxTypeRequestInfo.REFUND_REQUEST);
 		}
 		else if (request.getAmount() <= 0 && !request.getFullRefund()) {
 			let response: sdk.remotepay.RefundPaymentResponse = new sdk.remotepay.RefundPaymentResponse();
@@ -531,7 +530,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 			    "Request Validation Error",
                 "In refundPayment: RefundPaymentRequest Amount must be greater than zero when FullRefund is set to false. " + request);
 			this.deviceObserver.lastPRR = response;
-			this.deviceObserver.onFinishCancel(TxTypeRequestInfo.REFUND_REQUEST);
+			this.deviceObserver.onFinishCancel(CloverConnector.TxTypeRequestInfo.REFUND_REQUEST);
 		}
 		else {
 			this.device.doPaymentRefund(request.getOrderId(), request.getPaymentId(), request.getAmount(), request.getFullRefund());
@@ -551,13 +550,13 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
             this.deviceObserver.onFinishCancelManualRefund(sdk.remotepay.ResponseCode.FAIL, "Invalid Argument.", "In manualRefund: ManualRefundRequest - The request that was passed in for processing is null.");
 		}
 		else if (request.getAmount() <= 0) {
-			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.FAIL, "Request Validation Error", "In manualRefund: ManualRefundRequest - The request amount cannot be zero. Original Request = " + request, TxTypeRequestInfo.CREDIT_REQUEST);
+			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.FAIL, "Request Validation Error", "In manualRefund: ManualRefundRequest - The request amount cannot be zero. Original Request = " + request, CloverConnector.TxTypeRequestInfo.CREDIT_REQUEST);
 		}
 		else if (request.getExternalId() == null || request.getExternalId().trim().length == 0 || request.getExternalId().trim().length > 32) {
-			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.FAIL, "Invalid Argument.", "In manualRefund: ManualRefundRequest - The externalId is invalid. It is required and the max length is 32. Original Request = " + request, TxTypeRequestInfo.CREDIT_REQUEST);
+			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.FAIL, "Invalid Argument.", "In manualRefund: ManualRefundRequest - The externalId is invalid. It is required and the max length is 32. Original Request = " + request, CloverConnector.TxTypeRequestInfo.CREDIT_REQUEST);
 		}
 		else if (request.getVaultedCard() && !this.merchantInfo.supportsVaultCards) {
-			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.UNSUPPORTED, "Merchant Configuration Validation Error", "In manualRefund: ManualRefundRequest - Vault Card support is not enabled for the payment gateway. Original Request = " + request, TxTypeRequestInfo.CREDIT_REQUEST);
+			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.UNSUPPORTED, "Merchant Configuration Validation Error", "In manualRefund: ManualRefundRequest - Vault Card support is not enabled for the payment gateway. Original Request = " + request, CloverConnector.TxTypeRequestInfo.CREDIT_REQUEST);
 		}
 		else {
 			let builder: PayIntent.Builder = new PayIntent.Builder();
