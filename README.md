@@ -412,33 +412,32 @@ API documentation is generated when `npm install` is run.
                * For example: Want a Sale request to interrupt showing Ads Custom Activity
 
 
-SEMI-795 Addition of retrievePayment functionality.
-SEMI-777 Addition of custom activity support.
+* SEMI-795 Addition of retrievePayment functionality.
+* SEMI-777 Addition of custom activity support.
 
 ## Version 1.2.0
 ## Version 1.2.0-rc1.1
 
-SEMI-792  Installation script fix.  Move dev-dependencies to dependencies.
+* SEMI-792  Installation script fix.  Move dev-dependencies to dependencies.
 
 ## Version 1.2.0-rc1.0
 
-SEMI-689  Initial 1.2 implementation.  Redesign of internal classes and many processes.  Support for 'per-transaction' settings. Update to use version 1.2.0-rc1.0 of remote-pay-cloud-api classes.  Addition of REMOTE_ERROR handling.  Increased request validation before communication.  Added ability to direct connect to device via 'Network Pay Display' app.  Added 'displayPaymentReceiptOptions' to replace deprecated 'showPaymentReceiptOptions'.  Removed dependency on browser for connector objects produced using 1.2 factory objects.
-
-SEMI-554 Added internal support for remote error.  Fix "cloverShouldHandleReceipts" and "disablePrinting" check to look for correct property. Use 1.2.0-rc1.0 of remote-pay-cloud-api.
+* SEMI-689  Initial 1.2 implementation.  Redesign of internal classes and many processes.  Support for 'per-transaction' settings. Update to use version 1.2.0-rc1.0 of remote-pay-cloud-api classes.  Addition of REMOTE_ERROR handling.  Increased request validation before communication.  Added ability to direct connect to device via 'Network Pay Display' app.  Added 'displayPaymentReceiptOptions' to replace deprecated 'showPaymentReceiptOptions'.  Removed dependency on browser for connector objects produced using 1.2 factory objects.
+* SEMI-554 Added internal support for remote error.  Fix "cloverShouldHandleReceipts" and "disablePrinting" check to look for correct property. Use 1.2.0-rc1.0 of remote-pay-cloud-api.
 
 ## Version 1.1.0
 ## Version 1.1.0-rc6.4
 
-SEMI-498 Revert update to use new schema objects.  New schema is slated for 1.2.
+* SEMI-498 Revert update to use new schema objects.  New schema is slated for 1.2.
 
 ## Version 1.1.0-rc6.3 (deprecated)
 
-SEMI-498 Add ready checking before attempting remote calls.  Add request validation.  Inhibit multiple 'onReady' callbacks.  Update to use new schema objects.
-SEMI-577 Add Declaration of support for Chrome version 54, Firefox version 49
+* SEMI-498 Add ready checking before attempting remote calls.  Add request validation.  Inhibit multiple 'onReady' callbacks.  Update to use new schema objects.
+* SEMI-577 Add Declaration of support for Chrome version 54, Firefox version 49
 
 ## Version 1.1.0-rc6.2
 
-SEMI-541 Update remote pay cloud API classes to ver 1.1.0-rc5.1
+* SEMI-541 Update remote pay cloud API classes to ver 1.1.0-rc5.1
 
 ## Version 1.1.0-rc6.1
 
