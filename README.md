@@ -387,6 +387,8 @@ API documentation is generated when `npm install` is run.
 
 # Release Notes
 
+SEMI-917 Add onDeviceDisconnected, onDeviceConnected, onDeviceReady, and deprecate onDisconnected, onConnected, onReady.  This brings this API in closer alignment with the other remote-pay API's.
+
 ## Version 1.3.0-rc1.0
 * Added support for Custom Activities
   * ICloverConnector
