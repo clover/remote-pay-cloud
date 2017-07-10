@@ -218,7 +218,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 				if (req.getTippableAmount()) {
 					transactionSettings.setTippableAmount(req.getTippableAmount());
 				}
-				if (req.getTipAmount()) {
+				if (req.getTipAmount() !== undefined) { // In javascript, 0 is false.  We must test for undefined explicitly. SEMI-864
 					builder.setTipAmount(req.getTipAmount());
 				}
 				if (req.getTipMode()) {

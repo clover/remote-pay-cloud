@@ -387,6 +387,9 @@ API documentation is generated when `npm install` is run.
 
 # Release Notes
 
+SEMI-864 Fix case where a provided tip of 0 resulted in a sale being converted to an auth.
+
+## Version 1.3.0-rc1.1
 SEMI-917 Add onDeviceDisconnected, onDeviceConnected, onDeviceReady, and deprecate onDisconnected, onConnected, onReady.  This brings this API in closer alignment with the other remote-pay API's.
 
 ## Version 1.3.0-rc1.0
