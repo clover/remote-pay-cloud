@@ -383,10 +383,10 @@ This library has been tested against the following Browser type and versions:
 # Generate Documentation
 API documentation is generated when `npm install` is run. 
 [Online Docs](http://clover.github.io/remote-pay-cloud/1.3.0-rc1.1/) and
-[Online API class Docs](http://clover.github.io/remote-pay-cloud-api/1.3.0-rc1.1/)
+[Online API class Docs](http://clover.github.io/remote-pay-cloud-api/1.3.1-rc1.0/)
 
 # Release Notes
-
+## Version 1.3.1-rc1.0
 SEMI-864 Fix case where a provided tip of 0 resulted in a sale being converted to an auth.
 
 ## Version 1.3.0-rc1.1
