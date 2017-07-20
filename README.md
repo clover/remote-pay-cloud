@@ -5,7 +5,7 @@
 See the package.json postversion script, which maps to scripts/postversion.sh
 Do not change this or the versioning may not reflect the npm version correctly.
 --->
-Current version: 1.3.1-rc1.1
+Current version: 1.3.1-rc1.2
 
 ## Overview
 
@@ -382,10 +382,13 @@ This library has been tested against the following Browser type and versions:
 
 # Generate Documentation
 API documentation is generated when `npm install` is run. 
-[Online Docs](http://clover.github.io/remote-pay-cloud/1.3.1-rc1.1/) and
-[Online API class Docs](http://clover.github.io/remote-pay-cloud-api/1.3.1-rc1.0/)
+[Online Docs](http://clover.github.io/remote-pay-cloud/1.3.1-rc1.2/) and
+[Online API class Docs](http://clover.github.io/remote-pay-cloud-api/1.3.1-rc1.1/)
 
 # Release Notes
+## Version 1.3.1-rc1.2
+* CLOVER-21536  Default allowPartialAuth in PayIntent dto.  Update to dependency on remote-pay-cloud-api
+
 ## Version 1.3.1-rc1.1
 * SEMI-695 Update typesccript version
 
