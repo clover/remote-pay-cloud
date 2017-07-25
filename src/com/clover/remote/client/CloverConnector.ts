@@ -1262,10 +1262,10 @@ export namespace CloverConnector {
 			this.cloverConnector.broadcaster.notifyCloseout(response);
 		}
 
-		public onDeviceDisconnected(): void {
-			this.logger.debug('Disconnected');
+		public onDeviceDisconnected(device: CloverDevice, message?:string): void {
+			this.logger.debug('Disconnected ', message);
 			this.cloverConnector.isReady = false;
-			this.cloverConnector.broadcaster.notifyOnDisconnect();
+			this.cloverConnector.broadcaster.notifyOnDisconnect(message);
 		}
 
 		public onDeviceConnected(): void {

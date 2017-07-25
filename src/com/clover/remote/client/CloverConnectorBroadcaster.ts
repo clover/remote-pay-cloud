@@ -172,12 +172,12 @@ export class CloverConnectorBroadcaster
         });
     }
 
-    public notifyOnDisconnect(): void {
-        this.logger.debug('Sending Disconnect notification to listeners');
+    public notifyOnDisconnect(message?:string): void {
+        this.logger.debug('Sending Disconnect notification to listeners', message);
         this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
             try {
-                listener.onDeviceDisconnected();  // changed the name in 1.3
-                listener.onDisconnected();        // left here for backwards compatibility.  Deprecated in 1.3*
+                listener.onDeviceDisconnected(message);  // changed the name in 1.3
+                listener.onDisconnected(message);        // left here for backwards compatibility.  Deprecated in 1.3*
             }
             catch(e) {
                 this.logger.error(e);

@@ -61,8 +61,8 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      * 
      * @param {CloverTransport} transport - the transport holding the notifications
      */
-    public onDeviceDisconnected(transport: CloverTransport): void {
-        this.notifyObserversDisconnected(transport);
+    public onDeviceDisconnected(transport: CloverTransport, message?:string): void {
+        this.notifyObserversDisconnected(transport, message);
     }
 
     public getApplicationId(): string {
@@ -359,9 +359,9 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      * 
      * @param transport 
      */
-    private notifyObserversDisconnected(transport: CloverTransport): void {
+    private notifyObserversDisconnected(transport: CloverTransport, message?:string): void {
 		this.deviceObservers.forEach((obs) => {
-			obs.onDeviceDisconnected(this);
+			obs.onDeviceDisconnected(this, message);
 		});
     }
 

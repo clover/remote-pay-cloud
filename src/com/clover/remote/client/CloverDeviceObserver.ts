@@ -168,7 +168,7 @@ export interface CloverDeviceObserver {
 	 * 
 	 * @param {CloverDevice} device 
 	 */
-	onDeviceDisconnected(device: CloverDevice): void;
+	onDeviceDisconnected(device: CloverDevice, message?:string): void;
 
 	/**
 	 * Device Connected
