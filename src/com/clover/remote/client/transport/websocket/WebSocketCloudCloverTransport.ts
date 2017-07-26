@@ -104,7 +104,7 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
 		this.httpSupport.postData(alertEndpoint,
             function(data) { this.deviceNotificationSent(data);}.bind(this),
             function(error) {
-                this.connectionError(this, "Error sending alert to device." + error);
+                this.connectionError(this.webSocket, "Error sending alert to device." + error);
             }.bind(this),
             deviceContactInfo);
 	}
@@ -126,6 +126,8 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
             let deviceWebSocketEndpoint:string = Endpoints.getDeviceWebSocketEndpoint(
                 notificationResponse.host, notificationResponse.token, this.friendlyId, this.forceConnect);
             this.doOptionsCallToAvoid401Error(deviceWebSocketEndpoint);
+        } else {
+            this.connectionError(this.webSocket, "Could not send alert to device.");
         }
     }
 

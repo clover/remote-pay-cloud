@@ -386,6 +386,9 @@ API documentation is generated when `npm install` is run.
 [Online API class Docs](http://clover.github.io/remote-pay-cloud-api/1.3.1/)
 
 # Release Notes
+
+* SEMI-991 When Cloud connections fail because a device is not communicating with the Clover servers, report disconnect.
+
 ## Version 1.3.1
 ## Version 1.3.1-rc1.2
 * CLOVER-21536  Default allowPartialAuth in PayIntent dto.  Update to dependency on remote-pay-cloud-api
