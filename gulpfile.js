@@ -25,8 +25,29 @@ gulp.task('build:src', ['clean:dist'], () => {
 
 gulp.task("typedoc", function() {
 	return gulp
-		.src(["src/**/*.ts"])
+		.src([
+                "src/com/clover/remote/client/CloverConnectorFactoryBuilder.ts",
+                "src/com/clover/remote/client/ICloverConnectorFactory.ts",
+                "src/com/clover/remote/client/CloverConnectorFactoryV2.ts",
+                "src/com/clover/remote/client/CloverConnectorFactory.ts",
+                "src/com/clover/remote/client/CardEntryMethods.ts",
+
+                "src/com/clover/remote/client/device/WebSocketPairedCloverDeviceConfiguration.ts",
+                "src/com/clover/remote/client/device/WebSocketCloudCloverDeviceConfiguration.ts",
+
+                "src/com/clover/websocket/CloverWebSocketInterface.ts",
+                "src/com/clover/websocket/BrowserWebSocketImpl.ts",
+                "src/com/clover/websocket/WebSocketListener.ts",
+                "src/com/clover/websocket/WebSocketState.ts",
+
+                "src/com/clover/util/ImageUtil.ts",
+                "src/com/clover/util/IImageUtil.ts",
+                "src/com/clover/Version.ts",
+                "src/CloverID.ts"
+            ]
+        )
 		.pipe(typedoc({
+            excludeExternals: true,
 			module: "commonjs",
 			target: "es5",
 			out: "docs/",
