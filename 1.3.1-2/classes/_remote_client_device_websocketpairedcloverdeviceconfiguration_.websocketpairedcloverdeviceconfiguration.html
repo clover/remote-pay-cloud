@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>WebSocketCloudCloverDeviceConfiguration | Clover SDK for Javascript Integration</title>
+	<title>WebSocketPairedCloverDeviceConfiguration | Clover SDK for Javascript Integration</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,13 +54,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_remote_client_device_websocketcloudcloverdeviceconfiguration_.html">&quot;remote/client/device/WebSocketCloudCloverDeviceConfiguration&quot;</a>
+					<a href="../modules/_remote_client_device_websocketpairedcloverdeviceconfiguration_.html">&quot;remote/client/device/WebSocketPairedCloverDeviceConfiguration&quot;</a>
 				</li>
 				<li>
-					<a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html">WebSocketCloudCloverDeviceConfiguration</a>
+					<a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html">WebSocketPairedCloverDeviceConfiguration</a>
 				</li>
 			</ul>
-			<h1>Class WebSocketCloudCloverDeviceConfiguration</h1>
+			<h1>Class WebSocketPairedCloverDeviceConfiguration</h1>
 		</div>
 	</div>
 </header>
@@ -70,8 +70,10 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Configuration used to create a connection to a device via the Clover cloud.</p>
+						<p>This is the base class that is used when connecting directly to a device via the &quot;Network Pay Display&quot;.</p>
 					</div>
+					<p>A pairing scheme is used when connecting, so the function callbacks for when a pairing code is received,
+					and when the pairing completes must be implemented here.</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
@@ -81,7 +83,7 @@
 						<span class="tsd-signature-type">WebSocketCloverDeviceConfiguration</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">WebSocketCloudCloverDeviceConfiguration</span>
+								<span class="target">WebSocketPairedCloverDeviceConfiguration</span>
 							</li>
 						</ul>
 					</li>
@@ -91,6 +93,7 @@
 				<h3>Implements</h3>
 				<ul class="tsd-hierarchy">
 					<li><span class="tsd-signature-type">CloverDeviceConfiguration</span></li>
+					<li><span class="tsd-signature-type">PairingDeviceConfiguration</span></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -100,41 +103,40 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-private-protected">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#accesstoken" class="tsd-kind-icon">access<wbr>Token</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#cloverserver" class="tsd-kind-icon">clover<wbr>Server</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#deviceid" class="tsd-kind-icon">device<wbr>Id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#forceconnect" class="tsd-kind-icon">force<wbr>Connect</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#friendlyid" class="tsd-kind-icon">friendly<wbr>Id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#heartbeatinterval" class="tsd-kind-icon">heartbeat<wbr>Interval</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#httpsupport" class="tsd-kind-icon">http<wbr>Support</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#imageutil" class="tsd-kind-icon">image<wbr>Util</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#merchantid" class="tsd-kind-icon">merchant<wbr>Id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#pingretrycountbeforereconnect" class="tsd-kind-icon">ping<wbr>Retry<wbr>Count<wbr>Before<wbr>Reconnect</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#reconnectdelay" class="tsd-kind-icon">reconnect<wbr>Delay</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#websocketimplclass" class="tsd-kind-icon">web<wbr>Socket<wbr>Impl<wbr>Class</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#authtoken" class="tsd-kind-icon">auth<wbr>Token</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#heartbeatinterval" class="tsd-kind-icon">heartbeat<wbr>Interval</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#imageutil" class="tsd-kind-icon">image<wbr>Util</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#pingretrycountbeforereconnect" class="tsd-kind-icon">ping<wbr>Retry<wbr>Count<wbr>Before<wbr>Reconnect</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#posname" class="tsd-kind-icon">pos<wbr>Name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#reconnectdelay" class="tsd-kind-icon">reconnect<wbr>Delay</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#serialnumber" class="tsd-kind-icon">serial<wbr>Number</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#uri" class="tsd-kind-icon">uri</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#websocketimplclass" class="tsd-kind-icon">web<wbr>Socket<wbr>Impl<wbr>Class</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#getapplicationid" class="tsd-kind-icon">get<wbr>Application<wbr>Id</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#getcloverdevicetype" class="tsd-kind-icon">get<wbr>Clover<wbr>Device<wbr>Type</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#getclovertransport" class="tsd-kind-icon">get<wbr>Clover<wbr>Transport</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#getheartbeatinterval" class="tsd-kind-icon">get<wbr>Heartbeat<wbr>Interval</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#getimageutil" class="tsd-kind-icon">get<wbr>Image<wbr>Util</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#getmessagepackagename" class="tsd-kind-icon">get<wbr>Message<wbr>Package<wbr>Name</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#getname" class="tsd-kind-icon">get<wbr>Name</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#getpingretrycountbeforereconnect" class="tsd-kind-icon">get<wbr>Ping<wbr>Retry<wbr>Count<wbr>Before<wbr>Reconnect</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#getreconnectdelay" class="tsd-kind-icon">get<wbr>Reconnect<wbr>Delay</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#setheartbeatinterval" class="tsd-kind-icon">set<wbr>Heartbeat<wbr>Interval</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#setpingretrycountbeforereconnect" class="tsd-kind-icon">set<wbr>Ping<wbr>Retry<wbr>Count<wbr>Before<wbr>Reconnect</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#setreconnectdelay" class="tsd-kind-icon">set<wbr>Reconnect<wbr>Delay</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#getapplicationid" class="tsd-kind-icon">get<wbr>Application<wbr>Id</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#getcloverdevicetype" class="tsd-kind-icon">get<wbr>Clover<wbr>Device<wbr>Type</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#getclovertransport" class="tsd-kind-icon">get<wbr>Clover<wbr>Transport</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#getheartbeatinterval" class="tsd-kind-icon">get<wbr>Heartbeat<wbr>Interval</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#getimageutil" class="tsd-kind-icon">get<wbr>Image<wbr>Util</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#getmessagepackagename" class="tsd-kind-icon">get<wbr>Message<wbr>Package<wbr>Name</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#getname" class="tsd-kind-icon">get<wbr>Name</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#getpingretrycountbeforereconnect" class="tsd-kind-icon">get<wbr>Ping<wbr>Retry<wbr>Count<wbr>Before<wbr>Reconnect</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#getreconnectdelay" class="tsd-kind-icon">get<wbr>Reconnect<wbr>Delay</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#onpairingcode" class="tsd-kind-icon">on<wbr>Pairing<wbr>Code</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#onpairingsuccess" class="tsd-kind-icon">on<wbr>Pairing<wbr>Success</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#setheartbeatinterval" class="tsd-kind-icon">set<wbr>Heartbeat<wbr>Interval</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#setpingretrycountbeforereconnect" class="tsd-kind-icon">set<wbr>Ping<wbr>Retry<wbr>Count<wbr>Before<wbr>Reconnect</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#setreconnectdelay" class="tsd-kind-icon">set<wbr>Reconnect<wbr>Delay</a></li>
 							</ul>
 						</section>
 					</div>
@@ -146,14 +148,14 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Web<wbr>Socket<wbr>Cloud<wbr>Clover<wbr>Device<wbr>Configuration<span class="tsd-signature-symbol">(</span>applicationId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, webSocketFactoryFunction<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, imageUtil<span class="tsd-signature-symbol">: </span><a href="../interfaces/_util_iimageutil_.iimageutil.html" class="tsd-signature-type">IImageUtil</a>, cloverServer<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, accessToken<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, httpSupport<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">HttpSupport</span>, merchantId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, deviceId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, friendlyId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, forceConnect<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span>, heartbeatInterval<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, reconnectDelay<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html" class="tsd-signature-type">WebSocketCloudCloverDeviceConfiguration</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Web<wbr>Socket<wbr>Paired<wbr>Clover<wbr>Device<wbr>Configuration<span class="tsd-signature-symbol">(</span>endpoint<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, applicationId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, posName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, serialNumber<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, authToken<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, webSocketFactoryFunction<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, imageUtil<span class="tsd-signature-symbol">: </span><a href="../interfaces/_util_iimageutil_.iimageutil.html" class="tsd-signature-type">IImageUtil</a>, heartbeatInterval<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, reconnectDelay<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html" class="tsd-signature-type">WebSocketPairedCloverDeviceConfiguration</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides WebSocketCloverDeviceConfiguration.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/8d7c30b/src/com/clover/remote/client/device/WebSocketCloudCloverDeviceConfiguration.ts#L23">remote/client/device/WebSocketCloudCloverDeviceConfiguration.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/device/WebSocketPairedCloverDeviceConfiguration.ts#L20">remote/client/device/WebSocketPairedCloverDeviceConfiguration.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -161,11 +163,42 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
+									<h5>endpoint: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>the endpoint of the Clover device. e.g. wss://192.168.1.15:12345/remote_pay</p>
+										</div>
+									</div>
+								</li>
+								<li>
 									<h5>applicationId: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
-											<p>the applicationId that uniquely identifies the POS.
-											e.g. com.company.MyPOS:2.3.1 for the first connection</p>
+											<p>the applicationId that uniquely identifies the POS. e.g. com.company.MyPOS:2.3.1</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5>posName: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Displayed during pairing to display the POS name on the Mini. e.g. MyPOS</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5>serialNumber: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Displayed during pairing to display the device identifier. e.g. &#39;Aisle 3&#39; or &#39;POS-35153234&#39;</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5>authToken: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>The authToken retrieved from a previous pairing activity, passed as an argument to onPairingSuccess. This will be null for the first connection</p>
 										</div>
 									</div>
 								</li>
@@ -173,9 +206,8 @@
 									<h5>webSocketFactoryFunction: <span class="tsd-signature-type">any</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
-											<p>the function that will return an instance of the
-												CloverWebSocketInterface that will be used when connecting.  For Browser implementations, this can be
-											BrowserWebSocketImpl.createInstance.  For NodeJS implementations, this will be defined differently.</p>
+											<p>the function that will return an instance of the CloverWebSocketInterface
+											that will be used when connecting.</p>
 										</div>
 									</div>
 								</li>
@@ -188,82 +220,13 @@
 									</div>
 								</li>
 								<li>
-									<h5>cloverServer: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>the base url for the clover server used in the cloud connection.
-											EX:  <a href="https://www.clover.com">https://www.clover.com</a>, <a href="http://localhost:9000">http://localhost:9000</a></p>
-										</div>
-									</div>
-								</li>
-								<li>
-									<h5>accessToken: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>the OAuth access token that will be used when contacting the clover server</p>
-										</div>
-									</div>
-								</li>
-								<li>
-									<h5>httpSupport: <span class="tsd-signature-type">HttpSupport</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>the helper object used when making http requests.</p>
-										</div>
-									</div>
-								</li>
-								<li>
-									<h5>merchantId: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>the merchant the device belongs to.</p>
-										</div>
-									</div>
-								</li>
-								<li>
-									<h5>deviceId: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>the id (not uuid) of the device to connect to</p>
-										</div>
-									</div>
-								</li>
-								<li>
-									<h5>friendlyId: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>an identifier for the specific terminal connected to this device.  This id is used
-												in debugging and may be sent to other clients if they attempt to connect to the same device.  It will also be
-											sent to other clients that are currently connected if this device does a forceConnect.</p>
-										</div>
-									</div>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> forceConnect: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>if true, overtake any existing connection.</p>
-										</div>
-									</div>
-								</li>
-								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> heartbeatInterval: <span class="tsd-signature-type">number</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>duration to wait for a PING before disconnecting</p>
-										</div>
-									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> reconnectDelay: <span class="tsd-signature-type">number</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>duration to wait until a reconnect is attempted</p>
-										</div>
-									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html" class="tsd-signature-type">WebSocketCloudCloverDeviceConfiguration</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html" class="tsd-signature-type">WebSocketPairedCloverDeviceConfiguration</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -271,52 +234,12 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-private-protected">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="accesstoken" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> access<wbr>Token</h3>
-					<div class="tsd-signature tsd-kind-icon">access<wbr>Token<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="authtoken" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> auth<wbr>Token</h3>
+					<div class="tsd-signature tsd-kind-icon">auth<wbr>Token<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/8d7c30b/src/com/clover/remote/client/device/WebSocketCloudCloverDeviceConfiguration.ts#L18">remote/client/device/WebSocketCloudCloverDeviceConfiguration.ts:18</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="cloverserver" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> clover<wbr>Server</h3>
-					<div class="tsd-signature tsd-kind-icon">clover<wbr>Server<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/8d7c30b/src/com/clover/remote/client/device/WebSocketCloudCloverDeviceConfiguration.ts#L17">remote/client/device/WebSocketCloudCloverDeviceConfiguration.ts:17</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="deviceid" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> device<wbr>Id</h3>
-					<div class="tsd-signature tsd-kind-icon">device<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/8d7c30b/src/com/clover/remote/client/device/WebSocketCloudCloverDeviceConfiguration.ts#L21">remote/client/device/WebSocketCloudCloverDeviceConfiguration.ts:21</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="forceconnect" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> force<wbr>Connect</h3>
-					<div class="tsd-signature tsd-kind-icon">force<wbr>Connect<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/8d7c30b/src/com/clover/remote/client/device/WebSocketCloudCloverDeviceConfiguration.ts#L23">remote/client/device/WebSocketCloudCloverDeviceConfiguration.ts:23</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="friendlyid" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> friendly<wbr>Id</h3>
-					<div class="tsd-signature tsd-kind-icon">friendly<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/8d7c30b/src/com/clover/remote/client/device/WebSocketCloudCloverDeviceConfiguration.ts#L22">remote/client/device/WebSocketCloudCloverDeviceConfiguration.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/device/WebSocketPairedCloverDeviceConfiguration.ts#L20">remote/client/device/WebSocketPairedCloverDeviceConfiguration.ts:20</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -327,17 +250,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from WebSocketCloverDeviceConfiguration.heartbeatInterval</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/8d7c30b/src/com/clover/remote/client/device/WebSocketCloverDeviceConfiguration.ts#L13">remote/client/device/WebSocketCloverDeviceConfiguration.ts:13</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="httpsupport" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> http<wbr>Support</h3>
-					<div class="tsd-signature tsd-kind-icon">http<wbr>Support<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">HttpSupport</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/8d7c30b/src/com/clover/remote/client/device/WebSocketCloudCloverDeviceConfiguration.ts#L19">remote/client/device/WebSocketCloudCloverDeviceConfiguration.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/device/WebSocketCloverDeviceConfiguration.ts#L13">remote/client/device/WebSocketCloverDeviceConfiguration.ts:13</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -348,17 +261,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from WebSocketCloverDeviceConfiguration.imageUtil</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/8d7c30b/src/com/clover/remote/client/device/WebSocketCloverDeviceConfiguration.ts#L18">remote/client/device/WebSocketCloverDeviceConfiguration.ts:18</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="merchantid" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> merchant<wbr>Id</h3>
-					<div class="tsd-signature tsd-kind-icon">merchant<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/8d7c30b/src/com/clover/remote/client/device/WebSocketCloudCloverDeviceConfiguration.ts#L20">remote/client/device/WebSocketCloudCloverDeviceConfiguration.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/device/WebSocketCloverDeviceConfiguration.ts#L18">remote/client/device/WebSocketCloverDeviceConfiguration.ts:18</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -369,7 +272,17 @@
 					<aside class="tsd-sources">
 						<p>Inherited from WebSocketCloverDeviceConfiguration.pingRetryCountBeforeReconnect</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/8d7c30b/src/com/clover/remote/client/device/WebSocketCloverDeviceConfiguration.ts#L15">remote/client/device/WebSocketCloverDeviceConfiguration.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/device/WebSocketCloverDeviceConfiguration.ts#L15">remote/client/device/WebSocketCloverDeviceConfiguration.ts:15</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="posname" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> pos<wbr>Name</h3>
+					<div class="tsd-signature tsd-kind-icon">pos<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/device/WebSocketPairedCloverDeviceConfiguration.ts#L18">remote/client/device/WebSocketPairedCloverDeviceConfiguration.ts:18</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -380,7 +293,27 @@
 					<aside class="tsd-sources">
 						<p>Inherited from WebSocketCloverDeviceConfiguration.reconnectDelay</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/8d7c30b/src/com/clover/remote/client/device/WebSocketCloverDeviceConfiguration.ts#L14">remote/client/device/WebSocketCloverDeviceConfiguration.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/device/WebSocketCloverDeviceConfiguration.ts#L14">remote/client/device/WebSocketCloverDeviceConfiguration.ts:14</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="serialnumber" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> serial<wbr>Number</h3>
+					<div class="tsd-signature tsd-kind-icon">serial<wbr>Number<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/device/WebSocketPairedCloverDeviceConfiguration.ts#L19">remote/client/device/WebSocketPairedCloverDeviceConfiguration.ts:19</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="uri" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> uri</h3>
+					<div class="tsd-signature tsd-kind-icon">uri<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;null</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/device/WebSocketPairedCloverDeviceConfiguration.ts#L17">remote/client/device/WebSocketPairedCloverDeviceConfiguration.ts:17</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -391,7 +324,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from WebSocketCloverDeviceConfiguration.webSocketImplClass</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/8d7c30b/src/com/clover/remote/client/device/WebSocketCloverDeviceConfiguration.ts#L17">remote/client/device/WebSocketCloverDeviceConfiguration.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/device/WebSocketCloverDeviceConfiguration.ts#L17">remote/client/device/WebSocketCloverDeviceConfiguration.ts:17</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -409,25 +342,25 @@
 							<aside class="tsd-sources">
 								<p>Inherited from WebSocketCloverDeviceConfiguration.getApplicationId</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/8d7c30b/src/com/clover/remote/client/device/WebSocketCloverDeviceConfiguration.ts#L40">remote/client/device/WebSocketCloverDeviceConfiguration.ts:40</a></li>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/device/WebSocketCloverDeviceConfiguration.ts#L40">remote/client/device/WebSocketCloverDeviceConfiguration.ts:40</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="getcloverdevicetype" class="tsd-anchor"></a>
 					<h3>get<wbr>Clover<wbr>Device<wbr>Type</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">get<wbr>Clover<wbr>Device<wbr>Type<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides WebSocketCloverDeviceConfiguration.getCloverDeviceType</p>
+								<p>Inherited from WebSocketCloverDeviceConfiguration.getCloverDeviceType</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/8d7c30b/src/com/clover/remote/client/device/WebSocketCloudCloverDeviceConfiguration.ts#L80">remote/client/device/WebSocketCloudCloverDeviceConfiguration.ts:80</a></li>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/device/WebSocketCloverDeviceConfiguration.ts#L68">remote/client/device/WebSocketCloverDeviceConfiguration.ts:68</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
@@ -445,7 +378,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides WebSocketCloverDeviceConfiguration.getCloverTransport</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/8d7c30b/src/com/clover/remote/client/device/WebSocketCloudCloverDeviceConfiguration.ts#L84">remote/client/device/WebSocketCloudCloverDeviceConfiguration.ts:84</a></li>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/device/WebSocketPairedCloverDeviceConfiguration.ts#L64">remote/client/device/WebSocketPairedCloverDeviceConfiguration.ts:64</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">CloverTransport</span></h4>
@@ -463,7 +396,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from WebSocketCloverDeviceConfiguration.getHeartbeatInterval</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/8d7c30b/src/com/clover/remote/client/device/WebSocketCloverDeviceConfiguration.ts#L44">remote/client/device/WebSocketCloverDeviceConfiguration.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/device/WebSocketCloverDeviceConfiguration.ts#L44">remote/client/device/WebSocketCloverDeviceConfiguration.ts:44</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -481,7 +414,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from WebSocketCloverDeviceConfiguration.getImageUtil</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/8d7c30b/src/com/clover/remote/client/device/WebSocketCloverDeviceConfiguration.ts#L79">remote/client/device/WebSocketCloverDeviceConfiguration.ts:79</a></li>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/device/WebSocketCloverDeviceConfiguration.ts#L79">remote/client/device/WebSocketCloverDeviceConfiguration.ts:79</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -505,7 +438,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides WebSocketCloverDeviceConfiguration.getMessagePackageName</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/8d7c30b/src/com/clover/remote/client/device/WebSocketCloudCloverDeviceConfiguration.ts#L72">remote/client/device/WebSocketCloudCloverDeviceConfiguration.ts:72</a></li>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/device/WebSocketPairedCloverDeviceConfiguration.ts#L56">remote/client/device/WebSocketPairedCloverDeviceConfiguration.ts:56</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -523,7 +456,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides WebSocketCloverDeviceConfiguration.getName</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/8d7c30b/src/com/clover/remote/client/device/WebSocketCloudCloverDeviceConfiguration.ts#L76">remote/client/device/WebSocketCloudCloverDeviceConfiguration.ts:76</a></li>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/device/WebSocketPairedCloverDeviceConfiguration.ts#L60">remote/client/device/WebSocketPairedCloverDeviceConfiguration.ts:60</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -541,7 +474,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from WebSocketCloverDeviceConfiguration.getPingRetryCountBeforeReconnect</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/8d7c30b/src/com/clover/remote/client/device/WebSocketCloverDeviceConfiguration.ts#L60">remote/client/device/WebSocketCloverDeviceConfiguration.ts:60</a></li>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/device/WebSocketCloverDeviceConfiguration.ts#L60">remote/client/device/WebSocketCloverDeviceConfiguration.ts:60</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -559,10 +492,56 @@
 							<aside class="tsd-sources">
 								<p>Inherited from WebSocketCloverDeviceConfiguration.getReconnectDelay</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/8d7c30b/src/com/clover/remote/client/device/WebSocketCloverDeviceConfiguration.ts#L52">remote/client/device/WebSocketCloverDeviceConfiguration.ts:52</a></li>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/device/WebSocketCloverDeviceConfiguration.ts#L52">remote/client/device/WebSocketCloverDeviceConfiguration.ts:52</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="onpairingcode" class="tsd-anchor"></a>
+					<h3>on<wbr>Pairing<wbr>Code</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Pairing<wbr>Code<span class="tsd-signature-symbol">(</span>pairingCode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/device/WebSocketPairedCloverDeviceConfiguration.ts#L80">remote/client/device/WebSocketPairedCloverDeviceConfiguration.ts:80</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>pairingCode: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="onpairingsuccess" class="tsd-anchor"></a>
+					<h3>on<wbr>Pairing<wbr>Success</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Pairing<wbr>Success<span class="tsd-signature-symbol">(</span>authToken<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/device/WebSocketPairedCloverDeviceConfiguration.ts#L81">remote/client/device/WebSocketPairedCloverDeviceConfiguration.ts:81</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>authToken: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -577,7 +556,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from WebSocketCloverDeviceConfiguration.setHeartbeatInterval</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/8d7c30b/src/com/clover/remote/client/device/WebSocketCloverDeviceConfiguration.ts#L48">remote/client/device/WebSocketCloverDeviceConfiguration.ts:48</a></li>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/device/WebSocketCloverDeviceConfiguration.ts#L48">remote/client/device/WebSocketCloverDeviceConfiguration.ts:48</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -601,7 +580,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from WebSocketCloverDeviceConfiguration.setPingRetryCountBeforeReconnect</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/8d7c30b/src/com/clover/remote/client/device/WebSocketCloverDeviceConfiguration.ts#L64">remote/client/device/WebSocketCloverDeviceConfiguration.ts:64</a></li>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/device/WebSocketCloverDeviceConfiguration.ts#L64">remote/client/device/WebSocketCloverDeviceConfiguration.ts:64</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -625,7 +604,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from WebSocketCloverDeviceConfiguration.setReconnectDelay</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/8d7c30b/src/com/clover/remote/client/device/WebSocketCloverDeviceConfiguration.ts#L56">remote/client/device/WebSocketCloverDeviceConfiguration.ts:56</a></li>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/device/WebSocketCloverDeviceConfiguration.ts#L56">remote/client/device/WebSocketCloverDeviceConfiguration.ts:56</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -664,10 +643,10 @@
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_remote_client_icloverconnectorfactory_.html">"remote/client/IClover<wbr>Connector<wbr>Factory"</a>
 					</li>
-					<li class="current tsd-kind-external-module">
+					<li class=" tsd-kind-external-module">
 						<a href="../modules/_remote_client_device_websocketcloudcloverdeviceconfiguration_.html">"remote/client/device/<wbr>Web<wbr>Socket<wbr>Cloud<wbr>Clover<wbr>Device<wbr>Configuration"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class="current tsd-kind-external-module">
 						<a href="../modules/_remote_client_device_websocketpairedcloverdeviceconfiguration_.html">"remote/client/device/<wbr>Web<wbr>Socket<wbr>Paired<wbr>Clover<wbr>Device<wbr>Configuration"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -695,82 +674,79 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html" class="tsd-kind-icon">Web<wbr>Socket<wbr>Cloud<wbr>Clover<wbr>Device<wbr>Configuration</a>
+						<a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html" class="tsd-kind-icon">Web<wbr>Socket<wbr>Paired<wbr>Clover<wbr>Device<wbr>Configuration</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-								<a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#accesstoken" class="tsd-kind-icon">access<wbr>Token</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#cloverserver" class="tsd-kind-icon">clover<wbr>Server</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#deviceid" class="tsd-kind-icon">device<wbr>Id</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#forceconnect" class="tsd-kind-icon">force<wbr>Connect</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#friendlyid" class="tsd-kind-icon">friendly<wbr>Id</a>
+								<a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#authtoken" class="tsd-kind-icon">auth<wbr>Token</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
-								<a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#heartbeatinterval" class="tsd-kind-icon">heartbeat<wbr>Interval</a>
+								<a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#heartbeatinterval" class="tsd-kind-icon">heartbeat<wbr>Interval</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+								<a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#imageutil" class="tsd-kind-icon">image<wbr>Util</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+								<a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#pingretrycountbeforereconnect" class="tsd-kind-icon">ping<wbr>Retry<wbr>Count<wbr>Before<wbr>Reconnect</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#httpsupport" class="tsd-kind-icon">http<wbr>Support</a>
+								<a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#posname" class="tsd-kind-icon">pos<wbr>Name</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
-								<a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#imageutil" class="tsd-kind-icon">image<wbr>Util</a>
+								<a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#reconnectdelay" class="tsd-kind-icon">reconnect<wbr>Delay</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#merchantid" class="tsd-kind-icon">merchant<wbr>Id</a>
+								<a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#serialnumber" class="tsd-kind-icon">serial<wbr>Number</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#uri" class="tsd-kind-icon">uri</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
-								<a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#pingretrycountbeforereconnect" class="tsd-kind-icon">ping<wbr>Retry<wbr>Count<wbr>Before<wbr>Reconnect</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
-								<a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#reconnectdelay" class="tsd-kind-icon">reconnect<wbr>Delay</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
-								<a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#websocketimplclass" class="tsd-kind-icon">web<wbr>Socket<wbr>Impl<wbr>Class</a>
+								<a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#websocketimplclass" class="tsd-kind-icon">web<wbr>Socket<wbr>Impl<wbr>Class</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#getapplicationid" class="tsd-kind-icon">get<wbr>Application<wbr>Id</a>
+								<a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#getapplicationid" class="tsd-kind-icon">get<wbr>Application<wbr>Id</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#getcloverdevicetype" class="tsd-kind-icon">get<wbr>Clover<wbr>Device<wbr>Type</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
-								<a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#getcloverdevicetype" class="tsd-kind-icon">get<wbr>Clover<wbr>Device<wbr>Type</a>
+								<a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#getclovertransport" class="tsd-kind-icon">get<wbr>Clover<wbr>Transport</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#getheartbeatinterval" class="tsd-kind-icon">get<wbr>Heartbeat<wbr>Interval</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#getimageutil" class="tsd-kind-icon">get<wbr>Image<wbr>Util</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
-								<a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#getclovertransport" class="tsd-kind-icon">get<wbr>Clover<wbr>Transport</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#getheartbeatinterval" class="tsd-kind-icon">get<wbr>Heartbeat<wbr>Interval</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#getimageutil" class="tsd-kind-icon">get<wbr>Image<wbr>Util</a>
+								<a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#getmessagepackagename" class="tsd-kind-icon">get<wbr>Message<wbr>Package<wbr>Name</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
-								<a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#getmessagepackagename" class="tsd-kind-icon">get<wbr>Message<wbr>Package<wbr>Name</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
-								<a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#getname" class="tsd-kind-icon">get<wbr>Name</a>
+								<a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#getname" class="tsd-kind-icon">get<wbr>Name</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#getpingretrycountbeforereconnect" class="tsd-kind-icon">get<wbr>Ping<wbr>Retry<wbr>Count<wbr>Before<wbr>Reconnect</a>
+								<a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#getpingretrycountbeforereconnect" class="tsd-kind-icon">get<wbr>Ping<wbr>Retry<wbr>Count<wbr>Before<wbr>Reconnect</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#getreconnectdelay" class="tsd-kind-icon">get<wbr>Reconnect<wbr>Delay</a>
+								<a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#getreconnectdelay" class="tsd-kind-icon">get<wbr>Reconnect<wbr>Delay</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#onpairingcode" class="tsd-kind-icon">on<wbr>Pairing<wbr>Code</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#onpairingsuccess" class="tsd-kind-icon">on<wbr>Pairing<wbr>Success</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#setheartbeatinterval" class="tsd-kind-icon">set<wbr>Heartbeat<wbr>Interval</a>
+								<a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#setheartbeatinterval" class="tsd-kind-icon">set<wbr>Heartbeat<wbr>Interval</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#setpingretrycountbeforereconnect" class="tsd-kind-icon">set<wbr>Ping<wbr>Retry<wbr>Count<wbr>Before<wbr>Reconnect</a>
+								<a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#setpingretrycountbeforereconnect" class="tsd-kind-icon">set<wbr>Ping<wbr>Retry<wbr>Count<wbr>Before<wbr>Reconnect</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="_remote_client_device_websocketcloudcloverdeviceconfiguration_.websocketcloudcloverdeviceconfiguration.html#setreconnectdelay" class="tsd-kind-icon">set<wbr>Reconnect<wbr>Delay</a>
+								<a href="_remote_client_device_websocketpairedcloverdeviceconfiguration_.websocketpairedcloverdeviceconfiguration.html#setreconnectdelay" class="tsd-kind-icon">set<wbr>Reconnect<wbr>Delay</a>
 							</li>
 						</ul>
 					</li>
