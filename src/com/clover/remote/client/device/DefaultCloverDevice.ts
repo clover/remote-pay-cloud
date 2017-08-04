@@ -998,11 +998,21 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         remoteMessage.setType(sdk.remotemessage.RemoteMessageType.COMMAND);
         remoteMessage.setPackageName(this.packageName);
         remoteMessage.setMethod(message.method.toString());
-        remoteMessage.setPayload(JSON.stringify(message));
+        remoteMessage.setPayload(JSON.stringify(message, DefaultCloverDevice.stringifyClover));
         remoteMessage.setRemoteSourceSDK(DefaultCloverDevice.REMOTE_SDK);
         remoteMessage.setRemoteApplicationID(this.applicationId);
 
         return remoteMessage;
+    }
+
+    protected static stringifyClover (key : string, value : any) : any {
+        if(Array.isArray(value) && key != "elements"){
+            //converts array into the format that clover devices expect
+            //from) foo : []
+            //to) foo : {elements : []}
+            return {elements: value};
+        }
+        return value;
     }
 
     protected sendRemoteMessage(remoteMessage: sdk.remotemessage.RemoteMessage): void {

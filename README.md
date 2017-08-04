@@ -387,6 +387,8 @@ API documentation is generated when `npm install` is run.
 
 # Release Notes
 
+* SEMI-1045 Converts array elements into the format expected by Clover Devices
+
 ## Version 1.3.1-1
 * SEMI-1025 Use version of remote-pay-cloud-api that contains OrderUpdateMessage and related files.
 * SEMI-991 When Cloud connections fail because a device is not communicating with the Clover servers, report disconnect.
