@@ -5,7 +5,7 @@
 See the package.json postversion script, which maps to scripts/postversion.sh
 Do not change this or the versioning may not reflect the npm version correctly.
 --->
-Current version: 1.3.1-1
+Current version: 1.3.1-2
 
 ## Overview
 
@@ -382,12 +382,13 @@ This library has been tested against the following Browser type and versions:
 
 # Generate Documentation
 API documentation is generated when `npm install` is run. 
-[Online Docs](http://clover.github.io/remote-pay-cloud/1.3.1-1/) and
+[Online Docs](http://clover.github.io/remote-pay-cloud/1.3.1-2/) and
 [Online API class Docs](http://clover.github.io/remote-pay-cloud-api/1.3.1-1/)
 
 # Release Notes
 
-* SEMI-1045 Converts array elements into the format expected by Clover Devices
+## Version 1.3.1-2
+* SEMI-1045 Converts array elements into the format expected by Clover Devices.  Fix for displaying an order.
 
 ## Version 1.3.1-1
 * SEMI-1025 Use version of remote-pay-cloud-api that contains OrderUpdateMessage and related files.
