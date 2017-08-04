@@ -387,7 +387,8 @@ API documentation is generated when `npm install` is run.
 
 # Release Notes
 
-* SEMI-1045 Converts array elements into the format expected by Clover Devices
+## Version 1.3.1-2
+* SEMI-1045 Converts array elements into the format expected by Clover Devices.  Fix for displaying an order.
 
 ## Version 1.3.1-1
 * SEMI-1025 Use version of remote-pay-cloud-api that contains OrderUpdateMessage and related files.
