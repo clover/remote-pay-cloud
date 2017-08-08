@@ -41,9 +41,11 @@ export class CloverConnectorBroadcaster
 
     public notifyOnTipAdded(tip: number): void {
         this.logger.debug('Sending TipAdded notification to listeners');
+        let tipAdded: sdk.remotepay.TipAdded = new sdk.remotepay.TipAdded();
+        tipAdded.setTipAmount(tip);
         this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
             try {
-                listener.onTipAdded(new sdk.remotepay.TipAdded(tip));
+                listener.onTipAdded(tipAdded);
             }
             catch(e) {
                 this.logger.error(e);
