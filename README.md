@@ -388,6 +388,7 @@ API documentation is generated when `npm install` is run.
 # Release Notes
 
 ## Version 1.3.1-1
+* SEMI-1054 Adds tipAmount to tipAdded 
 * SEMI-1025 Use version of remote-pay-cloud-api that contains OrderUpdateMessage and related files.
 * SEMI-991 When Cloud connections fail because a device is not communicating with the Clover servers, report disconnect.
 
