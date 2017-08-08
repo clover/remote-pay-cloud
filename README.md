@@ -387,6 +387,8 @@ API documentation is generated when `npm install` is run.
 
 # Release Notes
 
+* SEMI-1054 Adds tipAmount to tipAdded 
+
 ## Version 1.3.1-2
 * SEMI-1045 Converts array elements into the format expected by Clover Devices.  Fix for displaying an order.
 
