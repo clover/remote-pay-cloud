@@ -387,6 +387,7 @@ API documentation is generated when `npm install` is run.
 
 # Release Notes
 
+* SEMI-1057 Adds the VaultedCard to the Vaulted Card response
 * SEMI-1054 Adds tipAmount to tipAdded 
 
 ## Version 1.3.1-2

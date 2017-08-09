@@ -1222,11 +1222,12 @@ export namespace CloverConnector {
 		public onVaultCardResponse(vaultedCardOrSuccess: any, code: any, reason: string, message?: string, vaultedCard?: sdk.payments.VaultedCard): void {
 			if (vaultedCardOrSuccess instanceof sdk.payments.VaultedCard) {
 				let success: boolean = (code == sdk.remotepay.ResponseCode.SUCCESS);
-				this.onVaultCardResponse(success, success ? sdk.remotepay.ResponseCode.SUCCESS : sdk.remotepay.ResponseCode.FAIL, null, null, vaultedCard);
+				this.onVaultCardResponse(success, success ? sdk.remotepay.ResponseCode.SUCCESS : sdk.remotepay.ResponseCode.FAIL, null, null, vaultedCardOrSuccess);
 			}
 			else {
 				this.cloverConnector.device.doShowWelcomeScreen();
 				let response: sdk.remotepay.VaultCardResponse = new sdk.remotepay.VaultCardResponse();
+				response.setCard(vaultedCard);
                 CloverConnector.populateBaseResponse(response, vaultedCardOrSuccess, code, reason, message);
 				this.cloverConnector.broadcaster.notifyOnVaultCardRespose(response);
 			}
