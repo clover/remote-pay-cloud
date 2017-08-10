@@ -998,7 +998,26 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         remoteMessage.setType(sdk.remotemessage.RemoteMessageType.COMMAND);
         remoteMessage.setPackageName(this.packageName);
         remoteMessage.setMethod(message.method.toString());
+
+        // *******************
+        // Special serialization handling
+        // The top level elements should not have the "elements" wrapper on collections (arrays).
+        // sdk.remotemessage.Message instances are the only ones this needs to happen for.  This
+        // is the result of the manner in which the serialization/deserialization happens in the
+        // Android code.  The top level objects are not (de)serialized by a
+        // com.clover.sdk.GenericClient#extractListOther
+        // (in the Clover common repo).  The GenericClient is the tool that adds the elements
+        // wrapper.  The top level objects are (de)serialized by themselves
+        // com.clover.remote.message.Message#fromJsonString
+        for(var fieldKey in message) {
+            var metaInfo = message.getMetaInfo(fieldKey);
+            if (metaInfo && (metaInfo.type == Array)) {
+                message[fieldKey].suppressElementsWrapper = true;
+            }
+        }
         remoteMessage.setPayload(JSON.stringify(message, DefaultCloverDevice.stringifyClover));
+        // *******************
+
         remoteMessage.setRemoteSourceSDK(DefaultCloverDevice.REMOTE_SDK);
         remoteMessage.setRemoteApplicationID(this.applicationId);
 
@@ -1006,7 +1025,11 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
     }
 
     protected static stringifyClover (key : string, value : any) : any {
-        if(Array.isArray(value) && key != "elements"){
+        // If the element is an array, and it does NOT have the suppressElementsWrapper property,
+        // and the key is NOT "elements", then add the elements wrapper object
+        if( Array.isArray(value) &&
+            !value.hasOwnProperty("suppressElementsWrapper") &&
+            (key != "elements")) {
             //converts array into the format that clover devices expect
             //from) foo : []
             //to) foo : {elements : []}
