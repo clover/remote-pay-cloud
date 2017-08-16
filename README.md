@@ -366,7 +366,7 @@ let cloverConnector: Clover.remotepay.ICloverConnector =
 cloverConnector.addCloverConnectorListener(new StandAloneExampleCloverConnectorListener(cloverConnector));
 cloverConnector.initializeConnection();
 ```
-##### Clean up the connection on exit of the window.  
+##### Clean up the connection on exit of the window  
 This should be done with all connectors.
 The following example uses jQuery to add a hook for the window `beforeunload` event that ensures that the connector is displosed of.
 ```
@@ -387,8 +387,8 @@ This library has been tested against the following browser types and versions:
 
 # Generate Documentation
 API documentation is generated when `npm install` is run. 
-[Online Docs](http://clover.github.io/remote-pay-cloud/1.3.1-3/) and
-[Online API class Docs](http://clover.github.io/remote-pay-cloud-api/1.3.1-1/)
+* [Online Docs](http://clover.github.io/remote-pay-cloud/1.3.1-3/)
+* [Online API class Docs](http://clover.github.io/remote-pay-cloud-api/1.3.1-1/)
 
 ## Getting Help
 - [Tutorial for the Browser SDK](https://docs.clover.com/build/getting-started-with-cloverconnector/?sdk=browser)
@@ -396,34 +396,34 @@ API documentation is generated when `npm install` is run.
 - [Semi-Integration FAQ](https://docs.clover.com/build/semi-integration-faq/)
 - [Clover Developer Community](https://community.clover.com/index.html)
 
-# Release Notes
+## Release Notes
 
-## Version 1.3.1-3
+### Version 1.3.1-3
 * SEMI-1045 Correct array serialization for top level remotemessage.Message types
 * SEMI-1057 Adds the VaultedCard to the Vaulted Card response
 * SEMI-1054 Adds tipAmount to tipAdded 
 
-## Version 1.3.1-2
+### Version 1.3.1-2
 * SEMI-1045 Converts array elements into the format expected by Clover Devices. Fix for displaying an order.
 
-## Version 1.3.1-1
+### Version 1.3.1-1
 * SEMI-1025 Use version of remote-pay-cloud-api that contains OrderUpdateMessage and related files.
 * SEMI-991 When Cloud connections fail because a device is not communicating with the Clover servers, report disconnect.
 
-## Version 1.3.1
-## Version 1.3.1-rc1.2
+### Version 1.3.1
+#### Version 1.3.1-rc1.2
 * CLOVER-21536  Default allowPartialAuth in PayIntent dto.  Update to dependency on remote-pay-cloud-api.
 
-## Version 1.3.1-rc1.1
+#### Version 1.3.1-rc1.1
 * SEMI-695 Update typesccript version.
 
-## Version 1.3.1-rc1.0
+#### Version 1.3.1-rc1.0
 * SEMI-864 Fix case where a provided tip of 0 resulted in a sale being converted to an auth.
 
-## Version 1.3.0-rc1.1
+### Version 1.3.0-rc1.1
 * SEMI-917 Add onDeviceDisconnected, onDeviceConnected, and onDeviceReady and deprecate onDisconnected, onConnected, and onReady.  This brings this API into closer alignment with the other remote-pay APIs.
 
-## Version 1.3.0-rc1.0
+#### Version 1.3.0-rc1.0
 * Added support for Custom Activities
   * ICloverConnector
     * Added
@@ -448,64 +448,64 @@ API documentation is generated when `npm install` is run.
                * For example: Want a Sale request to interrupt showing Ads Custom Activity
 
 * SEMI-889 Remove automatic transition to welcome screen when device is ready.
-* SEMI-695 Addition of response to `resetDevice` call.
-* SEMI-795 Addition of retrievePayment functionality.
-* SEMI-777 Addition of custom activity support.
+* SEMI-695 Add response to `resetDevice` call.
+* SEMI-795 Add retrievePayment functionality.
+* SEMI-777 Add support for custom activities.
 
-## Version 1.2.0
-## Version 1.2.0-rc1.1
+### Version 1.2.0
+#### Version 1.2.0-rc1.1
 
-* SEMI-792  Installation script fix.  Move dev-dependencies to dependencies.
+* SEMI-792  Installation script fix. Move dev-dependencies to dependencies.
 
-## Version 1.2.0-rc1.0
+#### Version 1.2.0-rc1.0
 
-* SEMI-689  Initial 1.2 implementation.  Redesign of internal classes and many processes.  Support for 'per-transaction' settings. Update to use version 1.2.0-rc1.0 of remote-pay-cloud-api classes.  Addition of REMOTE_ERROR handling.  Increased request validation before communication.  Added ability to direct connect to device via the Network Pay Display app.  Added 'displayPaymentReceiptOptions' to replace deprecated 'showPaymentReceiptOptions'.  Removed dependency on browser for connector objects produced using 1.2 factory objects.
-* SEMI-554 Added internal support for remote error.  Fix "cloverShouldHandleReceipts" and "disablePrinting" check to look for correct property. Use 1.2.0-rc1.0 of remote-pay-cloud-api.
+* SEMI-689  Initial 1.2 implementation. Redesign of internal classes and many processes. Support for 'per-transaction' settings. Update to use version 1.2.0-rc1.0 of remote-pay-cloud-api classes.  Addition of REMOTE_ERROR handling.  Increased request validation before communication.  Added ability to direct connect to device via the Network Pay Display app.  Added 'displayPaymentReceiptOptions' to replace deprecated 'showPaymentReceiptOptions'.  Removed dependency on browser for connector objects produced using 1.2 factory objects.
+* SEMI-554 Added internal support for remote error. Fix "cloverShouldHandleReceipts" and "disablePrinting" check to look for correct property. Use 1.2.0-rc1.0 of remote-pay-cloud-api.
 
-## Version 1.1.0
-## Version 1.1.0-rc6.4
+### Version 1.1.0
+#### Version 1.1.0-rc6.4
 
-* SEMI-498 Revert update to use new schema objects.  New schema is slated for 1.2.
+* SEMI-498 Revert update to use new schema objects. New schema is slated for 1.2.
 
-## Version 1.1.0-rc6.3 (deprecated)
+#### Version 1.1.0-rc6.3 (deprecated)
 
-* SEMI-498 Add ready checking before attempting remote calls.  Add request validation.  Inhibit multiple 'onReady' callbacks.  Update to use new schema objects.
-* SEMI-577 Add Declaration of support for Chrome version 54, Firefox version 49.
+* SEMI-498 Add ready checking before attempting remote calls. Add request validation. Inhibit multiple 'onReady' callbacks. Update to use new schema objects.
+* SEMI-577 Add Declaration of support for Chrome version 54 and Firefox version 49.
 
-## Version 1.1.0-rc6.2
+#### Version 1.1.0-rc6.2
 
 * SEMI-541 Update Remote Pay Cloud API classes to ver 1.1.0-rc5.1.
 
-## Version 1.1.0-rc6.1
+#### Version 1.1.0-rc6.1
 
 * SVR-899 Handle reconnect requests from the server.
 
-## Version 1.1.0-rc6.0
+#### Version 1.1.0-rc6.0
 
 * PAY-1258 Fix documentation. Set up flow to capture "REFUND_RESPONSE" and extract any additional failure info.  Fix namespace issues.  Change flow to depend on ACK messages (when supported).  Extend ping/pong timeout check.
 
-## Version 1.1.0-rc5.1
+#### Version 1.1.0-rc5.1
 
 * SEMI-493: Allow suppression of log messages. Log messages are now suppressed by default. To enable default logging:
 ```
 require("remote-pay-cloud").DebugConfig.loggingEnabled = true;
 ```
 
-## Version 1.1.0-rc5.0
+#### Version 1.1.0-rc5.0
 
 * SEMI-438: Remove dependency on 'prototype.js'.
 
-## Version 1.1.0-RC2
+#### Version 1.1.0-RC2
 
 * SEMI-457: Add remoteApplicationId to required configuration.
 * SEMI-434: Add ability to read card data.
 * SEMI-423: Added backwards compatibility For older versions of android remote-pay ACK messages.
 
-## Version 1.1.0-RC1
+#### Version 1.1.0-RC1
 
 A deprecated beta version of the Connector (Clover.js) is included in this version with `require` directive syntax, but will removed in the future.
 
-## Version [BETA](https://github.com/clover/remote-pay-cloud-BETA/tree/BETA_Final) 
+### Version [BETA](https://github.com/clover/remote-pay-cloud-BETA/tree/BETA_Final) 
 
 The beta version includes the earliest library as well as a server with examples of the functions. 
 
