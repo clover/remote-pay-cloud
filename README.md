@@ -12,38 +12,42 @@ Do not change this or the versioning may not reflect the npm version correctly.
 Current version: 1.3.1-3
 
 ## Overview
-This SDK provides an API that enables your point-of-sale (POS) system using JavaScript to interface with a [Clover® payment device] (https://www.clover.com/pos-hardware/). Merchants can accept payments using credit, debit, EMV, and NFC contactless payments (including Apple Pay), gift cards, EBT (electronic benefit transfer), and more. [Learn more about Clover® integrations](https://www.clover.com/integrations).
+This SDK provides an API that enables your JavaScript point-of-sale (POS) system to interface with a [Clover® payment device] (https://www.clover.com/pos-hardware/). Merchants can accept payments using credit, debit, EMV (chip card), and NFC contactless payments (including Apple Pay), as well as gift cards, EBT (electronic benefit transfer), and more. [Learn more about Clover® integrations](https://www.clover.com/integrations).
 
-The API is available for download on [GitHub](https://github.com/clover/remote-pay-cloud), and can be used:
+The API is available for download on [GitHub](https://github.com/clover/remote-pay-cloud). You can use it in conjunction with:
 
-* In conjunction with the proper browser framework from a NodeJS `require` directive [hosted on npm](https://www.npmjs.com/package/remote-pay-cloud)
-* In conjunction with a server-based NodeJS application by including a compatible [WebSocket](https://www.npmjs.com/package/websocket) and [XMLHttpRequest](https://www.npmjs.com/package/xmlhttprequest) library
+* The proper browser framework from a NodeJS `require` directive [hosted on npm](https://www.npmjs.com/package/remote-pay-cloud)
+* A server-based NodeJS application by including a compatible [WebSocket](https://www.npmjs.com/package/websocket) and [XMLHttpRequest](https://www.npmjs.com/package/xmlhttprequest) library
 
-1. The remotepay/ICloverConnector is the high-level API with methods like `Sale()`, `VoidTransaction()`, `ManualRefund()`, etc.
-2. The remotepay/ICloverConnectorListener is the high-level listener API that defines callback methods like `onSaleResponse`, `onRefundPaymentResponse`, etc.
-3. The API includes objects that map to standard Clover objects such as `Payment`, `CardTransaction`, `Order`, etc.  These objects will match those defined in [clover-android-sdk](https://github.com/clover/clover-android-sdk).
+1. The remotepay/ICloverConnector is the high-level API that defines methods like `Sale()`, `VoidTransaction()`, and `ManualRefund()`.
+2. The remotepay/ICloverConnectorListener is the high-level listener API that defines callback methods like `onSaleResponse` and `onRefundPaymentResponse`.
+3. The API includes objects that map to standard Clover objects such as `Payment`, `CardTransaction`, `Order`, etc.  These objects will match those defined in the [Android SDK](https://github.com/clover/clover-android-sdk).
 
-If used from a browser, the library requires the browser you use to support WebSockets. See [WebSocket Browser Support](http://caniuse.com/#feat=websockets).
+If used from a browser, the browser must support WebSockets. For more information, see [WebSocket Browser Support](http://caniuse.com/#feat=websockets).
 
-For more developer documentation and information about the Semi-Integration program, please visit our [semi-integration developer documents] (https://docs.clover.com/build/integration-overview-requirements/). 
+## Getting Help
+- [Tutorial for the Browser SDK](https://docs.clover.com/build/getting-started-with-cloverconnector/?sdk=browser)
+- [API Class Documentation](http://clover.github.io/remote-pay-cloud-api/1.3.1/)
+- [Semi-Integration FAQ](https://docs.clover.com/build/semi-integration-faq/)
+- [Clover Developer Community](https://community.clover.com/index.html)
 
 ## Examples
 ### Application
 A sale/refund UI example project that connects to a device via the Clover Cloud [Clover Cloud Connector Example](https://github.com/clover/clover-cloud-connector-example) is available for download and deployment, or direct deployment to a Heroku server.
 
 ### Example framework
-A example project composed of small examples that connect to a device via the Clover cloud - [Clover Cloud Connector Unit Examples](https://github.com/clover/clover-cloud-connector-unit-examples) is available for download and deployment, or direct deployment to a Heroku server.
+An [example project](https://github.com/clover/clover-cloud-connector-unit-examples) composed of small examples that connect to a device via the Clover Cloud is available for download and deployment, or direct deployment to a Heroku server.
 
-Please report any questions/comments/concerns to us by emailing [semi-integrations@clover.com](mailto:semi-integrations@clover.com).
+Please report any questions/comments/concerns by emailing us at [semi-integrations@clover.com](mailto:semi-integrations@clover.com).
 
 ---
 
 # Quick start
 
-Clover's cloud connector API.  Published as an NPM package.  Intended for use in a browser environment, or in a NodeJS application.
+Clover's Cloud Connector API is published as an npm package.  It is intended for use in a browser environment, or in a Node.js application.
 
 ## JavaScript
-This shows how you can make a connection to a Clover device using plain JavaScript in the browser and the Cloud Pay Display app.
+These examples show how you can make a connection to a Clover device using plain JavaScript in the browser and the Cloud Pay Display app.
 
 ### At a glance
 
@@ -116,7 +120,7 @@ $(window).on('beforeunload ', function () {
 var clover = require("remote-pay-cloud");
 ```
 ##### Create the Clover Connector object
-This will require gathering the configuration information to create the connector.  In this example, the configuration is hard coded.  The creation of the connector is done using the connector factory.
+You’ll need to gather the configuration information in order to create the connector.  In this example, the configuration is hard-coded. Use the connector factory to create the connection.
 ```
 var connector = new clover.CloverConnectorFactory().createICloverConnector({
     "merchantId": "BBFF8NBCXEMDT",
@@ -127,9 +131,7 @@ var connector = new clover.CloverConnectorFactory().createICloverConnector({
 });
 ```
 
-You can configure the Clover Connector object in several ways.
-
-Here are a few examples of configurations you can use when creating the Clover Connector object:
+You can configure the Clover Connector object in several ways. Here are a few examples of configurations you can use when creating the Clover Connector object.
 
 1. With a clientID, domain, merchantId, and deviceSerialId
 ```
@@ -183,7 +185,7 @@ ExampleCloverConnectorListener.prototype.onVerifySignatureRequest = function (re
 };
 
 // The ICloverConnectorListener function that's called when the device detects a possible duplicate transaction,
-// due to the same card being used in a short period of time. This example accepts the duplicate payment challenge, sight unseen
+// due to the same card being used in a short period of time. This example accepts the duplicate payment challenge sight-unseen
 ExampleCloverConnectorListener.prototype.onConfirmPaymentRequest = function (request) {
   this.cloverConnector.acceptPayment(request.payment);
 };
@@ -209,8 +211,8 @@ connector.initializeConnection();
 ```
 
 ##### Clean up the connection on exit of the window
-This should be done with all connectors.
-The following example uses jQuery to add a hook for the window `beforeunload` event that ensures that the connector is disposed of.
+This should be done with all connectors
+The following example uses jQuery to add a hook for the window `beforeunload` event that ensures that the connector is disposed of
 ```
 $(window).on('beforeunload ', function () {
     try {
@@ -328,17 +330,17 @@ cloverConnector.initializeConnection();
 ```
 import * as Clover from 'remote-pay-cloud';
 ```
-##### Create the Clover Device Configuration object
-Depending on the mode of configuration, you may choose to use a WebSocketPairedCloverDeviceConfiguration, or a WebSocketCloudCloverDeviceConfiguration.
+##### Create the Clover device Configuration object
+Depending on the mode of configuration, you may choose to use a WebSocketPairedCloverDeviceConfiguration or a WebSocketCloudCloverDeviceConfiguration.
 ```
 export class StandAloneExampleWebsocketPairedCloverDeviceConfiguration extends 
                  Clover.WebSocketPairedCloverDeviceConfiguration {
 ...
 }
 ```
-There are many ways the Clover Connector object can be configured.  This includes a direct connection with a browser as shown here, connecting using a browser via the cloud similar to the above example, and connecting using a NodeJS application. 
+There are many ways the Clover Connector object can be configured.  This includes a direct connection with a browser as shown here, connecting using a browser via the cloud (similar to the example above), or connecting using a Node.js application. 
 
-##### Define a listener that will listen for events produced byt the Clover Connector
+##### Define a listener that will listen for events produced by the Clover Connector
 The functions implemented will be called as the connector encounters the events.  These functions can be found in the clover.remotepay.ICloverConnectorListener. 
 ```
 export class StandAloneExampleCloverConnectorListener extends Clover.remotepay.ICloverConnectorListener {
@@ -368,7 +370,7 @@ cloverConnector.initializeConnection();
 ```
 ##### Clean up the connection on exit of the window  
 This should be done with all connectors.
-The following example uses jQuery to add a hook for the window `beforeunload` event that ensures that the connector is displosed of.
+The following example uses jQuery to add a hook for the window `beforeunload` event that ensures the connector is disposed of.
 ```
 $(window).on('beforeunload ', function () {
     try {
@@ -390,12 +392,6 @@ API documentation is generated when `npm install` is run.
 * [Online Docs](http://clover.github.io/remote-pay-cloud/1.3.1-3/)
 * [Online API class Docs](http://clover.github.io/remote-pay-cloud-api/1.3.1-1/)
 
-## Getting Help
-- [Tutorial for the Browser SDK](https://docs.clover.com/build/getting-started-with-cloverconnector/?sdk=browser)
-- [API Class Documentation](http://clover.github.io/remote-pay-cloud-api/1.3.1/)
-- [Semi-Integration FAQ](https://docs.clover.com/build/semi-integration-faq/)
-- [Clover Developer Community](https://community.clover.com/index.html)
-
 ## Release Notes
 
 ### Version 1.3.1-3
@@ -404,24 +400,24 @@ API documentation is generated when `npm install` is run.
 * SEMI-1054 Adds tipAmount to tipAdded 
 
 ### Version 1.3.1-2
-* SEMI-1045 Converts array elements into the format expected by Clover Devices. Fix for displaying an order.
+* SEMI-1045 Converts array elements into the format expected by Clover devices. Fix for displaying an order.
 
 ### Version 1.3.1-1
 * SEMI-1025 Use version of remote-pay-cloud-api that contains OrderUpdateMessage and related files.
-* SEMI-991 When Cloud connections fail because a device is not communicating with the Clover servers, report disconnect.
+* SEMI-991 When Cloud connections fail because a device is not communicating with the Clover servers, report the disconnect.
 
 ### Version 1.3.1
 #### Version 1.3.1-rc1.2
 * CLOVER-21536  Default allowPartialAuth in PayIntent dto.  Update to dependency on remote-pay-cloud-api.
 
 #### Version 1.3.1-rc1.1
-* SEMI-695 Update typesccript version.
+* SEMI-695 Update typescript version.
 
 #### Version 1.3.1-rc1.0
-* SEMI-864 Fix case where a provided tip of 0 resulted in a sale being converted to an auth.
+* SEMI-864 Fix case where a tip of 0 resulted in a sale being converted to an auth.
 
 ### Version 1.3.0-rc1.1
-* SEMI-917 Add onDeviceDisconnected, onDeviceConnected, and onDeviceReady and deprecate onDisconnected, onConnected, and onReady.  This brings this API into closer alignment with the other remote-pay APIs.
+* SEMI-917 Added onDeviceDisconnected, onDeviceConnected, and onDeviceReady and deprecated onDisconnected, onConnected, and onReady. The additions bring this API into closer alignment with the other Remote Pay APIs.
 
 #### Version 1.3.0-rc1.0
 * Added support for Custom Activities
@@ -433,24 +429,24 @@ API documentation is generated when `npm install` is run.
       * onCustomActivityResponse
       
   * CustomActivity
-    * apk must be approved and then installed via the Clover App Market
+    * The APK must be approved and then installed through the Clover App Market
     * clover-cfp-sdk library
       * Added CloverCFPActivity that can be extended
       * Added constants for getting/retrieving activity payload CloverCFP interface
-      * Working with Custom Activities...
-        * The action of the activity, as defined in the AndroidManifest, should be passed in as part of the request
-        * A single text payload can be passed in to the request and retrieved in the intent via com.clover.remote.cfp.CFPActivity.EXTRA_PAYLOAD constant. e.g. "com.clover.remote.terminal.remotecontrol.extra.EXTRA_PAYLOAD"
+      * Working with Custom Activities:
+        * The action of the Activity, as defined in the AndroidManifest, should be passed in as part of the request
+        * A single text payload can be passed in to the request and retrieved in the intent via com.clover.remote.cfp.CFPActivity.EXTRA_PAYLOAD constant (e.g. "com.clover.remote.terminal.remotecontrol.extra.EXTRA_PAYLOAD”).
         * The CustomActivityResponse (onCustomActivityResponse) contains a single text payload, populated from the com.clover.remote.cfp.EXTRA_PAYLOAD extra in the result Intent
         * Block vs Non-Blocking Activities
             * A blocking CustomActivity (CustomActivityRequest.setNonBlocking(boolean)) will either need to finish itself, or can be exited via ICloverConnector.resetDevice()
                * For example: Don't want a Sale request to interrupt Collect Customer Information Custom Activity
-            * A non-blocking CustomActivity will finish when a new request is made
+            * A non-blocking Custom Activity will finish when a new request is made
                * For example: Want a Sale request to interrupt showing Ads Custom Activity
 
 * SEMI-889 Remove automatic transition to welcome screen when device is ready.
 * SEMI-695 Add response to `resetDevice` call.
 * SEMI-795 Add retrievePayment functionality.
-* SEMI-777 Add support for custom activities.
+* SEMI-777 Add support for Custom Activities.
 
 ### Version 1.2.0
 #### Version 1.2.0-rc1.1
@@ -459,7 +455,7 @@ API documentation is generated when `npm install` is run.
 
 #### Version 1.2.0-rc1.0
 
-* SEMI-689  Initial 1.2 implementation. Redesign of internal classes and many processes. Support for 'per-transaction' settings. Update to use version 1.2.0-rc1.0 of remote-pay-cloud-api classes.  Addition of REMOTE_ERROR handling.  Increased request validation before communication.  Added ability to direct connect to device via the Network Pay Display app.  Added 'displayPaymentReceiptOptions' to replace deprecated 'showPaymentReceiptOptions'.  Removed dependency on browser for connector objects produced using 1.2 factory objects.
+* SEMI-689  Initial 1.2 implementation. Redesign of internal classes and many processes. Support for 'per-transaction' settings. Update to use version 1.2.0-rc1.0 of remote-pay-cloud-api classes.  Addition of REMOTE_ERROR handling.  Increased request validation before communication.  Added the ability to direct connect to the device via the Network Pay Display app.  Added 'displayPaymentReceiptOptions' to replace deprecated 'showPaymentReceiptOptions'.  Removed dependency on browser for connector objects produced using 1.2 factory objects.
 * SEMI-554 Added internal support for remote error. Fix "cloverShouldHandleReceipts" and "disablePrinting" check to look for correct property. Use 1.2.0-rc1.0 of remote-pay-cloud-api.
 
 ### Version 1.1.0
@@ -470,7 +466,7 @@ API documentation is generated when `npm install` is run.
 #### Version 1.1.0-rc6.3 (deprecated)
 
 * SEMI-498 Add ready checking before attempting remote calls. Add request validation. Inhibit multiple 'onReady' callbacks. Update to use new schema objects.
-* SEMI-577 Add Declaration of support for Chrome version 54 and Firefox version 49.
+* SEMI-577 Add declaration of support for Chrome version 54 and Firefox version 49.
 
 #### Version 1.1.0-rc6.2
 
@@ -482,7 +478,7 @@ API documentation is generated when `npm install` is run.
 
 #### Version 1.1.0-rc6.0
 
-* PAY-1258 Fix documentation. Set up flow to capture "REFUND_RESPONSE" and extract any additional failure info.  Fix namespace issues.  Change flow to depend on ACK messages (when supported).  Extend ping/pong timeout check.
+* PAY-1258 Fix documentation. Set up flow to capture "REFUND_RESPONSE" and extract any additional failure info. Fix namespace issues. Change flow to depend on ACK messages (when supported). Extend ping/pong timeout check.
 
 #### Version 1.1.0-rc5.1
 
