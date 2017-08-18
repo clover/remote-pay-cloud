@@ -12,7 +12,7 @@ Do not change this or the versioning may not reflect the npm version correctly.
 Current version: 1.3.1-3
 
 ## Overview
-This SDK provides an API that enables your JavaScript point-of-sale (POS) system to interface with a [Clover® payment device] (https://www.clover.com/pos-hardware/). Merchants can accept payments using credit, debit, EMV (chip card), and NFC contactless payments (including Apple Pay), as well as gift cards, EBT (electronic benefit transfer), and more. [Learn more about Clover® integrations](https://www.clover.com/integrations).
+This SDK provides an API that enables your JavaScript point-of-sale (POS) system to interface with a [Clover® payment device](https://www.clover.com/pos-hardware/). Merchants can accept payments using credit, debit, EMV (chip card), and NFC contactless payments (including Apple Pay), as well as gift cards, EBT (electronic benefit transfer), and more. [Learn more about Clover® integrations](https://www.clover.com/integrations).
 
 The API is available for download on [GitHub](https://github.com/clover/remote-pay-cloud). You can use it in conjunction with:
 
@@ -33,7 +33,7 @@ If used from a browser, the browser must support WebSockets. For more informatio
 
 ## Examples
 ### Application
-A sale/refund UI example project that connects to a device via the Clover Cloud [Clover Cloud Connector Example](https://github.com/clover/clover-cloud-connector-example) is available for download and deployment, or direct deployment to a Heroku server.
+A [sale/refund UI example project](https://github.com/clover/clover-cloud-connector-example) that connects to a device via the Clover Cloud is available for download and deployment, or direct deployment to a Heroku server.
 
 ### Example framework
 An [example project](https://github.com/clover/clover-cloud-connector-unit-examples) composed of small examples that connect to a device via the Clover Cloud is available for download and deployment, or direct deployment to a Heroku server.
