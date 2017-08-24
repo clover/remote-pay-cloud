@@ -646,7 +646,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
             this.notifyDeviceNotConnected("In closeout");
 		}
 		else {
-			this.device.doCloseout(request.getIsAllowOpenTabs(), request.getBatchId());
+			this.device.doCloseout(request.getAllowOpenTabs(), request.getBatchId());
 		}
 	}
 
