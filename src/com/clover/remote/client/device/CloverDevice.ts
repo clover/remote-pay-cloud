@@ -135,7 +135,7 @@ export abstract class CloverDevice {
 	 * 
 	 * @param {Array<string>} textLines 
 	 */
-	public abstract doPrintText(textLines: Array<string>): void;
+	public abstract doPrintText(textLines: Array<string>, printRequestId?: string, printDeviceId?: string): void;
 
 	/**
 	 * Show Welcome Screen
@@ -160,21 +160,21 @@ export abstract class CloverDevice {
 	 * 
 	 * @param {string} reason 
 	 */
-	public abstract doOpenCashDrawer(reason: string): void;
+	public abstract doOpenCashDrawer(reason: string, deviceId?: string): void;
 
 	/**
 	 * Print Image (Bitmap)
 	 * 
 	 * @param {any} bitmap
 	 */
-	public abstract doPrintImageObject(bitmap: any): void;
+	public abstract doPrintImageObject(bitmap: any, printRequestId?: string, printDeviceId?: string): void;
 
 	/**
 	 * Print Image (URL)
 	 * 
 	 * @param {string} url 
 	 */
-	public abstract doPrintImageUrl(url: string): void;
+	public abstract doPrintImageUrl(url: string, printRequestId?: string, printDeviceId?: string): void;
 
 	/**
 	 * Dispose
@@ -258,6 +258,16 @@ export abstract class CloverDevice {
 	 * @param {string} externalPaymentId
      */
 	public abstract doRetrievePayment(externalPaymentId: string): void;
+
+	/**
+	 * Get printers attached to this device.
+	 */
+	public abstract doRetrievePrinters(category?: sdk.remotepay.RetrievePrintersRequest.category): void;
+
+	/**
+	 * Get the status of a specific print job.
+	 */
+	public abstract doRetrievePrintJobStatus(printRequestId: string): void;
 
 	/**
 	 * Supports Acknowledgements

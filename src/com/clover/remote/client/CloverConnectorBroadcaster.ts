@@ -427,4 +427,28 @@ export class CloverConnectorBroadcaster
             }
         });
     }
+
+    public notifyOnRetrievePrintersResponse(response: sdk.remotepay.RetrievePrintersResponse): void {
+        this.logger.debug('Sending RetrievePrintersResponse notification to listeners');
+        this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
+            try {
+                listener.onRetrievePrintersResponse(response);
+            }
+            catch(e) {
+                this.logger.error(e);
+            }
+        });
+    }
+
+    public notifyOnPrintJobStatusResponse(response: sdk.remotepay.PrintJobStatusResponse): void {
+        this.logger.debug('Sending PrintJobStatusResponse notification to listeners');
+        this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
+            try {
+                listener.onPrintJobStatusResponse(response);
+            }
+            catch(e) {
+                this.logger.error(e);
+            }
+        });
+    }
 }

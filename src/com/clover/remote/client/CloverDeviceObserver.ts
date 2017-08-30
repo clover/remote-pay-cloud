@@ -317,5 +317,19 @@ export interface CloverDeviceObserver {
 	 * @param reason
 	 * @param payment
      */
-	 onRetrievePaymentResponse(result:sdk.remotepay.ResponseCode, reason: string, externalPaymentId: string, queryStatus:sdk.remotemessage.QueryStatus, payment:sdk.payments.Payment): void;
+	onRetrievePaymentResponse(result:sdk.remotepay.ResponseCode, reason: string, externalPaymentId: string, queryStatus:sdk.remotemessage.QueryStatus, payment:sdk.payments.Payment): void;
+
+	/**
+	 * The result of a request to get printers attached to the device.
+	 *
+	 * @param printers
+	 */
+	onRetrievePrintersResponse(result: sdk.remotepay.ResponseCode, reason: string, printers: sdk.printer.Printer[]): void;
+
+	/**
+	 * The status of the requested print job.
+	 *
+	 * @param status
+	 */
+	onPrintJobStatusResponse(result: sdk.remotepay.ResponseCode, reason: string, status: sdk.remotepay.PrintJobStatusResponse.Status): void;
 }
