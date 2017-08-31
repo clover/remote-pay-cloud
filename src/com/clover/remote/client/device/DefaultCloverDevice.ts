@@ -434,7 +434,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         });
     }
 
-    private notifyObserversRetrievePrintersResponse(message: sdk.remotemessage.RetrievePrintersResponseMessage): void {
+    private notifyObserversRetrievePrintersResponse(message: sdk.remotemessage.GetPrintersResponseMessage): void {
         this.deviceObservers.forEach((obs) => {
             obs.onRetrievePrintersResponse(sdk.remotepay.ResponseCode.SUCCESS, message.reason, message.printers);
         });
@@ -696,7 +696,9 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         let message: sdk.remotemessage.OpenCashDrawerMessage = new sdk.remotemessage.OpenCashDrawerMessage();
         message.setReason(reason);
         if (deviceId) {
-            message.setDeviceId(deviceId);
+            let ptr: sdk.printer.Printer = new sdk.printer.Printer();
+            ptr.setId(deviceId);
+            message.setPrinter(ptr);
         }
         this.sendObjectMessage(message);
     }
@@ -775,10 +777,12 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         let message:sdk.remotemessage.TextPrintMessage = new sdk.remotemessage.TextPrintMessage();
         message.setTextLines(textLines);
         if (printRequestId) {
-            message.setPrintRequestId(printRequestId);
+            message.setExternalPrintJobId(printRequestId);
         }
         if (printDeviceId) {
-            message.setPrintDeviceId(printDeviceId);
+            let ptr: sdk.printer.Printer = new sdk.printer.Printer();
+            ptr.setId(printDeviceId);
+            message.setPrinter(ptr);
         }
         this.sendObjectMessage(message);
     }
@@ -793,10 +797,12 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         // bitmap - HTMLImageElement
         message.setPng(this.imageUtil.getBase64Image(bitmap));
         if (printRequestId) {
-            message.setPrintRequestId(printRequestId);
+            message.setExternalPrintJobId(printRequestId);
         }
         if (printDeviceId) {
-            message.setPrintDeviceId(printDeviceId);
+            let ptr: sdk.printer.Printer = new sdk.printer.Printer();
+            ptr.setId(printDeviceId);
+            message.setPrinter(ptr);
         }
         this.sendObjectMessage(message);
     }
@@ -810,10 +816,12 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         let message: sdk.remotemessage.ImagePrintMessage = new sdk.remotemessage.ImagePrintMessage();
         message.setUrlString(url);
         if (printRequestId) {
-            message.setPrintRequestId(printRequestId);
+            message.setExternalPrintJobId(printRequestId);
         }
         if (printDeviceId) {
-            message.setPrintDeviceId(printDeviceId);
+            let ptr: sdk.printer.Printer = new sdk.printer.Printer();
+            ptr.setId(printDeviceId);
+            message.setPrinter(ptr);
         }
         this.sendObjectMessage(message);
     }
@@ -984,7 +992,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
     }
 
     public doRetrievePrinters(category?: sdk.remotepay.RetrievePrintersRequest.category): void {
-        let message: sdk.remotemessage.RetrievePrintersRequestMessage = new sdk.remotemessage.RetrievePrintersRequestMessage();
+        let message: sdk.remotemessage.GetPrintersRequestMessage = new sdk.remotemessage.GetPrintersRequestMessage();
         if (category) {
             message.setCategory(category);
         }
@@ -993,7 +1001,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
 
     public doRetrievePrintJobStatus(printRequestId: string): void {
         let message: sdk.remotemessage.PrintJobStatusRequestMessage = new sdk.remotemessage.PrintJobStatusRequestMessage();
-        message.setPrintRequestId(printRequestId);
+        message.setExternalPrintJobId(printRequestId);
         this.sendObjectMessage(message);
     }
 

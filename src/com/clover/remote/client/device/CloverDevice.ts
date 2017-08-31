@@ -262,7 +262,7 @@ export abstract class CloverDevice {
 	/**
 	 * Get printers attached to this device.
 	 */
-	public abstract doRetrievePrinters(category?: sdk.remotepay.RetrievePrintersRequest.category): void;
+	public abstract doRetrievePrinters(category?: sdk.printer.PrintCategory): void;
 
 	/**
 	 * Get the status of a specific print job.
