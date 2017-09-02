@@ -331,5 +331,5 @@ export interface CloverDeviceObserver {
 	 *
 	 * @param status
 	 */
-	onPrintJobStatusResponse(result: sdk.remotepay.ResponseCode, reason: string, status: sdk.remotepay.PrintJobStatusResponse.Status): void;
+	onPrintJobStatusResponse(result: sdk.remotepay.ResponseCode, reason: string, externalPrintJobId: string, status: sdk.remotepay.PrintJobStatusResponse.Status): void;
 }

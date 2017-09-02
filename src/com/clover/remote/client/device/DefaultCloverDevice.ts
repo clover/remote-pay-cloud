@@ -442,7 +442,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
 
     private notifyObserversPrintJobStatusResponse(message: sdk.remotemessage.PrintJobStatusResponseMessage): void {
         this.deviceObservers.forEach((obs) => {
-            obs.onPrintJobStatusResponse(sdk.remotepay.ResponseCode.SUCCESS, message.reason, message.status);
+            obs.onPrintJobStatusResponse(sdk.remotepay.ResponseCode.SUCCESS, message.reason, message.externalPrintJobId, message.status);
         });
     }
 

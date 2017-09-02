@@ -1502,11 +1502,12 @@ export namespace CloverConnector {
 		    this.cloverConnector.broadcaster.notifyOnRetrievePrintersResponse(response);
 		}
 
-		public onPrintJobStatusResponse(result: sdk.remotepay.ResponseCode, reason: string, printStatus: sdk.remotepay.PrintJobStatusResponse.Status): void {
+		public onPrintJobStatusResponse(result: sdk.remotepay.ResponseCode, reason: string, printRequestId: string, printStatus: sdk.remotepay.PrintJobStatusResponse.Status): void {
 		    let success: boolean = (status == sdk.remotepay.ResponseCode.SUCCESS);
 		    let response: sdk.remotepay.PrintJobStatusResponse = new sdk.remotepay.PrintJobStatusResponse();
 		    CloverConnector.populateBaseResponse(response, success, result, reason);
 		    response.setStatus(printStatus);
+			response.setPrintRequestId(printRequestId);
 		    this.cloverConnector.broadcaster.notifyOnPrintJobStatusResponse(response);
 		}
 	}
