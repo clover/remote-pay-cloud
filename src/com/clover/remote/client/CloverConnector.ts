@@ -1462,7 +1462,7 @@ export namespace CloverConnector {
 		}
 
 		public onDeviceStatusResponse(result:sdk.remotepay.ResponseCode, reason: string, state:sdk.remotemessage.ExternalDeviceState, data:sdk.remotemessage.ExternalDeviceStateData): void {
-			let success: boolean = (status == sdk.remotemessage.ResultStatus.SUCCESS);
+			let success: boolean = (result == sdk.remotemessage.ResultStatus.SUCCESS);
 
 			let response:sdk.remotepay.RetrieveDeviceStatusResponse  = new sdk.remotepay.RetrieveDeviceStatusResponse();
 			CloverConnector.populateBaseResponse(response, success, result,
@@ -1483,7 +1483,7 @@ export namespace CloverConnector {
 		}
 
 		public onRetrievePaymentResponse(result:sdk.remotepay.ResponseCode, reason: string, externalPaymentId: string, queryStatus:sdk.remotemessage.QueryStatus, payment:sdk.payments.Payment): void {
-			let success: boolean = (status == sdk.remotepay.ResponseCode.SUCCESS);
+			let success: boolean = (result == sdk.remotepay.ResponseCode.SUCCESS);
 
 			let response:sdk.remotepay.RetrievePaymentResponse  = new sdk.remotepay.RetrievePaymentResponse();
 			CloverConnector.populateBaseResponse(response, success, result,
@@ -1495,7 +1495,7 @@ export namespace CloverConnector {
 		}
 
 		public onRetrievePrintersResponse(result:sdk.remotepay.ResponseCode, reason: string, printers:sdk.printers.Printers[]): void {
-            let success: boolean = (status == sdk.remotepay.ResponseCode.SUCCESS);
+            let success: boolean = (result == sdk.remotepay.ResponseCode.SUCCESS);
 		    let response:sdk.remotepay.RetrievePrintersResponse = new sdk.remotepay.RetrievePrintersResponse();
 		    CloverConnector.populateBaseResponse(response, success, result, reason);
 		    response.setPrinters(printers);
@@ -1503,7 +1503,7 @@ export namespace CloverConnector {
 		}
 
 		public onPrintJobStatusResponse(result: sdk.remotepay.ResponseCode, reason: string, printRequestId: string, printStatus: sdk.remotepay.PrintJobStatusResponse.Status): void {
-		    let success: boolean = (status == sdk.remotepay.ResponseCode.SUCCESS);
+		    let success: boolean = (result == sdk.remotepay.ResponseCode.SUCCESS);
 		    let response: sdk.remotepay.PrintJobStatusResponse = new sdk.remotepay.PrintJobStatusResponse();
 		    CloverConnector.populateBaseResponse(response, success, result, reason);
 		    response.setStatus(printStatus);
