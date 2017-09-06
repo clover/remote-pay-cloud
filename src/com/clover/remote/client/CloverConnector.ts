@@ -641,6 +641,26 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 		}
 	}
 
+	public retrievePrinters(request: sdk.remotepay.RetrievePrintersRequest): void {
+	    if (!this.device || !this.isReady) {
+	        this.notifyDeviceNotConnected("In retrievePrinters");
+	    } else if (!request) {
+	        this.notifyInvalidData("In retrievePrinters: Invalid argument. Null is not allowed.");
+	    } else {
+	        this.device.doRetrievePrinters(request.category);
+	    }
+	}
+
+	public retrievePrintJobStatus(request: sdk.remotepay.PrintJobStatusRequest): void {
+	    if (!this.device || !this.isReady) {
+	        this.notifyDeviceNotConnected("In retrievePrintJobStatus");
+	    } else if (!request || !request.printRequestId) {
+	        this.notifyInvalidData("In retrievePrintJobStatus: Invalid argument. Null is not allowed.");
+	    } else {
+	        this.device.doRetrievePrintJobStatus(request.printRequestId);
+	    }
+	}
+
 	public closeout(request: sdk.remotepay.CloseoutRequest): void {
 		if (!this.device || !this.isReady) {
             this.notifyDeviceNotConnected("In closeout");
@@ -691,6 +711,40 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 		else {
 			this.device.doPrintImageUrl(url);
 		}
+	}
+
+	public print(request: sdk.remotepay.PrintRequest): void {
+	    if (!this.device || !this.isReady) {
+	        this.notifyDeviceNotConnected("In print");
+	    } else if (!request) {
+	        this.notifyInvalidData("In print: Invalid argument. Null is not allowed.");
+	    } else if (!this.validatePrintRequest(request)) {
+            this.notifyInvalidData("In print: Invalid argument. PrintRequest was not formatted correctly.");
+	    } else {
+	        if (request.image && request.image.length == 1) {
+                this.device.doPrintImageObject(request.image[0], request.printRequestId, request.printDeviceId);
+	        } else if (request.text) {
+                this.device.doPrintText(request.text, request.printRequestId, request.printDeviceId);
+	        } else if (request.imageUrl && request.imageUrl.length == 1) {
+	            this.device.doPrintImageUrl(request.imageUrl[0], request.printRequestId, request.printDeviceId);
+	        } else {
+	            this.notifyInvalidData("In print: Invalid argument. PrintRequest element was not formatted correctly.");
+	        }
+	    }
+	}
+
+	public validatePrintRequest(request: sdk.remotepay.PrintRequest): boolean {
+	    if (!request.image && !request.text && !request.imageUrl) {
+	        this.notifyInvalidData("In validatePrintRequest: There are no items to print.");
+	        return false;
+	    } else if ((request.image && request.text) ||
+	                (request.image && request.imageUrl) ||
+	                (request.text && request.imageUrl)) {
+	        this.notifyInvalidData("In validatePrintRequest: There are too may different kinds of items to print.  Can only have one.");
+	        return false;
+	    } else {
+	        return true;
+	    }
 	}
 
 	public showMessage(message: string): void {
@@ -748,12 +802,17 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 		}
 	}
 
-	public openCashDrawer(reason: string): void {
+	public openCashDrawer(request: sdk.remotepay.OpenCashDrawerRequest | string): void {
 		if (!this.device || !this.isReady) {
-            this.notifyDeviceNotConnected("In displayPaymentReceiptOptions");
+            this.notifyDeviceNotConnected("In openCashDrawer");
 		}
-		else {
-			this.device.doOpenCashDrawer(reason);
+		else if (!request) {
+		    this.notifyInvalidData("In openCashDrawer: Invalid argument. The request cannot be null.");
+		} else if (typeof request === "string") {
+		    this.device.doOpenCashDrawer(request);
+		} else {
+			this.device.doOpenCashDrawer(request.reason, null);
+			//TODO: CAPS- per SEMI-1130, this process will not handle the printer ID yet, so passing null.  Once fixed, the second parameter should be 'request.deviceId'
 		}
 	}
 
@@ -1433,6 +1492,23 @@ export namespace CloverConnector {
 			response.setQueryStatus(queryStatus);
 			response.setPayment(payment);
 			this.cloverConnector.broadcaster.notifyOnRetrievePaymentResponse(response);
+		}
+
+		public onRetrievePrintersResponse(result:sdk.remotepay.ResponseCode, reason: string, printers:sdk.printers.Printers[]): void {
+            let success: boolean = (status == sdk.remotepay.ResponseCode.SUCCESS);
+		    let response:sdk.remotepay.RetrievePrintersResponse = new sdk.remotepay.RetrievePrintersResponse();
+		    CloverConnector.populateBaseResponse(response, success, result, reason);
+		    response.setPrinters(printers);
+		    this.cloverConnector.broadcaster.notifyOnRetrievePrintersResponse(response);
+		}
+
+		public onPrintJobStatusResponse(result: sdk.remotepay.ResponseCode, reason: string, printRequestId: string, printStatus: sdk.remotepay.PrintJobStatusResponse.Status): void {
+		    let success: boolean = (status == sdk.remotepay.ResponseCode.SUCCESS);
+		    let response: sdk.remotepay.PrintJobStatusResponse = new sdk.remotepay.PrintJobStatusResponse();
+		    CloverConnector.populateBaseResponse(response, success, result, reason);
+		    response.setStatus(printStatus);
+			response.setPrintRequestId(printRequestId);
+		    this.cloverConnector.broadcaster.notifyOnPrintJobStatusResponse(response);
 		}
 	}
 

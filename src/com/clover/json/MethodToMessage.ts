@@ -93,5 +93,9 @@ export class MethodToMessage {
         MethodToMessage.methodToType[remotemessage.Method.ACTIVITY_MESSAGE_FROM_ACTIVITY] = remotemessage.ActivityMessageFromActivity;
         MethodToMessage.methodToType[remotemessage.Method.RETRIEVE_PAYMENT_RESPONSE] = remotemessage.RetrievePaymentResponseMessage;
         MethodToMessage.methodToType[remotemessage.Method.RETRIEVE_PAYMENT_REQUEST] = remotemessage.RetrievePaymentRequestMessage;
+        MethodToMessage.methodToType[remotemessage.Method.GET_PRINTERS_REQUEST] = remotemessage.GetPrintersRequestMessage;
+        MethodToMessage.methodToType[remotemessage.Method.GET_PRINTERS_RESPONSE] = remotemessage.GetPrintersResponseMessage;
+        MethodToMessage.methodToType[remotemessage.Method.PRINT_JOB_STATUS_REQUEST] = remotemessage.PrintJobStatusRequestMessage;
+        MethodToMessage.methodToType[remotemessage.Method.PRINT_JOB_STATUS_RESPONSE] = remotemessage.PrintJobStatusResponseMessage;
     }
 }
