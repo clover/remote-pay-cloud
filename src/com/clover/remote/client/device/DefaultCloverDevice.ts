@@ -1,6 +1,7 @@
 import sdk = require('remote-pay-cloud-api');
 import {RemoteMessageParser} from '../../../json/RemoteMessageParser';
 import {CloverDevice} from './CloverDevice';
+import {CloverConnector} from '../CloverConnector';
 import {CloverTransport} from '../transport/CloverTransport';
 import {ObjectMessageSender} from '../transport/ObjectMessageSender';
 import {CloverTransportObserver} from '../transport/CloverTransportObserver';
@@ -20,6 +21,8 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
 
     protected logger: Logger = Logger.create();
 
+    private remoteMessageVersion: number = 1;
+
     private static id: number = 0;
 
     protected messageParser: RemoteMessageParser = RemoteMessageParser.getDefaultInstance();
@@ -28,12 +31,15 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
 
     private imageUtil: IImageUtil;
 
+    private maxMessageSizeInChars: number;
+
     constructor(configuration: CloverDeviceConfiguration) {
         super(
             configuration.getMessagePackageName(),
             configuration.getCloverTransport(),
             configuration.getApplicationId());
         this.imageUtil = configuration.getImageUtil();
+        this.maxMessageSizeInChars = Math.max(1000, configuration.getMaxMessageCharacters());
 		this.transport.subscribe(this);
         this.transport.setObjectMessageSender(this);
 	}
@@ -87,6 +93,8 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
             if (sdkMessage == null) {
                 this.logger.error('Error parsing message: ' + JSON.stringify(rMessage));
             }
+            this.remoteMessageVersion = Math.max(this.remoteMessageVersion, sdkMessage.version);
+                //if version is >= 2, then chunking is supported
             switch(method) {
                 case sdk.remotemessage.Method.BREAK:
                     break;
@@ -804,7 +812,12 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
             ptr.setId(printDeviceId);
             message.setPrinter(ptr);
         }
-        this.sendObjectMessage(message);
+        if (this.remoteMessageVersion > 1) {
+            //We need to be putting this in the attachment instead of the payload (for the remoteMessage)
+            this.sendObjectMessage_opt_version(message, this.remoteMessageVersion, message.getPng());
+        } else {
+            this.sendObjectMessage(message);
+        }
     }
 
 	/**
@@ -1025,13 +1038,11 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         return this.sendObjectMessage_opt_version(message);
     }
 
-    private sendObjectMessage_opt_version(message: sdk.remotemessage.Message, version?: number): string {
-        let remoteMessage: sdk.remotemessage.RemoteMessage = this.buildRemoteMessageToSend(message, version);
-        this.sendRemoteMessage(remoteMessage);
-        return remoteMessage.getId();
+    private sendObjectMessage_opt_version(message: sdk.remotemessage.Message, version?: number, attachment?: string, attachmentEncoding?: string): string {
+        return this.buildRemoteMessages(message, version, attachment, attachmentEncoding); // this now sends the messages and returns the ID
     }
 
-    protected buildRemoteMessageToSend(message: sdk.remotemessage.Message, version?: number): sdk.remotemessage.RemoteMessage {
+    protected buildRemoteMessageToSend(message: sdk.remotemessage.Message, version?: number): sdk.remotemessage.RemoteMessage { //leaving untouched for backwards compatibility and existing uses
         // Default to version 1
         if (version == null) version = 1;
 
@@ -1084,6 +1095,120 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         remoteMessage.setRemoteApplicationID(this.applicationId);
 
         return remoteMessage;
+    }
+
+    protected buildRemoteMessages(message: sdk.remotemessage.Message, version?: number, attachment?: string, attachmentEncoding?: string): string { //Looks like the above buildRemoteMessagesToSend, but needs to support new functionality
+        // Default to version 1
+        if (version == null) version = 1;
+
+        // Make sure the message is not null
+        if (message == null) {
+            this.logger.debug('Message is null');
+            return null;
+        }
+
+        // Check the message method
+        this.logger.info(message.toString());
+        if (message.method == null) {
+            this.logger.error('Invalid Message', new Error('Invalid Message: ' + message.toString()));
+            return null;
+        }
+
+        // Check the application id
+        if (this.applicationId == null) {
+            this.logger.error('Invalid ApplicationID: ' + this.applicationId);
+            throw new Error('Invalid applicationId');
+        }
+
+        let messageId: string = (++DefaultCloverDevice.id) + '';
+        let remoteMessage: sdk.remotemessage.RemoteMessage = new sdk.remotemessage.RemoteMessage();
+        remoteMessage.setId(messageId);
+        remoteMessage.setType(sdk.remotemessage.RemoteMessageType.COMMAND);
+        remoteMessage.setPackageName(this.packageName);
+        remoteMessage.setMethod(message.method.toString());
+        remoteMessage.setRemoteSourceSDK(DefaultCloverDevice.REMOTE_SDK);
+        remoteMessage.setRemoteApplicationID(this.applicationId);
+        if (attachmentEncoding) {
+            remoteMessage.setAttachmentEncoding(attachmentEncoding);
+        }
+
+        // *******************
+        // Special serialization handling
+        // The top level elements should not have the "elements" wrapper on collections (arrays).
+        // sdk.remotemessage.Message instances are the only ones this needs to happen for.  This
+        // is the result of the manner in which the serialization/deserialization happens in the
+        // Android code.  The top level objects are not (de)serialized by a
+        // com.clover.sdk.GenericClient#extractListOther
+        // (in the Clover common repo).  The GenericClient is the tool that adds the elements
+        // wrapper.  The top level objects are (de)serialized by themselves
+        // com.clover.remote.message.Message#fromJsonString
+        for(var fieldKey in message) {
+            var metaInfo = message.getMetaInfo(fieldKey);
+            if (metaInfo && (metaInfo.type == Array)) {
+                message[fieldKey].suppressElementsWrapper = true;
+            }
+        }
+        let messagePayload = JSON.stringify(message, DefaultCloverDevice.stringifyClover);
+        // *******************
+
+        if (version > 1) {
+            // fragmenting is possible
+            let payloadTooLarge = ((attachment ? attachment.length : 0) + (messagePayload ? messagePayload.length : 0)) > this.maxMessageSizeInChars;
+            //TODO: CAPS - need to confirm with Blake how we should be handling this...disagree with iOS
+            if (payloadTooLarge) { // need to fragment
+                if ((attachment && attachment.length > CloverConnector.MAX_PAYLOAD_SIZE)) { //TODO: CAPS - in double parens until requirements are reviewed
+                    this.logger.error('Error sending message - payload size is greater than the maximum allowed.');
+                    return null;
+                }
+                let fragmentIndex: number = 0;
+                //fragmenting loop for payload
+                while (messagePayload.length > 0) {
+                    remoteMessage.setLastFragment(false);
+                    if (messagePayload.length <= this.maxMessageSizeInChars) {
+                        remoteMessage.setPayload(messagePayload);
+                        messagePayload = "";
+                        remoteMessage.setLastFragment(true); //TODO: CAPS - so the device is expecting this not to dictate attachments or other data from later messages?
+                    } else {
+                        remoteMessage.setPayload(messagePayload.substr(0,this.maxMessageSizeInChars));
+                        messagePayload = messagePayload.substr(this.maxMessageSizeInChars);
+                    }
+                    remoteMessage.setFragmentIndex(fragmentIndex++);
+                    this.sendRemoteMessage(remoteMessage);
+                } //end fragment payload loop
+                remoteMessage.setPayload(null);
+                if (attachment) {
+                    //fragmenting loop for attachment
+                    if (attachmentEncoding == "BASE64") {
+                        remoteMessage.setAttachmentEncoding("BASE64.ATTACHMENT");
+                        while (attachment.length > 0) {
+                            remoteMessage.setLastFragment(false);
+                            if (attachment.length <= this.maxMessageSizeInChars) {
+                                remoteMessage.setAttachment(attachment);
+                                attachment = "";
+                                remoteMessage.setLastFragment(true);
+                            } else {
+                                remoteMessage.setAttachment(attachment.substr(0,this.maxMessageSizeInChars));
+                                attachment = attachment.substr(this.maxMessageSizeInChars);
+                            }
+                            remoteMessage.setFragmentIndex(fragmentIndex++);
+                            this.sendRemoteMessage(remoteMessage);
+                        } //end fragment attachment loop
+                    }
+                }
+            } else { // no need to fragment
+                remoteMessage.setPayload(messagePayload);
+                if (attachment) {
+                    remoteMessage.setAttachment(attachment);
+                }
+                this.sendRemoteMessage(remoteMessage);
+            }
+        } else {
+            // fragmenting is not possible, just send as is
+            remoteMessage.setPayload(messagePayload);
+            this.sendRemoteMessage(remoteMessage);
+        }
+
+        return messageId;
     }
 
     protected static stringifyClover (key : string, value : any) : any {

@@ -13,6 +13,7 @@ export abstract class WebSocketCloverDeviceConfiguration implements CloverDevice
 	protected heartbeatInterval: number = 1000;
 	protected reconnectDelay: number = 3000;
 	protected pingRetryCountBeforeReconnect: number = 4;
+	public maxCharInMessage: number = 50000;
 	private appId: string;
 	protected webSocketImplClass: any;
 	protected imageUtil: IImageUtil;
@@ -90,4 +91,7 @@ export abstract class WebSocketCloverDeviceConfiguration implements CloverDevice
 	 */
 	public abstract getCloverTransport(): CloverTransport;
 
+    public getMaxMessageCharacters(): number {
+        return this.maxCharInMessage;
+    }
 }

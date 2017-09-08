@@ -47,6 +47,8 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 	// Flag indicating whether the device is ready or not
 	public isReady: boolean = false;
 
+	public static MAX_PAYLOAD_SIZE: number = 10000000; // maximum size of the payload of a full message.  if the payload exceeds this, the message will not be sent.
+
 	// Hold the last request
 	public lastRequest: any;
 
