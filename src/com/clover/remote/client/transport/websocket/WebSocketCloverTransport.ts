@@ -27,6 +27,10 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
 
 	webSocket: CloverWebSocketClient;
 
+	private messageQueue:Array<string> = new Array<string>();
+
+	private messageSenderId:number = null;
+
 	/**
 	 * This is the WebSocket implementation.  This is odd,
 	 * but it is how we can keep ourselves from being tied to a browser.
@@ -92,25 +96,48 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
 		// from WebSocketCloverDeviceConfiguration.getMessagePackageName, which needs to be changeable
 		// 'com.clover.remote_protocol_broadcast.app'
 		this.messageParser = RemoteMessageParser.getDefaultInstance();
-
-		// The subclasses need to set some values before this is called.  They call it
-		// when they are good and ready!
-		// this.initialize();
+		this.messageSenderId = setTimeout(function(){this.sendMessageThread()}.bind(this), 2000);
 	}
 
-	public sendMessage(message: string): number {
+	/**
+	 * Since this javascript, this is not an actual thread, but it
+	 * represents threading the sending of the messages.
+	 *
+	 * This just checks the message queue for elements, then sends using
+	 * a FIFO pattern.
+	 */
+	private sendMessageThread():void {
 		// let's see if we have connectivity
-
-		if(this.webSocket != null && this.webSocket.isOpen()) {
-			try {
-				this.webSocket.send(message);
-			} catch(e){
-				this.reconnect();
+		if (this.webSocket != null && this.webSocket.isOpen()) {
+			if (this.messageQueue.length > 0) {
+				try {
+					this.webSocket.send(this.messageQueue.shift());
+				} catch (e) {
+					this.reconnect();
+				}
 			}
-			return 0;
 		} else {
-            this.reconnect();
+			this.reconnect();
 		}
+		if (!this.shutdown) {
+			// the setTimeout(...,0) resolves an odd chrome problem WRT
+			// sending messages in a loop.  When the volume reaches
+			// ~131072, a message is dropped, followed by another message
+			// being dropped every 65536.
+			this.messageSenderId = setTimeout(function () {
+				this.sendMessageThread()
+			}.bind(this), 0);
+		}
+	}
+
+	/**
+	 * Pushes the message to the queue for sending by the send 'thread'
+	 *
+	 * @param message - a string message to send on the websocket
+	 * @returns {number} negative 1 (-1)
+     */
+	public sendMessage(message: string): number {
+		this.messageQueue.push(message);
 		return -1;
 	}
 
