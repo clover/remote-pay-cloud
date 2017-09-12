@@ -106,20 +106,20 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
 	 * This just checks the message queue for elements, then sends using
 	 * a FIFO pattern.
 	 */
-	private sendMessageThread(): void {
+	private sendMessageThread():void {
 		// let's see if we have connectivity
-		if(this.webSocket != null && this.webSocket.isOpen()) {
-			try {
-				if (this.messageQueue.length > 0) {
+		if (this.webSocket != null && this.webSocket.isOpen()) {
+			if (this.messageQueue.length > 0) {
+				try {
 					this.webSocket.send(this.messageQueue.shift());
+				} catch (e) {
+					this.reconnect();
 				}
-			} catch(e){
-				this.reconnect();
 			}
 		} else {
 			this.reconnect();
 		}
-		if(!this.shutdown) {
+		if (!this.shutdown) {
 			// the setTimeout(...,0) resolves an odd chrome problem WRT
 			// sending messages in a loop.  When the volume reaches
 			// ~131072, a message is dropped, followed by another message
