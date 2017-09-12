@@ -49,4 +49,11 @@ export interface CloverDeviceConfiguration {
 	 * @returns IImageUtil - Image Utility
 	 */
 	getImageUtil(): IImageUtil;
+
+	/**
+	 * Get the max message size in characters
+	 *
+	 * @returns number - size
+	 */
+	getMaxMessageCharacters(): number;
 }
