@@ -32,7 +32,7 @@ Please report any questions, comments, or concerns by emailing us at [semi-integ
 
 ### Quick start
 
-Clover's Cloud Connector API is published as an npm package.  It is intended for use in a browser environment or Node.js application.
+Clover's Cloud Connector API is published as an npm package. It is intended for use in a browser environment or Node.js application.
 
 The following examples demonstrate how you can create a connection to a Clover device using plain JavaScript in the browser and the Cloud Pay Display app.
 
@@ -376,16 +376,6 @@ API documentation is generated when `npm install` is run.
 * [Online API class Docs](http://clover.github.io/remote-pay-cloud-api/1.3.1-1/)
 
 ## Release Notes
-
-### Version 1.3.1
-#### Version 1.3.1-rc1.2
-* CLOVER-21536  Default allowPartialAuth in PayIntent dto.  Update to dependency on remote-pay-cloud-api.
-
-#### Version 1.3.1-rc1.1
-* SEMI-695 Update typescript version.
-
-#### Version 1.3.1-rc1.0
-* SEMI-864 Fix case where a tip of 0 resulted in a sale being converted to an auth.
 
 ### Version 1.3.0-rc1.1
 * SEMI-917 Added onDeviceDisconnected, onDeviceConnected, and onDeviceReady and deprecated onDisconnected, onConnected, and onReady. The additions bring this API into closer alignment with the other Remote Pay APIs.
