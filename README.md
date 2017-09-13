@@ -7,51 +7,39 @@
 See the package.json postversion script, which maps to scripts/postversion.sh
 Do not change this or the versioning may not reflect the npm version correctly.
 --->
-## Version
+### Version
 
 Current version: 1.3.1-3
 
-## Overview
-This SDK provides an API that enables your JavaScript point-of-sale (POS) system to interface with a [Clover® payment device](https://www.clover.com/pos-hardware/). Merchants can accept payments using credit, debit, EMV (chip card), and NFC contactless payments (including Apple Pay), as well as gift cards, EBT (electronic benefit transfer), and more. [Learn more about Clover® integrations](https://www.clover.com/integrations).
+### Overview
+This SDK provides an API that enables your JavaScript point-of-sale (POS) system to communicate with a [Clover® payment device](https://www.clover.com/pos-hardware/). Learn more about [Clover integrations](https://www.clover.com/integrations).
 
-The API is available for download on [GitHub](https://github.com/clover/remote-pay-cloud). You can use it in conjunction with:
+You can use the API in conjunction with:
 
 * The proper browser framework from a NodeJS `require` directive [hosted on npm](https://www.npmjs.com/package/remote-pay-cloud)
 * A server-based NodeJS application by including a compatible [WebSocket](https://www.npmjs.com/package/websocket) and [XMLHttpRequest](https://www.npmjs.com/package/xmlhttprequest) library
 
-1. The remotepay/ICloverConnector is the high-level API that defines methods like `Sale()`, `VoidTransaction()`, and `ManualRefund()`.
-2. The remotepay/ICloverConnectorListener is the high-level listener API that defines callback methods like `onSaleResponse` and `onRefundPaymentResponse`.
-3. The API includes objects that map to standard Clover objects such as `Payment`, `CardTransaction`, `Order`, etc.  These objects will match those defined in the [Android SDK](https://github.com/clover/clover-android-sdk).
-
 If used from a browser, the browser must support WebSockets. For more information, see [WebSocket Browser Support](http://caniuse.com/#feat=websockets).
 
-## Getting Help
-- [Tutorial for the Browser SDK](https://docs.clover.com/build/getting-started-with-cloverconnector/?sdk=browser)
-- [API Class Documentation](http://clover.github.io/remote-pay-cloud-api/1.3.1/)
-- [Semi-Integration FAQ](https://docs.clover.com/build/semi-integration-faq/)
-- [Clover Developer Community](https://community.clover.com/index.html)
+### Examples
+#### Application
+A [sale/refund UI example project](https://github.com/clover/clover-cloud-connector-example) that connects to a device via the Clover Cloud is available either for download and deployment, or direct deployment to a Heroku server.
 
-## Examples
-### Application
-A [sale/refund UI example project](https://github.com/clover/clover-cloud-connector-example) that connects to a device via the Clover Cloud is available for download and deployment, or direct deployment to a Heroku server.
+#### Example framework
+Another [project](https://github.com/clover/clover-cloud-connector-unit-examples) composed of small examples that connect to a device via the Clover Cloud is also available either for download and deployment, or direct deployment to a Heroku server.
 
-### Example framework
-An [example project](https://github.com/clover/clover-cloud-connector-unit-examples) composed of small examples that connect to a device via the Clover Cloud is available for download and deployment, or direct deployment to a Heroku server.
-
-Please report any questions/comments/concerns by emailing us at [semi-integrations@clover.com](mailto:semi-integrations@clover.com).
+Please report any questions, comments, or concerns by emailing us at [semi-integrations@clover.com](mailto:semi-integrations@clover.com).
 
 ---
 
-# Quick start
+### Quick start
 
-Clover's Cloud Connector API is published as an npm package.  It is intended for use in a browser environment, or in a Node.js application.
+Clover's Cloud Connector API is published as an npm package.  It is intended for use in a browser environment or Node.js application.
 
-## JavaScript
-These examples show how you can make a connection to a Clover device using plain JavaScript in the browser and the Cloud Pay Display app.
+#### JavaScript
+The following examples demonstrate how you can make a connection to a Clover device using plain JavaScript in the browser and the Cloud Pay Display app.
 
-### At a glance
-
-#### Make a sale
+##### Make a sale
 ```
 var $ = require('jQuery');
 
@@ -115,7 +103,7 @@ $(window).on('beforeunload ', function () {
 ```
 
 #### Breakdown
-##### Import the libraries needed to create the Clover object
+##### Import the libraries needed to create the Clover object.
 ```
 var clover = require("remote-pay-cloud");
 ```
@@ -503,7 +491,13 @@ A deprecated beta version of the Connector (Clover.js) is included in this versi
 
 ### Version [BETA](https://github.com/clover/remote-pay-cloud-BETA/tree/BETA_Final) 
 
-The beta version includes the earliest library as well as a server with examples of the functions. 
+The beta version includes the earliest library, as well as a server with examples of the functions. 
+
+### Additional resources
+- [Tutorial for the Browser SDK](https://docs.clover.com/build/getting-started-with-cloverconnector/?sdk=browser)
+- [API Class Documentation](http://clover.github.io/remote-pay-cloud-api/1.3.1/)
+- [Semi-Integration FAQ](https://docs.clover.com/build/semi-integration-faq/)
+- [Clover Developer Community](https://community.clover.com/index.html)
 
 ## License 
 Copyright © 2017 Clover Network, Inc. All rights reserved.
