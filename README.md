@@ -101,7 +101,7 @@ $(window).on('beforeunload ', function () {
 
 ```
 
-#### Breakdown
+#### Step-by-Step Explanation
 ##### Import the libraries needed to create the Clover object
 ```
 var clover = require("remote-pay-cloud");
