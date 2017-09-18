@@ -1220,7 +1220,7 @@ export namespace CloverConnector {
             let response: sdk.remotepay.RefundPaymentResponse = new sdk.remotepay.RefundPaymentResponse();
             CloverConnector.populateBaseResponse(response, false, result,
                 reason ? reason : "Request Canceled",
-                message ? message : "The Manual Refund Request was canceled.");
+                message ? message : "The Refund Request was canceled.");
             this.cloverConnector.broadcaster.notifyOnRefundPaymentResponse(response);
         }
 
