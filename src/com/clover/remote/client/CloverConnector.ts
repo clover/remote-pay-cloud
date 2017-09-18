@@ -499,40 +499,28 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 
 	public refundPayment(request: sdk.remotepay.RefundPaymentRequest): void {
 		if (!this.device || !this.isReady) {
-			let response: sdk.remotepay.RefundPaymentResponse = new sdk.remotepay.RefundPaymentResponse();
-			response.setRefund(null);
-            CloverConnector.populateBaseResponse(response, false, sdk.remotepay.ResponseCode.ERROR,
-                "Device Connection Error",
-                "In refundPayment: RefundPaymentRequest - The Clover device is not connected.");
-			this.deviceObserver.lastPRR = response;
-			this.deviceObserver.onFinishCancel(CloverConnector.TxTypeRequestInfo.REFUND_REQUEST);
+			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.CANCEL,
+			    "Device Connection Error",
+			    "In refundPayment: RefundPaymentRequest - The Clover device is not connected.",
+			    CloverConnector.TxTypeRequestInfo.REFUND_REQUEST);
 		}
 		else if (request == null) {
-			let response: sdk.remotepay.RefundPaymentResponse = new sdk.remotepay.RefundPaymentResponse();
-			response.setRefund(null);
-            CloverConnector.populateBaseResponse(response, false, sdk.remotepay.ResponseCode.FAIL,
+			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.CANCEL,
 			    "Request Validation Error",
-                "In refundPayment: RefundPaymentRequest - The request that was passed in for processing is empty.");
-			this.deviceObserver.lastPRR = response;
-			this.deviceObserver.onFinishCancel(CloverConnector.TxTypeRequestInfo.REFUND_REQUEST);
+			    "In refundPayment: RefundPaymentRequest - The request that was passed in for processing is empty.",
+			    CloverConnector.TxTypeRequestInfo.REFUND_REQUEST);
 		}
 		else if (request.getPaymentId() == null) {
-			let response: sdk.remotepay.RefundPaymentResponse = new sdk.remotepay.RefundPaymentResponse();
-			response.setRefund(null);
-            CloverConnector.populateBaseResponse(response, false, sdk.remotepay.ResponseCode.FAIL,
+			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.CANCEL,
 			    "Request Validation Error",
-                "In refundPayment: RefundPaymentRequest PaymentID cannot be empty. " + request);
-			this.deviceObserver.lastPRR = response;
-			this.deviceObserver.onFinishCancel(CloverConnector.TxTypeRequestInfo.REFUND_REQUEST);
+                "In refundPayment: RefundPaymentRequest PaymentID cannot be empty. " + request,
+			    CloverConnector.TxTypeRequestInfo.REFUND_REQUEST);
 		}
 		else if (request.getAmount() <= 0 && !request.getFullRefund()) {
-			let response: sdk.remotepay.RefundPaymentResponse = new sdk.remotepay.RefundPaymentResponse();
-			response.setRefund(null);
-            CloverConnector.populateBaseResponse(response, false, sdk.remotepay.ResponseCode.FAIL,
+			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.CANCEL,
 			    "Request Validation Error",
-                "In refundPayment: RefundPaymentRequest Amount must be greater than zero when FullRefund is set to false. " + request);
-			this.deviceObserver.lastPRR = response;
-			this.deviceObserver.onFinishCancel(CloverConnector.TxTypeRequestInfo.REFUND_REQUEST);
+                "In refundPayment: RefundPaymentRequest Amount must be greater than zero when FullRefund is set to false. " + request,
+			    CloverConnector.TxTypeRequestInfo.REFUND_REQUEST);
 		}
 		else {
 			this.device.doPaymentRefund(request.getOrderId(), request.getPaymentId(), request.getAmount(), request.getFullRefund());
@@ -942,7 +930,7 @@ export namespace CloverConnector {
 		cloverConnector: CloverConnector;
 
 		// Hold the last Payment Refund Response
-		lastPRR: sdk.remotepay.RefundPaymentResponse;
+		lastPRR: sdk.remotepay.RefundPaymentResponse; //still in use until orderRef is populated on refund objects
 
 		constructor(cc: CloverConnector) {
 			this.cloverConnector = cc;
@@ -1110,24 +1098,30 @@ export namespace CloverConnector {
 			try {
 				this.cloverConnector.device.doShowWelcomeScreen();
 				this.cloverConnector.lastRequest = null;
-				let lastRefundResponse: sdk.remotepay.RefundPaymentResponse = this.lastPRR;
-				this.lastPRR = null;
-
-				// Since finishOk is the more appropriate/consistent location in the "flow" to
-				// publish the RefundResponse (like SaleResponse, AuthResponse, etc., rather
-				// than after the server call, which calls onPaymetRefund),
-				// we will hold on to the response from
-				// onRefundResponse (Which has more information than just the refund) and publish it here
-				if (lastRefundResponse) {
-					if (lastRefundResponse.getRefund().getId() == refund.getId()) {
-						this.cloverConnector.broadcaster.notifyOnRefundPaymentResponse(lastRefundResponse);
-					}
-					else {
-						this.logger.error("The last PaymentRefundResponse has a different refund than this refund in finishOk");
-					}
-				}
-				else {
-					this.logger.error("Shouldn't get an onFinishOk with having gotten an onPaymentRefund!");
+				//NOTE: these two lines can eventually be removed (once refunds have the orderRef populated correctly):
+                let lastRefundResponse: sdk.remotepay.RefundPaymentResponse = this.lastPRR; //only needed for the order ID
+                this.lastPRR = null;
+				if (refund.getOrderRef() != null) {
+				    let success: boolean = true;
+                    let response: sdk.remotepay.RefundPaymentResponse = new sdk.remotepay.RefundPaymentResponse();
+                    CloverConnector.populateBaseResponse(response, success,
+                        success ? sdk.remotepay.ResponseCode.SUCCESS : sdk.remotepay.ResponseCode.FAIL);
+                    response.setOrderId(refund.getOrderRef());
+                    response.setPaymentId(refund.getPaymentId());
+                    response.setRefund(refund);
+                    this.cloverConnector.broadcaster.notifyOnRefundPaymentResponse(response);
+				} else {
+                    if (lastRefundResponse && lastRefundResponse.getRefund().getId() == refund.getId()) { //need to make sure it's the same refund before sending
+                        this.cloverConnector.broadcaster.notifyOnRefundPaymentResponse(lastRefundResponse);
+                    } else {
+                        let success: boolean = true;
+                        let response: sdk.remotepay.RefundPaymentResponse = new sdk.remotepay.RefundPaymentResponse();
+                        CloverConnector.populateBaseResponse(response, success,
+                            success ? sdk.remotepay.ResponseCode.SUCCESS : sdk.remotepay.ResponseCode.FAIL);
+                        response.setPaymentId(refund.getPaymentId());
+                        response.setRefund(refund);
+                        this.cloverConnector.broadcaster.notifyOnRefundPaymentResponse(response);
+                    }
 				}
 			}
 			finally {}
@@ -1157,12 +1151,10 @@ export namespace CloverConnector {
 				this.cloverConnector.lastRequest = null;
 				if (!requestInfo) {
 					requestInfo = this.getMessageTypeFromLastRequest(lastReq);
-					if (!requestInfo && (this.lastPRR instanceof sdk.remotepay.RefundPaymentResponse)) {
-						requestInfo = TxTypeRequestInfo.REFUND_REQUEST;
-					} else {
+					if (!requestInfo) {
 						this.logger.error('onFinishCancel called, requestInfo was null, and ' +
-							'could not determine the type of the message from the last request ' +
-							'or last refund response', arguments);
+							'could not determine the type of the message from the last request',
+							arguments);
 					}
 				}
 				if (requestInfo == TxTypeRequestInfo.PREAUTH_REQUEST) {
@@ -1178,8 +1170,7 @@ export namespace CloverConnector {
 					this.onFinishCancelManualRefund(result, reason, message);
 				}
 				else if (requestInfo == TxTypeRequestInfo.REFUND_REQUEST) {
-					this.cloverConnector.broadcaster.notifyOnRefundPaymentResponse(this.lastPRR);
-					this.lastPRR = null;
+					this.onFinishCancelRefund(result, reason, message);
 				} else {
 					this.logger.error('onFinishCancel called, but could not determine how to respond!', arguments);
 				}
@@ -1223,6 +1214,14 @@ export namespace CloverConnector {
                 reason ? reason : "Request Canceled",
                 message ? message : "The Manual Refund Request was canceled.");
             this.cloverConnector.broadcaster.notifyOnManualRefundResponse(response);
+        }
+
+        public onFinishCancelRefund(result: sdk.remotepay.ResponseCode, reason?: string, message?: string): void {
+            let response: sdk.remotepay.RefundPaymentResponse = new sdk.remotepay.RefundPaymentResponse();
+            CloverConnector.populateBaseResponse(response, false, result,
+                reason ? reason : "Request Canceled",
+                message ? message : "The Refund Request was canceled.");
+            this.cloverConnector.broadcaster.notifyOnRefundPaymentResponse(response);
         }
 
         public onVerifySignature(payment: sdk.remotepay.Payment, signature: sdk.base.Signature): void {
@@ -1275,6 +1274,7 @@ export namespace CloverConnector {
 			response.setOrderId(orderId);
 			response.setPaymentId(paymentId);
 			response.setRefund(refund);
+			//NOTE: While this is currently needed, we are attempting to move away from this requirement
 			this.lastPRR = response; // set this so we have the appropriate information for when onFinish(Refund) is called
 		}
 
