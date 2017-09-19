@@ -105,6 +105,8 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
             function(data) { this.deviceNotificationSent(data);}.bind(this),
             function(error) {
                 this.connectionError(this.webSocket, "Error sending alert to device." + error);
+                // This may end a reconnect attempt
+                this.setReconnecting(false);
             }.bind(this),
             deviceContactInfo);
 	}
@@ -128,6 +130,8 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
             this.doOptionsCallToAvoid401Error(deviceWebSocketEndpoint);
         } else {
             this.connectionError(this.webSocket, "Could not send alert to device.");
+            // This may end a reconnect attempt
+            this.setReconnecting(false);
         }
     }
 
@@ -177,11 +181,15 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
                 }
             } else {
                 this.connectionError(this.webSocket, "Device is already connected to '" + this.friendlyId + "'");
-                return;
+                // This may end a reconnect attempt
+                this.setReconnecting(false);
+                return; // done connecting
             }
             // If the device socket is already connected and good, just return.
             if (this.webSocket && this.webSocket.getWebSocketState() == WebSocketState.OPEN) {
-                return;
+                // This may end a reconnect attempt
+                this.setReconnecting(false);
+                return; // done connecting
             }
         }
         super.initializeWithUri(deviceWebSocketEndpoint);
