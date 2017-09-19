@@ -35,12 +35,9 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
 	 * Subclasses need to set this at times.
 	 *
 	 * @param newValue
-	 * @returns {boolean}
      */
-	protected setReconnecting(newValue: boolean): boolean {
-		let oldValue: boolean = this.reconnecting;
+	protected setReconnecting(newValue: boolean): void {
 		this.reconnecting = newValue;
-		return oldValue;
 	}
 
 	webSocket: CloverWebSocketClient;
@@ -88,6 +85,8 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
 				return;
 			}
 			setTimeout(this.reconnector, this.reconnectDelay);
+		} else {
+			this.logger.debug("Already attempting to reconnect, will ignore additional request");
 		}
     }
 
@@ -153,7 +152,7 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
 			// being dropped every 65536.
 			this.messageSenderId = setTimeout(function () {
 				this.sendMessageThread()
-			}.bind(this), 5);
+			}.bind(this), 0);
 		}
 	}
 

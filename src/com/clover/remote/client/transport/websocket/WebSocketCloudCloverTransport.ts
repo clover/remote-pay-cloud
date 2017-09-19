@@ -93,6 +93,9 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
 	 *
 	 * To make the call, we also need to have an object that we can use that does not tie us to
 	 * a particular environment.  This is the httpSupport.
+     *
+     * If an attempt is being made to reconnect, when this fails, it will set the 'reconnecting' flag to
+     * false to allow another reconnect attempt to be started by a separate 'thread'.
 	 */
 	protected initialize(): void {
 
