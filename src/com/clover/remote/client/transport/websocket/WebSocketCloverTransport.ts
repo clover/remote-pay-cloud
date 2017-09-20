@@ -25,6 +25,21 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
 
 	private reconnectDelay: number = 3000;
 
+    /**
+	 * We do not wantto start up multiple reconnect threads.  This should alleviate that
+	 * @type {boolean}
+     */
+	private reconnecting: boolean = false;
+
+	/**
+	 * Subclasses need to set this at times.
+	 *
+	 * @param newValue
+     */
+	protected setReconnecting(newValue: boolean): void {
+		this.reconnecting = newValue;
+	}
+
 	webSocket: CloverWebSocketClient;
 
 	private messageQueue:Array<string> = new Array<string>();
@@ -62,11 +77,17 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
     }.bind(this);
 
     public reconnect(): void {
-        if (this.shutdown) {
-            this.logger.debug("Not attempting to reconnect, shutdown...");
-            return;
-        }
-        setTimeout(this.reconnector, this.reconnectDelay);
+		// If we are already reconnecting, do not start another.
+		if(!this.reconnecting) {
+			this.setReconnecting(true);
+			if (this.shutdown) {
+				this.logger.debug("Not attempting to reconnect, shutdown...");
+				return;
+			}
+			setTimeout(this.reconnector, this.reconnectDelay);
+		} else {
+			this.logger.debug("Already attempting to reconnect, will ignore additional request");
+		}
     }
 
 	/**
@@ -107,17 +128,22 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
 	 * a FIFO pattern.
 	 */
 	private sendMessageThread():void {
-		// let's see if we have connectivity
-		if (this.webSocket != null && this.webSocket.isOpen()) {
-			if (this.messageQueue.length > 0) {
+		// If we do not have any messages, then don't try to send them
+		if (this.messageQueue.length > 0) {
+			// let's see if we have connectivity
+			if (this.webSocket != null && this.webSocket.isOpen()) {
+				// Hold the message in case we need to put it back on the queue
+				let nextMsg:string = this.messageQueue.shift();
 				try {
-					this.webSocket.send(this.messageQueue.shift());
+					this.webSocket.send(nextMsg);
 				} catch (e) {
+					// Failed to send, put it back
+					this.messageQueue.unshift(nextMsg);
 					this.reconnect();
 				}
+			} else {
+				this.reconnect();
 			}
-		} else {
-			this.reconnect();
 		}
 		if (!this.shutdown) {
 			// the setTimeout(...,0) resolves an odd chrome problem WRT
@@ -157,6 +183,8 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
 	 * @param deviceEndpoint
      */
 	protected initializeWithUri(deviceEndpoint: string): void  { // synchronized
+		// Primary end to the reconnect attempts
+		this.setReconnecting(false);
 		if (this.webSocket != null) {
 			if (this.webSocket.isOpen() || this.webSocket.isConnecting()) {
 				return;
