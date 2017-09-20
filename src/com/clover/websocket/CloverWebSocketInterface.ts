@@ -12,6 +12,7 @@ import {Logger} from '../remote/client/util/Logger';
  * Interface to connect a websocket implementation to.
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/API/WebSocket
+ * or https://html.spec.whatwg.org/multipage/web-sockets.html
  */
 export abstract class CloverWebSocketInterface {
 
@@ -42,23 +43,17 @@ export abstract class CloverWebSocketInterface {
 
     public connect(): CloverWebSocketInterface {
         this.webSocket = this.createWebSocket(this.endpoint);
-        this.webSocket.addEventListener("open", function(event) {
-            this.notifyOnOpen(event);
-        }.bind(this));
-        this.webSocket.addEventListener("message", function(event) {
-            this.notifyOnMessage(event);
-        }.bind(this));
-        this.webSocket.addEventListener("close", function(event) {
-            this.notifyOnClose(event);
-        }.bind(this));
-        this.webSocket.addEventListener("error", function(event) {
-            this.notifyOnError(event);
-        }.bind(this));
+        if (typeof this.webSocket["addEventListener"] !== "function") {
+           this.logger.error("FATAL: The websocket implementation being used must have an 'addEventListener' function.  Either use a supported websocket implementation (https://www.npmjs.com/package/ws) or override the connect method on CloverWebSocketInterface.");
+        } else {
+            this.webSocket.addEventListener("open", (event) => this.notifyOnOpen(event));
+            this.webSocket.addEventListener("message", (event) => this.notifyOnMessage(event));
+            this.webSocket.addEventListener("close", (event) => this.notifyOnClose(event));
+            this.webSocket.addEventListener("error", (event) => this.notifyOnError(event));
+        }
         return this;
     }
 
-    ///////
-    // https://www.w3.org/TR/2011/WD-websockets-20110419/
     private notifyOnOpen(event: Event) : void {
         this.listeners.forEach((listener: WebSocketListener) => {
             try {
@@ -70,6 +65,7 @@ export abstract class CloverWebSocketInterface {
             }
         });
     }
+
     private notifyOnMessage(event: MessageEvent) : void {
         this.listeners.forEach((listener: WebSocketListener) => {
             try {
@@ -80,21 +76,26 @@ export abstract class CloverWebSocketInterface {
             }
         });
     }
-    private notifyOnError(event: Event) : void {
+
+    /**
+     * A simple error event is passed per the websocket spec - https://www.w3.org/TR/websockets/#concept-websocket-close-fail
+     * It doesn't appear that an exact typing for the websocket error event is available, so I am using any.
+     *
+     * @param {any} event - simple event passed per websocket spec.
+     */
+    private notifyOnError(event: any) : void {
         this.listeners.forEach((listener: WebSocketListener) => {
             try {
-                /*
-                According to the spec, only CLOSING or OPEN should occur. This is a 'simple' event.
-                 */
+                // According to the spec, only CLOSING or OPEN should occur. This is a 'simple' event.
                 // check event here for any additional data we can see - headers?
                 if (this.getReadyState() == WebSocketState.CONNECTING) {
-                    listener.onConnectError(this);
+                    listener.onConnectError(this, event);
                 } else if (this.getReadyState() == WebSocketState.CLOSING) {
-                    listener.onUnexpectedError(this);
+                    listener.onUnexpectedError(this, event);
                 } else if (this.getReadyState() == WebSocketState.CLOSED) {
-                    listener.onDisconnected(this);
+                    listener.onDisconnected(this, event);
                 } else if (this.getReadyState() == WebSocketState.OPEN) {
-                    listener.onSendError(this);
+                    listener.onSendError(this, event);
                 }
             }
             catch(e) {
@@ -102,6 +103,7 @@ export abstract class CloverWebSocketInterface {
             }
         });
     }
+
     private notifyOnClose(event: CloseEvent) : void {
         this.listeners.forEach((listener: WebSocketListener) => {
             try {
@@ -112,8 +114,6 @@ export abstract class CloverWebSocketInterface {
             }
         });
     }
-    ////////
-
 
     public sendClose(code?: number, reason?: string): CloverWebSocketInterface {
         this.logger.debug("Close sent code ", code, " reason ", reason);
@@ -155,6 +155,7 @@ export abstract class CloverWebSocketInterface {
     public addListener(listener: WebSocketListener): void {
         this.listeners.push(listener);
     }
+
     public removeListener(listener: WebSocketListener): boolean {
         var indexOfListener = this.listeners.indexOf(listener);
         if (indexOfListener !== -1) {
@@ -163,6 +164,7 @@ export abstract class CloverWebSocketInterface {
         }
         return false;
     }
+
     public getListeners(): Array<WebSocketListener> {
         return this.listeners.slice();
     }
@@ -171,12 +173,15 @@ export abstract class CloverWebSocketInterface {
     public getUrl(): String {
         return this.webSocket.url;
     }
+
     public getReadyState(): WebSocketState {
         return this.webSocket.readyState;
     }
+
     public getBufferedAmount(): number {
         return this.webSocket.bufferedAmount;
     }
+
     public getProtocol(): string {
         return this.webSocket.protocol;
     }

@@ -182,7 +182,7 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
 		this.clearWebsocket();
 	}
 
-	public connectionError(ws: CloverWebSocketClient, message?:string):void {
+	public connectionError(ws: CloverWebSocketClient, message?: string):void {
 		this.logger.debug('Not Responding...');
 
 		if (this.webSocket == ws) {
@@ -191,7 +191,6 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
 				observer.onDeviceDisconnected(this, message);
 			}
 		}
-		// this.reconnect();
 	}
 
 	public onNotResponding(ws: CloverWebSocketClient): void {

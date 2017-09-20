@@ -14,7 +14,7 @@ export interface CloverWebSocketClientListener {
 
     onMessage(ws: CloverWebSocketClient, message: string);
 
-    connectionError(cloverNVWebSocketClient: CloverWebSocketClient);
+    connectionError(cloverNVWebSocketClient: CloverWebSocketClient, message?: string);
 
     onSendError(payloadText: string);
 }
