@@ -163,7 +163,11 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
 	 * @returns {number} negative 1 (-1)
      */
 	public sendMessage(message: string): number {
-		this.messageQueue.push(message);
+		if (!this.shutdown) {
+			this.messageQueue.push(message);
+		} else {
+			this.logger.debug('In process of shutting down, ignoring ' + message);
+		}
 		return -1;
 	}
 
@@ -199,6 +203,10 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
 
 	public dispose():void {
 		this.shutdown = true;
+
+		// Attempt to clear out messages already in the send queue
+		this.drainQueue();
+
 		if (this.webSocket != null) {
 			this.notifyDeviceDisconnected();
 			try {
@@ -208,6 +216,25 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
 			}
 		}
 		this.clearWebsocket();
+	}
+
+	private drainQueue(): void {
+		// Attempt to finish off the queue
+		while (this.messageQueue.length > 0) {
+			// let's see if we have connectivity
+			if (this.webSocket != null && this.webSocket.isOpen()) {
+				let nextMsg:string = this.messageQueue.shift();
+				try {
+					this.webSocket.send(nextMsg);
+				} catch (e) {
+					this.logger.debug('In process of shutting down, an error occurred trying to drain the message queue.  The messages unsent are ' + this.messageQueue);
+					break;
+				}
+			} else {
+				this.logger.debug('In process of shutting down, the websocket became disconnected.  The messages unsent are ' + this.messageQueue);
+				break;
+			}
+		}
 	}
 
 	public connectionError(ws: CloverWebSocketClient, message?:string):void {
