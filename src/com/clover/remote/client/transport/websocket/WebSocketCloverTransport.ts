@@ -246,7 +246,6 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
 				observer.onDeviceDisconnected(this, message);
 			}
 		}
-		// this.reconnect();
 	}
 
 	public onNotResponding(ws: CloverWebSocketClient): void {

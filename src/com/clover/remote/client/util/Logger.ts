@@ -31,7 +31,9 @@ export class Logger extends EventEmitter {
 		return log;
 
 		function toConsole() {
-			if (log.enabled || DebugConfig.loggingEnabled) {
+            var args = [].slice.call(arguments),
+				errorLog = args && args.length > 0 ? args[0] === "error" : false;
+			if (errorLog || log.enabled || DebugConfig.loggingEnabled) {
 				console.log.apply(console, arguments)
 			}
 		}

@@ -42,9 +42,10 @@ export class CloverWebSocketClient implements WebSocketListener {
             this.socket.connect();
         } catch(e) {
             this.logger.error('connect, connectionError', e);
-            this.listener.connectionError(this);
+            this.listener.connectionError(this, e.message);
         }
     }
+
     public close(code?: number, reason?: string): void {
         this.socket.sendClose(code, reason);
     }
@@ -73,9 +74,17 @@ export class CloverWebSocketClient implements WebSocketListener {
         this.listener.onOpen(this);
     }
 
-    public onConnectError(websocket: CloverWebSocketInterface): void {
-        this.logger.error('onConnectError');
-        this.listener.connectionError(this);
+    /**
+     *
+     * @param {CloverWebSocketInterface} websocket
+     * @param event - A simple error event is passed per the websocket spec - https://www.w3.org/TR/websockets/#concept-websocket-close-fail
+     * It doesn't appear that an exact typing for the websocket error event is available, so I am using any.
+     */
+    public onConnectError(websocket: CloverWebSocketInterface, event: any): void {
+        let eventMessage: string = event.message || "Not available";
+        let message: string = `A websocket connection error has occurred.  Details: ${eventMessage}`;
+        this.logger.error(message);
+        this.listener.connectionError(this, message);
     }
 
     public onDisconnected(websocket: CloverWebSocketInterface): void {
@@ -87,6 +96,7 @@ export class CloverWebSocketClient implements WebSocketListener {
     }
 
     public onError(websocket: CloverWebSocketInterface): void {
+        this.logger.error('A websocket error has occurred.');
     }
 
     public onPingFrame(websocket: CloverWebSocketInterface): void {
@@ -94,10 +104,11 @@ export class CloverWebSocketClient implements WebSocketListener {
     }
 
     public onSendError(websocket: CloverWebSocketInterface): void  {
-        this.listener.onSendError("");//frame.getPayloadText());
+        this.listener.onSendError("");// frame.getPayloadText());
     }
 
     public onUnexpectedError(websocket: CloverWebSocketInterface): void {
+        this.logger.error('An unexpected websocket error has occurred.');
     }
 
     public send( message: string): void {

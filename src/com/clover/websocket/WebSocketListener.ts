@@ -1,6 +1,4 @@
-import {WebSocketState} from './WebSocketState';
 import { CloverWebSocketInterface } from './CloverWebSocketInterface';
-
 
 /**
  * Listener interface to receive WebSocket events.
@@ -23,9 +21,9 @@ export interface WebSocketListener {
 
     onConnected(websocket: CloverWebSocketInterface): void;
 
-    onConnectError(websocket: CloverWebSocketInterface): void;
+    onConnectError(websocket: CloverWebSocketInterface, errorEvent: any): void;
 
-    onDisconnected(websocket: CloverWebSocketInterface): void;
+    onDisconnected(websocket: CloverWebSocketInterface, errorEvent: any): void;
 
     onCloseFrame(websocket: CloverWebSocketInterface, closeCode: number, reason: string): void;
 
@@ -33,7 +31,7 @@ export interface WebSocketListener {
 
     onPingFrame(websocket: CloverWebSocketInterface): void;
 
-    onSendError(websocket: CloverWebSocketInterface): void;
+    onSendError(websocket: CloverWebSocketInterface, errorEvent: any): void;
 
-    onUnexpectedError(websocket: CloverWebSocketInterface): void;
+    onUnexpectedError(websocket: CloverWebSocketInterface, errorEvent: any): void;
 }
