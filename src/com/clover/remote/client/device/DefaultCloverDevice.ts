@@ -952,7 +952,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
 	public doRejectPayment(payment: sdk.payments.Payment, challenge: sdk.base.Challenge): void {
         let message: sdk.remotemessage.PaymentRejectedMessage = new sdk.remotemessage.PaymentRejectedMessage();
         message.setPayment(payment);
-        message.setVoidReason(challenge.reason);
+        message.setReason(challenge.reason);
         this.sendObjectMessage(message);
     }
 
