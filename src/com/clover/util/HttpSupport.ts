@@ -70,13 +70,10 @@ export class HttpSupport {
      */
     public doXmlHttp(method:string, endpoint:string, onDataLoaded:Function, onError:Function):void {
         this.setXmlHttpCallback(this.xmlHttp, endpoint, onDataLoaded, onError);
-
         this.xmlHttp.open(method, endpoint, true);
-        // Firefox bug
-        // https://bugzilla.mozilla.org/show_bug.cgi?id=433859#c4
-        // ugh.  About time to go ahead and include a library
-        // Not sure how to do browser specific hacks in npm
-        if (navigator.userAgent.search("Firefox")) {
+        // Handle the following Firefox bug - https://bugzilla.mozilla.org/show_bug.cgi?id=433859#c4
+        // This check can only be performed in a browser environment so make sure navigator is defined first.
+        if (typeof(navigator) !== "undefined" && navigator.userAgent.search("Firefox")) {
             this.xmlHttp.setRequestHeader("Accept", "*/*");
         }
 

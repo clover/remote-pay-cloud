@@ -88,8 +88,8 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
     }
 
     protected handleRemoteMessageCOMMAND(rMessage: sdk.remotemessage.RemoteMessage) {
-        this.remoteMessageVersion = Math.max(this.remoteMessageVersion, rMessage.getVersion());
-        //if version is >= 2, then chunking is supported
+        this.remoteMessageVersion = Math.max(this.remoteMessageVersion, typeof rMessage["getVersion"] === "function" ? rMessage.getVersion() : 1);
+        // if version is >= 2, then chunking is supported
         let method: sdk.remotemessage.Method = sdk.remotemessage.Method[rMessage.method];
         if (method == null) {
             this.logger.error('Unsupported method type: ' + rMessage.method);
