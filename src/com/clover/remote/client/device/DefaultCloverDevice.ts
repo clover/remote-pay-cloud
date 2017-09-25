@@ -1124,7 +1124,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         if (version > 1) {
             // fragmenting is possible
             let payloadTooLarge = ((attachment ? attachment.length : 0) + (messagePayload ? messagePayload.length : 0)) > this.maxMessageSizeInChars;
-            if (payloadTooLarge) { // need to fragment
+            if (payloadTooLarge || attachment) { // need to fragment
                 if (attachment && attachment.length > CloverConnector.MAX_PAYLOAD_SIZE) {
                     this.logger.error('Error sending message - payload size is greater than the maximum allowed.');
                     return null;
