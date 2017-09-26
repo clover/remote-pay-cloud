@@ -22,14 +22,8 @@ export class HttpSupport {
      */
     xmlHttpImplClass: any;
 
-    /**
-     * The instance of the call interface
-     */
-    xmlHttp: any;
-
     public constructor(xmlHttpImplClass:any) {
         this.xmlHttpImplClass = xmlHttpImplClass;
-        this.xmlHttp = new this.xmlHttpImplClass();
     }
 
     private setXmlHttpCallback(xmlHttpInst:any, endpoint:string, onDataLoaded:Function, onError:Function):void {
@@ -42,7 +36,7 @@ export class HttpSupport {
                             if (xmlHttpInst.responseText && xmlHttpInst.responseText != "") {
                                 data = JSON.parse(xmlHttpInst.responseText);
                             }
-                            onDataLoaded(data);
+                            onDataLoaded(data, xmlHttpInst);
                         }
                     } catch (e) {
                         this.logger.error(endpoint, e);
@@ -61,46 +55,41 @@ export class HttpSupport {
         }.bind(this);
     }
 
-    public getResponseHeader(headerName:string): string {
-        return this.xmlHttp.getResponseHeader(headerName);
-    }
-
     /**
      * Make the REST call to get the data
      */
     public doXmlHttp(method:string, endpoint:string, onDataLoaded:Function, onError:Function):void {
-        this.setXmlHttpCallback(this.xmlHttp, endpoint, onDataLoaded, onError);
-
-        this.xmlHttp.open(method, endpoint, true);
-        // Firefox bug
-        // https://bugzilla.mozilla.org/show_bug.cgi?id=433859#c4
-        // ugh.  About time to go ahead and include a library
-        // Not sure how to do browser specific hacks in npm
-        if (navigator.userAgent.search("Firefox")) {
-            this.xmlHttp.setRequestHeader("Accept", "*/*");
+        const xmlHttp = new this.xmlHttpImplClass();
+        this.setXmlHttpCallback(xmlHttp, endpoint, onDataLoaded, onError);
+        xmlHttp.open(method, endpoint, true);
+        // Handle the following Firefox bug - https://bugzilla.mozilla.org/show_bug.cgi?id=433859#c4
+        // This check can only be performed in a browser environment so make sure navigator is defined first.
+        if (typeof(navigator) !== "undefined" && navigator.userAgent.search("Firefox")) {
+            xmlHttp.setRequestHeader("Accept", "*/*");
         }
 
-        this.xmlHttp.send();
+        xmlHttp.send();
     }
 
     public doXmlHttpSendJson(method:string, sendData:any, endpoint:string, onDataLoaded:Function, onError:Function, additionalHeaders?:any):void {
-        this.setXmlHttpCallback(this.xmlHttp, endpoint, onDataLoaded, onError);
+        const xmlHttp = new this.xmlHttpImplClass();
+        this.setXmlHttpCallback(xmlHttp, endpoint, onDataLoaded, onError);
 
-        this.xmlHttp.open(method, endpoint, true);
+        xmlHttp.open(method, endpoint, true);
         if (additionalHeaders) {
             for (var key in additionalHeaders) {
                 if (additionalHeaders.hasOwnProperty(key)) {
-                    this.xmlHttp.setRequestHeader(key, additionalHeaders[key]);
+                    xmlHttp.setRequestHeader(key, additionalHeaders[key]);
                 }
             }
         }
         if (sendData) {
-            this.xmlHttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xmlHttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
             var sendDataStr = JSON.stringify(sendData);
-            this.xmlHttp.send(sendDataStr);
+            xmlHttp.send(sendDataStr);
         }
         else {
-            this.xmlHttp.send();
+            xmlHttp.send();
         }
     }
     /**

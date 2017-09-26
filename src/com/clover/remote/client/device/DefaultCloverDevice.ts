@@ -88,8 +88,8 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
     }
 
     protected handleRemoteMessageCOMMAND(rMessage: sdk.remotemessage.RemoteMessage) {
-        this.remoteMessageVersion = Math.max(this.remoteMessageVersion, rMessage.getVersion());
-        //if version is >= 2, then chunking is supported
+        this.remoteMessageVersion = Math.max(this.remoteMessageVersion, typeof rMessage["getVersion"] === "function" ? rMessage.getVersion() : 1);
+        // if version is >= 2, then chunking is supported
         let method: sdk.remotemessage.Method = sdk.remotemessage.Method[rMessage.method];
         if (method == null) {
             this.logger.error('Unsupported method type: ' + rMessage.method);
@@ -952,7 +952,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
 	public doRejectPayment(payment: sdk.payments.Payment, challenge: sdk.base.Challenge): void {
         let message: sdk.remotemessage.PaymentRejectedMessage = new sdk.remotemessage.PaymentRejectedMessage();
         message.setPayment(payment);
-        message.setVoidReason(challenge.reason);
+        message.setReason(challenge.reason);
         this.sendObjectMessage(message);
     }
 
@@ -1123,8 +1123,8 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
 
         if (version > 1) {
             // fragmenting is possible
-            let payloadTooLarge = ((attachment ? attachment.length : 0) + (messagePayload ? messagePayload.length : 0)) > this.maxMessageSizeInChars;
-            if (payloadTooLarge) { // need to fragment
+            let payloadTooLarge = (messagePayload ? messagePayload.length : 0) > this.maxMessageSizeInChars;
+            if (payloadTooLarge || attachment) { // need to fragment
                 if (attachment && attachment.length > CloverConnector.MAX_PAYLOAD_SIZE) {
                     this.logger.error('Error sending message - payload size is greater than the maximum allowed.');
                     return null;

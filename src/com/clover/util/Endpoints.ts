@@ -38,7 +38,7 @@ export class Endpoints {
 
     static REMOTE_PAY_PATH:string = Endpoints.MERCHANT_V2_PATH + "/remote_pay";
 
-    static WEBSOCKET_PATH:string = "/support/remote_pay/cs";
+    static WEBSOCKET_PATH:string = "support/remote_pay/cs";
     static WEBSOCKET_TOKEN_KEY:string = "wsTkn";
     static WEBSOCKET_TOKEN_SUFFIX:string = "?token={"+Endpoints.WEBSOCKET_TOKEN_KEY+"}";
     static WEBSOCKET_FRIENDLY_ID_KEY:string = "wsFriendlyId";
@@ -46,7 +46,7 @@ export class Endpoints {
     static WEBSOCKET_FORCE_CONNECT_ID_KEY:string = "wsForceConnect";
     static WEBSOCKET_FORCE_CONNECT_ID_SUFFIX = "&forceConnect={"+Endpoints.WEBSOCKET_FORCE_CONNECT_ID_KEY+"}";
 
-    static OAUTH_PATH:string = "/oauth/authorize?response_type=token";
+    static OAUTH_PATH:string = "oauth/authorize?response_type=token";
     static OAUTH_CLIENT_ID_KEY = "client_id";
     static OAUTH_CLIENT_ID_SUFFIX = "&client_id={"+Endpoints.OAUTH_CLIENT_ID_KEY+"}";
     static OAUTH_MERCHANT_ID_KEY = "merchant_id";
@@ -68,9 +68,6 @@ export class Endpoints {
      */
     public static getOAuthURL(domain:string, clientId:string, merchantId?:string, redirectUri?:string): string {
         var variables = {};
-        if(domain.slice(-1) == '/') {
-            domain = domain.slice(0, domain.length-1);
-        }
         variables[Endpoints.DOMAIN_KEY] = domain;
         variables[Endpoints.OAUTH_CLIENT_ID_KEY] = clientId;
         let oauthEndpointPath: string = Endpoints.DOMAIN_PATH + Endpoints.OAUTH_PATH + Endpoints.OAUTH_CLIENT_ID_SUFFIX;
@@ -175,11 +172,22 @@ export class Endpoints {
         for( var key in variableMap) {
             if(variableMap.hasOwnProperty(key)) {
                 var bracedKey = new RegExp(this.escapeRegExp("{" + key + "}"), "g");
+                // If the value of DOMAIN_KEY does not have a trailing slash, add one.
+                if (key === Endpoints.DOMAIN_KEY) {
+                    variableMap[key] = Endpoints.appendTrailingSlashToDomain(variableMap[key]);
+                }
                 template = template.replace(bracedKey, variableMap[key]);
             }
         }
         return template;
     };
+
+    private static appendTrailingSlashToDomain(domain: string): string {
+        if(domain && domain.charAt(domain.length - 1) !== '/') {
+            return `${domain}/`;
+        }
+        return domain;
+    }
 
     /**
      *
