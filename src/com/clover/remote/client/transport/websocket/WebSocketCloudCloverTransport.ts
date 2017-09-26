@@ -89,7 +89,7 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
         let alertEndpoint:string = Endpoints.getAlertDeviceEndpoint(this.cloverServer, this.merchantId, this.accessToken);
         let deviceContactInfo:DeviceContactInfo = new DeviceContactInfo(this.deviceId.replace(/-/g, ""), true);
 		this.httpSupport.postData(alertEndpoint,
-            (data) => setTimeout(() => this.deviceNotificationSent(data), 1000),
+            (data) => this.deviceNotificationSent(data),
             (error) => {
                 this.connectionError(this.webSocket, `Error sending alert to device. Details: ${error.message}`);
                 // This may end a reconnect attempt
