@@ -143,8 +143,8 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
             httpUrl = deviceWebSocketEndpointCopy.replace("ws", "http");
         }
         this.httpSupport.options(httpUrl,
-            () => this.afterOptionsCall(deviceWebSocketEndpoint),
-            () => this.afterOptionsCall(deviceWebSocketEndpoint));
+            (data, xmlHttpReqImpl) => this.afterOptionsCall(deviceWebSocketEndpoint, xmlHttpReqImpl),
+            (data, xmlHttpReqImpl) => this.afterOptionsCall(deviceWebSocketEndpoint, xmlHttpReqImpl));
     }
 
     /**
@@ -155,10 +155,13 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
      *
      * @param deviceWebSocketEndpoint
      */
-    private afterOptionsCall(deviceWebSocketEndpoint:string): void {
+    private afterOptionsCall(deviceWebSocketEndpoint: string, xmlHttpReqImpl: any): void {
         // See com.clover.support.handler.remote_pay.RemotePayConnectionControlHandler#X_CLOVER_CONNECTED_ID
         // This checks for an existing connection, which includes the id of the terminal that is connected.
-        var connectedId = this.httpSupport.getResponseHeader(WebSocketCloudCloverTransport.X_CLOVER_CONNECTED_ID);
+        let connectedId = "";
+        if (xmlHttpReqImpl && typeof xmlHttpReqImpl["getResponseHeader"] === "function") {
+            connectedId = xmlHttpReqImpl.getResponseHeader(WebSocketCloudCloverTransport.X_CLOVER_CONNECTED_ID)
+        }
         if (connectedId && !this.forceConnect) {
             if (this.friendlyId == connectedId) {
                 // Do anything here?  This is already connected.
