@@ -512,7 +512,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
     /// <param name="rrm"></param>
     public notifyObserversPaymentRefundResponse(rrm: sdk.remotemessage.RefundResponseMessage): void {
         this.deviceObservers.forEach((obs) => {
-            obs.onPaymentRefundResponse(rrm.orderId, rrm.paymentId, rrm.refund, rrm.code);
+            obs.onPaymentRefundResponse(rrm.orderId, rrm.paymentId, rrm.refund, rrm.code, rrm.reason, rrm.message);
         });
     }
 

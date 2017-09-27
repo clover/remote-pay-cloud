@@ -133,7 +133,7 @@ export interface CloverDeviceObserver {
 	 * @param {Refund} refund 
 	 * @param {TxState} code 
 	 */
-	onPaymentRefundResponse(orderId: string, paymentId: string, refund: sdk.payments.Refund, code: sdk.remotemessage.TxState): void;
+	onPaymentRefundResponse(orderId: string, paymentId: string, refund: sdk.payments.Refund, code: sdk.remotemessage.TxState, reason: sdk.remotemessage.ErrorCode, message: string): void;
 
 	/**
 	 * Vault Card Response
