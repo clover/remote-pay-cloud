@@ -801,8 +801,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 		} else if (typeof request === "string") {
 		    this.device.doOpenCashDrawer(request);
 		} else {
-			this.device.doOpenCashDrawer(request.reason, null);
-			//TODO: CAPS- per SEMI-1130, this process will not handle the printer ID yet, so passing null.  Once fixed, the second parameter should be 'request.deviceId'
+			this.device.doOpenCashDrawer(request.reason, request.deviceId);
 		}
 	}
 
