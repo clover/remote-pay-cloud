@@ -1265,7 +1265,7 @@ export namespace CloverConnector {
 			//TODO: For future use
 		}
 
-		public onPaymentRefundResponse(orderId: string, paymentId: string, refund: sdk.payments.Refund, code: sdk.remotemessage.TxState): void {
+		public onPaymentRefundResponse(orderId: string, paymentId: string, refund: sdk.payments.Refund, code: sdk.remotemessage.TxState, reason: sdk.remotemessage.ErrorCode, message: string): void {
 			// hold the response for finishOk for the refund. See comments in onFinishOk(Refund)
 			let success: boolean = (code == sdk.remotemessage.TxState.SUCCESS);
 			let response: sdk.remotepay.RefundPaymentResponse = new sdk.remotepay.RefundPaymentResponse();
@@ -1274,6 +1274,8 @@ export namespace CloverConnector {
 			response.setOrderId(orderId);
 			response.setPaymentId(paymentId);
 			response.setRefund(refund);
+			response.setReason(reason.toString());
+			response.setMessage(message);
 			//NOTE: While this is currently needed, we are attempting to move away from this requirement
 			this.lastPRR = response; // set this so we have the appropriate information for when onFinish(Refund) is called
 		}
