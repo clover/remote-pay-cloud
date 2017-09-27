@@ -331,7 +331,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 		} else if(request == null) {
             this.deviceObserver.onFinishCancelAuth(sdk.remotepay.ResponseCode.FAIL,
                 "Invalid Argument.", "In auth: AuthRequest - The request that was passed in for processing is null.");
-		} else if(request.getAmount() <= 0) {
+		} else if(request.getAmount() == null || request.getAmount() <= 0) {
 			this.deviceObserver.onFinishCancel_rmm(
                 sdk.remotepay.ResponseCode.FAIL, "Request Validation Error", "In auth: AuthRequest - " +
                 "The request amount cannot be zero. Original Request = " + request, CloverConnector.TxTypeRequestInfo.AUTH_REQUEST);
