@@ -1,3 +1,4 @@
+import sdk = require('remote-pay-cloud-api');
 import {CloverTransport} from './CloverTransport';
 
 /**
@@ -27,6 +28,11 @@ export interface CloverTransportObserver {
      * @param {string} message - an optional message
      */
     onDeviceDisconnected(transport: CloverTransport, message?:string): void;
+
+    /**
+     * Device experienced an error on the transport.
+     */
+    onDeviceError(cloverDeviceEvent: sdk.remotepay.CloverDeviceErrorEvent): void;
 
     /**
      * Called when a raw message is received from the device
