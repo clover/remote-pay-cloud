@@ -702,33 +702,33 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
         }
     }
 
-	public print(request: sdk.remotepay.PrintRequest): void {
-		if (!this.device || !this.isReady) {
-			this.notifyDeviceNotConnected("In print");
-		} else if (!request) {
-			this.notifyInvalidData("In print: Invalid argument. Null is not allowed.");
-		} else if (!this.validatePrintRequest(request)) {
-			this.notifyInvalidData("In print: Invalid argument. PrintRequest was not formatted correctly.");
-		} else {
-			if (request.image) {
-				if (Array.isArray(request.image) && request.image.length > 1) {
-					this.notifyInvalidData("In print: Invalid argument. Only one image can be printed at a time in the current API.");
-				}
-				let singleOrArr: any = (Array.isArray(request.image) ? request.image[0] : request.image);
-				this.device.doPrintImageObject(singleOrArr, request.printRequestId, request.printDeviceId);
-			} else if (request.text) {
-				this.device.doPrintText(request.text, request.printRequestId, request.printDeviceId);
-			} else if (request.imageUrl) {
-				if (Array.isArray(request.imageUrl) && request.imageUrl.length > 1) {
-					this.notifyInvalidData("In print: Invalid argument. Only one imageUrl can be printed at a time in the current API.");
-				}
-				let singleOrArr: any = (Array.isArray(request.imageUrl) ? request.imageUrl[0] : request.imageUrl);
-				this.device.doPrintImageUrl(singleOrArr, request.printRequestId, request.printDeviceId);
-			} else {
-				this.notifyInvalidData("In print: Invalid argument. PrintRequest element was not formatted correctly.");
-			}
-		}
-	}
+    public print(request:sdk.remotepay.PrintRequest):void {
+        if (!this.device || !this.isReady) {
+            this.notifyDeviceNotConnected("In print");
+        } else if (!request) {
+            this.notifyInvalidData("In print: Invalid argument. Null is not allowed.");
+        } else if (!this.validatePrintRequest(request)) {
+            this.notifyInvalidData("In print: Invalid argument. PrintRequest was not formatted correctly.");
+        } else {
+            if (request.image) {
+                if (Array.isArray(request.image) && request.image.length > 1) {
+                    this.notifyInvalidData("In print: Invalid argument. Only one image can be printed at a time in the current API.");
+                }
+                let singleOrArr:any = (Array.isArray(request.image) ? request.image[0] : request.image);
+                this.device.doPrintImageObject(singleOrArr, request.printRequestId, request.printDeviceId);
+            } else if (request.text) {
+                this.device.doPrintText(request.text, request.printRequestId, request.printDeviceId);
+            } else if (request.imageUrl) {
+                if (Array.isArray(request.imageUrl) && request.imageUrl.length > 1) {
+                    this.notifyInvalidData("In print: Invalid argument. Only one imageUrl can be printed at a time in the current API.");
+                }
+                let singleOrArr:any = (Array.isArray(request.imageUrl) ? request.imageUrl[0] : request.imageUrl);
+                this.device.doPrintImageUrl(singleOrArr, request.printRequestId, request.printDeviceId);
+            } else {
+                this.notifyInvalidData("In print: Invalid argument. PrintRequest element was not formatted correctly.");
+            }
+        }
+    }
 
     public validatePrintRequest(request: sdk.remotepay.PrintRequest): boolean {
         if (!request.image && !request.text && !request.imageUrl) {
