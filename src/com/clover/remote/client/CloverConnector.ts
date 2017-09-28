@@ -335,7 +335,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 			this.deviceObserver.onFinishCancel_rmm(
                 sdk.remotepay.ResponseCode.FAIL, "Request Validation Error", "In auth: AuthRequest - " +
                 "The request amount cannot be zero. Original Request = " + request, CloverConnector.TxTypeRequestInfo.AUTH_REQUEST);
-		} else if (request.getExternalId() == null || request.getExternalId().trim().length == 0 || 
+		} else if (request.getExternalId() == null || request.getExternalId().trim().length == 0 ||
             request.getExternalId().trim().length > 32){
 			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.FAIL,
                 "Invalid Argument.", "In auth: AuthRequest - The externalId is invalid. It is " +
@@ -376,7 +376,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
                 "Request Validation Error", "In preAuth: PreAuthRequest - " +
                 "The request amount cannot be zero. Original Request = " + request, CloverConnector.TxTypeRequestInfo.PREAUTH_REQUEST);
 		}
-		else if (request.getExternalId() == null || request.getExternalId().trim().length == 0 || 
+		else if (request.getExternalId() == null || request.getExternalId().trim().length == 0 ||
             request.getExternalId().trim().length > 32){
 			this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.FAIL,
                 "Invalid Argument.", "In preAuth: PreAuthRequest - The externalId is invalid. " +
@@ -401,14 +401,14 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 
 	public capturePreAuth(request: sdk.remotepay.CapturePreAuthRequest): void {
 		if (!this.device || !this.isReady) {
-			this.deviceObserver.onCapturePreAuth(sdk.remotepay.ResponseCode.ERROR, 
-                "Device connection Error", 
+			this.deviceObserver.onCapturePreAuth(sdk.remotepay.ResponseCode.ERROR,
+                "Device connection Error",
                 "In capturePreAuth: CapturePreAuth - The Clover device is not connected.", null, null);
 		}
 		else if (!this.merchantInfo.supportsPreAuths) {
-			this.deviceObserver.onCapturePreAuth(sdk.remotepay.ResponseCode.UNSUPPORTED, 
-                "Merchant Configuration Validation Error", 
-                "In capturePreAuth: PreAuth Captures are not enabled for the payment gateway. Original Request = " + 
+			this.deviceObserver.onCapturePreAuth(sdk.remotepay.ResponseCode.UNSUPPORTED,
+                "Merchant Configuration Validation Error",
+                "In capturePreAuth: PreAuth Captures are not enabled for the payment gateway. Original Request = " +
                 request, null, null);
 		}
 		else if (request == null) {
@@ -432,7 +432,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 				this.device.doCaptureAuth(request.paymentId, request.amount, request.tipAmount);
 			}
 			catch(e) {
-				let response: sdk.remotepay.CapturePreAuthResponse = 
+				let response: sdk.remotepay.CapturePreAuthResponse =
                     new sdk.remotepay.CapturePreAuthResponse();
                 CloverConnector.populateBaseResponse(response, false, sdk.remotepay.ResponseCode.UNSUPPORTED,
                     "Pre Auths unsupported",
@@ -704,23 +704,31 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 	}
 
 	public print(request: sdk.remotepay.PrintRequest): void {
-	    if (!this.device || !this.isReady) {
-	        this.notifyDeviceNotConnected("In print");
-	    } else if (!request) {
-	        this.notifyInvalidData("In print: Invalid argument. Null is not allowed.");
-	    } else if (!this.validatePrintRequest(request)) {
-            this.notifyInvalidData("In print: Invalid argument. PrintRequest was not formatted correctly.");
-	    } else {
-	        if (request.image && request.image.length == 1) {
-                this.device.doPrintImageObject(request.image[0], request.printRequestId, request.printDeviceId);
-	        } else if (request.text) {
-                this.device.doPrintText(request.text, request.printRequestId, request.printDeviceId);
-	        } else if (request.imageUrl && request.imageUrl.length == 1) {
-	            this.device.doPrintImageUrl(request.imageUrl[0], request.printRequestId, request.printDeviceId);
-	        } else {
-	            this.notifyInvalidData("In print: Invalid argument. PrintRequest element was not formatted correctly.");
-	        }
-	    }
+		if (!this.device || !this.isReady) {
+			this.notifyDeviceNotConnected("In print");
+		} else if (!request) {
+			this.notifyInvalidData("In print: Invalid argument. Null is not allowed.");
+		} else if (!this.validatePrintRequest(request)) {
+			this.notifyInvalidData("In print: Invalid argument. PrintRequest was not formatted correctly.");
+		} else {
+			if (request.image) {
+				if (Array.isArray(request.image) && request.image.length > 1) {
+					this.notifyInvalidData("In print: Invalid argument. Only one image can be printed at a time in the current API.");
+				}
+				let singleOrArr: any = (Array.isArray(request.image) ? request.image[0] : request.image);
+				this.device.doPrintImageObject(singleOrArr, request.printRequestId, request.printDeviceId);
+			} else if (request.text) {
+				this.device.doPrintText(request.text, request.printRequestId, request.printDeviceId);
+			} else if (request.imageUrl) {
+				if (Array.isArray(request.imageUrl) && request.imageUrl.length > 1) {
+					this.notifyInvalidData("In print: Invalid argument. Only one imageUrl can be printed at a time in the current API.");
+				}
+				let singleOrArr: any = (Array.isArray(request.imageUrl) ? request.imageUrl[0] : request.imageUrl);
+				this.device.doPrintImageUrl(singleOrArr, request.printRequestId, request.printDeviceId);
+			} else {
+				this.notifyInvalidData("In print: Invalid argument. PrintRequest element was not formatted correctly.");
+			}
+		}
 	}
 
 	public validatePrintRequest(request: sdk.remotepay.PrintRequest): boolean {
