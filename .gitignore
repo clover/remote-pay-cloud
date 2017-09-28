@@ -1,6 +1,7 @@
 **/*.js-e
 **/*.ts-e
 **/*.md-e
+/src/**/*.js
 /.idea
 /docs/
 /dist/

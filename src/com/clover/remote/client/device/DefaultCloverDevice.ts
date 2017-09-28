@@ -75,6 +75,10 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         this.notifyObserversDisconnected(transport, message);
     }
 
+    public onDeviceError(deviceError: sdk.remotepay.CloverDeviceErrorEvent): void {
+        this.notifyObserversDeviceError(deviceError);
+    }
+
     public getApplicationId(): string {
         return this.applicationId;
     }
@@ -382,6 +386,18 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
 			obs.onDeviceDisconnected(this, message);
 		});
     }
+
+    /**
+     * Notify the observers that the transport failed.
+     *
+     * @param transport
+     */
+    private notifyObserversDeviceError(errorEvent: sdk.remotepay.CloverDeviceErrorEvent): void {
+        this.deviceObservers.forEach((obs) => {
+            obs.onDeviceError(errorEvent);
+        });
+    }
+
 
     /**
      * Notify the observers that the device is ready
