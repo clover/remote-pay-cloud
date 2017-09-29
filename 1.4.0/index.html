@@ -62,40 +62,33 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="clover-sdk-for-javascript-integration">Clover SDK for Javascript Integration</h1>
+				<p><img src="https://www.clover.com/assets/images/public-site/press/clover_primary_gray_rgb.png" alt="Clover logo"></p>
+				<h1 id="clover-sdk-for-javascript-integration">Clover SDK for JavaScript integration</h1>
 				<!---
 !!NOTE!!  The following is automatically updated to reflect the npm version.
 See the package.json postversion script, which maps to scripts/postversion.sh
 Do not change this or the versioning may not reflect the npm version correctly.
 --->
-				<p>Current version: 1.3.1-2</p>
+				<h2 id="version">Version</h2>
+				<p>Current version: 1.4.0</p>
 				<h2 id="overview">Overview</h2>
-				<p>This SDK provides an API to allow your application using Javascript to interface with a Clover® Mini device (<a href="https://www.clover.com/pos-hardware/mini">https://www.clover.com/pos-hardware/mini</a>)</p>
-				<p>The API is available on <a href="https://github.com/clover/remote-pay-cloud">GitHub</a> for download, and can be used:</p>
+				<p>This SDK provides an API that enables your JavaScript point-of-sale (POS) system to communicate with a <a href="https://www.clover.com/pos-hardware/">Clover® payment device</a>. Learn more about <a href="https://www.clover.com/integrations">Clover integrations</a>.</p>
+				<p>You can use the API in conjunction with:</p>
 				<ul>
-					<li>in conjunction with the proper browser framework from a NodeJS <code>require</code> directive, <a href="https://www.npmjs.com/package/remote-pay-cloud">hosted on NPM</a></li>
-					<li><p>in conjunction with a server based NodeJS application by including a compatible <a href="https://www.npmjs.com/package/websocket">WebSocket</a> and <a href="https://www.npmjs.com/package/xmlhttprequest">XMLHttpRequest</a> library.</p>
-					</li>
-					<li><p>The remotepay/ICloverConnector is the high-level API with methods like <code>Sale()</code>, <code>VoidTransaction()</code>, <code>ManualRefund()</code>, etc.</p>
-					</li>
-					<li>The remotepay/ICloverConnectorListener is the high-level listener API that defines callback methods like <code>onSaleResponse</code>, <code>onRefundPaymentResponse</code>, etc.</li>
-					<li>The API includes objects that map to standard Clover objects such as <code>Payment</code>, <code>CardTransaction</code>, <code>Order</code>, etc.  These objects will match those defined in <a href="https://github.com/clover/clover-android-sdk">clover-android-sdk</a></li>
+					<li>The proper browser framework from a Node.js <code>require</code> directive <a href="https://www.npmjs.com/package/remote-pay-cloud">hosted on npm</a></li>
+					<li>A server-based Node.js application by including a compatible <a href="https://www.npmjs.com/package/websocket">WebSocket</a> and <a href="https://www.npmjs.com/package/xmlhttprequest">XMLHttpRequest</a> library</li>
 				</ul>
-				<p>If used from a browser, the library requires the browser you use to support WebSockets. See <a href="http://caniuse.com/#feat=websockets">WebSocket Browser Support</a>.</p>
-				<p>For more developer documentation and information about the Semi-Integration program, please visit our [semi-integration developer documents] (<a href="https://docs.clover.com/build/integration-overview-requirements/">https://docs.clover.com/build/integration-overview-requirements/</a>). </p>
+				<p>If used from a browser, the browser must support WebSockets. For more information, see <a href="http://caniuse.com/#feat=websockets">WebSocket Browser Support</a>.</p>
 				<h2 id="examples">Examples</h2>
 				<h3 id="application">Application</h3>
-				<p>A sale/refund UI example project that connects to a device via the Clover cloud <a href="https://github.com/clover/clover-cloud-connector-example">Clover Cloud Connector Example</a> is available for download and deployment, or direct deployment to a Heroku server.</p>
-				<h3 id="example-framework">Example Framework</h3>
-				<p>A example project composed of small examples that connect to a device via the Clover cloud - <a href="https://github.com/clover/clover-cloud-connector-unit-examples">Clover Cloud Connector Unit Examples</a> is available for download and deployment, or direct deployment to a Heroku server.</p>
-				<p>Please report any questions/comments/concerns to us by emailing <a href="mailto:semi-integrations@clover.com">semi-integrations@clover.com</a>.</p>
-				<hr>
-				<h1 id="quickstart">Quickstart</h1>
-				<p>Clover&#39;s cloud connector API.  Published as an NPM package.  Intended for use in a browser environment, or in a NodeJS application.</p>
-				<h2 id="javascript">Javascript</h2>
-				<p>This shows how you can make a connection using plain javascript in the browser to a Clover device using the Cloud Pay Display.</p>
-				<h3 id="at-a-glance">At a Glance</h3>
-				<h4 id="make-a-sale-">Make a sale.</h4>
+				<p>A <a href="https://github.com/clover/clover-cloud-connector-example">sale/refund UI example project</a> that connects to a device via the Clover Cloud is available either for download and deployment, or direct deployment to a Heroku server.</p>
+				<h3 id="example-framework">Example framework</h3>
+				<p>Another <a href="https://github.com/clover/clover-cloud-connector-unit-examples">project</a> composed of small examples that connect to a device via the Clover Cloud is also available either for download and deployment, or direct deployment to a Heroku server.</p>
+				<p>Please report any questions, comments, or concerns by emailing us at <a href="mailto:semi-integrations@clover.com">semi-integrations@clover.com</a>.</p>
+				<h3 id="quick-start">Quick start</h3>
+				<p>Clover&#39;s Cloud Connector API is published as an npm package. It is intended for use in a browser environment or Node.js application.</p>
+				<p>The following example demonstrates how you can create a connection to a Clover device using plain JavaScript in the browser and the Cloud Pay Display app.</p>
+				<h4 id="make-a-sale">Make a sale</h4>
 				<pre><code><span class="hljs-keyword">var</span> $ = <span class="hljs-built_in">require</span>(<span class="hljs-string">'jQuery'</span>);
 
 <span class="hljs-keyword">var</span> clover = <span class="hljs-built_in">require</span>(<span class="hljs-string">"remote-pay-cloud"</span>);
@@ -155,11 +148,11 @@ $(<span class="hljs-built_in">window</span>).on(<span class="hljs-string">'befor
         <span class="hljs-built_in">console</span>.log(e);
     }
 });
-</code></pre><h4 id="breakdown">Breakdown</h4>
-				<h5 id="import-the-libraries-needed-to-create-the-clover-object-">Import the libraries needed to create the clover object.</h5>
+</code></pre><h4 id="step-by-step-explanation">Step-by-Step Explanation</h4>
+				<h5 id="import-the-libraries-needed-to-create-the-clover-object">Import the libraries needed to create the Clover object</h5>
 				<pre><code><span class="hljs-attribute">var clover</span> = require(<span class="hljs-string">"remote-pay-cloud"</span>);
-</code></pre><h5 id="create-the-clover-connector-object-">Create the Clover Connector object.</h5>
-				<p>This will require gathering the configuration information to create the connector.  In this example, the configuration is hard coded.  The creation of the connector is done using the connector factory.</p>
+</code></pre><h5 id="create-the-clover-connector-object">Create the Clover Connector object</h5>
+				<p>You will need to gather the configuration information in order to create the connector.  In this example, the configuration is hard-coded. Use the connector factory to create the connection.</p>
 				<pre><code><span class="hljs-keyword">var</span> connector = <span class="hljs-keyword">new</span> clover.CloverConnectorFactory().createICloverConnector({
     <span class="hljs-string">"merchantId"</span>: <span class="hljs-string">"BBFF8NBCXEMDT"</span>,
     <span class="hljs-string">"clientId"</span>: <span class="hljs-string">"3RPTN642FHXTC"</span>,
@@ -167,10 +160,9 @@ $(<span class="hljs-built_in">window</span>).on(<span class="hljs-string">'befor
     <span class="hljs-string">"deviceSerialId"</span>: <span class="hljs-string">"C031UQ52340045"</span>,
     <span class="hljs-string">"domain"</span>: <span class="hljs-string">"https://sandbox.dev.clover.com/"</span>
 });
-</code></pre><p>There are several ways the Clover Connector object can be configured.</p>
-				<p>Examples of configurations that can be used when creating the Clover Connector object:</p>
+</code></pre><p>You can configure the Clover Connector object in several ways. Here are a few examples of configurations you can use.</p>
 				<ol>
-					<li>With a clientID, domain, merchantId, deviceSerialId<pre><code>{
+					<li>With a clientID, domain, merchantId, and deviceSerialId<pre><code>{
 <span class="hljs-attr">"clientId"</span> : <span class="hljs-string">"3BZPZ6A6FQ8ZM"</span>,
 <span class="hljs-attr">"remoteApplicationId"</span>: <span class="hljs-string">"com.yourname.yourapplication:1.0.0-beta1"</span>,
 <span class="hljs-attr">"domain"</span> : <span class="hljs-string">"https://sandbox.dev.clover.com/"</span>,
@@ -178,7 +170,7 @@ $(<span class="hljs-built_in">window</span>).on(<span class="hljs-string">'befor
 <span class="hljs-attr">"deviceSerialId"</span> : <span class="hljs-string">"C021UQ52341078"</span>
 }
 </code></pre></li>
-					<li>With a oauthToken, domain, merchantId, clientId, deviceSerialId<pre><code>{
+					<li>With an oauthToken, domain, merchantId, clientId, and deviceSerialId<pre><code>{
 <span class="hljs-attr">"oauthToken"</span> : <span class="hljs-string">"6e6313e8-fe33-8662-7ff2-3a6690e0ff14"</span>,
 <span class="hljs-attr">"domain"</span> : <span class="hljs-string">"https://sandbox.dev.clover.com/"</span>,
 <span class="hljs-attr">"merchantId"</span> : <span class="hljs-string">"VKYQ0RVGMYHRS"</span>,
@@ -188,10 +180,10 @@ $(<span class="hljs-built_in">window</span>).on(<span class="hljs-string">'befor
 }
 </code></pre></li>
 				</ol>
-				<h5 id="define-a-listener-that-will-listen-for-events-produced-by-the-clover-connector-">Define a listener that will listen for events produced by the Clover Connector.</h5>
-				<p>The functions implemented will be called as the connector encounters the events.  These functions can be found in the clover.remotepay.ICloverConnectorListener. </p>
+				<h5 id="define-a-listener-that-will-listen-for-events-produced-by-the-clover-connector">Define a listener that will listen for events produced by the Clover Connector</h5>
+				<p>The functions implemented will be called as the connector encounters the events. These functions can be found in the <code>clover.remotepay.ICloverConnectorListener</code>. </p>
 				<pre><code><span class="hljs-comment">// This overrides/implements the constructor function.  This example</span>
-<span class="hljs-comment">// expects that a clover connector implementation instance is passed to the created listener.</span>
+<span class="hljs-comment">// expects that a CloverConnector implementation instance is passed to the created listener.</span>
 <span class="hljs-keyword">var</span> ExampleCloverConnectorListener = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">cloverConnector</span>) </span>{
     clover.remotepay.ICloverConnectorListener.call(<span class="hljs-keyword">this</span>);
     <span class="hljs-keyword">this</span>.cloverConnector = cloverConnector;
@@ -199,7 +191,7 @@ $(<span class="hljs-built_in">window</span>).on(<span class="hljs-string">'befor
 ExampleCloverConnectorListener.prototype = <span class="hljs-built_in">Object</span>.create(clover.remotepay.ICloverConnectorListener.prototype);
 ExampleCloverConnectorListener.prototype.constructor = ExampleCloverConnectorListener;
 
-<span class="hljs-comment">// The ICloverConnectorListener function that is called when the device is ready to be used.</span>
+<span class="hljs-comment">// The ICloverConnectorListener function that's called when the device is ready to be used</span>
 <span class="hljs-comment">// This example starts up a sale for $100</span>
 ExampleCloverConnectorListener.prototype.onReady: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">merchantInfo</span>) </span>{
     <span class="hljs-keyword">var</span> saleRequest = <span class="hljs-keyword">new</span> clover.remotepay.SaleRequest();
@@ -208,22 +200,22 @@ ExampleCloverConnectorListener.prototype.onReady: <span class="hljs-function"><s
     <span class="hljs-keyword">this</span>.cloverConnector.sale(saleRequest);
 };
 
-<span class="hljs-comment">// The ICloverConnectorListener function that is called when the device needs to have a signature</span>
-<span class="hljs-comment">// accepted, or rejected.</span>
-<span class="hljs-comment">// This example accepts the signature, sight unseen</span>
+<span class="hljs-comment">// The ICloverConnectorListener function that's called when the device needs to capture a signature</span>
+<span class="hljs-comment">// The signature will be either accepted or rejected</span>
+<span class="hljs-comment">// This example accepts the signature, sight-unseen</span>
 ExampleCloverConnectorListener.prototype.onVerifySignatureRequest = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">request</span>) </span>{
     log.info(request);
     <span class="hljs-keyword">this</span>.cloverConnector.acceptSignature(request);
 };
 
-<span class="hljs-comment">// The ICloverConnectorListener function that is called when the device detects a possible duplicate transaction,</span>
-<span class="hljs-comment">// due to the same card being used in a short period of time. This example accepts the duplicate payment challenge, sight unseen</span>
+<span class="hljs-comment">// The ICloverConnectorListener function that's called when the device detects a possible duplicate transaction,</span>
+<span class="hljs-comment">// due to the same card being used in a short period of time. This example accepts the duplicate payment challenge sight-unseen.</span>
 ExampleCloverConnectorListener.prototype.onConfirmPaymentRequest = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">request</span>) </span>{
   <span class="hljs-keyword">this</span>.cloverConnector.acceptPayment(request.payment);
 };
 
-<span class="hljs-comment">// The ICloverConnectorListener function that is called when a sale request is completed.</span>
-<span class="hljs-comment">// This example logs the response, and disposes of the connector.  If the response is not an expected</span>
+<span class="hljs-comment">// The ICloverConnectorListener function that's called when a sale request is completed.</span>
+<span class="hljs-comment">// This example logs the response and disposes of the connector.  If the response is not an expected</span>
 <span class="hljs-comment">// type, it will log an error.</span>
 ExampleCloverConnectorListener.prototype.onSaleResponse = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">response</span>) </span>{
     log.info(response);
@@ -233,12 +225,12 @@ ExampleCloverConnectorListener.prototype.onSaleResponse = <span class="hljs-func
         <span class="hljs-built_in">console</span>.error(response);
     }
 };
-</code></pre><h5 id="add-the-listener-instance-to-the-connector-and-initialize-the-connection-to-the-device-">Add the listener instance to the connector, and initialize the connection to the device.</h5>
+</code></pre><h5 id="add-the-listener-instance-to-the-connector-and-initialize-the-connection-to-the-device">Add the listener instance to the connector and initialize the connection to the device</h5>
 				<pre><code><span class="hljs-keyword">var</span> connectorListener = <span class="hljs-function"><span class="hljs-keyword">new</span> <span class="hljs-title">ExampleCloverConnectorListener</span>(connector);
 <span class="hljs-title">connector</span>.<span class="hljs-title">addCloverConnectorListener</span>(connectorListener);
 <span class="hljs-title">connector</span>.<span class="hljs-title">initializeConnection</span>();</span>
-</code></pre><h5 id="clean-up-the-connection-on-exit-of-the-window-this-should-be-done-with-all-connectors-">Clean up the connection on exit of the window.  This should be done with all connectors.</h5>
-				<p>This example uses jQuery to add a hook for the window <code>beforeunload</code> event that ensures that the connector is displosed of.</p>
+</code></pre><h5 id="clean-up-the-connection-on-exit-of-the-window">Clean up the connection on exit of the window</h5>
+				<p>This should be done with all connectors. The following example uses jQuery to add a hook for the window <code>beforeunload</code> event that ensures that the connector is disposed of.</p>
 				<pre><code>$(<span class="hljs-built_in">window</span>).on(<span class="hljs-string">'beforeunload '</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
     <span class="hljs-keyword">try</span> {
         connector.dispose();
@@ -247,9 +239,8 @@ ExampleCloverConnectorListener.prototype.onSaleResponse = <span class="hljs-func
     }
 });
 </code></pre><h2 id="typescript">Typescript</h2>
-				<p>This shows how you can make a connection using typescript in the browser to a Clover device using the Network Pay Display.</p>
-				<h3 id="at-a-glance">At a Glance</h3>
-				<h4 id="make-a-sale-">Make a sale.</h4>
+				<p>This section demonstrates how you can make a connection to a Clover device using typescript in the browser and the Network Pay Display app.</p>
+				<h3 id="make-a-sale">Make a sale</h3>
 				<pre><code><span class="hljs-keyword">var</span> $ = <span class="hljs-built_in">require</span>(<span class="hljs-string">'jQuery'</span>);
 <span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> Clover <span class="hljs-keyword">from</span> <span class="hljs-string">'remote-pay-cloud'</span>;
 
@@ -343,38 +334,38 @@ $(<span class="hljs-built_in">window</span>).on(<span class="hljs-string">'befor
 });
 
 cloverConnector.initializeConnection();
-</code></pre><h4 id="breakdown">Breakdown</h4>
-				<h5 id="import-the-libraries-needed-to-create-the-clover-object-">Import the libraries needed to create the clover object.</h5>
+</code></pre><h4 id="step-by-step-explanation">Step-by-Step Explanation</h4>
+				<h5 id="import-the-libraries-needed-to-create-the-clover-object">Import the libraries needed to create the Clover object</h5>
 				<pre><code><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> Clover <span class="hljs-keyword">from</span> <span class="hljs-string">'remote-pay-cloud'</span>;
-</code></pre><h5 id="create-the-clover-device-configuration-object-">Create the Clover Device Configuration object.</h5>
-				<p>Depending on the mode of configuration, you may choose to use a WebSocketPairedCloverDeviceConfiguration, or a WebSocketCloudCloverDeviceConfiguration.</p>
+</code></pre><h5 id="create-the-clover-device-configuration-object">Create the Clover device Configuration object</h5>
+				<p>Depending on the mode of configuration, you may choose to use a WebSocketPairedCloverDeviceConfiguration or a WebSocketCloudCloverDeviceConfiguration.</p>
 				<pre><code>export <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StandAloneExampleWebsocketPairedCloverDeviceConfiguration</span> <span class="hljs-keyword">extends</span> </span>
                  <span class="hljs-type">Clover</span>.<span class="hljs-type">WebSocketPairedCloverDeviceConfiguration</span> {
 ...
 }
-</code></pre><p>There are many ways the Clover Connector object can be configured.  This includes a direct connection with a browser as shown here, connecting using a browser via the cloud similar to the above example, and connecting using a NodeJS application. </p>
-				<h5 id="define-a-listener-that-will-listen-for-events-produced-byt-the-clover-connector-">Define a listener that will listen for events produced byt the Clover Connector.</h5>
-				<p>The functions implemented will be called as the connector encounters the events.  These functions can be found in the clover.remotepay.ICloverConnectorListener. </p>
+</code></pre><p>There are many ways the Clover Connector object can be configured.  This includes a direct connection with a browser as shown here, using a browser to connect through the cloud (similar to the example above), or connecting using a Node.js application. </p>
+				<h5 id="define-a-listener-that-will-listen-for-events-produced-by-the-clover-connector">Define a listener that will listen for events produced by the Clover Connector</h5>
+				<p>The functions implemented will be called as the connector encounters the events.  These functions can be found in the <code>clover.remotepay.ICloverConnectorListener</code>. </p>
 				<pre><code>export <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StandAloneExampleCloverConnectorListener</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Clover</span>.<span class="hljs-title">remotepay</span>.<span class="hljs-title">ICloverConnectorListener</span> </span>{
 ...
 }
-</code></pre><h5 id="create-the-clover-connector-factory-object-">Create the Clover Connector Factory object.</h5>
-				<p>The factory can be obtained using the builder.  If unspecified, the factory will produce 1.1.0 compatible connectors.  Here we specify the 1.2 version.</p>
+</code></pre><h5 id="create-the-clover-connector-factory-object">Create the Clover Connector Factory object</h5>
+				<p>The factory can be obtained using the builder.  If unspecified, the factory will produce 1.1.0-compatible connectors.  This example specifies the 1.2 version.</p>
 				<pre><code>let configuration = {}<span class="hljs-comment">;</span>
 configuration[<span class="hljs-keyword">Clover.CloverConnectorFactoryBuilder.FACTORY_VERSION] </span>= 
       <span class="hljs-keyword">Clover.CloverConnectorFactoryBuilder.VERSION_12;
 </span>let connectorFactory: <span class="hljs-keyword">Clover.ICloverConnectorFactory </span>= 
       <span class="hljs-keyword">Clover.CloverConnectorFactoryBuilder.createICloverConnectorFactory(configuration);</span>
-</code></pre><h5 id="create-the-clover-connector-object-">Create the Clover Connector object.</h5>
+</code></pre><h5 id="create-the-clover-connector-object">Create the Clover Connector object</h5>
 				<p>Using the configuration object you created, call the factory function to get an instance of a Clover Connector.</p>
 				<pre><code>let <span class="hljs-keyword">cloverConnector: </span><span class="hljs-keyword">Clover.remotepay.ICloverConnector </span>=
     connectorFactory.createICloverConnector(
       new StandAloneExampleWebsocketPairedCloverDeviceConfiguration())<span class="hljs-comment">;</span>
-</code></pre><h5 id="add-the-listener-instance-to-the-connector-and-initialize-the-connection-to-the-device-">Add the listener instance to the connector, and initialize the connection to the device.</h5>
+</code></pre><h5 id="add-the-listener-instance-to-the-connector-and-initialize-the-connection-to-the-device">Add the listener instance to the connector and initialize the connection to the device</h5>
 				<pre><code>cloverConnector.addCloverConnectorListener(<span class="hljs-function"><span class="hljs-keyword">new</span> <span class="hljs-title">StandAloneExampleCloverConnectorListener</span>(cloverConnector));
 <span class="hljs-title">cloverConnector</span>.<span class="hljs-title">initializeConnection</span>();</span>
-</code></pre><h5 id="clean-up-the-connection-on-exit-of-the-window-this-should-be-done-with-all-connectors-">Clean up the connection on exit of the window.  This should be done with all connectors.</h5>
-				<p>This example uses jQuery to add a hook for the window <code>beforeunload</code> event that ensures that the connector is displosed of.</p>
+</code></pre><h5 id="clean-up-the-connection-on-exit-of-the-window">Clean up the connection on exit of the window</h5>
+				<p>This should be done with all connectors. The following example uses jQuery to add a hook for the window <code>beforeunload</code> event that ensures the connector is disposed of.</p>
 				<pre><code>$(<span class="hljs-built_in">window</span>).on(<span class="hljs-string">'beforeunload '</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
     <span class="hljs-keyword">try</span> {
         connector.dispose();
@@ -382,148 +373,26 @@ configuration[<span class="hljs-keyword">Clover.CloverConnectorFactoryBuilder.FA
         <span class="hljs-built_in">console</span>.log(e);
     }
 });
-</code></pre><h1 id="browser-versions-tested">Browser Versions Tested</h1>
-				<p>This library has been tested against the following Browser type and versions:</p>
+</code></pre><h2 id="browser-versions-tested">Browser Versions Tested</h2>
+				<p>This library has been tested against the following browser types and versions:</p>
 				<ul>
-					<li>Chrome version 54-58</li>
+					<li>Chrome versions 54-58</li>
 					<li>Firefox version 49</li>
 				</ul>
-				<h1 id="generate-documentation">Generate Documentation</h1>
-				<p>API documentation is generated when <code>npm install</code> is run.
-					<a href="http://clover.github.io/remote-pay-cloud/1.3.1-2/">Online Docs</a> and
-				<a href="http://clover.github.io/remote-pay-cloud-api/1.3.1-1/">Online API class Docs</a></p>
-				<h1 id="release-notes">Release Notes</h1>
-				<h2 id="version-1-3-1-2">Version 1.3.1-2</h2>
+				<h2 id="generate-documentation">Generate Documentation</h2>
+				<p>API documentation is automatically generated when <code>npm install</code> is run. </p>
 				<ul>
-					<li>SEMI-1045 Converts array elements into the format expected by Clover Devices.  Fix for displaying an order.</li>
+					<li><a href="http://clover.github.io/remote-pay-cloud/1.4.0/">Online Docs</a></li>
 				</ul>
-				<h2 id="version-1-3-1-1">Version 1.3.1-1</h2>
+				<h2 id="additional-resources">Additional resources</h2>
 				<ul>
-					<li>SEMI-1025 Use version of remote-pay-cloud-api that contains OrderUpdateMessage and related files.</li>
-					<li>SEMI-991 When Cloud connections fail because a device is not communicating with the Clover servers, report disconnect.</li>
+					<li><a href="https://github.com/clover/remote-pay-cloud/releases">Release Notes</a></li>
+					<li><a href="https://docs.clover.com/build/getting-started-with-cloverconnector/?sdk=browser">Tutorial for the Browser SDK</a></li>
+					<li><a href="http://clover.github.io/remote-pay-cloud-api/1.4.0/">API Class Documentation</a></li>
+					<li><a href="https://community.clover.com/index.html">Clover Developer Community</a></li>
 				</ul>
-				<h2 id="version-1-3-1">Version 1.3.1</h2>
-				<h2 id="version-1-3-1-rc1-2">Version 1.3.1-rc1.2</h2>
-				<ul>
-					<li>CLOVER-21536  Default allowPartialAuth in PayIntent dto.  Update to dependency on remote-pay-cloud-api</li>
-				</ul>
-				<h2 id="version-1-3-1-rc1-1">Version 1.3.1-rc1.1</h2>
-				<ul>
-					<li>SEMI-695 Update typesccript version</li>
-				</ul>
-				<h2 id="version-1-3-1-rc1-0">Version 1.3.1-rc1.0</h2>
-				<ul>
-					<li>SEMI-864 Fix case where a provided tip of 0 resulted in a sale being converted to an auth.</li>
-				</ul>
-				<h2 id="version-1-3-0-rc1-1">Version 1.3.0-rc1.1</h2>
-				<ul>
-					<li>SEMI-917 Add onDeviceDisconnected, onDeviceConnected, onDeviceReady, and deprecate onDisconnected, onConnected, onReady.  This brings this API in closer alignment with the other remote-pay API&#39;s.</li>
-				</ul>
-				<h2 id="version-1-3-0-rc1-0">Version 1.3.0-rc1.0</h2>
-				<ul>
-					<li><p>Added support for Custom Activities</p>
-						<ul>
-							<li>ICloverConnector<ul>
-									<li>Added<ul>
-											<li>startCustomActivity</li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-							<li><p>ICloverConnectorListener</p>
-								<ul>
-									<li>Added<ul>
-											<li>onCustomActivityResponse</li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-							<li><p>CustomActivity</p>
-								<ul>
-									<li>apk must be approved and then installed via the Clover App Market</li>
-									<li>clover-cfp-sdk library<ul>
-											<li>Added CloverCFPActivity that can be extended</li>
-											<li>Added constants for getting/retrieving activity payload CloverCFP interface</li>
-											<li>Working with Custom Activities...<ul>
-													<li>The action of the activity, as defined in the AndroidManifest, should be passed in as part of the request</li>
-													<li>A single text payload can be passed in to the request and retrieved in the intent via com.clover.remote.cfp.CFPActivity.EXTRA_PAYLOAD constant. e.g. &quot;com.clover.remote.terminal.remotecontrol.extra.EXTRA_PAYLOAD&quot;</li>
-													<li>The CustomActivityResponse (onCustomActivityResponse) contains a single text payload, populated from the com.clover.remote.cfp.EXTRA_PAYLOAD extra in the result Intent</li>
-													<li>Block vs Non-Blocking Activities<ul>
-															<li>A blocking CustomActivity (CustomActivityRequest.setNonBlocking(boolean)) will either need to finish itself, or can be exited via ICloverConnector.resetDevice()<ul>
-																	<li>For example: Don&#39;t want a Sale request to interrupt Collect Customer Information Custom Activity</li>
-																</ul>
-															</li>
-															<li>A non-blocking CustomActivity will finish when a new request is made<ul>
-																	<li>For example: Want a Sale request to interrupt showing Ads Custom Activity</li>
-																</ul>
-															</li>
-														</ul>
-													</li>
-												</ul>
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</li>
-					<li><p>SEMI-889 Remove automatic transition to welcome screen when device is ready</p>
-					</li>
-					<li>SEMI-695 Addition of response to <code>resetDevice</code> call.</li>
-					<li>SEMI-795 Addition of retrievePayment functionality.</li>
-					<li>SEMI-777 Addition of custom activity support.</li>
-				</ul>
-				<h2 id="version-1-2-0">Version 1.2.0</h2>
-				<h2 id="version-1-2-0-rc1-1">Version 1.2.0-rc1.1</h2>
-				<ul>
-					<li>SEMI-792  Installation script fix.  Move dev-dependencies to dependencies.</li>
-				</ul>
-				<h2 id="version-1-2-0-rc1-0">Version 1.2.0-rc1.0</h2>
-				<ul>
-					<li>SEMI-689  Initial 1.2 implementation.  Redesign of internal classes and many processes.  Support for &#39;per-transaction&#39; settings. Update to use version 1.2.0-rc1.0 of remote-pay-cloud-api classes.  Addition of REMOTE_ERROR handling.  Increased request validation before communication.  Added ability to direct connect to device via &#39;Network Pay Display&#39; app.  Added &#39;displayPaymentReceiptOptions&#39; to replace deprecated &#39;showPaymentReceiptOptions&#39;.  Removed dependency on browser for connector objects produced using 1.2 factory objects.</li>
-					<li>SEMI-554 Added internal support for remote error.  Fix &quot;cloverShouldHandleReceipts&quot; and &quot;disablePrinting&quot; check to look for correct property. Use 1.2.0-rc1.0 of remote-pay-cloud-api.</li>
-				</ul>
-				<h2 id="version-1-1-0">Version 1.1.0</h2>
-				<h2 id="version-1-1-0-rc6-4">Version 1.1.0-rc6.4</h2>
-				<ul>
-					<li>SEMI-498 Revert update to use new schema objects.  New schema is slated for 1.2.</li>
-				</ul>
-				<h2 id="version-1-1-0-rc6-3-deprecated-">Version 1.1.0-rc6.3 (deprecated)</h2>
-				<ul>
-					<li>SEMI-498 Add ready checking before attempting remote calls.  Add request validation.  Inhibit multiple &#39;onReady&#39; callbacks.  Update to use new schema objects.</li>
-					<li>SEMI-577 Add Declaration of support for Chrome version 54, Firefox version 49</li>
-				</ul>
-				<h2 id="version-1-1-0-rc6-2">Version 1.1.0-rc6.2</h2>
-				<ul>
-					<li>SEMI-541 Update remote pay cloud API classes to ver 1.1.0-rc5.1</li>
-				</ul>
-				<h2 id="version-1-1-0-rc6-1">Version 1.1.0-rc6.1</h2>
-				<ul>
-					<li>SVR-899 Handle reconnect requests from the server.</li>
-				</ul>
-				<h2 id="version-1-1-0-rc6-0">Version 1.1.0-rc6.0</h2>
-				<ul>
-					<li>PAY-1258 Fix documentation.  Set up flow to capture &quot;REFUND_RESPONSE&quot; and extract any additional failure info.  Fix namespace issues.  Change flow to depend on ACK messages (when supported).  Extend ping/pong timeout check.</li>
-				</ul>
-				<h2 id="version-1-1-0-rc5-1">Version 1.1.0-rc5.1</h2>
-				<ul>
-					<li>SEMI-493: Allow suppression of log messages. Log messages are now suppressed by default.  To enable default logging:<pre><code><span class="hljs-built_in">require</span>(<span class="hljs-string">"remote-pay-cloud"</span>).DebugConfig.loggingEnabled = <span class="hljs-literal">true</span>;
-</code></pre></li>
-				</ul>
-				<h2 id="version-1-1-0-rc5-0">Version 1.1.0-rc5.0</h2>
-				<ul>
-					<li>SEMI-438: Remove dependency on &#39;prototype.js&#39;</li>
-				</ul>
-				<h2 id="version-1-1-0-rc2">Version 1.1.0-RC2</h2>
-				<ul>
-					<li>SEMI-457: Add remoteApplicationId to required configuration.</li>
-					<li>SEMI-434: Add ability to read card data.</li>
-					<li>SEMI-423: Added backwards compatibility For older versions of android remote-pay ACK messages.</li>
-				</ul>
-				<h2 id="version-1-1-0-rc1">Version 1.1.0-RC1</h2>
-				<p>A deprecated beta version of the Connector (Clover.js) is included in this version with <code>require</code> directive syntax, but will removed in the future.</p>
-				<h2 id="version-beta-https-github-com-clover-remote-pay-cloud-beta-tree-beta_final-">Version <a href="https://github.com/clover/remote-pay-cloud-BETA/tree/BETA_Final">BETA</a></h2>
-				<p>The beta version includes the earliest library as well as a server with examples of the functions. </p>
+				<h2 id="license">License</h2>
+				<p>Copyright © 2017 Clover Network, Inc. All rights reserved.</p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">

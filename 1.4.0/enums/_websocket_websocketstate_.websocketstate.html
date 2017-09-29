@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ImageUtil | Clover SDK for Javascript Integration</title>
+	<title>WebSocketState | Clover SDK for Javascript Integration</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,80 +54,108 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_util_imageutil_.html">&quot;util/ImageUtil&quot;</a>
+					<a href="../modules/_websocket_websocketstate_.html">&quot;websocket/WebSocketState&quot;</a>
 				</li>
 				<li>
-					<a href="_util_imageutil_.imageutil.html">ImageUtil</a>
+					<a href="_websocket_websocketstate_.websocketstate.html">WebSocketState</a>
 				</li>
 			</ul>
-			<h1>Class ImageUtil</h1>
+			<h1>Enumeration WebSocketState</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-hierarchy">
-				<h3>Hierarchy</h3>
-				<ul class="tsd-hierarchy">
-					<li>
-						<span class="target">ImageUtil</span>
-					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel">
-				<h3>Implements</h3>
-				<ul class="tsd-hierarchy">
-					<li><a href="../interfaces/_util_iimageutil_.iimageutil.html" class="tsd-signature-type">IImageUtil</a></li>
-				</ul>
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>WebSocket state.</p>
+					</div>
+					<p></p></p>
+				</div>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Methods</h3>
+							<h3>Enumeration members</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_util_imageutil_.imageutil.html#getbase64image" class="tsd-kind-icon">get<wbr>Base64<wbr>Image</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="_websocket_websocketstate_.websocketstate.html#closed" class="tsd-kind-icon">CLOSED</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="_websocket_websocketstate_.websocketstate.html#closing" class="tsd-kind-icon">CLOSING</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="_websocket_websocketstate_.websocketstate.html#connecting" class="tsd-kind-icon">CONNECTING</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="_websocket_websocketstate_.websocketstate.html#open" class="tsd-kind-icon">OPEN</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="getbase64image" class="tsd-anchor"></a>
-					<h3>get<wbr>Base64<wbr>Image</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Base64<wbr>Image<span class="tsd-signature-symbol">(</span>img<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">HTMLImageElement</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/util/ImageUtil.ts#L12">util/ImageUtil.ts:12</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p> Appropriate for browsers.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>img: <span class="tsd-signature-type">HTMLImageElement</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>an image.  Can be obtained in a manner similar to :
-										<pre>var img = document.getElementById(&quot;img_id&quot;);</pre></p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
-							<p>a base 64 encoded string of the image.</p>
-						</li>
-					</ul>
+				<h2>Enumeration members</h2>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="closed" class="tsd-anchor"></a>
+					<h3>CLOSED</h3>
+					<div class="tsd-signature tsd-kind-icon">CLOSED<span class="tsd-signature-symbol">:</span> </div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/4284aed/src/com/clover/websocket/WebSocketState.ts#L41">websocket/WebSocketState.ts:41</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The WebSocket connection is closed.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="closing" class="tsd-anchor"></a>
+					<h3>CLOSING</h3>
+					<div class="tsd-signature tsd-kind-icon">CLOSING<span class="tsd-signature-symbol">:</span> </div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/4284aed/src/com/clover/websocket/WebSocketState.ts#L35">websocket/WebSocketState.ts:35</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A <a href="https://tools.ietf.org/html/rfc6455#section-7">closing
+							handshake</a> is being performed.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="connecting" class="tsd-anchor"></a>
+					<h3>CONNECTING</h3>
+					<div class="tsd-signature tsd-kind-icon">CONNECTING<span class="tsd-signature-symbol">:</span> </div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/4284aed/src/com/clover/websocket/WebSocketState.ts#L20">websocket/WebSocketState.ts:20</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An <a href="https://tools.ietf.org/html/rfc6455#section-4">opening
+							handshake</a> is being performed.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="open" class="tsd-anchor"></a>
+					<h3>OPEN</h3>
+					<div class="tsd-signature tsd-kind-icon">OPEN<span class="tsd-signature-symbol">:</span> </div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/4284aed/src/com/clover/websocket/WebSocketState.ts#L28">websocket/WebSocketState.ts:28</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The WebSocket connection is established ( the <a href=
+								"https://tools.ietf.org/html/rfc6455#section-4">opening handshake</a>
+							has succeeded) and usable.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -164,7 +192,7 @@
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_util_iimageutil_.html">"util/IImage<wbr>Util"</a>
 					</li>
-					<li class="current tsd-kind-external-module">
+					<li class=" tsd-kind-external-module">
 						<a href="../modules/_util_imageutil_.html">"util/<wbr>Image<wbr>Util"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -176,7 +204,7 @@
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_websocket_websocketlistener_.html">"websocket/<wbr>Web<wbr>Socket<wbr>Listener"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class="current tsd-kind-external-module">
 						<a href="../modules/_websocket_websocketstate_.html">"websocket/<wbr>Web<wbr>Socket<wbr>State"</a>
 					</li>
 				</ul>
@@ -185,11 +213,20 @@
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_util_imageutil_.imageutil.html" class="tsd-kind-icon">Image<wbr>Util</a>
+					<li class="current tsd-kind-enum tsd-parent-kind-external-module">
+						<a href="_websocket_websocketstate_.websocketstate.html" class="tsd-kind-icon">Web<wbr>Socket<wbr>State</a>
 						<ul>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_util_imageutil_.imageutil.html#getbase64image" class="tsd-kind-icon">get<wbr>Base64<wbr>Image</a>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="_websocket_websocketstate_.websocketstate.html#closed" class="tsd-kind-icon">CLOSED</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="_websocket_websocketstate_.websocketstate.html#closing" class="tsd-kind-icon">CLOSING</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="_websocket_websocketstate_.websocketstate.html#connecting" class="tsd-kind-icon">CONNECTING</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="_websocket_websocketstate_.websocketstate.html#open" class="tsd-kind-icon">OPEN</a>
 							</li>
 						</ul>
 					</li>

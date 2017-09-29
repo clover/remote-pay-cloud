@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>CardEntryMethods | Clover SDK for Javascript Integration</title>
+	<title>ImageUtil | Clover SDK for Javascript Integration</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,32 +54,31 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_remote_client_cardentrymethods_.html">&quot;remote/client/CardEntryMethods&quot;</a>
+					<a href="../modules/_util_imageutil_.html">&quot;util/ImageUtil&quot;</a>
 				</li>
 				<li>
-					<a href="_remote_client_cardentrymethods_.cardentrymethods.html">CardEntryMethods</a>
+					<a href="_util_imageutil_.imageutil.html">ImageUtil</a>
 				</li>
 			</ul>
-			<h1>Class CardEntryMethods</h1>
+			<h1>Class ImageUtil</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Defines card entry method constants used in device communication.</p>
-					</div>
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">CardEntryMethods</span>
+						<span class="target">ImageUtil</span>
 					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel">
+				<h3>Implements</h3>
+				<ul class="tsd-hierarchy">
+					<li><a href="../interfaces/_util_iimageutil_.iimageutil.html" class="tsd-signature-type">IImageUtil</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -87,91 +86,48 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Properties</h3>
+							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="_remote_client_cardentrymethods_.cardentrymethods.html#all" class="tsd-kind-icon">ALL</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="_remote_client_cardentrymethods_.cardentrymethods.html#card_entry_method_icc_contact" class="tsd-kind-icon">CARD_<wbr>ENTRY_<wbr>METHOD_<wbr>ICC_<wbr>CONTACT</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="_remote_client_cardentrymethods_.cardentrymethods.html#card_entry_method_mag_stripe" class="tsd-kind-icon">CARD_<wbr>ENTRY_<wbr>METHOD_<wbr>MAG_<wbr>STRIPE</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="_remote_client_cardentrymethods_.cardentrymethods.html#card_entry_method_manual" class="tsd-kind-icon">CARD_<wbr>ENTRY_<wbr>METHOD_<wbr>MANUAL</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="_remote_client_cardentrymethods_.cardentrymethods.html#card_entry_method_nfc_contactless" class="tsd-kind-icon">CARD_<wbr>ENTRY_<wbr>METHOD_<wbr>NFC_<wbr>CONTACTLESS</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="_remote_client_cardentrymethods_.cardentrymethods.html#default" class="tsd-kind-icon">DEFAULT</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-static"><a href="_remote_client_cardentrymethods_.cardentrymethods.html#kiosk_card_entry_methods" class="tsd-kind-icon">KIOSK_<wbr>CARD_<wbr>ENTRY_<wbr>METHODS</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_util_imageutil_.imageutil.html#getbase64image" class="tsd-kind-icon">get<wbr>Base64<wbr>Image</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="all" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> ALL</h3>
-					<div class="tsd-signature tsd-kind-icon">ALL<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;CardEntryMethods.CARD_ENTRY_METHOD_MAG_STRIPE |CardEntryMethods.CARD_ENTRY_METHOD_ICC_CONTACT |CardEntryMethods.CARD_ENTRY_METHOD_NFC_CONTACTLESS |CardEntryMethods.CARD_ENTRY_METHOD_MANUAL</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/CardEntryMethods.ts#L18">remote/client/CardEntryMethods.ts:18</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="card_entry_method_icc_contact" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> CARD_<wbr>ENTRY_<wbr>METHOD_<wbr>ICC_<wbr>CONTACT</h3>
-					<div class="tsd-signature tsd-kind-icon">CARD_<wbr>ENTRY_<wbr>METHOD_<wbr>ICC_<wbr>CONTACT<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0b0010 | 0b001000000000 | CardEntryMethods.KIOSK_CARD_ENTRY_METHODS</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/CardEntryMethods.ts#L9">remote/client/CardEntryMethods.ts:9</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="card_entry_method_mag_stripe" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> CARD_<wbr>ENTRY_<wbr>METHOD_<wbr>MAG_<wbr>STRIPE</h3>
-					<div class="tsd-signature tsd-kind-icon">CARD_<wbr>ENTRY_<wbr>METHOD_<wbr>MAG_<wbr>STRIPE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0b0001 | 0b000100000000 | CardEntryMethods.KIOSK_CARD_ENTRY_METHODS</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/CardEntryMethods.ts#L8">remote/client/CardEntryMethods.ts:8</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="card_entry_method_manual" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> CARD_<wbr>ENTRY_<wbr>METHOD_<wbr>MANUAL</h3>
-					<div class="tsd-signature tsd-kind-icon">CARD_<wbr>ENTRY_<wbr>METHOD_<wbr>MANUAL<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0b1000 | 0b100000000000 | CardEntryMethods.KIOSK_CARD_ENTRY_METHODS</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/CardEntryMethods.ts#L11">remote/client/CardEntryMethods.ts:11</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="card_entry_method_nfc_contactless" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> CARD_<wbr>ENTRY_<wbr>METHOD_<wbr>NFC_<wbr>CONTACTLESS</h3>
-					<div class="tsd-signature tsd-kind-icon">CARD_<wbr>ENTRY_<wbr>METHOD_<wbr>NFC_<wbr>CONTACTLESS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0b0100 | 0b010000000000 | CardEntryMethods.KIOSK_CARD_ENTRY_METHODS</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/CardEntryMethods.ts#L10">remote/client/CardEntryMethods.ts:10</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="default" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> DEFAULT</h3>
-					<div class="tsd-signature tsd-kind-icon">DEFAULT<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;CardEntryMethods.CARD_ENTRY_METHOD_MAG_STRIPE |CardEntryMethods.CARD_ENTRY_METHOD_ICC_CONTACT |CardEntryMethods.CARD_ENTRY_METHOD_NFC_CONTACTLESS</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/CardEntryMethods.ts#L13">remote/client/CardEntryMethods.ts:13</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-static">
-					<a name="kiosk_card_entry_methods" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagPrivate">Private</span> KIOSK_<wbr>CARD_<wbr>ENTRY_<wbr>METHODS</h3>
-					<div class="tsd-signature tsd-kind-icon">KIOSK_<wbr>CARD_<wbr>ENTRY_<wbr>METHODS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;1 &lt;&lt; 15</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/CardEntryMethods.ts#L6">remote/client/CardEntryMethods.ts:6</a></li>
-						</ul>
-					</aside>
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getbase64image" class="tsd-anchor"></a>
+					<h3>get<wbr>Base64<wbr>Image</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Base64<wbr>Image<span class="tsd-signature-symbol">(</span>img<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">HTMLImageElement</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/4284aed/src/com/clover/util/ImageUtil.ts#L12">util/ImageUtil.ts:12</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p> Appropriate for browsers.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>img: <span class="tsd-signature-type">HTMLImageElement</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>an image.  Can be obtained in a manner similar to :
+										<pre>var img = document.getElementById(&quot;img_id&quot;);</pre></p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<p>a base 64 encoded string of the image.</p>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -184,7 +140,7 @@
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_version_.html">"<wbr>Version"</a>
 					</li>
-					<li class="current tsd-kind-external-module">
+					<li class=" tsd-kind-external-module">
 						<a href="../modules/_remote_client_cardentrymethods_.html">"remote/client/<wbr>Card<wbr>Entry<wbr>Methods"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -208,7 +164,7 @@
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_util_iimageutil_.html">"util/IImage<wbr>Util"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class="current tsd-kind-external-module">
 						<a href="../modules/_util_imageutil_.html">"util/<wbr>Image<wbr>Util"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -230,28 +186,10 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_remote_client_cardentrymethods_.cardentrymethods.html" class="tsd-kind-icon">Card<wbr>Entry<wbr>Methods</a>
+						<a href="_util_imageutil_.imageutil.html" class="tsd-kind-icon">Image<wbr>Util</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="_remote_client_cardentrymethods_.cardentrymethods.html#all" class="tsd-kind-icon">ALL</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="_remote_client_cardentrymethods_.cardentrymethods.html#card_entry_method_icc_contact" class="tsd-kind-icon">CARD_<wbr>ENTRY_<wbr>METHOD_<wbr>ICC_<wbr>CONTACT</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="_remote_client_cardentrymethods_.cardentrymethods.html#card_entry_method_mag_stripe" class="tsd-kind-icon">CARD_<wbr>ENTRY_<wbr>METHOD_<wbr>MAG_<wbr>STRIPE</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="_remote_client_cardentrymethods_.cardentrymethods.html#card_entry_method_manual" class="tsd-kind-icon">CARD_<wbr>ENTRY_<wbr>METHOD_<wbr>MANUAL</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="_remote_client_cardentrymethods_.cardentrymethods.html#card_entry_method_nfc_contactless" class="tsd-kind-icon">CARD_<wbr>ENTRY_<wbr>METHOD_<wbr>NFC_<wbr>CONTACTLESS</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="_remote_client_cardentrymethods_.cardentrymethods.html#default" class="tsd-kind-icon">DEFAULT</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-static">
-								<a href="_remote_client_cardentrymethods_.cardentrymethods.html#kiosk_card_entry_methods" class="tsd-kind-icon">KIOSK_<wbr>CARD_<wbr>ENTRY_<wbr>METHODS</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_util_imageutil_.imageutil.html#getbase64image" class="tsd-kind-icon">get<wbr>Base64<wbr>Image</a>
 							</li>
 						</ul>
 					</li>

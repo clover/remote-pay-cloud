@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>TxTypeRequestInfo | Clover SDK for Javascript Integration</title>
+	<title>CloverConnectorFactory | Clover SDK for Javascript Integration</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,28 +57,36 @@
 					<a href="../modules/_remote_client_cloverconnectorfactory_.html">&quot;remote/client/CloverConnectorFactory&quot;</a>
 				</li>
 				<li>
-					<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html">LegacyCloverConnector</a>
-				</li>
-				<li>
-					<a href="../modules/_remote_client_cloverconnectorfactory_.legacycloverconnector.cloverconnector.html">CloverConnector</a>
-				</li>
-				<li>
-					<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.cloverconnector.txtyperequestinfo.html">TxTypeRequestInfo</a>
+					<a href="_remote_client_cloverconnectorfactory_.cloverconnectorfactory.html">CloverConnectorFactory</a>
 				</li>
 			</ul>
-			<h1>Class TxTypeRequestInfo</h1>
+			<h1>Class CloverConnectorFactory</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>This is for backwards compatibility.  It will not work for non-browser!!!</p>
+					</div>
+					<p>This is the equivalent of the old way we created and ran the cloud.</p>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">TxTypeRequestInfo</span>
+						<span class="target">CloverConnectorFactory</span>
 					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel">
+				<h3>Implements</h3>
+				<ul class="tsd-hierarchy">
+					<li><a href="../interfaces/_remote_client_icloverconnectorfactory_.icloverconnectorfactory.html" class="tsd-signature-type">ICloverConnectorFactory</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -86,69 +94,65 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Properties</h3>
+							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.cloverconnector.txtyperequestinfo.html#auth_request" class="tsd-kind-icon">AUTH_<wbr>REQUEST</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.cloverconnector.txtyperequestinfo.html#credit_request" class="tsd-kind-icon">CREDIT_<wbr>REQUEST</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.cloverconnector.txtyperequestinfo.html#preauth_request" class="tsd-kind-icon">PREAUTH_<wbr>REQUEST</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.cloverconnector.txtyperequestinfo.html#refund_request" class="tsd-kind-icon">REFUND_<wbr>REQUEST</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.cloverconnector.txtyperequestinfo.html#sale_request" class="tsd-kind-icon">SALE_<wbr>REQUEST</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="_remote_client_cloverconnectorfactory_.cloverconnectorfactory.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_remote_client_cloverconnectorfactory_.cloverconnectorfactory.html#createicloverconnector" class="tsd-kind-icon">createIClover<wbr>Connector</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="auth_request" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> AUTH_<wbr>REQUEST</h3>
-					<div class="tsd-signature tsd-kind-icon">AUTH_<wbr>REQUEST<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;AUTH&quot;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/CloverConnector.ts#L870">remote/client/CloverConnector.ts:870</a></li>
-						</ul>
-					</aside>
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Clover<wbr>Connector<wbr>Factory<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_remote_client_cloverconnectorfactory_.cloverconnectorfactory.html" class="tsd-signature-type">CloverConnectorFactory</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/4284aed/src/com/clover/remote/client/CloverConnectorFactory.ts#L17">remote/client/CloverConnectorFactory.ts:17</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="_remote_client_cloverconnectorfactory_.cloverconnectorfactory.html" class="tsd-signature-type">CloverConnectorFactory</a></h4>
+						</li>
+					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="credit_request" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> CREDIT_<wbr>REQUEST</h3>
-					<div class="tsd-signature tsd-kind-icon">CREDIT_<wbr>REQUEST<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;CREDIT&quot;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/CloverConnector.ts#L872">remote/client/CloverConnector.ts:872</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="preauth_request" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> PREAUTH_<wbr>REQUEST</h3>
-					<div class="tsd-signature tsd-kind-icon">PREAUTH_<wbr>REQUEST<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;PREAUTH&quot;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/CloverConnector.ts#L871">remote/client/CloverConnector.ts:871</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="refund_request" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> REFUND_<wbr>REQUEST</h3>
-					<div class="tsd-signature tsd-kind-icon">REFUND_<wbr>REQUEST<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;REFUND&quot;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/CloverConnector.ts#L873">remote/client/CloverConnector.ts:873</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="sale_request" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> SALE_<wbr>REQUEST</h3>
-					<div class="tsd-signature tsd-kind-icon">SALE_<wbr>REQUEST<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;SALE&quot;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/399a6a3/src/com/clover/remote/client/CloverConnector.ts#L869">remote/client/CloverConnector.ts:869</a></li>
-						</ul>
-					</aside>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="createicloverconnector" class="tsd-anchor"></a>
+					<h3>createIClover<wbr>Connector</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">createIClover<wbr>Connector<span class="tsd-signature-symbol">(</span>configuration<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">sdk.remotepay.ICloverConnector</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/_remote_client_icloverconnectorfactory_.icloverconnectorfactory.html">ICloverConnectorFactory</a>.<a href="../interfaces/_remote_client_icloverconnectorfactory_.icloverconnectorfactory.html#createicloverconnector">createICloverConnector</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/clover/remote-pay-cloud/blob/4284aed/src/com/clover/remote/client/CloverConnectorFactory.ts#L21">remote/client/CloverConnectorFactory.ts:21</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>configuration: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">sdk.remotepay.ICloverConnector</span></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -158,37 +162,70 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_version_.html">"<wbr>Version"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_remote_client_cardentrymethods_.html">"remote/client/<wbr>Card<wbr>Entry<wbr>Methods"</a>
+					</li>
+					<li class="current tsd-kind-external-module">
+						<a href="../modules/_remote_client_cloverconnectorfactory_.html">"remote/client/<wbr>Clover<wbr>Connector<wbr>Factory"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_remote_client_cloverconnectorfactorybuilder_.html">"remote/client/<wbr>Clover<wbr>Connector<wbr>Factory<wbr>Builder"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_remote_client_cloverconnectorfactoryv2_.html">"remote/client/<wbr>Clover<wbr>Connector<wbr>Factory<wbr>V2"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_remote_client_icloverconnectorfactory_.html">"remote/client/IClover<wbr>Connector<wbr>Factory"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_remote_client_device_websocketcloudcloverdeviceconfiguration_.html">"remote/client/device/<wbr>Web<wbr>Socket<wbr>Cloud<wbr>Clover<wbr>Device<wbr>Configuration"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_remote_client_device_websocketpairedcloverdeviceconfiguration_.html">"remote/client/device/<wbr>Web<wbr>Socket<wbr>Paired<wbr>Clover<wbr>Device<wbr>Configuration"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_util_iimageutil_.html">"util/IImage<wbr>Util"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_util_imageutil_.html">"util/<wbr>Image<wbr>Util"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_websocket_browserwebsocketimpl_.html">"websocket/<wbr>Browser<wbr>Web<wbr>Socket<wbr>Impl"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_websocket_cloverwebsocketinterface_.html">"websocket/<wbr>Clover<wbr>Web<wbr>Socket<wbr>Interface"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_websocket_websocketlistener_.html">"websocket/<wbr>Web<wbr>Socket<wbr>Listener"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_websocket_websocketstate_.html">"websocket/<wbr>Web<wbr>Socket<wbr>State"</a>
+					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.cloverconnector.innerdeviceobserver.html" class="tsd-kind-icon">Inner<wbr>Device<wbr>Observer</a>
-					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class tsd-parent-kind-module">
-						<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.cloverconnector.txtyperequestinfo.html" class="tsd-kind-icon">Tx<wbr>Type<wbr>Request<wbr>Info</a>
+					<li class="current tsd-kind-class tsd-parent-kind-external-module">
+						<a href="_remote_client_cloverconnectorfactory_.cloverconnectorfactory.html" class="tsd-kind-icon">Clover<wbr>Connector<wbr>Factory</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.cloverconnector.txtyperequestinfo.html#auth_request" class="tsd-kind-icon">AUTH_<wbr>REQUEST</a>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="_remote_client_cloverconnectorfactory_.cloverconnectorfactory.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.cloverconnector.txtyperequestinfo.html#credit_request" class="tsd-kind-icon">CREDIT_<wbr>REQUEST</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.cloverconnector.txtyperequestinfo.html#preauth_request" class="tsd-kind-icon">PREAUTH_<wbr>REQUEST</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.cloverconnector.txtyperequestinfo.html#refund_request" class="tsd-kind-icon">REFUND_<wbr>REQUEST</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.cloverconnector.txtyperequestinfo.html#sale_request" class="tsd-kind-icon">SALE_<wbr>REQUEST</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_remote_client_cloverconnectorfactory_.cloverconnectorfactory.html#createicloverconnector" class="tsd-kind-icon">createIClover<wbr>Connector</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+						<a href="_remote_client_cloverconnectorfactory_.legacycloverconnector.html" class="tsd-kind-icon">Legacy<wbr>Clover<wbr>Connector</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
