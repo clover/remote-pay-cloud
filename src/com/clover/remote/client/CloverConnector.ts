@@ -114,7 +114,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
         else if (request == null) {
             this.deviceObserver.onFinishCancelSale(sdk.remotepay.ResponseCode.FAIL, "Invalid Argument.", "In sale: SaleRequest - The request that was passed in for processing is null.");
         }
-        else if (request.getAmount() <= 0) {
+        else if (request.getAmount() == null || request.getAmount() <= 0) {
             this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.FAIL, "Request Validation Error", "In sale: SaleRequest - The request amount cannot be zero. Original Request = " + request, CloverConnector.TxTypeRequestInfo.SALE_REQUEST);
         }
         else if (request.getTipAmount() && request.getTipAmount() < 0) {
@@ -370,7 +370,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
                 "Invalid Argument.", "In preAuth: PreAuthRequest - " +
                 "The request that was passed in for processing is null.");
         }
-        else if (request.getAmount() <= 0) {
+        else if (request.getAmount() == null || request.getAmount() <= 0) {
             this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.FAIL,
                 "Request Validation Error", "In preAuth: PreAuthRequest - " +
                 "The request amount cannot be zero. Original Request = " + request, CloverConnector.TxTypeRequestInfo.PREAUTH_REQUEST);
@@ -515,7 +515,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
                 "In refundPayment: RefundPaymentRequest PaymentID cannot be empty. " + request,
                 CloverConnector.TxTypeRequestInfo.REFUND_REQUEST);
         }
-        else if (request.getAmount() <= 0 && !request.getFullRefund()) {
+        else if ((request.getAmount() == null || request.getAmount() <= 0) && !request.getFullRefund()) {
             this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.CANCEL,
                 "Request Validation Error",
                 "In refundPayment: RefundPaymentRequest Amount must be greater than zero when FullRefund is set to false. " + request,
@@ -538,7 +538,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
         else if (request == null) {
             this.deviceObserver.onFinishCancelManualRefund(sdk.remotepay.ResponseCode.FAIL, "Invalid Argument.", "In manualRefund: ManualRefundRequest - The request that was passed in for processing is null.");
         }
-        else if (request.getAmount() <= 0) {
+        else if (request.getAmount() == null || request.getAmount() <= 0) {
             this.deviceObserver.onFinishCancel_rmm(sdk.remotepay.ResponseCode.FAIL, "Request Validation Error", "In manualRefund: ManualRefundRequest - The request amount cannot be zero. Original Request = " + request, CloverConnector.TxTypeRequestInfo.CREDIT_REQUEST);
         }
         else if (request.getExternalId() == null || request.getExternalId().trim().length == 0 || request.getExternalId().trim().length > 32) {
