@@ -708,7 +708,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
         } else if (!request) {
             this.notifyInvalidData("In print: Invalid argument. Null is not allowed.");
         } else if (!this.validatePrintRequest(request)) {
-            this.notifyInvalidData("In print: Invalid argument. PrintRequest was not formatted correctly.");
+            return;
         } else {
             if (request.image) {
                 if (Array.isArray(request.image) && request.image.length > 1) {
