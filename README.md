@@ -9,7 +9,7 @@ Do not change this or the versioning may not reflect the npm version correctly.
 --->
 ## Version
 
-Current version: 1.3.1-3
+Current version: 1.4.0
 
 ## Overview
 This SDK provides an API that enables your JavaScript point-of-sale (POS) system to communicate with a [Clover® payment device](https://www.clover.com/pos-hardware/). Learn more about [Clover integrations](https://www.clover.com/integrations).
@@ -372,13 +372,12 @@ This library has been tested against the following browser types and versions:
 
 ## Generate Documentation
 API documentation is automatically generated when `npm install` is run. 
-* [Online Docs](http://clover.github.io/remote-pay-cloud/1.3.1-3/)
-* [Online API class Docs](http://clover.github.io/remote-pay-cloud-api/1.3.1-1/)
+* [Online Docs](http://clover.github.io/remote-pay-cloud/1.4.0/)
 
 ## Additional resources
 - [Release Notes](https://github.com/clover/remote-pay-cloud/releases)
 - [Tutorial for the Browser SDK](https://docs.clover.com/build/getting-started-with-cloverconnector/?sdk=browser)
-- [API Class Documentation](http://clover.github.io/remote-pay-cloud-api/1.3.1/)
+- [API Class Documentation](http://clover.github.io/remote-pay-cloud-api/1.4.0/)
 - [Clover Developer Community](https://community.clover.com/index.html)
 
 ## License 
