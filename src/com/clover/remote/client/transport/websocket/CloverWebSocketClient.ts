@@ -19,7 +19,7 @@ export class CloverWebSocketClient implements WebSocketListener {
 
     private logger: Logger = Logger.create();
 
-    constructor(endpoint: string, listener: CloverWebSocketClientListener, heartbeatInterval: number, webSocketImplClass:any) {
+    constructor(endpoint: string, listener: CloverWebSocketClientListener, heartbeatInterval: number, webSocketImplClass: any) {
         this.listener = listener;
         this.heartbeatInterval = heartbeatInterval >= 0 ? Math.min(100, heartbeatInterval) : heartbeatInterval; // can be negative, but > than 100 ms
         this.endpoint = endpoint;
@@ -27,11 +27,11 @@ export class CloverWebSocketClient implements WebSocketListener {
     }
 
     public getWebSocketState(): WebSocketState {
-        return (this.socket)?this.socket.getReadyState():null;
+        return (this.socket) ? this.socket.getReadyState() : null;
     }
 
     public connect(): void {
-        if(this.socket != null) {
+        if (this.socket != null) {
             throw new Error("Socket already created. Must create a new CloverWebSocketClient");
         }
         try {
@@ -40,7 +40,7 @@ export class CloverWebSocketClient implements WebSocketListener {
             // socket.setAutoFlush(true);
             this.socket.addListener(this);
             this.socket.connect();
-        } catch(e) {
+        } catch (e) {
             this.logger.error('connect, connectionError', e);
             this.listener.connectionError(this, e.message);
         }
@@ -66,10 +66,10 @@ export class CloverWebSocketClient implements WebSocketListener {
         return this.socket.getState() == WebSocketState.CLOSED;
     }
 
-    public onTextMessage(websocket: CloverWebSocketInterface, text: string): void{
+    public onTextMessage(websocket: CloverWebSocketInterface, text: string): void {
         this.listener.onMessage(this, text);
     }
-    
+
     public onConnected(websocket: CloverWebSocketInterface): void {
         this.listener.onOpen(this);
     }
@@ -103,7 +103,7 @@ export class CloverWebSocketClient implements WebSocketListener {
         this.socket.sendPong();
     }
 
-    public onSendError(websocket: CloverWebSocketInterface): void  {
+    public onSendError(websocket: CloverWebSocketInterface): void {
         this.listener.onSendError("");// frame.getPayloadText());
     }
 
@@ -111,11 +111,11 @@ export class CloverWebSocketClient implements WebSocketListener {
         this.logger.error('An unexpected websocket error has occurred.');
     }
 
-    public send( message: string): void {
+    public send(message: string): void {
         this.socket.sendText(message);
     }
 
-    public clearListener(): void  {
+    public clearListener(): void {
         this.socket.removeListener(this);
     }
 

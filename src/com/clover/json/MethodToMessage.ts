@@ -10,15 +10,15 @@ var remotemessage = sdk.remotemessage;
 export class MethodToMessage {
 
     private static methodToType = null;
-    
-    static getType(method: string):any {
-        if(MethodToMessage.methodToType == null) {
+
+    static getType(method: string): any {
+        if (MethodToMessage.methodToType == null) {
             MethodToMessage.initialize();
         }
         return MethodToMessage.methodToType[method];
     }
 
-    static initialize():any {
+    static initialize(): any {
         MethodToMessage.methodToType = {};
         MethodToMessage.methodToType[remotemessage.Method.ACK] = remotemessage.AcknowledgementMessage;
         MethodToMessage.methodToType[remotemessage.Method.CLOSEOUT_RESPONSE] = remotemessage.CloseoutResponseMessage;

@@ -1,4 +1,4 @@
-import { CloverWebSocketInterface } from './CloverWebSocketInterface';
+import {CloverWebSocketInterface} from './CloverWebSocketInterface';
 
 /**
  * Listener interface to receive WebSocket events.

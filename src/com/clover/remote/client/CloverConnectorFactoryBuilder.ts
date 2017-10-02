@@ -13,10 +13,10 @@ import {CloverConnectorFactory} from './CloverConnectorFactory';
  */
 export class CloverConnectorFactoryBuilder {
 
-    public static DEFAULT_VERSION:string = "DEFAULT";
+    public static DEFAULT_VERSION: string = "DEFAULT";
 
-    public static VERSION_12:string = "VERSION_12";
-    public static FACTORY_VERSION:string = "FACTORY_VERSION";
+    public static VERSION_12: string = "VERSION_12";
+    public static FACTORY_VERSION: string = "FACTORY_VERSION";
 
     /**
      * Produces factories that are version specific.  The passed configuration object is used to determine the
@@ -27,9 +27,9 @@ export class CloverConnectorFactoryBuilder {
      * @param configuration contains a property for CloverConnectorFactoryBuilder.FACTORY_VERSION, or null.
      * @returns {any}
      */
-    public static createICloverConnectorFactory(configuration:any): ICloverConnectorFactory {
-        if(configuration && configuration[CloverConnectorFactoryBuilder.FACTORY_VERSION]) {
-            if(configuration[CloverConnectorFactoryBuilder.FACTORY_VERSION] == CloverConnectorFactoryBuilder.VERSION_12) {
+    public static createICloverConnectorFactory(configuration: any): ICloverConnectorFactory {
+        if (configuration && configuration[CloverConnectorFactoryBuilder.FACTORY_VERSION]) {
+            if (configuration[CloverConnectorFactoryBuilder.FACTORY_VERSION] == CloverConnectorFactoryBuilder.VERSION_12) {
                 return new CloverConnectorFactoryV2();
             }
             console.error("Factory version specified, but not found!", configuration);
