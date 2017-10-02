@@ -8,7 +8,7 @@ import {DefaultCloverDevice} from './DefaultCloverDevice';
  */
 export class WebsocketCloudCloverDevice extends DefaultCloverDevice {
 
-    constructor(configuration:CloverDeviceConfiguration) {
+    constructor(configuration: CloverDeviceConfiguration) {
         super(configuration);
     }
 
@@ -34,13 +34,13 @@ export class WebsocketCloudCloverDevice extends DefaultCloverDevice {
      *
      * @param rMessage
      */
-    protected handleRemoteMessageEVENT(rMessage: sdk.remotemessage.RemoteMessage){
+    protected handleRemoteMessageEVENT(rMessage: sdk.remotemessage.RemoteMessage) {
         let method: sdk.remotemessage.Method = sdk.remotemessage.Method[rMessage.method];
         if (method == null) {
             this.logger.error('Unsupported method type: ' + rMessage.method);
         }
         else {
-            var sdkMessage:sdk.remotemessage.Message = this.messageParser.parseMessageFromRemoteMessageObj(rMessage);
+            var sdkMessage: sdk.remotemessage.Message = this.messageParser.parseMessageFromRemoteMessageObj(rMessage);
             if (method == sdk.remotemessage.Method.FORCECONNECT) {
                 this.logger.info("Connection was stolen!  Will not attempt reconnect.", rMessage);
                 // Do we need to notify anyone?
@@ -56,7 +56,7 @@ export class WebsocketCloudCloverDevice extends DefaultCloverDevice {
      */
     private notifyObserversForceConnect(message: sdk.remotemessage.ForceConnectMessage): void {
         this.deviceObservers.forEach((obs) => {
-            let deviceErrorEvent:sdk.remotepay.CloverDeviceErrorEvent = new sdk.remotepay.CloverDeviceErrorEvent();
+            let deviceErrorEvent: sdk.remotepay.CloverDeviceErrorEvent = new sdk.remotepay.CloverDeviceErrorEvent();
             deviceErrorEvent.setCode(sdk.remotepay.DeviceErrorEventCode.Interrupted);
             deviceErrorEvent.setMessage(JSON.stringify(message));
             deviceErrorEvent.setType(sdk.remotepay.ErrorType.COMMUNICATION);
@@ -71,16 +71,16 @@ export class WebsocketCloudCloverDevice extends DefaultCloverDevice {
      *
      * @param rMessage
      */
-    protected handleRemoteMessage(rMessage: sdk.remotemessage.RemoteMessage){
+    protected handleRemoteMessage(rMessage: sdk.remotemessage.RemoteMessage) {
         try {
-            if(rMessage.method == sdk.remotemessage.Method.RESET) {
+            if (rMessage.method == sdk.remotemessage.Method.RESET) {
                 this.logger.info("Reset requested!  Will reconnect.");
                 this.transport.reset();
-            } else{
+            } else {
                 super.handleRemoteMessage(rMessage);
             }
         }
-        catch(eM) {
+        catch (eM) {
             this.logger.error('Error processing message: ' + rMessage.payload, eM);
         }
     }

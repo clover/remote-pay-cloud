@@ -23,7 +23,7 @@ export class CloverConnectorBroadcaster
         this.listeners.splice(0, this.listeners.length);
     }
 
-    public push(...items: sdk.remotepay.ICloverConnectorListener[]) : number {
+    public push(...items: sdk.remotepay.ICloverConnectorListener[]): number {
         if (items.length == 1) {
             return this.listeners.push(items[0]);
         } else {
@@ -47,7 +47,7 @@ export class CloverConnectorBroadcaster
             try {
                 listener.onTipAdded(tipAdded);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -59,7 +59,7 @@ export class CloverConnectorBroadcaster
             try {
                 listener.onRefundPaymentResponse(refundPaymentResponse);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -71,7 +71,7 @@ export class CloverConnectorBroadcaster
             try {
                 listener.onCloseoutResponse(closeoutResponse);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -83,7 +83,7 @@ export class CloverConnectorBroadcaster
             try {
                 listener.onDeviceActivityStart(deviceEvent);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -95,7 +95,7 @@ export class CloverConnectorBroadcaster
             try {
                 listener.onDeviceActivityEnd(deviceEvent);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -107,7 +107,7 @@ export class CloverConnectorBroadcaster
             try {
                 listener.onSaleResponse(response);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -119,7 +119,7 @@ export class CloverConnectorBroadcaster
             try {
                 listener.onAuthResponse(response);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -131,7 +131,7 @@ export class CloverConnectorBroadcaster
             try {
                 listener.onManualRefundResponse(response);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -143,7 +143,7 @@ export class CloverConnectorBroadcaster
             try {
                 listener.onVerifySignatureRequest(request);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -155,7 +155,7 @@ export class CloverConnectorBroadcaster
             try {
                 listener.onVoidPaymentResponse(response);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -168,20 +168,20 @@ export class CloverConnectorBroadcaster
                 listener.onDeviceConnected();  // changed the name in 1.3
                 listener.onConnected();        // left here for backwards compatibility.  Deprecated in 1.3*
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
     }
 
-    public notifyOnDisconnect(message?:string): void {
+    public notifyOnDisconnect(message?: string): void {
         this.logger.debug('Sending Disconnect notification to listeners', message);
         this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
             try {
                 listener.onDeviceDisconnected(message);  // changed the name in 1.3
                 listener.onDisconnected(message);        // left here for backwards compatibility.  Deprecated in 1.3*
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -194,7 +194,7 @@ export class CloverConnectorBroadcaster
                 listener.onDeviceReady(merchantInfo);  // changed the name in 1.3
                 listener.onReady(merchantInfo);        // left here for backwards compatibility.  Deprecated in 1.3*
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -206,7 +206,7 @@ export class CloverConnectorBroadcaster
             try {
                 listener.onTipAdjustAuthResponse(response);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -218,7 +218,7 @@ export class CloverConnectorBroadcaster
             try {
                 listener.onVaultCardResponse(ccr);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -230,7 +230,7 @@ export class CloverConnectorBroadcaster
             try {
                 listener.onPreAuthResponse(response);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -242,7 +242,7 @@ export class CloverConnectorBroadcaster
             try {
                 listener.onCapturePreAuthResponse(response);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -254,7 +254,7 @@ export class CloverConnectorBroadcaster
             try {
                 listener.onDeviceError(errorEvent);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -266,7 +266,7 @@ export class CloverConnectorBroadcaster
             try {
                 listener.onPrintRefundPaymentReceipt(printRefundPaymentReceiptMessage);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -278,7 +278,7 @@ export class CloverConnectorBroadcaster
             try {
                 listener.onPrintPaymentMerchantCopyReceipt(printPaymentMerchantCopyReceiptMessage);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -290,7 +290,7 @@ export class CloverConnectorBroadcaster
             try {
                 listener.onPrintPaymentDeclineReceipt(printPaymentDeclineReceiptMessage);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -302,7 +302,7 @@ export class CloverConnectorBroadcaster
             try {
                 listener.onPrintPaymentReceipt(printPaymentReceiptMessage);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -314,7 +314,7 @@ export class CloverConnectorBroadcaster
             try {
                 listener.onPrintManualRefundReceipt(printManualRefundReceiptMessage);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -326,7 +326,7 @@ export class CloverConnectorBroadcaster
             try {
                 listener.onPrintManualRefundDeclineReceipt(printManualRefundDeclineReceiptMessage);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -338,7 +338,7 @@ export class CloverConnectorBroadcaster
             try {
                 listener.onConfirmPaymentRequest(confirmPaymentRequest);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -350,7 +350,7 @@ export class CloverConnectorBroadcaster
             try {
                 listener.onRetrievePendingPaymentsResponse(rppr);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -362,7 +362,7 @@ export class CloverConnectorBroadcaster
             try {
                 listener.onReadCardDataResponse(rcdr);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -374,7 +374,7 @@ export class CloverConnectorBroadcaster
             try {
                 listener.onMessageFromActivity(response);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -386,7 +386,7 @@ export class CloverConnectorBroadcaster
             try {
                 listener.onCustomActivityResponse(response);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -398,7 +398,7 @@ export class CloverConnectorBroadcaster
             try {
                 listener.onRetrieveDeviceStatusResponse(response);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -410,7 +410,7 @@ export class CloverConnectorBroadcaster
             try {
                 listener.onResetDeviceResponse(response);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -422,7 +422,7 @@ export class CloverConnectorBroadcaster
             try {
                 listener.onRetrievePaymentResponse(response);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -434,7 +434,7 @@ export class CloverConnectorBroadcaster
             try {
                 listener.onRetrievePrintersResponse(response);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -446,7 +446,7 @@ export class CloverConnectorBroadcaster
             try {
                 listener.onPrintJobStatusResponse(response);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });

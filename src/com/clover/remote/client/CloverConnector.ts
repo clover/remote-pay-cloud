@@ -702,7 +702,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
         }
     }
 
-    public print(request:sdk.remotepay.PrintRequest):void {
+    public print(request: sdk.remotepay.PrintRequest): void {
         if (!this.device || !this.isReady) {
             this.notifyDeviceNotConnected("In print");
         } else if (!request) {
@@ -714,7 +714,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
                 if (Array.isArray(request.image) && request.image.length > 1) {
                     this.notifyInvalidData("In print: Invalid argument. Only one image can be printed at a time in the current API.");
                 }
-                let singleOrArr:any = (Array.isArray(request.image) ? request.image[0] : request.image);
+                let singleOrArr: any = (Array.isArray(request.image) ? request.image[0] : request.image);
                 this.device.doPrintImageObject(singleOrArr, request.printRequestId, request.printDeviceId);
             } else if (request.text) {
                 this.device.doPrintText(request.text, request.printRequestId, request.printDeviceId);
@@ -722,7 +722,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
                 if (Array.isArray(request.imageUrl) && request.imageUrl.length > 1) {
                     this.notifyInvalidData("In print: Invalid argument. Only one imageUrl can be printed at a time in the current API.");
                 }
-                let singleOrArr:any = (Array.isArray(request.imageUrl) ? request.imageUrl[0] : request.imageUrl);
+                let singleOrArr: any = (Array.isArray(request.imageUrl) ? request.imageUrl[0] : request.imageUrl);
                 this.device.doPrintImageUrl(singleOrArr, request.printRequestId, request.printDeviceId);
             } else {
                 this.notifyInvalidData("In print: Invalid argument. PrintRequest element was not formatted correctly.");

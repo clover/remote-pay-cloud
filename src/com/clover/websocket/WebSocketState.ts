@@ -4,8 +4,7 @@
  *
  * </p>
  */
-export enum WebSocketState
-{
+export enum WebSocketState {
     /**
      * This value does not exist in the web
      *

@@ -11,7 +11,7 @@ import {WebSocketCloverTransport} from "./WebSocketCloverTransport";
 
 /**
  * WebSocket Cloud Clover Transport.  This handles the need to notify the device before a connection attempt is made.
- * 
+ *
  */
 export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
 
@@ -21,15 +21,15 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
      *
      * @type {string}
      */
-    static X_CLOVER_CONNECTED_ID:string  = "X-CLOVER-CONNECTED-ID";
+    static X_CLOVER_CONNECTED_ID: string = "X-CLOVER-CONNECTED-ID";
 
-	private httpSupport:HttpSupport;
-    private cloverServer:string;
-    private merchantId:string;
-    private accessToken:string;
-    private deviceId:string;
-    private friendlyId:string;
-    private forceConnect:boolean;
+    private httpSupport: HttpSupport;
+    private cloverServer: string;
+    private merchantId: string;
+    private accessToken: string;
+    private deviceId: string;
+    private friendlyId: string;
+    private forceConnect: boolean;
 
     /**
      * @param {number} heartbeatInterval - duration to wait for a PING before disconnecting
@@ -38,7 +38,7 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
      * @param {Object} webSocketImplClass - the function that will return an instance of the
      *  CloverWebSocketInterface that will be used when connecting.  For Browser implementations, this can be
      * @param {string} cloverServer the base url for the clover server used in the cloud connection.
-     * 	EX:  https://www.clover.com, http://localhost:9000
+     *    EX:  https://www.clover.com, http://localhost:9000
      * @param {string} merchantId - the merchant the device belongs to.
      * @param {string} accessToken - the OAuth access token that will be used when contacting the clover server
      * @param {string} deviceId - the id (not uuid) of the device to connect to
@@ -48,47 +48,47 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
      * @param {boolean} forceConnect - if true, overtake any existing connection.
      * @param {HttpSupport} httpSupport - the helper object used when making http requests.
      */
-    public constructor(heartbeatInterval:number,
-                       reconnectDelay:number,
-                       retriesUntilDisconnect:number,
-                       webSocketImplClass:any,
-					   cloverServer:string,
-                       merchantId:string,
-					   accessToken:string,
-                       deviceId:string,
-                       friendlyId:string,
-                       forceConnect:boolean,
-					   httpSupport:HttpSupport) {
-		super(heartbeatInterval, reconnectDelay, retriesUntilDisconnect, webSocketImplClass);
+    public constructor(heartbeatInterval: number,
+                       reconnectDelay: number,
+                       retriesUntilDisconnect: number,
+                       webSocketImplClass: any,
+                       cloverServer: string,
+                       merchantId: string,
+                       accessToken: string,
+                       deviceId: string,
+                       friendlyId: string,
+                       forceConnect: boolean,
+                       httpSupport: HttpSupport) {
+        super(heartbeatInterval, reconnectDelay, retriesUntilDisconnect, webSocketImplClass);
         this.cloverServer = cloverServer;
         this.merchantId = merchantId;
         this.accessToken = accessToken;
         this.deviceId = deviceId;
-		this.httpSupport = httpSupport;
+        this.httpSupport = httpSupport;
         this.friendlyId = friendlyId;
         this.forceConnect = forceConnect;
 
         this.initialize();
-	}
+    }
 
-	/**
-	 * The cloud needs to call an endpoint on the server to notify the device that it wants
-	 * to talk.  This requires a valid OAuth access token, and we also need to know which Clover
-	 * server to contact.
-	 *
-	 * To make the call, we also need to have an object that we can use that does not tie us to
-	 * a particular environment.  This is the httpSupport.
+    /**
+     * The cloud needs to call an endpoint on the server to notify the device that it wants
+     * to talk.  This requires a valid OAuth access token, and we also need to know which Clover
+     * server to contact.
+     *
+     * To make the call, we also need to have an object that we can use that does not tie us to
+     * a particular environment.  This is the httpSupport.
      *
      * If an attempt is being made to reconnect, when this fails, it will set the 'reconnecting' flag to
      * false to allow another reconnect attempt to be started by a separate 'thread'.
-	 */
-	protected initialize(): void {
-		// Do the notification call.  This needs to happen every time we attempt to connect.
+     */
+    protected initialize(): void {
+        // Do the notification call.  This needs to happen every time we attempt to connect.
         // It COULD mean that the device gets a notification when the Cloud Pay Display is
         // already running, but this is not harmful.
-        let alertEndpoint:string = Endpoints.getAlertDeviceEndpoint(this.cloverServer, this.merchantId, this.accessToken);
-        let deviceContactInfo:DeviceContactInfo = new DeviceContactInfo(this.deviceId.replace(/-/g, ""), true);
-		this.httpSupport.postData(alertEndpoint,
+        let alertEndpoint: string = Endpoints.getAlertDeviceEndpoint(this.cloverServer, this.merchantId, this.accessToken);
+        let deviceContactInfo: DeviceContactInfo = new DeviceContactInfo(this.deviceId.replace(/-/g, ""), true);
+        this.httpSupport.postData(alertEndpoint,
             (data) => this.deviceNotificationSent(data),
             (error) => {
                 this.connectionError(this.webSocket, `Error sending alert to device. Details: ${error.message}`);
@@ -96,7 +96,7 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
                 this.setReconnecting(false);
             },
             deviceContactInfo);
-	}
+    }
 
     /**
      * This handles the response from the server of the request to send a notification to the device. If the
@@ -106,13 +106,13 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
      *  was sent to the device.  If it was, then the properties 'host' and 'token' are used to derive the
      *  websocket endpoint uri.
      */
-    private deviceNotificationSent(notificationResponse:any): void {
+    private deviceNotificationSent(notificationResponse: any): void {
         // Note "!data.hasOwnProperty('sent')" is included to allow for
         // backwards compatibility.  If the property is NOT included, then
         // we will assume an earlier version of the protocol on the server,
         // and assume that the notification WAS SENT.
         if (!notificationResponse.hasOwnProperty('sent') || notificationResponse.sent) {
-            let deviceWebSocketEndpoint:string = Endpoints.getDeviceWebSocketEndpoint(
+            let deviceWebSocketEndpoint: string = Endpoints.getDeviceWebSocketEndpoint(
                 notificationResponse.host, notificationResponse.token, this.friendlyId, this.forceConnect);
             this.doOptionsCallToAvoid401Error(deviceWebSocketEndpoint);
         } else {
@@ -128,7 +128,7 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
      *
      * @param deviceWebSocketEndpoint
      */
-    private doOptionsCallToAvoid401Error(deviceWebSocketEndpoint:string): void {
+    private doOptionsCallToAvoid401Error(deviceWebSocketEndpoint: string): void {
         // A way to deal with the 401 error that
         // occurs when a websocket connection is made to the
         // server (sometimes).  Do a preliminary OPTIONS
@@ -166,7 +166,7 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
             if (this.friendlyId == connectedId) {
                 // Do anything here?  This is already connected.
                 this.logger.debug("Trying to connect, but already connected to friendlyId '" + this.friendlyId + "'");
-                if(this.webSocket) {
+                if (this.webSocket) {
                     this.webSocket.close();
                 }
             } else {
@@ -185,15 +185,15 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
         super.initializeWithUri(deviceWebSocketEndpoint);
     }
 
-	/**
-	 *
-	 * @override
-	 * @param ws
+    /**
+     *
+     * @override
+     * @param ws
      */
-	public onOpen(ws: CloverWebSocketClient): void {
-		if (this.webSocket == ws) {
-			super.onOpen(ws);
-			this.notifyDeviceReady();
-		}
-	}
+    public onOpen(ws: CloverWebSocketClient): void {
+        if (this.webSocket == ws) {
+            super.onOpen(ws);
+            this.notifyDeviceReady();
+        }
+    }
 }

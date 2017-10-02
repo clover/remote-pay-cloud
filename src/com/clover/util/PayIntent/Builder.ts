@@ -6,50 +6,50 @@ import sdk = require('remote-pay-cloud-api');
  */
 export namespace PayIntent {
     export class Builder {
-        private action:string;
-        private amount:number;
+        private action: string;
+        private amount: number;
         /** @Deprecated // Please use TransactionSettings */
-        private tippableAmount:number;
-        private tipAmount:number;
-        private taxAmount:number;
-        private orderId:string;
-        private paymentId:string;
-        private employeeId:string;
-        private transactionType:sdk.remotemessage.TransactionType;
-        private taxableAmountRates:Array<sdk.payments.TaxableAmountRate> ;
-        private serviceChargeAmount:sdk.payments.ServiceChargeAmount;
+        private tippableAmount: number;
+        private tipAmount: number;
+        private taxAmount: number;
+        private orderId: string;
+        private paymentId: string;
+        private employeeId: string;
+        private transactionType: sdk.remotemessage.TransactionType;
+        private taxableAmountRates: Array<sdk.payments.TaxableAmountRate>;
+        private serviceChargeAmount: sdk.payments.ServiceChargeAmount;
         /** @Deprecated // Please use TransactionSettings */
-        private isDisableCashBack:boolean = false;
-        private isTesting:boolean = false;
+        private isDisableCashBack: boolean = false;
+        private isTesting: boolean = false;
         /** @Deprecated // Please use TransactionSettings */
-        private cardEntryMethods:number;
-        private voiceAuthCode:string;
-        private postalCode:string;
-        private streetAddress:string;
-        private isCardNotPresent:boolean = false;
-        private cardDataMessage:string;
+        private cardEntryMethods: number;
+        private voiceAuthCode: string;
+        private postalCode: string;
+        private streetAddress: string;
+        private isCardNotPresent: boolean = false;
+        private cardDataMessage: string;
         /** @Deprecated // Please use TransactionSettings */
-        private remotePrint:boolean = false;
-        private transactionNo:string;
+        private remotePrint: boolean = false;
+        private transactionNo: string;
         /** @Deprecated // Please use TransactionSettings */
-        private isForceSwipePinEntry:boolean = false;
+        private isForceSwipePinEntry: boolean = false;
         /** @Deprecated // Please use TransactionSettings */
-        private disableRestartTransactionWhenFailed:boolean = false;
+        private disableRestartTransactionWhenFailed: boolean = false;
         // Can be set to the properly formatted uuid for a payment (
-        private externalPaymentId:string;
-        private vaultedCard:sdk.payments.VaultedCard;
+        private externalPaymentId: string;
+        private vaultedCard: sdk.payments.VaultedCard;
         /** @Deprecated // Please use TransactionSettings */
-        private allowOfflinePayment:boolean;
+        private allowOfflinePayment: boolean;
         /** @Deprecated // Please use TransactionSettings */
-        private approveOfflinePaymentWithoutPrompt:boolean;
-        private requiresRemoteConfirmation:boolean;
-        private applicationTracking:sdk.apps.AppTracking;
-        private allowPartialAuth:boolean = true;
-        private germanInfo:sdk.payments.GermanInfo;
-        private cashAdvanceCustomerIdentification:sdk.payments.CashAdvanceCustomerIdentification;
-        private transactionSettings:sdk.payments.TransactionSettings;
+        private approveOfflinePaymentWithoutPrompt: boolean;
+        private requiresRemoteConfirmation: boolean;
+        private applicationTracking: sdk.apps.AppTracking;
+        private allowPartialAuth: boolean = true;
+        private germanInfo: sdk.payments.GermanInfo;
+        private cashAdvanceCustomerIdentification: sdk.payments.CashAdvanceCustomerIdentification;
+        private transactionSettings: sdk.payments.TransactionSettings;
 
-        public static buildTransactionSettingsFromPayIntent(payIntent:sdk.remotemessage.PayIntent): sdk.payments.TransactionSettings {
+        public static buildTransactionSettingsFromPayIntent(payIntent: sdk.remotemessage.PayIntent): sdk.payments.TransactionSettings {
             let transactionSettings: sdk.payments.TransactionSettings = new sdk.payments.TransactionSettings();
 
             transactionSettings.setCloverShouldHandleReceipts(!payIntent.remotePrint);
@@ -68,7 +68,7 @@ export namespace PayIntent {
             return transactionSettings;
         }
 
-        public payment(payment:sdk.payment.Payment): Builder {
+        public payment(payment: sdk.payment.Payment): Builder {
             this.amount = payment.getAmount();
             this.tipAmount = payment.getTipAmount();
             this.taxAmount = payment.getTaxAmount();
@@ -170,7 +170,7 @@ export namespace PayIntent {
             return this;
         }
 
-        public setTaxableAmountRates(taxableAmountRates: Array<sdk.payments.TaxableAmountRate> ): Builder {
+        public setTaxableAmountRates(taxableAmountRates: Array<sdk.payments.TaxableAmountRate>): Builder {
             this.taxableAmountRates = new Array<sdk.payments.TaxableAmountRate>(taxableAmountRates);
             return this;
         }
@@ -200,7 +200,7 @@ export namespace PayIntent {
         }
 
         /** @Deprecated */
-        public setDisableCashback(disableCashBack: boolean = false ): Builder {
+        public setDisableCashback(disableCashBack: boolean = false): Builder {
             this.isDisableCashBack = disableCashBack;
             if (this.transactionSettings != null) { // ** Backward Compatibility **
                 this.transactionSettings.setDisableCashBack(disableCashBack);
@@ -214,7 +214,7 @@ export namespace PayIntent {
         }
 
         /** @Deprecated */
-        public setForceSwipePinEntry(isForceSwipePinEntry:boolean = false ): Builder {
+        public setForceSwipePinEntry(isForceSwipePinEntry: boolean = false): Builder {
             this.isForceSwipePinEntry = isForceSwipePinEntry;
             if (this.transactionSettings != null) { // ** Backward Compatibility **
                 this.transactionSettings.setForcePinEntryOnSwipe(isForceSwipePinEntry);
@@ -223,7 +223,7 @@ export namespace PayIntent {
         }
 
         /** @Deprecated */
-        public setDisableRestartTransactionWhenFailed(disableRestartTransactionWhenFailed: boolean = false ): Builder {
+        public setDisableRestartTransactionWhenFailed(disableRestartTransactionWhenFailed: boolean = false): Builder {
             this.disableRestartTransactionWhenFailed = disableRestartTransactionWhenFailed;
             if (this.transactionSettings != null) { // ** Backward Compatibility **
                 this.transactionSettings.setDisableRestartTransactionOnFailure(disableRestartTransactionWhenFailed);
@@ -284,12 +284,12 @@ export namespace PayIntent {
             return this;
         }
 
-        public setTransactionSettings(transactionSettings: sdk.payments.TransactionSettings ): Builder {
+        public setTransactionSettings(transactionSettings: sdk.payments.TransactionSettings): Builder {
             this.transactionSettings = transactionSettings;
             return this;
         }
 
-        public setCardNotPresent(cardNotPresent:boolean = false): Builder {
+        public setCardNotPresent(cardNotPresent: boolean = false): Builder {
             this.isCardNotPresent = cardNotPresent;
             return this;
         }

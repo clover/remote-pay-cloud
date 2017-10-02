@@ -18,7 +18,7 @@ export class CloverConnectorFactory implements ICloverConnectorFactory {
     constructor() {
     }
 
-    public createICloverConnector(configuration:any):sdk.remotepay.ICloverConnector {
+    public createICloverConnector(configuration: any): sdk.remotepay.ICloverConnector {
         return new LegacyCloverConnector(configuration);
     }
 }
@@ -37,16 +37,16 @@ export class CloverConnectorFactory implements ICloverConnectorFactory {
  */
 export class LegacyCloverConnector extends CloverConnector {
 
-    legacyConfiguration:any;
+    legacyConfiguration: any;
 
-    private urlParamsInfo:{[key: string]: string} = null;
-    static _accessTokenKey:string = 'access_token';
-    static accessTokenKey:string = '#' + LegacyCloverConnector._accessTokenKey;
-    static URL_MERCHANT_ID_KEY:string = "merchant_id";
-    private httpSupport:HttpSupport;
+    private urlParamsInfo: { [key: string]: string } = null;
+    static _accessTokenKey: string = 'access_token';
+    static accessTokenKey: string = '#' + LegacyCloverConnector._accessTokenKey;
+    static URL_MERCHANT_ID_KEY: string = "merchant_id";
+    private httpSupport: HttpSupport;
     private imageUtil: IImageUtil;
 
-    constructor(legacyConfiguration:any) {
+    constructor(legacyConfiguration: any) {
         super(null);
 
         this.httpSupport = new HttpSupport(XMLHttpRequest);
@@ -65,8 +65,8 @@ export class LegacyCloverConnector extends CloverConnector {
      * @param rawConfiguration - a Json object that has values that can be used to construct the
      *  object configuration.
      */
-    protected generateNewConfigurationAndInitialize(rawConfiguration:any):void {
-        let newConfig:WebSocketCloudCloverDeviceConfiguration = new WebSocketCloudCloverDeviceConfiguration(
+    protected generateNewConfigurationAndInitialize(rawConfiguration: any): void {
+        let newConfig: WebSocketCloudCloverDeviceConfiguration = new WebSocketCloudCloverDeviceConfiguration(
             rawConfiguration.remoteApplicationId,
             BrowserWebSocketImpl.createInstance,
             this.imageUtil,
@@ -88,7 +88,7 @@ export class LegacyCloverConnector extends CloverConnector {
      *
      * @param configuration - the raw configuration object
      */
-    protected initializeLegacyConnection(configuration:any) {
+    protected initializeLegacyConnection(configuration: any) {
 
         if (configuration.oauthToken) {
             this.onceWeHaveTheAccessToken(configuration);
@@ -99,7 +99,7 @@ export class LegacyCloverConnector extends CloverConnector {
                 configuration.oauthToken = this.getAccessToken(configuration);
                 this.onceWeHaveTheAccessToken(configuration);
             } else {
-                let errorResponse:sdk.remotepay.CloverDeviceErrorEvent = new sdk.remotepay.CloverDeviceErrorEvent();
+                let errorResponse: sdk.remotepay.CloverDeviceErrorEvent = new sdk.remotepay.CloverDeviceErrorEvent();
                 errorResponse.setCode(sdk.remotepay.DeviceErrorEventCode.InvalidConfig);
                 errorResponse.setType(sdk.remotepay.ErrorType.EXCEPTION);
                 errorResponse.setMessage("Both 'clientId' and 'domain' are unset.  Cannot initialize.");
@@ -113,11 +113,11 @@ export class LegacyCloverConnector extends CloverConnector {
      *
      * @param configuration - the raw configuration object
      */
-    private onceWeHaveTheAccessToken(configuration:any) {
+    private onceWeHaveTheAccessToken(configuration: any) {
         // If we had the oauth token, but we do not have the merchantId, this will redirect
         configuration.merchantId = this.getMerchantId(configuration);
         // We need the deviceId in order to send the notification.
-        if(configuration.deviceId) {
+        if (configuration.deviceId) {
             this.generateNewConfigurationAndInitialize(configuration);
         } else {
             this.getDeviceId(configuration);
@@ -133,19 +133,19 @@ export class LegacyCloverConnector extends CloverConnector {
      *
      * @param configuration - the raw configuration object
      */
-    private getDeviceId(configuration:any):void {
+    private getDeviceId(configuration: any): void {
         if (configuration.deviceSerialId || configuration.deviceId) {
-            if(configuration.deviceId) {
+            if (configuration.deviceId) {
                 this.generateNewConfigurationAndInitialize(configuration);
             } else {
-                let devicesEndpoint:string = Endpoints.getDevicesEndpoint(
+                let devicesEndpoint: string = Endpoints.getDevicesEndpoint(
                     configuration.domain, configuration.merchantId, configuration.oauthToken);
                 this.httpSupport.getData(devicesEndpoint,
                     function (devices) {
                         this.handleDeviceResult(LegacyCloverConnector.buildMapOfSerialToDevice(devices), configuration)
                     }.bind(this),
                     function (error) {
-                        let errorResponse:sdk.remotepay.CloverDeviceErrorEvent = new sdk.remotepay.CloverDeviceErrorEvent();
+                        let errorResponse: sdk.remotepay.CloverDeviceErrorEvent = new sdk.remotepay.CloverDeviceErrorEvent();
                         errorResponse.setCode(sdk.remotepay.DeviceErrorEventCode.InvalidConfig);
                         errorResponse.setType(sdk.remotepay.ErrorType.EXCEPTION);
                         errorResponse.setMessage(JSON.stringify({"Error retreiving devices:": error}, null, '\t'));
@@ -154,7 +154,7 @@ export class LegacyCloverConnector extends CloverConnector {
                 );
             }
         } else {
-            let errorResponse:sdk.remotepay.CloverDeviceErrorEvent = new sdk.remotepay.CloverDeviceErrorEvent();
+            let errorResponse: sdk.remotepay.CloverDeviceErrorEvent = new sdk.remotepay.CloverDeviceErrorEvent();
             errorResponse.setCode(sdk.remotepay.DeviceErrorEventCode.InvalidConfig);
             errorResponse.setType(sdk.remotepay.ErrorType.EXCEPTION);
             errorResponse.setMessage("Neither 'deviceId' or 'deviceSerialId' passed, one must be set.  Cannot initialize.");
@@ -170,7 +170,7 @@ export class LegacyCloverConnector extends CloverConnector {
      */
     protected static buildMapOfSerialToDevice(devicesVX): any {
         var devices = null;
-        var deviceBySerial: {[key: string]: string} = {};
+        var deviceBySerial: { [key: string]: string } = {};
         // depending on the version of the call, the devices might be in a slightly different format.
         // We would need to determine what devices were capable of doing what we want.  This means we
         // need to know if the device has the websocket connection enabled.  The best way to do this is
@@ -200,7 +200,7 @@ export class LegacyCloverConnector extends CloverConnector {
     protected handleDeviceResult(devices, configuration): void {
         var myDevice = devices[configuration.deviceSerialId];
         if (null == myDevice) {
-            let errorResponse:sdk.remotepay.CloverDeviceErrorEvent = new sdk.remotepay.CloverDeviceErrorEvent();
+            let errorResponse: sdk.remotepay.CloverDeviceErrorEvent = new sdk.remotepay.CloverDeviceErrorEvent();
             errorResponse.setCode(sdk.remotepay.DeviceErrorEventCode.InvalidConfig);
             errorResponse.setType(sdk.remotepay.ErrorType.EXCEPTION);
             errorResponse.setMessage("Cannot determine device to use.  " +
@@ -228,20 +228,20 @@ export class LegacyCloverConnector extends CloverConnector {
      * @param configuration
      * @returns {string|any}
      */
-    private getMerchantId(configuration:any): string {
-        if(!configuration.merchantId) {
-            if(!this.urlParamsInfo) {
+    private getMerchantId(configuration: any): string {
+        if (!configuration.merchantId) {
+            if (!this.urlParamsInfo) {
                 if (configuration.domain && configuration.clientId) {
                     // We must have the merchant id.  This will make the merchant log in again.
                     this.getAccessToken(configuration);
-                    let errorResponse:sdk.remotepay.CloverDeviceErrorEvent = new sdk.remotepay.CloverDeviceErrorEvent();
+                    let errorResponse: sdk.remotepay.CloverDeviceErrorEvent = new sdk.remotepay.CloverDeviceErrorEvent();
                     errorResponse.setCode(sdk.remotepay.DeviceErrorEventCode.InvalidConfig);
                     errorResponse.setType(sdk.remotepay.ErrorType.EXCEPTION);
                     errorResponse.setMessage("Neither 'merchantId' or '" +
                         LegacyCloverConnector.URL_MERCHANT_ID_KEY + "' specified. Cannot initialize.");
                     this.broadcaster.notifyOnDeviceError(errorResponse);
                 } else {
-                    let errorResponse:sdk.remotepay.CloverDeviceErrorEvent = new sdk.remotepay.CloverDeviceErrorEvent();
+                    let errorResponse: sdk.remotepay.CloverDeviceErrorEvent = new sdk.remotepay.CloverDeviceErrorEvent();
                     errorResponse.setCode(sdk.remotepay.DeviceErrorEventCode.InvalidConfig);
                     errorResponse.setType(sdk.remotepay.ErrorType.EXCEPTION);
                     errorResponse.setMessage("Both 'clientId' and 'domain' are unset.  Cannot initialize.");
@@ -260,11 +260,11 @@ export class LegacyCloverConnector extends CloverConnector {
      * @param configuration
      * @returns {null}
      */
-    private getAccessToken(configuration:any): string {
+    private getAccessToken(configuration: any): string {
         this.parseWindowURL();
 
         var token = null;
-        if(this.urlParamsInfo) {
+        if (this.urlParamsInfo) {
             token = this.urlParamsInfo[LegacyCloverConnector.accessTokenKey];
         }
         if (token == null) {
@@ -274,19 +274,19 @@ export class LegacyCloverConnector extends CloverConnector {
         return token;
     }
 
-    private static redirect(configuration:any): void {
-        let finalRedirect:string = window.location.href.replace(window.location.hash, '');
-        let oAuthRedirectUrl:string = Endpoints.getOAuthURL(configuration.domain, configuration.clientId, null, finalRedirect);
+    private static redirect(configuration: any): void {
+        let finalRedirect: string = window.location.href.replace(window.location.hash, '');
+        let oAuthRedirectUrl: string = Endpoints.getOAuthURL(configuration.domain, configuration.clientId, null, finalRedirect);
         window.location.href = oAuthRedirectUrl;
     }
 
     private parseWindowURL(): void {
-        if(!this.urlParamsInfo) {
+        if (!this.urlParamsInfo) {
             this.parseURL(window.location);
         }
     }
 
-    private parseURL(windowLocationObject:Location): void {
+    private parseURL(windowLocationObject: Location): void {
         this.urlParamsInfo = {};
 
         let params: string[] = windowLocationObject.hash.split('&');
@@ -297,14 +297,14 @@ export class LegacyCloverConnector extends CloverConnector {
     }
 
     private parseStuff(params: string[]) {
-        let i:number = 0;
-        let param:string = null;
+        let i: number = 0;
+        let param: string = null;
         while (param = params[i++]) {
-            let multiParam:string[] = param.split("=");
+            let multiParam: string[] = param.split("=");
             this.urlParamsInfo[multiParam[0]] = multiParam[1];
             // Make sure the access_token is mapped with the hash infront,
             // and without.
-            if(multiParam[0] === LegacyCloverConnector._accessTokenKey) {
+            if (multiParam[0] === LegacyCloverConnector._accessTokenKey) {
                 this.urlParamsInfo[LegacyCloverConnector.accessTokenKey] = multiParam[1];
             }
         }

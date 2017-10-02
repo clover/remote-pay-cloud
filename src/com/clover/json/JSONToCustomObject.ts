@@ -24,7 +24,7 @@ export class JSONToCustomObject {
      *  then a copy of the passed jsonobject will be returned.
      * @returns {Object | null}
      */
-    public transfertoObject(jsonobject:any, customobject:any, attachUnknownProperties:boolean):any {
+    public transfertoObject(jsonobject: any, customobject: any, attachUnknownProperties: boolean): any {
         if (typeof jsonobject === "string") {
             // This should not happen, primitives are set outside this.
             // Try to parse it as a json string
@@ -72,7 +72,7 @@ export class JSONToCustomObject {
                                 }
                             } else {
                                 // Warn.  We will be tolerant...
-                                this.log.warn("Passed json contains field " + key + " of type " + typeof jsonArray  +
+                                this.log.warn("Passed json contains field " + key + " of type " + typeof jsonArray +
                                     ".  The field on the object is of type array.  No assignment will be made", jsonArray, jsonobject);
                                 if (attachUnknownProperties) {
                                     customobject["x_" + key] = jsonArray;
@@ -97,7 +97,7 @@ export class JSONToCustomObject {
                                     // Try to create an instance of the type
                                     customobject[key] = new fieldType;
                                 } catch (e) {
-                                    this.log.error("fieldType is ", fieldType, ", key is ", key , " for jsonobject ", jsonobject);
+                                    this.log.error("fieldType is ", fieldType, ", key is ", key, " for jsonobject ", jsonobject);
                                     throw e;
                                 }
                                 var copied = this.transfertoObject(jsonobject[key], customobject[key], attachUnknownProperties);
@@ -121,9 +121,9 @@ export class JSONToCustomObject {
     public isPrimitive = function (metaInfo) {
         var variableType = metaInfo.type;
         return (
-        variableType === String ||
-        variableType === Number ||
-        variableType === Boolean );
+            variableType === String ||
+            variableType === Number ||
+            variableType === Boolean );
     };
 
     public isArray = function (metaInfo) {

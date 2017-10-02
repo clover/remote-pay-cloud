@@ -8,7 +8,7 @@ import {Logger} from '../remote/client/util/Logger';
  *
  * WebSocket Clover Interface.  Abstracts the WebSocket implementation so that the library is not tied to a
  * Browser implementation.
- * 
+ *
  * Interface to connect a websocket implementation to.
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/API/WebSocket
@@ -44,7 +44,7 @@ export abstract class CloverWebSocketInterface {
     public connect(): CloverWebSocketInterface {
         this.webSocket = this.createWebSocket(this.endpoint);
         if (typeof this.webSocket["addEventListener"] !== "function") {
-           this.logger.error("FATAL: The websocket implementation being used must have an 'addEventListener' function.  Either use a supported websocket implementation (https://www.npmjs.com/package/ws) or override the connect method on CloverWebSocketInterface.");
+            this.logger.error("FATAL: The websocket implementation being used must have an 'addEventListener' function.  Either use a supported websocket implementation (https://www.npmjs.com/package/ws) or override the connect method on CloverWebSocketInterface.");
         } else {
             this.webSocket.addEventListener("open", (event) => this.notifyOnOpen(event));
             this.webSocket.addEventListener("message", (event) => this.notifyOnMessage(event));
@@ -54,24 +54,24 @@ export abstract class CloverWebSocketInterface {
         return this;
     }
 
-    private notifyOnOpen(event: Event) : void {
+    private notifyOnOpen(event: Event): void {
         this.listeners.forEach((listener: WebSocketListener) => {
             try {
                 // check event here for any additional data we can see - headers?
                 listener.onConnected(this);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
     }
 
-    private notifyOnMessage(event: MessageEvent) : void {
+    private notifyOnMessage(event: MessageEvent): void {
         this.listeners.forEach((listener: WebSocketListener) => {
             try {
                 listener.onTextMessage(this, event.data);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
@@ -83,7 +83,7 @@ export abstract class CloverWebSocketInterface {
      *
      * @param {any} event - simple event passed per websocket spec.
      */
-    private notifyOnError(event: any) : void {
+    private notifyOnError(event: any): void {
         this.listeners.forEach((listener: WebSocketListener) => {
             try {
                 // According to the spec, only CLOSING or OPEN should occur. This is a 'simple' event.
@@ -98,18 +98,18 @@ export abstract class CloverWebSocketInterface {
                     listener.onSendError(this, event);
                 }
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });
     }
 
-    private notifyOnClose(event: CloseEvent) : void {
+    private notifyOnClose(event: CloseEvent): void {
         this.listeners.forEach((listener: WebSocketListener) => {
             try {
                 listener.onCloseFrame(this, event.code, event.reason);
             }
-            catch(e) {
+            catch (e) {
                 this.logger.error(e);
             }
         });

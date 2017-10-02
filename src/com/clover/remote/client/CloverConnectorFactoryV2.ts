@@ -22,7 +22,7 @@ export class CloverConnectorFactoryV2 implements ICloverConnectorFactory {
      * @param configuration - a configuration that determines how the connector connects to the device
      * @returns {CloverConnector}
      */
-    public createICloverConnector(configuration:CloverDeviceConfiguration):sdk.remotepay.ICloverConnector {
+    public createICloverConnector(configuration: CloverDeviceConfiguration): sdk.remotepay.ICloverConnector {
         return new CloverConnector(configuration);
     }
 }

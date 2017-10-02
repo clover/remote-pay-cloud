@@ -27,8 +27,8 @@ export class RemoteMessageParser extends JSONToCustomObject {
      * sdk.remotemessage.Message
      * @returns {sdk.remotemessage.Message}
      */
-    public parseMessageFromRemoteMessageObj(remoteMessageObj:sdk.remotemessage.RemoteMessage,
-                                            attachUnknownProperties:boolean = false): sdk.remotemessage.Message {
+    public parseMessageFromRemoteMessageObj(remoteMessageObj: sdk.remotemessage.RemoteMessage,
+                                            attachUnknownProperties: boolean = false): sdk.remotemessage.Message {
         var responseMessageType = MethodToMessage.getType(remoteMessageObj.getMethod());
         if (responseMessageType) {
             var messageToPopulate = new responseMessageType;
@@ -48,7 +48,7 @@ export class RemoteMessageParser extends JSONToCustomObject {
      * @param remoteMessage - a json object that is a serialized RemoteMessage
      * @returns {sdk.remotemessage.RemoteMessage} - object populated from the input json object.
      */
-    public parseToRemoteMessage(remoteMessage:any) {
+    public parseToRemoteMessage(remoteMessage: any) {
         var remoteMessageObj = new sdk.remotemessage.RemoteMessage();
         this.transfertoObject(remoteMessage, remoteMessageObj, false);
         return remoteMessageObj;

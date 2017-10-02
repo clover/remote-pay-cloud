@@ -22,11 +22,11 @@ export class HttpSupport {
      */
     xmlHttpImplClass: any;
 
-    public constructor(xmlHttpImplClass:any) {
+    public constructor(xmlHttpImplClass: any) {
         this.xmlHttpImplClass = xmlHttpImplClass;
     }
 
-    private setXmlHttpCallback(xmlHttpInst:any, endpoint:string, onDataLoaded:Function, onError:Function):void {
+    private setXmlHttpCallback(xmlHttpInst: any, endpoint: string, onDataLoaded: Function, onError: Function): void {
         xmlHttpInst.onreadystatechange = function () {
             if (xmlHttpInst.readyState == 4) {
                 if (xmlHttpInst.status == 200) {
@@ -47,7 +47,11 @@ export class HttpSupport {
                 }
                 else {
                     if (onError) {
-                        onError({message: "status returned was not 200", endpoint: endpoint, status: xmlHttpInst.status});
+                        onError({
+                            message: "status returned was not 200",
+                            endpoint: endpoint,
+                            status: xmlHttpInst.status
+                        });
                     }
                 }
             } else {
@@ -58,7 +62,7 @@ export class HttpSupport {
     /**
      * Make the REST call to get the data
      */
-    public doXmlHttp(method:string, endpoint:string, onDataLoaded:Function, onError:Function):void {
+    public doXmlHttp(method: string, endpoint: string, onDataLoaded: Function, onError: Function): void {
         const xmlHttp = new this.xmlHttpImplClass();
         this.setXmlHttpCallback(xmlHttp, endpoint, onDataLoaded, onError);
         xmlHttp.open(method, endpoint, true);
@@ -71,7 +75,7 @@ export class HttpSupport {
         xmlHttp.send();
     }
 
-    public doXmlHttpSendJson(method:string, sendData:any, endpoint:string, onDataLoaded:Function, onError:Function, additionalHeaders?:any):void {
+    public doXmlHttpSendJson(method: string, sendData: any, endpoint: string, onDataLoaded: Function, onError: Function, additionalHeaders?: any): void {
         const xmlHttp = new this.xmlHttpImplClass();
         this.setXmlHttpCallback(xmlHttp, endpoint, onDataLoaded, onError);
 
@@ -92,37 +96,39 @@ export class HttpSupport {
             xmlHttp.send();
         }
     }
+
     /**
      * Make the REST call to get the data
      */
-    public postData(endpoint:string, onDataLoaded:Function, onError:Function, sendData:any, additionalHeaders?:any):void {
+    public postData(endpoint: string, onDataLoaded: Function, onError: Function, sendData: any, additionalHeaders?: any): void {
         this.doXmlHttpSendJson("POST", sendData, endpoint, onDataLoaded, onError, additionalHeaders);
     }
 
     /**
      * Make the REST call to get the data
      */
-    public getData(endpoint:string, onDataLoaded:Function, onError:Function):void {
+    public getData(endpoint: string, onDataLoaded: Function, onError: Function): void {
         this.doXmlHttp("GET", endpoint, onDataLoaded, onError)
     }
 
     /**
      * Make the REST call to get the data
      */
-    public options(endpoint:string, onDataLoaded:Function, onError:Function):void {
+    public options(endpoint: string, onDataLoaded: Function, onError: Function): void {
         this.doXmlHttp("OPTIONS", endpoint, onDataLoaded, onError)
     }
 
     /**
      * Make the REST call to get the data
      */
-    public putData(endpoint:string, onDataLoaded:Function, onError:Function, sendData:any):void {
+    public putData(endpoint: string, onDataLoaded: Function, onError: Function, sendData: any): void {
         this.doXmlHttpSendJson("PUT", sendData, endpoint, onDataLoaded, onError);
     }
+
     /**
      * Make the REST call to get the data
      */
-    public deleteData(endpoint:string, onDataLoaded:Function, onError:Function):void {
+    public deleteData(endpoint: string, onDataLoaded: Function, onError: Function): void {
         this.doXmlHttp("DELETE", endpoint, onDataLoaded, onError)
     }
 }
