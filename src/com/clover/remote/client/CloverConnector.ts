@@ -1160,12 +1160,8 @@ export namespace CloverConnector {
                 let lastReq: any = this.cloverConnector.lastRequest;
                 this.cloverConnector.lastRequest = null;
                 if (!requestInfo) {
+                    // Backwards compatibility, attempt to get the message type from the last request.
                     requestInfo = this.getMessageTypeFromLastRequest(lastReq);
-                    if (!requestInfo) {
-                        this.logger.error('onFinishCancel called, requestInfo was null, and ' +
-                            'could not determine the type of the message from the last request',
-                            arguments);
-                    }
                 }
                 if (requestInfo == TxTypeRequestInfo.PREAUTH_REQUEST) {
                     this.onFinishCancelPreAuth(result, reason, message);
@@ -1181,8 +1177,23 @@ export namespace CloverConnector {
                 }
                 else if (requestInfo == TxTypeRequestInfo.REFUND_REQUEST) {
                     this.onFinishCancelRefund(result, reason, message);
-                } else {
-                    this.logger.error('onFinishCancel called, but could not determine how to respond!', arguments);
+                }
+                else {
+                    // Complete any un-resolved payment refund requests.
+                    if (this.lastPRR) {
+                        this.cloverConnector.broadcaster.notifyOnRefundPaymentResponse(this.lastPRR);
+                        this.lastPRR = null;
+                    }
+                    else {
+                        if (!requestInfo) {
+                        this.logger.error('onFinishCancel called, requestInfo was null, and ' +
+                            'could not determine the type of the message from the last request',
+                            arguments);
+                        }
+                        else {
+                            this.logger.error('onFinishCancel called, but could not determine how to respond!', arguments);
+                        }
+                    }
                 }
             }
             finally {
