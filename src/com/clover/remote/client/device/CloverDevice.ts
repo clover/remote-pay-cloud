@@ -61,8 +61,9 @@ export abstract class CloverDevice {
      *
      * @param {sdk.remotemessage.PayIntent} payIntent
      * @param {sdk.order.Order} order
+     * @param {string} requestInfo - request type.
      */
-    public abstract doTxStart(payIntent: sdk.remotemessage.PayIntent, order: sdk.order.Order): void;
+    public abstract doTxStart(payIntent: sdk.remotemessage.PayIntent, order: sdk.order.Order, requestInfo: string): void;
 
     /**
      * Key Press

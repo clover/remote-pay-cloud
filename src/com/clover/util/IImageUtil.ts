@@ -12,4 +12,14 @@ export interface IImageUtil {
      * @returns {string} a base 64 encoded string of the image.
      */
     getBase64Image(img: any): string;
+
+    /**
+     * Loads an image from a URL.
+     *
+     * @param {string} url
+     * @param {(Image) => {}} onLoad
+     * @param {(any) => {}} onError
+     */
+    loadImageFromURL(url: string,  onLoad: (image: any) => void, onError: (errorMessage: string) => void): void;
+
 }
