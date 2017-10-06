@@ -908,15 +908,19 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
         CloverConnector.populateBaseResponse(response, success, result, reason, message);
         response.setPayment(payment);
         response.setSignature(signature);
-        response.setIsSale(
-            sdk.payments.CardTransactionType.AUTH == payment.getCardTransaction().getType() &&
-            sdk.payments.Result.SUCCESS == payment.getResult());
-        response.setIsAuth(
-            sdk.payments.CardTransactionType.PREAUTH == payment.getCardTransaction().getType() &&
-            sdk.payments.Result.SUCCESS == payment.getResult());
-        response.setIsPreAuth(
-            sdk.payments.CardTransactionType.PREAUTH == payment.getCardTransaction().getType() &&
-            sdk.payments.Result.AUTH == payment.getResult());
+        const cardTransaction = payment.getCardTransaction();
+        if (cardTransaction) {
+            const transactionType = cardTransaction.getType();
+            response.setIsSale(
+                sdk.payments.CardTransactionType.AUTH == transactionType &&
+                sdk.payments.Result.SUCCESS == payment.getResult());
+            response.setIsAuth(
+                sdk.payments.CardTransactionType.PREAUTH == transactionType &&
+                sdk.payments.Result.SUCCESS == payment.getResult());
+            response.setIsPreAuth(
+                sdk.payments.CardTransactionType.PREAUTH == transactionType &&
+                sdk.payments.Result.AUTH == payment.getResult());
+        }
     }
 }
 
