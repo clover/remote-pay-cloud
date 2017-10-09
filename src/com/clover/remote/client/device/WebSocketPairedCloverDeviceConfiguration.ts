@@ -1,7 +1,5 @@
 import {WebSocketPairedCloverTransport} from '../transport/websocket/WebSocketPairedCloverTransport';
 import {CloverTransport} from '../transport/CloverTransport';
-import {CloverDeviceConfiguration} from './CloverDeviceConfiguration';
-import {DefaultCloverDevice} from './DefaultCloverDevice';
 import {PairingDeviceConfiguration} from '../transport/PairingDeviceConfiguration';
 import {WebSocketCloverDeviceConfiguration} from './WebSocketCloverDeviceConfiguration';
 import {IImageUtil} from '../../../util/IImageUtil';

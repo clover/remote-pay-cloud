@@ -11,7 +11,7 @@ export interface IImageUtil {
      * @param img - an image.
      * @returns {string} a base 64 encoded string of the image.
      */
-    getBase64Image(img: any): string;
+    getBase64Image(img: HTMLImageElement, onEncode: (response: any) => void): void;
 
     /**
      * Loads an image from a URL.

@@ -1,4 +1,4 @@
-import sdk = require('remote-pay-cloud-api');
+import * as sdk from 'remote-pay-cloud-api';
 
 import {CloverDeviceConfiguration} from './device/CloverDeviceConfiguration';
 import {ICloverConnectorFactory} from './ICloverConnectorFactory';

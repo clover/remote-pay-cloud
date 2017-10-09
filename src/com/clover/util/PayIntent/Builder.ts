@@ -1,4 +1,4 @@
-import sdk = require('remote-pay-cloud-api');
+import * as sdk from 'remote-pay-cloud-api';
 
 /**
  * Used to more closely match patterns used in other SDK's to allow for easier maintenance.
@@ -52,70 +52,70 @@ export namespace PayIntent {
         public static buildTransactionSettingsFromPayIntent(payIntent: sdk.remotemessage.PayIntent): sdk.payments.TransactionSettings {
             let transactionSettings: sdk.payments.TransactionSettings = new sdk.payments.TransactionSettings();
 
-            transactionSettings.setCloverShouldHandleReceipts(!payIntent.remotePrint);
-            transactionSettings.setDisableRestartTransactionOnFailure(payIntent.disableRestartTransactionWhenFailed);
-            transactionSettings.setForcePinEntryOnSwipe(payIntent.isForceSwipePinEntry);
-            transactionSettings.setDisableCashBack(payIntent.isDisableCashBack);
-            transactionSettings.setAllowOfflinePayment(payIntent.allowOfflinePayment);
-            transactionSettings.setApproveOfflinePaymentWithoutPrompt(payIntent.approveOfflinePaymentWithoutPrompt);
-            transactionSettings.setCardEntryMethods(payIntent.cardEntryMethods);
+            transactionSettings.setCloverShouldHandleReceipts(!payIntent.getRemotePrint());
+            transactionSettings.setDisableRestartTransactionOnFailure(payIntent.getDisableRestartTransactionWhenFailed());
+            transactionSettings.setForcePinEntryOnSwipe(payIntent.getIsForceSwipePinEntry());
+            transactionSettings.setDisableCashBack(payIntent.getIsDisableCashBack());
+            transactionSettings.setAllowOfflinePayment(payIntent.getAllowOfflinePayment());
+            transactionSettings.setApproveOfflinePaymentWithoutPrompt(payIntent.getApproveOfflinePaymentWithoutPrompt());
+            transactionSettings.setCardEntryMethods(payIntent.getCardEntryMethods());
             transactionSettings.setDisableDuplicateCheck(false); // default
             transactionSettings.setDisableReceiptSelection(false); // default
             transactionSettings.setSignatureEntryLocation(null); // will default to clover setting
             transactionSettings.setTipMode(null); // will default to clover setting
-            transactionSettings.setTippableAmount(payIntent.tippableAmount);
+            transactionSettings.setTippableAmount(payIntent.getTippableAmount());
 
             return transactionSettings;
         }
 
-        public payment(payment: sdk.payment.Payment): Builder {
+        public payment(payment: sdk.payments.Payment): Builder {
             this.amount = payment.getAmount();
             this.tipAmount = payment.getTipAmount();
             this.taxAmount = payment.getTaxAmount();
             this.employeeId = payment.getEmployee().getId();
-            this.transactionNo = payment.hasCardTransaction() ? payment.getCardTransaction().getTransactionNo() : null;
+            this.transactionNo = payment.getCardTransaction() ? payment.getCardTransaction().getTransactionNo() : null;
             this.transactionSettings = payment.getTransactionSettings();
             return this;
         }
 
         public payIntent(payIntent: sdk.remotemessage.PayIntent): Builder {
-            this.action = payIntent.action;
-            this.amount = payIntent.amount;
-            this.tippableAmount = payIntent.tippableAmount;
-            this.tipAmount = payIntent.tipAmount;
-            this.taxAmount = payIntent.taxAmount;
-            this.orderId = payIntent.orderId;
-            this.paymentId = payIntent.paymentId;
-            this.employeeId = payIntent.employeeId;
-            this.transactionType = payIntent.transactionType;
-            this.taxableAmountRates = payIntent.taxableAmountRateList;
-            this.serviceChargeAmount = payIntent.serviceChargeAmount;
-            this.isDisableCashBack = payIntent.isDisableCashBack;
-            this.isTesting = payIntent.isTesting;
-            this.cardEntryMethods = payIntent.cardEntryMethods;
-            this.voiceAuthCode = payIntent.voiceAuthCode;
-            this.postalCode = payIntent.postalCode;
-            this.streetAddress = payIntent.streetAddress;
-            this.isCardNotPresent = payIntent.isCardNotPresent;
-            this.cardDataMessage = payIntent.cardDataMessage;
-            this.remotePrint = payIntent.remotePrint;
-            this.transactionNo = payIntent.transactionNo;
-            this.isForceSwipePinEntry = payIntent.isForceSwipePinEntry;
-            this.disableRestartTransactionWhenFailed = payIntent.disableRestartTransactionWhenFailed;
-            this.externalPaymentId = payIntent.externalPaymentId;
-            this.vaultedCard = payIntent.vaultedCard;
-            this.allowOfflinePayment = payIntent.allowOfflinePayment;
-            this.approveOfflinePaymentWithoutPrompt = payIntent.approveOfflinePaymentWithoutPrompt;
-            this.requiresRemoteConfirmation = payIntent.requiresRemoteConfirmation;
-            this.applicationTracking = payIntent.applicationTracking;
-            this.allowPartialAuth = payIntent.allowPartialAuth;
-            this.germanInfo = payIntent.germanInfo;
-            if (payIntent.transactionSettings != null) {
-                this.transactionSettings = payIntent.transactionSettings;
+            this.action = payIntent.getAction();
+            this.amount = payIntent.getAmount();
+            this.tippableAmount = payIntent.getTippableAmount();
+            this.tipAmount = payIntent.getTipAmount();
+            this.taxAmount = payIntent.getTaxAmount();
+            this.orderId = payIntent.getOrderId();
+            this.paymentId = payIntent.getPaymentId();
+            this.employeeId = payIntent.getEmployeeId();
+            this.transactionType = payIntent.getTransactionType();
+            this.taxableAmountRates = payIntent.getTaxableAmountRates();
+            this.serviceChargeAmount = payIntent.getServiceChargeAmount();
+            this.isDisableCashBack = payIntent.getIsDisableCashBack();
+            this.isTesting = payIntent.getIsTesting();
+            this.cardEntryMethods = payIntent.getCardEntryMethods();
+            this.voiceAuthCode = payIntent.getVoiceAuthCode();
+            this.postalCode = payIntent.getPostalCode();
+            this.streetAddress = payIntent.getStreetAddress();
+            this.isCardNotPresent = payIntent.getIsCardNotPresent();
+            this.cardDataMessage = payIntent.getCardDataMessage();
+            this.remotePrint = payIntent.getRemotePrint();
+            this.transactionNo = payIntent.getTransactionNo();
+            this.isForceSwipePinEntry = payIntent.getIsForceSwipePinEntry();
+            this.disableRestartTransactionWhenFailed = payIntent.getDisableRestartTransactionWhenFailed();
+            this.externalPaymentId = payIntent.getExternalPaymentId();
+            this.vaultedCard = payIntent.getVaultedCard();
+            this.allowOfflinePayment = payIntent.getAllowOfflinePayment();
+            this.approveOfflinePaymentWithoutPrompt = payIntent.getApproveOfflinePaymentWithoutPrompt();
+            this.requiresRemoteConfirmation = payIntent.getRequiresRemoteConfirmation();
+            this.applicationTracking = payIntent.getApplicationTracking();
+            this.allowPartialAuth = payIntent.getAllowPartialAuth();
+            this.germanInfo = payIntent.getGermanInfo();
+            if (payIntent.getTransactionSettings() != null) {
+                this.transactionSettings = payIntent.getTransactionSettings();
             } else {
                 this.transactionSettings = PayIntent.Builder.buildTransactionSettingsFromPayIntent(payIntent);
             }
-            this.cashAdvanceCustomerIdentification = payIntent.cashAdvanceCustomerIdentification;
+            this.cashAdvanceCustomerIdentification = payIntent.getCashAdvanceCustomerIdentification();
 
             return this;
         }

@@ -1,4 +1,4 @@
-import sdk = require('remote-pay-cloud-api');
+import * as sdk from 'remote-pay-cloud-api';
 
 /**
  * Clover Transport Observer
@@ -6,6 +6,5 @@ import sdk = require('remote-pay-cloud-api');
  * The transport observer listens for notifications and handles them.
  */
 export interface ObjectMessageSender {
-
     sendObjectMessage(message: sdk.remotemessage.Message): string;
 }

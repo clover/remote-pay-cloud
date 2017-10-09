@@ -1,4 +1,4 @@
-import sdk = require('remote-pay-cloud-api');
+import * as sdk from 'remote-pay-cloud-api';
 import {Logger} from './util/Logger';
 
 /**
@@ -23,11 +23,11 @@ export class CloverConnectorBroadcaster
         this.listeners.splice(0, this.listeners.length);
     }
 
-    public push(...items: sdk.remotepay.ICloverConnectorListener[]): number {
+    public push(...items: Array<sdk.remotepay.ICloverConnectorListener>): number {
         if (items.length == 1) {
             return this.listeners.push(items[0]);
         } else {
-            return this.listeners.push(items);
+            return this.listeners.push(<any>items);
         }
     }
 
@@ -35,8 +35,8 @@ export class CloverConnectorBroadcaster
         return this.listeners.indexOf(searchElement, fromIndex);
     }
 
-    public splice(start: number, deleteCount: number, ...items: sdk.remotepay.ICloverConnectorListener[]): sdk.remotepay.ICloverConnectorListener[] {
-        return this.listeners.splice(start, deleteCount, items);
+    public splice(start: number, deleteCount: number, ...items: Array<sdk.remotepay.ICloverConnectorListener>): sdk.remotepay.ICloverConnectorListener[] {
+        return this.listeners.splice(start, deleteCount, <any>items);
     }
 
     public notifyOnTipAdded(tip: number): void {
@@ -178,8 +178,8 @@ export class CloverConnectorBroadcaster
         this.logger.debug('Sending Disconnect notification to listeners', message);
         this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
             try {
-                listener.onDeviceDisconnected(message);  // changed the name in 1.3
-                listener.onDisconnected(message);        // left here for backwards compatibility.  Deprecated in 1.3*
+                listener.onDeviceDisconnected();  // changed the name in 1.3
+                listener.onDisconnected(); // left here for backwards compatibility.  Deprecated in 1.3*
             }
             catch (e) {
                 this.logger.error(e);
@@ -253,78 +253,6 @@ export class CloverConnectorBroadcaster
         this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
             try {
                 listener.onDeviceError(errorEvent);
-            }
-            catch (e) {
-                this.logger.error(e);
-            }
-        });
-    }
-
-    public notifyOnPrintRefundPaymentReceipt(printRefundPaymentReceiptMessage: sdk.remotepay.PrintRefundPaymentReceiptMessage): void {
-        this.logger.debug('Sending PrintRefundPaymentReceipt notification to listeners');
-        this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
-            try {
-                listener.onPrintRefundPaymentReceipt(printRefundPaymentReceiptMessage);
-            }
-            catch (e) {
-                this.logger.error(e);
-            }
-        });
-    }
-
-    public notifyOnPrintPaymentMerchantCopyReceipt(printPaymentMerchantCopyReceiptMessage: sdk.remotepay.PrintPaymentMerchantCopyReceiptMessage): void {
-        this.logger.debug('Sending PrintPaymentMerchantCopyReceipt notification to listeners');
-        this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
-            try {
-                listener.onPrintPaymentMerchantCopyReceipt(printPaymentMerchantCopyReceiptMessage);
-            }
-            catch (e) {
-                this.logger.error(e);
-            }
-        });
-    }
-
-    public notifyOnPrintPaymentDeclineReceipt(printPaymentDeclineReceiptMessage: sdk.remotepay.PrintPaymentDeclineReceiptMessage): void {
-        this.logger.debug('Sending PrintPaymentDeclineReceipt notification to listeners');
-        this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
-            try {
-                listener.onPrintPaymentDeclineReceipt(printPaymentDeclineReceiptMessage);
-            }
-            catch (e) {
-                this.logger.error(e);
-            }
-        });
-    }
-
-    public notifyOnPrintPaymentReceipt(printPaymentReceiptMessage: sdk.remotepay.PrintPaymentReceiptMessage): void {
-        this.logger.debug('Sending PrintPaymentReceipt notification to listeners');
-        this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
-            try {
-                listener.onPrintPaymentReceipt(printPaymentReceiptMessage);
-            }
-            catch (e) {
-                this.logger.error(e);
-            }
-        });
-    }
-
-    public notifyOnPrintCreditReceipt(printManualRefundReceiptMessage: sdk.remotepay.PrintManualRefundReceiptMessage): void {
-        this.logger.debug('Sending PrintCreditReceipt notification to listeners');
-        this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
-            try {
-                listener.onPrintManualRefundReceipt(printManualRefundReceiptMessage);
-            }
-            catch (e) {
-                this.logger.error(e);
-            }
-        });
-    }
-
-    public notifyOnPrintCreditDeclineReceipt(printManualRefundDeclineReceiptMessage: sdk.remotepay.PrintManualRefundDeclineReceiptMessage): void {
-        this.logger.debug('Sending PrintCreditDeclineReceipt notification to listeners');
-        this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
-            try {
-                listener.onPrintManualRefundDeclineReceipt(printManualRefundDeclineReceiptMessage);
             }
             catch (e) {
                 this.logger.error(e);

@@ -1,20 +1,8 @@
-import sdk = require('remote-pay-cloud-api');
-import http = require('http');
-
-import {RemoteMessageParser} from '../../../../json/RemoteMessageParser';
+import * as sdk from 'remote-pay-cloud-api';
 
 import {PairingDeviceConfiguration} from '../PairingDeviceConfiguration';
-import {CloverDeviceConfiguration} from '../../device/CloverDeviceConfiguration';
-import {CloverDevice} from '../../device/CloverDevice';
 import {CloverWebSocketClient} from './CloverWebSocketClient';
-
-import {CloverTransport} from '../CloverTransport';
-import {Logger} from '../../util/Logger';
-import {CloverWebSocketClientListener} from "./CloverWebSocketClientListener";
 import {WebSocketCloverTransport} from "./WebSocketCloverTransport";
-
-import {CloverTransportObserver} from '../CloverTransportObserver';
-import {WebSocketCloverDeviceConfiguration} from "../../device/WebSocketCloverDeviceConfiguration";
 
 /**
  * WebSocket Paired Clover Transport
@@ -72,7 +60,6 @@ export class WebSocketPairedCloverTransport extends WebSocketCloverTransport {
         prm.setSerialNumber(this.serialNumber);
         prm.setApplicationName(this.posName);
         prm.setAuthenticationToken(this.authToken);
-
         this.objectMessageSender.sendObjectMessage(prm);
     }
 
@@ -92,12 +79,12 @@ export class WebSocketPairedCloverTransport extends WebSocketCloverTransport {
                 if (sdkMessage) {
                     if (sdk.remotemessage.Method.PAIRING_CODE == sdkMessage.getMethod()) {
                         this.logger.debug("Got PAIRING_CODE");
-                        var pcm: sdk.remotemessage.PairingCodeMessage = sdkMessage;
+                        var pcm: sdk.remotemessage.PairingCodeMessage = <sdk.remotemessage.PairingCodeMessage> sdkMessage;
                         var pairingCode: string = pcm.getPairingCode();
                         this.pairingDeviceConfiguration.onPairingCode(pairingCode);
                     } else if (sdk.remotemessage.Method.PAIRING_RESPONSE == sdkMessage.getMethod()) {
                         this.logger.debug("Got PAIRING_RESPONSE");
-                        var response: sdk.remotemessage.PairingResponse = sdkMessage;
+                        var response: sdk.remotemessage.PairingResponseMessage = <sdk.remotemessage.PairingResponseMessage> sdkMessage;
                         if (sdk.remotemessage.PairingState.PAIRED == response.getPairingState() ||
                             sdk.remotemessage.PairingState.INITIAL == response.getPairingState()) {
                             this.logger.debug("Got PAIRED pair response");
@@ -110,7 +97,7 @@ export class WebSocketPairedCloverTransport extends WebSocketCloverTransport {
                                 this.logger.debug("Error:" + e);
                             }
                             this.notifyDeviceReady();
-                        } else if (sdk.remotemessage.PairingState.FAILED == sdkMessage.getMethod()) {
+                        } else if (sdk.remotemessage.PairingState.FAILED == response.getPairingState()) {
                             this.logger.debug("Got FAILED pair response");
                             this.isPairing = true;
                             this.sendPairRequest();
