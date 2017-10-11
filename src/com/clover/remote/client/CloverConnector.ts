@@ -802,10 +802,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
     public openCashDrawer(request: sdk.remotepay.OpenCashDrawerRequest | string): void {
         if (!this.device || !this.isReady) {
             this.notifyDeviceNotConnected("In openCashDrawer");
-        }
-        else if (!request) {
-            this.notifyInvalidData("In openCashDrawer: Invalid argument. The request cannot be null.");
-        } else if (typeof request === "string") {
+        } else if (!request || (typeof request === "string") ) {
             this.device.doOpenCashDrawer(request);
         } else {
             this.device.doOpenCashDrawer(request.reason, request.deviceId);
