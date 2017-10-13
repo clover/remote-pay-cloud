@@ -30,6 +30,10 @@ export class CloverWebSocketClient implements WebSocketListener {
         return (this.socket) ? this.socket.getReadyState() : null;
     }
 
+    public getBufferedAmount(): number {
+        return (this.socket ? this.socket.getBufferedAmount(): 0);
+    }
+
     public connect(): void {
         if (this.socket != null) {
             throw new Error("Socket already created. Must create a new CloverWebSocketClient");

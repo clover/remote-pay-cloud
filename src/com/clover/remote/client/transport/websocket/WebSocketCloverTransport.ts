@@ -1,17 +1,10 @@
 import sdk = require('remote-pay-cloud-api');
-import http = require('http');
 
 import {RemoteMessageParser} from '../../../../json/RemoteMessageParser';
-
-import {CloverDeviceConfiguration} from '../../device/CloverDeviceConfiguration';
-import {CloverDevice} from '../../device/CloverDevice';
 import {CloverWebSocketClient} from './CloverWebSocketClient';
-
 import {CloverTransport} from '../CloverTransport';
 import {Logger} from '../../util/Logger';
 import {CloverWebSocketClientListener} from "./CloverWebSocketClientListener";
-import {CloverTransportObserver} from '../CloverTransportObserver';
-import {WebSocketCloverDeviceConfiguration} from "../../device/WebSocketCloverDeviceConfiguration";
 
 /**
  * WebSocket Clover Transport
@@ -43,8 +36,6 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
     webSocket: CloverWebSocketClient;
 
     private messageQueue: Array<string> = new Array<string>();
-
-    private messageSenderId: number = null;
 
     /**
      * This is the WebSocket implementation.  This is odd,
@@ -90,9 +81,6 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
         }
     }
 
-    /**
-     *
-     */
     public reset(): void {
         try {
             // By sending this close, the "onClose" will be fired, which will try to reconnect.
@@ -117,13 +105,17 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
         // from WebSocketCloverDeviceConfiguration.getMessagePackageName, which needs to be changeable
         // 'com.clover.remote_protocol_broadcast.app'
         this.messageParser = RemoteMessageParser.getDefaultInstance();
-        this.messageSenderId = setTimeout(function () {
-            this.sendMessageThread()
-        }.bind(this), 2000);
+        const messageSenderId = setInterval(() => {
+            if (!this.shutdown) {
+                this.sendMessageThread();
+            } else {
+                clearInterval(messageSenderId);
+            }
+        }, 100);
     }
 
     /**
-     * Since this javascript, this is not an actual thread, but it
+     * Since this is javascript, this is not an actual thread, but it
      * represents threading the sending of the messages.
      *
      * This just checks the message queue for elements, then sends using
@@ -137,7 +129,11 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
                 // Hold the message in case we need to put it back on the queue
                 let nextMsg: string = this.messageQueue.shift();
                 try {
-                    this.webSocket.send(nextMsg);
+                    if (this.webSocket.getBufferedAmount() > 0) {
+                        this.messageQueue.unshift(nextMsg);
+                    } else {
+                        this.webSocket.send(nextMsg);
+                    }
                 } catch (e) {
                     // Failed to send, put it back
                     this.messageQueue.unshift(nextMsg);
@@ -146,15 +142,6 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
             } else {
                 this.reconnect();
             }
-        }
-        if (!this.shutdown) {
-            // the setTimeout(...,0) resolves an odd chrome problem WRT
-            // sending messages in a loop.  When the volume reaches
-            // ~131072, a message is dropped, followed by another message
-            // being dropped every 65536.
-            this.messageSenderId = setTimeout(function () {
-                this.sendMessageThread()
-            }.bind(this), 0);
         }
     }
 
@@ -279,7 +266,6 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
         if (this.webSocket == ws) {
             // notify connected
             this.notifyDeviceConnected();
-            // this.sendPairRequest(); // for paired interfaces
         }
     }
 
@@ -330,17 +316,13 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
     }
 
     public onSendError(payloadText: string): void {
-        // TODO:
-        /*for (let observer of this.observers) {
-         CloverDeviceErrorEvent errorEvent = new CloverDeviceErrorEvent();
-         }*/
+       this.logger.error("WebSocketCloverTransport: An error occurred sending a message.");
     }
 }
 
 export namespace WebSocketCloverTransport {
     export class CloverWebSocketCloseCode {
         // See https://tools.ietf.org/html/rfc6455#section-7.4
-
         public code: number;
         public reason: string;
 

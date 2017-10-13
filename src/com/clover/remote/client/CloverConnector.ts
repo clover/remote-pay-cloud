@@ -174,10 +174,12 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
             transactionSettings.setAutoAcceptPaymentConfirmations(request.getAutoAcceptPaymentConfirmations());
             transactionSettings.setAutoAcceptSignature(request.getAutoAcceptSignature());
 
+            let paymentRequestType = null;
             if (request instanceof sdk.remotepay.PreAuthRequest) {
-                // nothing extra as of now
+                paymentRequestType = CloverConnector.TxTypeRequestInfo.PREAUTH_REQUEST;
             }
             else if (request instanceof sdk.remotepay.AuthRequest) {
+                paymentRequestType = CloverConnector.TxTypeRequestInfo.AUTH_REQUEST;
                 let req: sdk.remotepay.AuthRequest = request;
                 if (req.getTaxAmount()) {
                     builder.setTaxAmount(req.getTaxAmount());
@@ -198,6 +200,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
                 transactionSettings.setTipMode(sdk.payments.TipMode.ON_PAPER); // overriding TipMode, since it's an Auth request
             }
             else if (request instanceof sdk.remotepay.SaleRequest) {
+                paymentRequestType = CloverConnector.TxTypeRequestInfo.SALE_REQUEST;
                 let req: sdk.remotepay.SaleRequest = request;
                 // shared with AuthRequest
                 if (req.getAllowOfflinePayment()) {
@@ -226,7 +229,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 
             builder.setTransactionSettings(transactionSettings);
             let payIntent: sdk.remotemessage.PayIntent = builder.build();
-            this.device.doTxStart(payIntent, null); //
+            this.device.doTxStart(payIntent, null, paymentRequestType);
         }
     }
 
@@ -574,7 +577,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
             builder.setTransactionSettings(transactionSettings);
 
             let payIntent: sdk.remotepay.PayIntent = builder.build();
-            this.device.doTxStart(payIntent, null);
+            this.device.doTxStart(payIntent, null, CloverConnector.TxTypeRequestInfo.CREDIT_REQUEST);
         }
     }
 

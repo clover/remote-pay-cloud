@@ -17,24 +17,22 @@ import {Version} from '../../../Version';
  */
 export abstract class DefaultCloverDevice extends CloverDevice implements CloverTransportObserver, ObjectMessageSender {
 
-    private static REMOTE_SDK: string = Version.CLOVER_CLOUD_SDK + ":" + Version.CLOVER_CLOUD_SDK_VERSION;
-
-    private static BASE64: string = "BASE64";
-
-    private static BASE64_ATTACHMENT: string = DefaultCloverDevice.BASE64 + ".ATTACHMENT";
-
     protected logger: Logger = Logger.create();
+    protected messageParser: RemoteMessageParser = RemoteMessageParser.getDefaultInstance();
 
-    private remoteMessageVersion: number = 1;
+    // Remote message version and message version are not the same.  Remote message version is used for high-level
+    // feature detection - e.g. is message fragmentation supported or not?
+    private static DEFAULT_REMOTE_MESSAGE_VERSION: number = 1;
+    private remoteMessageVersion: number = DefaultCloverDevice.DEFAULT_REMOTE_MESSAGE_VERSION;
+
+    private static REMOTE_SDK: string = Version.CLOVER_CLOUD_SDK + ":" + Version.CLOVER_CLOUD_SDK_VERSION;
+    private static BASE64: string = "BASE64";
+    private static BASE64_ATTACHMENT: string = DefaultCloverDevice.BASE64 + ".ATTACHMENT";
 
     private static id: number = 0;
 
-    protected messageParser: RemoteMessageParser = RemoteMessageParser.getDefaultInstance();
-
     private msgIdToTask: { [key: string]: Function; } = {};
-
     private imageUtil: IImageUtil;
-
     private maxMessageSizeInChars: number;
 
     constructor(configuration: CloverDeviceConfiguration) {
@@ -92,8 +90,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
     }
 
     protected handleRemoteMessageCOMMAND(rMessage: sdk.remotemessage.RemoteMessage) {
-        this.remoteMessageVersion = Math.max(this.remoteMessageVersion, typeof rMessage["getVersion"] === "function" ? rMessage.getVersion() : 1);
-        // if version is >= 2, then chunking is supported
+        this.remoteMessageVersion = Math.max(this.remoteMessageVersion, typeof rMessage["getVersion"] === "function" ? rMessage.getVersion() : DefaultCloverDevice.DEFAULT_REMOTE_MESSAGE_VERSION);
         let method: sdk.remotemessage.Method = sdk.remotemessage.Method[rMessage.method];
         if (method == null) {
             this.logger.error('Unsupported method type: ' + rMessage.method);
@@ -398,7 +395,6 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         });
     }
 
-
     /**
      * Notify the observers that the device is ready
      *
@@ -647,7 +643,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      * @param {string} paymentId
      */
     public doShowPaymentReceiptScreen(orderId: string, paymentId: string): void {
-        let message: sdk.remotemessage.ShowPaymentReceiptOptionsMessage = new sdk.remotemessage.ShowPaymentReceiptOptionsMessage();
+        const message: sdk.remotemessage.ShowPaymentReceiptOptionsMessage = new sdk.remotemessage.ShowPaymentReceiptOptionsMessage();
         message.setOrderId(orderId);
         message.setPaymentId(paymentId);
         message.setVersion(2);
@@ -669,7 +665,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      * Show Thank You Screen
      */
     public doShowThankYouScreen(): void {
-        let message: sdk.remotemessage.ThankYouMessage = new sdk.remotemessage.ThankYouMessage();
+        const message: sdk.remotemessage.ThankYouMessage = new sdk.remotemessage.ThankYouMessage();
         this.sendObjectMessage(message);
 
     }
@@ -678,7 +674,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      * Show Welcome Screen
      */
     public doShowWelcomeScreen(): void {
-        let message: sdk.remotemessage.WelcomeMessage = new sdk.remotemessage.WelcomeMessage();
+        const message: sdk.remotemessage.WelcomeMessage = new sdk.remotemessage.WelcomeMessage();
         this.sendObjectMessage(message);
     }
 
@@ -689,7 +685,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      * @param {boolean} verified
      */
     public doSignatureVerified(payment: sdk.payments.Payment, verified: boolean): void {
-        let message: sdk.remotemessage.SignatureVerifiedMessage = new sdk.remotemessage.SignatureVerifiedMessage();
+        const message: sdk.remotemessage.SignatureVerifiedMessage = new sdk.remotemessage.SignatureVerifiedMessage();
         message.setPayment(payment);
         message.setVerified(verified);
         this.sendObjectMessage(message);
@@ -699,7 +695,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      * Retrieve Pending Payments
      */
     public doRetrievePendingPayments(): void {
-        let message: sdk.remotemessage.RetrievePendingPaymentsMessage = new sdk.remotemessage.RetrievePendingPaymentsMessage();
+        const message: sdk.remotemessage.RetrievePendingPaymentsMessage = new sdk.remotemessage.RetrievePendingPaymentsMessage();
         this.sendObjectMessage(message);
     }
 
@@ -709,7 +705,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      * @param {string} text
      */
     public doTerminalMessage(text: string): void {
-        let message: sdk.remotemessage.TerminalMessage = new sdk.remotemessage.TerminalMessage();
+        const message: sdk.remotemessage.TerminalMessage = new sdk.remotemessage.TerminalMessage();
         message.setText(text);
         this.sendObjectMessage(message);
     }
@@ -721,7 +717,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      * @param {string} deviceId (optional)
      */
     public doOpenCashDrawer(reason: string, deviceId?: string): void {
-        let message: sdk.remotemessage.OpenCashDrawerMessage = new sdk.remotemessage.OpenCashDrawerMessage();
+        const message: sdk.remotemessage.OpenCashDrawerMessage = new sdk.remotemessage.OpenCashDrawerMessage();
         message.setReason(reason);
         if (deviceId) {
             let ptr: sdk.printer.Printer = new sdk.printer.Printer();
@@ -738,7 +734,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      * @param {string} batchId
      */
     public doCloseout(allowOpenTabs: boolean, batchId: string): void {
-        let message: sdk.remotemessage.CloseoutRequestMessage = new sdk.remotemessage.CloseoutRequestMessage();
+        const message: sdk.remotemessage.CloseoutRequestMessage = new sdk.remotemessage.CloseoutRequestMessage();
         message.setAllowOpenTabs(allowOpenTabs);
         message.setBatchId(batchId);
         this.sendObjectMessage(message);
@@ -749,12 +745,15 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      *
      * @param {sdk.remotemessage.PayIntent} payIntent
      * @param {sdk.remotemessage.Order} order
+     * @param {string} requestInfo - request type.
      */
-    public doTxStart(payIntent: sdk.remotemessage.PayIntent, order: sdk.order.Order): void {
-        let message: sdk.remotemessage.TxStartRequestMessage = new sdk.remotemessage.TxStartRequestMessage();
+    public doTxStart(payIntent: sdk.remotemessage.PayIntent, order: sdk.order.Order, requestInfo: string): void {
+        const message: sdk.remotemessage.TxStartRequestMessage = new sdk.remotemessage.TxStartRequestMessage();
         message.setPayIntent(payIntent);
         message.setOrder(order);
-        this.sendObjectMessage(message);
+        message.setRequestInfo(requestInfo);
+        message.setVersion(2);
+        this.sendObjectMessage_opt_version(message);
     }
 
     /**
@@ -765,7 +764,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      * @param {number} amount
      */
     public doTipAdjustAuth(orderId: string, paymentId: string, amount: number): void {
-        let message: sdk.remotemessage.TipAdjustMessage = new sdk.remotemessage.TipAdjustMessage();
+        const message: sdk.remotemessage.TipAdjustMessage = new sdk.remotemessage.TipAdjustMessage();
         message.setOrderId(orderId);
         message.setPaymentId(paymentId);
         message.setTipAmount(amount);
@@ -778,7 +777,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      * @param {PayIntent} payIntent
      */
     public doReadCardData(payIntent: sdk.remotemessage.PayIntent): void {
-        let message: sdk.remotemessage.CardDataRequestMessage = new sdk.remotemessage.CardDataRequestMessage();
+        const message: sdk.remotemessage.CardDataRequestMessage = new sdk.remotemessage.CardDataRequestMessage();
         message.setPayIntent(payIntent);
         this.sendObjectMessage(message);
     }
@@ -790,7 +789,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      * @param {string} payload - the message content, unrestricted format
      */
     public doSendMessageToActivity(actionId: string, payload: string): void {
-        let message: sdk.remotemessage.ActivityMessageToActivity = new sdk.remotemessage.ActivityMessageToActivity();
+        const message: sdk.remotemessage.ActivityMessageToActivity = new sdk.remotemessage.ActivityMessageToActivity();
         message.setAction(actionId);
         message.setPayload(payload);
         this.sendObjectMessage(message);
@@ -802,7 +801,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      * @param {Array<string>} textLines
      */
     public doPrintText(textLines: Array<string>, printRequestId?: string, printDeviceId?: string): void {
-        let message: sdk.remotemessage.TextPrintMessage = new sdk.remotemessage.TextPrintMessage();
+        const message: sdk.remotemessage.TextPrintMessage = new sdk.remotemessage.TextPrintMessage();
         message.setTextLines(textLines);
         if (printRequestId) {
             message.setExternalPrintJobId(printRequestId);
@@ -821,7 +820,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      * @param {any} bitmap
      */
     public doPrintImageObject(bitmap: any, printRequestId?: string, printDeviceId?: string): void {
-        let message: sdk.remotemessage.ImagePrintMessage = new sdk.remotemessage.ImagePrintMessage();
+        const message: sdk.remotemessage.ImagePrintMessage = new sdk.remotemessage.ImagePrintMessage();
         // bitmap - HTMLImageElement
         message.setPng(this.imageUtil.getBase64Image(bitmap));
         if (printRequestId) {
@@ -832,8 +831,8 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
             ptr.setId(printDeviceId);
             message.setPrinter(ptr);
         }
-        if (this.remoteMessageVersion > 1) {
-            //We need to be putting this in the attachment instead of the payload (for the remoteMessage)
+        if (this.isFragmentationSupported(this.remoteMessageVersion)) {
+            // We need to be putting this in the attachment instead of the payload (for the remoteMessage)
             let base64Png: string = message.getPng();
             message.setPng(null);
             this.sendObjectMessage_opt_version(message, this.remoteMessageVersion,
@@ -844,26 +843,30 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
     }
 
     /**
-     * Print Image (URL)
+     * Printing images from a url from the device is problematic.
+     * See - https://jira.dev.clover.com/browse/SEMI-1352
+     * and - https://jira.dev.clover.com/browse/SEMI-1377
+     *
+     * Instead of relying on the device, we can retrieve the image from the URL
+     * and call doPrintImageObject instead of doPrintImageUrl. The doPrintImageObject
+     * method is more robust (can handle large images via chunking, etc.).
      *
      * @param {string} url
      */
     public doPrintImageUrl(url: string, printRequestId?: string, printDeviceId?: string): void {
-        let message: sdk.remotemessage.ImagePrintMessage = new sdk.remotemessage.ImagePrintMessage();
-        message.setUrlString(url);
-        if (printRequestId) {
-            message.setExternalPrintJobId(printRequestId);
-        }
-        if (printDeviceId) {
-            let ptr: sdk.printer.Printer = new sdk.printer.Printer();
-            ptr.setId(printDeviceId);
-            message.setPrinter(ptr);
-        }
-        this.sendObjectMessage(message);
+        this.imageUtil.loadImageFromURL(url, (image) => {
+            this.doPrintImageObject(image, printRequestId, printDeviceId);
+        }, (errorMessage) => {
+            let deviceErrorEvent: sdk.remotepay.CloverDeviceErrorEvent = new sdk.remotepay.CloverDeviceErrorEvent();
+            deviceErrorEvent.setCode(sdk.remotepay.DeviceErrorEventCode.UnknownError);
+            deviceErrorEvent.setMessage(errorMessage);
+            deviceErrorEvent.setType(sdk.remotepay.ErrorType.EXCEPTION);
+            this.notifyObserversDeviceError(deviceErrorEvent);
+        });
     }
 
     public doStartActivity(action: string, payload: string, nonBlocking: boolean): void {
-        let request: sdk.remotemessage.ActivityRequest = new sdk.remotemessage.ActivityRequest();
+        const request: sdk.remotemessage.ActivityRequest = new sdk.remotemessage.ActivityRequest();
         request.setAction(action);
         request.setPayload(payload);
         request.setNonBlocking(nonBlocking);
@@ -914,7 +917,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      * @param {boolean} fullRefund
      */
     public doPaymentRefund(orderId: string, paymentId: string, amount: number, fullRefund: boolean): void {
-        let message: sdk.remotemessage.RefundRequestMessage = new sdk.remotemessage.RefundRequestMessage();
+        const message: sdk.remotemessage.RefundRequestMessage = new sdk.remotemessage.RefundRequestMessage();
         message.setOrderId(orderId);
         message.setPaymentId(paymentId);
         message.setAmount(amount);
@@ -928,7 +931,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      * @param {number} cardEntryMethods
      */
     public doVaultCard(cardEntryMethods: number): void {
-        let message: sdk.remotemessage.VaultCardMessage = new sdk.remotemessage.VaultCardMessage();
+        const message: sdk.remotemessage.VaultCardMessage = new sdk.remotemessage.VaultCardMessage();
         message.setCardEntryMethods(cardEntryMethods);
         this.sendObjectMessage(message);
     }
@@ -941,7 +944,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      * @param {number} tipAmount
      */
     public doCaptureAuth(paymentId: string, amount: number, tipAmount: number): void {
-        let message: sdk.remotemessage.CapturePreAuthMessage = new sdk.remotemessage.CapturePreAuthMessage();
+        const message: sdk.remotemessage.CapturePreAuthMessage = new sdk.remotemessage.CapturePreAuthMessage();
         message.setPaymentId(paymentId);
         message.setAmount(amount);
         message.setTipAmount(tipAmount);
@@ -954,7 +957,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      * @param {Payment} payment
      */
     public doAcceptPayment(payment: sdk.payments.Payment): void {
-        let message: sdk.remotemessage.PaymentConfirmedMessage = new sdk.remotemessage.PaymentConfirmedMessage();
+        const message: sdk.remotemessage.PaymentConfirmedMessage = new sdk.remotemessage.PaymentConfirmedMessage();
         message.setPayment(payment);
         this.sendObjectMessage(message);
     }
@@ -966,7 +969,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      * @param {Challenge} challenge
      */
     public doRejectPayment(payment: sdk.payments.Payment, challenge: sdk.base.Challenge): void {
-        let message: sdk.remotemessage.PaymentRejectedMessage = new sdk.remotemessage.PaymentRejectedMessage();
+        const message: sdk.remotemessage.PaymentRejectedMessage = new sdk.remotemessage.PaymentRejectedMessage();
         message.setPayment(payment);
         message.setReason(challenge.reason);
         this.sendObjectMessage(message);
@@ -976,7 +979,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      * Discovery request
      */
     public doDiscoveryRequest(): void {
-        let drm: sdk.remotemessage.DiscoveryRequestMessage = new sdk.remotemessage.DiscoveryRequestMessage();
+        const drm: sdk.remotemessage.DiscoveryRequestMessage = new sdk.remotemessage.DiscoveryRequestMessage();
         drm.setSupportsOrderModification(false);
         this.sendObjectMessage(drm);
     }
@@ -988,7 +991,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      * @param {any} orderOperation
      */
     public doOrderUpdate(order: sdk.order.DisplayOrder, orderOperation: any): void {
-        let message: sdk.remotemessage.OrderUpdateMessage = new sdk.remotemessage.OrderUpdateMessage();
+        const message: sdk.remotemessage.OrderUpdateMessage = new sdk.remotemessage.OrderUpdateMessage();
         message.setOrder(order);
 
         if (orderOperation) {
@@ -1011,24 +1014,24 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      * Reset Device
      */
     public doResetDevice(): void {
-        let message: sdk.remotemessage.BreakMessage = new sdk.remotemessage.BreakMessage();
+        const message: sdk.remotemessage.BreakMessage = new sdk.remotemessage.BreakMessage();
         this.sendObjectMessage(message);
     }
 
     public doRetrieveDeviceStatus(request: sdk.remotepay.RetrieveDeviceStatusRequest): void {
-        let message: sdk.remotemessage.RetrieveDeviceStatusRequestMessage = new sdk.remotemessage.RetrieveDeviceStatusRequestMessage();
+        const message: sdk.remotemessage.RetrieveDeviceStatusRequestMessage = new sdk.remotemessage.RetrieveDeviceStatusRequestMessage();
         message.setSendLastMessage(request.getSendLastMessage());
         this.sendObjectMessage(message);
     }
 
     public doRetrievePayment(externalPaymentId: string): void {
-        let message: sdk.remotemessage.RetrievePaymentRequestMessage = new sdk.remotemessage.RetrievePaymentRequestMessage();
+        const message: sdk.remotemessage.RetrievePaymentRequestMessage = new sdk.remotemessage.RetrievePaymentRequestMessage();
         message.setExternalPaymentId(externalPaymentId);
         this.sendObjectMessage(message);
     }
 
     public doRetrievePrinters(category?: sdk.remotepay.RetrievePrintersRequest.category): void {
-        let message: sdk.remotemessage.GetPrintersRequestMessage = new sdk.remotemessage.GetPrintersRequestMessage();
+        const message: sdk.remotemessage.GetPrintersRequestMessage = new sdk.remotemessage.GetPrintersRequestMessage();
         if (category) {
             message.setCategory(category);
         }
@@ -1036,7 +1039,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
     }
 
     public doRetrievePrintJobStatus(printRequestId: string): void {
-        let message: sdk.remotemessage.PrintJobStatusRequestMessage = new sdk.remotemessage.PrintJobStatusRequestMessage();
+        const message: sdk.remotemessage.PrintJobStatusRequestMessage = new sdk.remotemessage.PrintJobStatusRequestMessage();
         message.setExternalPrintJobId(printRequestId);
         this.sendObjectMessage(message);
     }
@@ -1057,28 +1060,27 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      *
      * @param {sdk.remotemessage.Message} message
      */
-    public sendObjectMessage(message: sdk.remotemessage.Message): string {
-        return this.sendObjectMessage_opt_version(message);
+    public sendObjectMessage(remoteMessage: sdk.remotemessage.Message): string {
+        return this.sendObjectMessage_opt_version(remoteMessage);
     }
 
-    private sendObjectMessage_opt_version(message: sdk.remotemessage.Message, version?: number, attachment?: string, attachmentEncoding?: string): string {
-        return this.buildRemoteMessages(message, version, attachment, attachmentEncoding); // this now sends the messages and returns the ID
+    private sendObjectMessage_opt_version(remoteMessage: sdk.remotemessage.Message, remoteMessageVersion?: number, attachment?: string, attachmentEncoding?: string): string {
+        return this.buildRemoteMessages(remoteMessage, remoteMessageVersion, attachment, attachmentEncoding); // this now sends the messages and returns the ID
     }
 
-    private buildBaseRemoteMessage(message: sdk.remotemessage.Message, version?: number): sdk.remotemessage.RemoteMessage {
-        // Default to version 1
-        if (version == null) version = 1;
+    private buildBaseRemoteMessage(remoteMessage: sdk.remotemessage.Message, remoteMessageVersion?: number): sdk.remotemessage.RemoteMessage {
+        remoteMessageVersion = this.getRemoteMessageVersion(remoteMessage, remoteMessageVersion);
 
         // Make sure the message is not null
-        if (message == null) {
+        if (remoteMessage == null) {
             this.logger.debug('Message is null');
             return null;
         }
 
         // Check the message method
-        this.logger.info(message.toString());
-        if (message.method == null) {
-            this.logger.error('Invalid Message', new Error('Invalid Message: ' + message.toString()));
+        this.logger.info(remoteMessage.toString());
+        if (remoteMessage.method == null) {
+            this.logger.error('Invalid Message', new Error('Invalid Message: ' + remoteMessage.toString()));
             return null;
         }
 
@@ -1088,18 +1090,19 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
             throw new Error('Invalid applicationId');
         }
 
-        let messageId: string = (++DefaultCloverDevice.id) + '';
-        let remoteMessage: sdk.remotemessage.RemoteMessage = new sdk.remotemessage.RemoteMessage();
-        remoteMessage.setId(messageId);
-        remoteMessage.setType(sdk.remotemessage.RemoteMessageType.COMMAND);
-        remoteMessage.setPackageName(this.packageName);
-        remoteMessage.setMethod(message.method.toString());
-        remoteMessage.setRemoteSourceSDK(DefaultCloverDevice.REMOTE_SDK);
-        remoteMessage.setRemoteApplicationID(this.applicationId);
-
-        return remoteMessage;
+        const messageId: string = (++DefaultCloverDevice.id) + '';
+        const remoteMessageToReturn: sdk.remotemessage.RemoteMessage = new sdk.remotemessage.RemoteMessage();
+        remoteMessageToReturn.setId(messageId);
+        remoteMessageToReturn.setType(sdk.remotemessage.RemoteMessageType.COMMAND);
+        remoteMessageToReturn.setPackageName(this.packageName);
+        remoteMessageToReturn.setMethod(remoteMessage.method.toString());
+        remoteMessageToReturn.setVersion(remoteMessageVersion);
+        return remoteMessageToReturn;
     }
 
+    private getRemoteMessageVersion(remoteMessage: sdk.remotemessage.Message, remoteMessageVersion?: number) {
+        return remoteMessageVersion || remoteMessage.version || DefaultCloverDevice.DEFAULT_REMOTE_MESSAGE_VERSION;
+    }
 
     /**
      * Special serialization handling
@@ -1122,31 +1125,31 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         return message;
     }
 
-    protected buildRemoteMessageToSend(message: sdk.remotemessage.Message, version?: number): sdk.remotemessage.RemoteMessage {
-        let remoteMessage: sdk.remotemessage.RemoteMessage = this.buildBaseRemoteMessage(message, version);
+    protected buildRemoteMessageToSend(message: sdk.remotemessage.Message, remoteMessageVersion?: number): sdk.remotemessage.RemoteMessage {
+        const remoteMessage: sdk.remotemessage.RemoteMessage = this.buildBaseRemoteMessage(message, remoteMessageVersion);
         message = this.addSuppressElementsWrapper(message);
         remoteMessage.setPayload(JSON.stringify(message, DefaultCloverDevice.stringifyClover));
         return remoteMessage;
     }
 
-    protected buildRemoteMessages(message: sdk.remotemessage.Message, version?: number, attachment?: string, attachmentEncoding?: string): string {
-        let remoteMessage: sdk.remotemessage.RemoteMessage = this.buildBaseRemoteMessage(message, version);
+    protected buildRemoteMessages(message: sdk.remotemessage.Message, remoteMessageVersion?: number, attachment?: string, attachmentEncoding?: string): string {
+        const remoteMessage: sdk.remotemessage.RemoteMessage = this.buildBaseRemoteMessage(message, remoteMessageVersion);
         message = this.addSuppressElementsWrapper(message);
         if (attachmentEncoding) {
             remoteMessage.setAttachmentEncoding(attachmentEncoding);
         }
         let messagePayload = JSON.stringify(message, DefaultCloverDevice.stringifyClover);
 
-        if (version > 1) {
+        if (this.isFragmentationSupported(remoteMessageVersion)) {
             // fragmenting is possible
-            let payloadTooLarge = (messagePayload ? messagePayload.length : 0) > this.maxMessageSizeInChars;
+            const payloadTooLarge = (messagePayload ? messagePayload.length : 0) > this.maxMessageSizeInChars;
             if (payloadTooLarge || attachment) { // need to fragment
                 if (attachment && attachment.length > CloverConnector.MAX_PAYLOAD_SIZE) {
                     this.logger.error('Error sending message - payload size is greater than the maximum allowed.');
                     return null;
                 }
                 let fragmentIndex: number = 0;
-                //fragmenting loop for payload
+                // fragmenting loop for payload
                 while (messagePayload.length > 0) {
                     remoteMessage.setLastFragment(false);
                     if (messagePayload.length <= this.maxMessageSizeInChars) {
@@ -1215,12 +1218,22 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
     }
 
     protected sendRemoteMessage(remoteMessage: sdk.remotemessage.RemoteMessage): void {
-        let msg = JSON.stringify(remoteMessage);
+        const message = JSON.stringify(remoteMessage);
         if (this.transport) {
-            this.logger.debug('Sending: ' + msg);
-            this.transport.sendMessage(msg);
+            this.logger.debug(`Sending: ${message}`);
+            this.transport.sendMessage(message);
         } else {
-            this.logger.error('Cannot send message, transport is null: ' + msg);
+            this.logger.error(`Cannot send message, transport is null: ${message}`);
         }
+    }
+
+    /**
+     * If the remote message version is 2, fragmentation is supported.
+     *
+     * @param {number} version
+     * @returns {boolean}
+     */
+    private isFragmentationSupported(remoteMessageVersion: number) {
+        return remoteMessageVersion > 1;
     }
 }
