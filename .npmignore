@@ -1,8 +1,8 @@
 **/*.js-e
 **/*.ts-e
 **/*.md-e
-/.idea
-/docs/
-/node_modules/
+.idea
+node_modules
+scripts
 remote-pay-cloud.iml
 npm-debug.log
