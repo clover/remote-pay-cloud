@@ -24,13 +24,12 @@
     "url": "https://github.com/clover/remote-pay-cloud"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified, \"$npm_package_version && exit 1",
-    "build": "gulp && scripts/postversion.sh $npm_package_version"
+    "build": "gulp && scripts/postversion.sh \"$npm_package_version\""
   },
   "dependencies": {
     "eventemitter3": "1.1.1",
     "jsdoc": "3.4.3",
-    "remote-pay-cloud-api": "1.3.1-1",
+    "remote-pay-cloud-api": "1.3.2",
     "del": "2.2.2",
     "gulp": "3.9.1",
     "gulp-sourcemaps": "2.4.1",
