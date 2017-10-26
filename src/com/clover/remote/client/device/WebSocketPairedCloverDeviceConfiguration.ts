@@ -75,6 +75,10 @@ export abstract class WebSocketPairedCloverDeviceConfiguration extends WebSocket
         return transport;
     }
 
+    public setAuthToken(authToken: string) {
+        this.authToken = authToken;
+    }
+
     abstract onPairingCode(pairingCode: string): void;
 
     abstract onPairingSuccess(authToken: string): void;
