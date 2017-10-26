@@ -1040,6 +1040,9 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         remoteMessageToReturn.setPackageName(this.packageName);
         remoteMessageToReturn.setMethod(remoteMessage.getMethod().toString());
         remoteMessageToReturn.setVersion(remoteMessageVersion);
+        remoteMessageToReturn.setRemoteSourceSDK(DefaultCloverDevice.REMOTE_SDK);
+        remoteMessageToReturn.setRemoteApplicationID(this.applicationId);
+
         return remoteMessageToReturn;
     }
 
