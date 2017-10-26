@@ -1,23 +1,6 @@
 // These exports expose the v1 interface and objects.
 var sdk = require("remote-pay-cloud-api");
 
-// These exports expose the beta method of using the Clover device
-//var Clover = require("./Clover.js");
-//var CloverOAuth = require("./CloverOAuth.js");
-//var CloverError = require("./CloverError.js");
-//var CardEntryMethods = require("./CardEntryMethods.js");
-//var WebSocketDevice = require("./WebSocketDevice.js");
-//var RemoteMessageBuilder = require("./RemoteMessageBuilder.js");
-//var LanMethod = require("./LanMethod.js");
-//var XmlHttpSupport = require("./xmlHttpSupport.js");
-//var Endpoints = require("./Endpoints.js");
-var CloverID = require("./CloverID.js");
-//var KeyPress = require("./KeyPress.js");
-//var VoidReason = require("./VoidReason.js");
-//var CookiePersistance = require("./CookiePersistance.js");
-//var JSONToCustomObject = require("./JSONToCustomObject.js");
-//var MethodToMessage = require("./MethodToMessage.js");
-
 var base = sdk.base;
 var customers = sdk.customers;
 var device = sdk.device;
@@ -29,12 +12,8 @@ var printer = sdk.printer;
 var remotepay = sdk.remotepay;
 var remotemessage = sdk.remotemessage;
 
-//var CloverConnectorImpl = require("./CloverConnectorImpl.js");
-//var CloverConnectorFactory = require("./CloverConnectorFactory.js");
-//var DelegateCloverConnectorListener = require("./DelegateCloverConnectorListener.js");
-//var DebugCloverConnectorListener = require("./DebugCloverConnectorListener.js");
-
-//var Logger = require('./Logger.js');
+// These exports expose the beta method of using the Clover device
+var CloverID = require("./CloverID.js");
 
 // These exports expose the v1.2 CloverConnector and supporting objects
 var version = '1.2.0';
@@ -64,9 +43,9 @@ var ICloverConnectorFactory = require('./dist/com/clover/remote/client/ICloverCo
 var CloverConnectorFactory = require('./dist/com/clover/remote/client/CloverConnectorFactory.js').CloverConnectorFactory;
 var CardEntryMethods = require('./dist/com/clover/remote/client/CardEntryMethods.js').CardEntryMethods;
 
-
 // Export all of the pieces.
 module.exports = {
+    sdk: sdk,
     base: base,
     customers: customers,
     device: device,
@@ -77,7 +56,6 @@ module.exports = {
     printer: printer,
     remotepay: remotepay,
     remotemessage: remotemessage,
-
     CloverID: CloverID,
     DebugConfig: DebugConfig,
     version: version,
@@ -100,8 +78,3 @@ module.exports = {
     CloverConnectorFactory: CloverConnectorFactory,
     CardEntryMethods: CardEntryMethods
 };
-
-//
-// Expose the module.
-//
-// module.exports = exports['default'];

@@ -1,8 +1,6 @@
-import {WebSocketCloverTransport} from '../transport/websocket/WebSocketCloverTransport';
 import {CloverTransport} from '../transport/CloverTransport';
 import {CloverDeviceConfiguration} from './CloverDeviceConfiguration';
 import {DefaultCloverDevice} from './DefaultCloverDevice';
-import {PairingDeviceConfiguration} from '../transport/PairingDeviceConfiguration';
 import {IImageUtil} from '../../../util/IImageUtil';
 
 /**

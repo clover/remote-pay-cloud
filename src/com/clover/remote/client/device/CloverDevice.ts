@@ -1,4 +1,4 @@
-import sdk = require('remote-pay-cloud-api');
+import * as sdk from 'remote-pay-cloud-api';
 import {CloverTransport} from '../transport/CloverTransport';
 import {CloverDeviceObserver} from '../CloverDeviceObserver';
 
@@ -9,7 +9,6 @@ import {CloverDeviceObserver} from '../CloverDeviceObserver';
  */
 export abstract class CloverDevice {
     protected deviceObservers: CloverDeviceObserver[];
-
     protected transport: CloverTransport;
     protected packageName: string;
     protected applicationId: string;
@@ -215,7 +214,7 @@ export abstract class CloverDevice {
      * @param {sdk.payments.Payment} payment
      * @param {sdk.base.Challenge} challenge
      */
-    public abstract doRejectPayment(payment: sdk.remotepay.Payment, challenge: sdk.base.Challenge): void;
+    public abstract doRejectPayment(payment: sdk.payments.Payment, challenge: sdk.base.Challenge): void;
 
     /**
      * Retrieve Pending Payments

@@ -2,6 +2,7 @@
 **/*.ts-e
 **/*.md-e
 /src/**/*.js
+/src/**/*.d.ts
 /.idea
 /docs/
 /dist/

@@ -3,31 +3,37 @@ import {IImageUtil} from './IImageUtil';
 export class ImageUtil implements IImageUtil {
 
     /**
-     *  Appropriate for browsers.
+     * Appropriate for browsers. Uses a canvas element to base64
+     * encode the image.
      *
-     * @param img - an image.  Can be obtained in a manner similar to :
-     *  <pre>var img = document.getElementById("img_id");</pre>
-     * @returns {string} a base 64 encoded string of the image.
+     * @param {HTMLImageElement} img
+     * @param {(response: any) => void} onEncode
      */
-    public getBase64Image(img: HTMLImageElement): string {
+    public getBase64Image(img: HTMLImageElement, onEncode: (response: any) => void): string | void {
         // Create an empty canvas element
-        var canvas = document.createElement("canvas");
+        const canvas = document.createElement("canvas");
         canvas.width = img.naturalWidth;
         canvas.height = img.naturalHeight;
 
         // Copy the image contents to the canvas
-        var ctx = canvas.getContext("2d");
+        const ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0);
 
         // Get the data-URL formatted image
         // Firefox supports PNG and JPEG. You could check img.src to
         // guess the original format, but be aware the using "image/jpg"
         // will re-encode the image.
-        var dataURL = canvas.toDataURL("image/png");
-
-        return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+        const dataURL = canvas.toDataURL("image/png");
+        onEncode(dataURL.replace(/^data:image\/(png|jpg);base64,/, ""));
     }
 
+    /**
+     * Appropriate for browsers.  Uses an image tag and the load event to load an image from a url.
+     *
+     * @param {string} url
+     * @param {(image: any) => void} onLoad
+     * @param {(errorMessage: string) => void} onError
+     */
     public loadImageFromURL(url: string, onLoad: (image: any) => void, onError: (errorMessage: string) => void) {
         const image = new Image();
         const imageLoadHandler = () => {

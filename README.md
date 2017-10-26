@@ -376,9 +376,12 @@ This library has been tested against the following browser types and versions:
 * Chrome versions 54-58
 * Firefox version 49
 
+## Build
+To build run "npm run build"
+
 ## Generate Documentation
-API documentation is automatically generated when `npm install` is run. 
-* [Online Docs](http://clover.github.io/remote-pay-cloud/1.4.1/)
+API documentation is generated at build time - `npm run build` 
+* [Online Docs](http://clover.github.io/remote-pay-cloud/1.4.0/)
 
 ## Additional resources
 - [Release Notes](https://github.com/clover/remote-pay-cloud/releases)

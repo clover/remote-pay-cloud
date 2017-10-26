@@ -1,6 +1,5 @@
 import {CloverWebSocketInterface} from './CloverWebSocketInterface'
 
-
 /**
  * Uses a browser Websocket.
  *

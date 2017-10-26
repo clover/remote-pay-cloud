@@ -1,4 +1,4 @@
-import sdk = require('remote-pay-cloud-api');
+import * as sdk from 'remote-pay-cloud-api';
 
 import {MethodToMessage} from './MethodToMessage';
 import {JSONToCustomObject} from './JSONToCustomObject';
