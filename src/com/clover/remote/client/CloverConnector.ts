@@ -890,6 +890,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
     }
 
     public resetDevice(): void {
+        this.lastRequest = null;
         if (!this.device || !this.isReady) {
             this.notifyDeviceNotConnected("In resetDevice");
         }
