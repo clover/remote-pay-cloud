@@ -36,7 +36,7 @@ export class CloverConnectorBroadcaster
     }
 
     public splice(start: number, deleteCount: number, ...items: Array<sdk.remotepay.ICloverConnectorListener>): sdk.remotepay.ICloverConnectorListener[] {
-        return this.listeners.splice(start, deleteCount, <any>items);
+        return (items && items.length > 0) ? this.listeners.splice(start, deleteCount, <any>items) : this.listeners.splice(start, deleteCount);
     }
 
     public notifyOnTipAdded(tip: number): void {
