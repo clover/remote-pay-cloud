@@ -117,7 +117,16 @@ export abstract class CloverWebSocketInterface {
 
     public sendClose(code?: number, reason?: string): CloverWebSocketInterface {
         this.logger.debug("Close sent code ", code, " reason ", reason);
-        this.webSocket.close(code, reason);
+        try {
+            /** 1000 indicates normal closure.  To avoid InvalidAccessErrors if no code is available default to 1000.
+             *  Per the websocket spec:
+             *    "If the method's first argument is present but is not an integer equal to 1000 or in the range 3000 to 4999,
+             *     throw an InvalidAccessError exception and abort these steps."
+             */
+            this.webSocket.close(code || 1000, reason || "NORMAL_CLOSURE");
+        } catch (e) {
+            this.logger.error('error disposing of transport.', e);
+        }
         return this;
     }
 

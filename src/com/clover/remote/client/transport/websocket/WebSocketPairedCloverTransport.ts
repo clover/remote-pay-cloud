@@ -47,7 +47,7 @@ export class WebSocketPairedCloverTransport extends WebSocketCloverTransport {
      * @param ws
      */
     public onOpen(ws: CloverWebSocketClient): void {
-        if (this.webSocket == ws) {
+        if (this.cloverWebSocketClient == ws) {
             super.onOpen(ws);
             this.sendPairRequest();
         }
@@ -71,7 +71,7 @@ export class WebSocketPairedCloverTransport extends WebSocketCloverTransport {
      * @param message
      */
     public onMessage_cwscl(ws: CloverWebSocketClient, message: string): void { // CloverWebSocketClientListener
-        if (this.webSocket == ws) {
+        if (this.cloverWebSocketClient == ws) {
             if (this.isPairing) {
                 let remoteMessage: sdk.remotemessage.RemoteMessage = this.messageParser.parseToRemoteMessage(message);
                 var sdkMessage: sdk.remotemessage.Message = this.messageParser.parseMessageFromRemoteMessageObj(remoteMessage);
@@ -116,5 +116,9 @@ export class WebSocketPairedCloverTransport extends WebSocketCloverTransport {
 
     public setPairingDeviceConfiguration(pairingDeviceConfiguration: PairingDeviceConfiguration): void {
         this.pairingDeviceConfiguration = pairingDeviceConfiguration;
+    }
+
+    public setAuthToken(authToken: string) {
+        this.authToken = authToken;
     }
 }
