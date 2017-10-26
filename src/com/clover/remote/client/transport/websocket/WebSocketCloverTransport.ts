@@ -33,7 +33,7 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
         this.reconnecting = newValue;
     }
 
-    webSocket: CloverWebSocketClient;
+    cloverWebSocketClient: CloverWebSocketClient;
 
     private messageQueue: Array<string> = new Array<string>();
 
@@ -84,7 +84,7 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
     public reset(): void {
         try {
             // By sending this close, the "onClose" will be fired, which will try to reconnect.
-            this.webSocket.close(
+            this.cloverWebSocketClient.close(
                 WebSocketCloverTransport.CloverWebSocketCloseCode.RESET_CLOSE_CODE.code,
                 WebSocketCloverTransport.CloverWebSocketCloseCode.RESET_CLOSE_CODE.reason);
         } catch (e) {
@@ -125,14 +125,14 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
         // If we do not have any messages, then don't try to send them
         if (this.messageQueue.length > 0) {
             // let's see if we have connectivity
-            if (this.webSocket != null && this.webSocket.isOpen()) {
+            if (this.cloverWebSocketClient != null && this.cloverWebSocketClient.isOpen()) {
                 // Hold the message in case we need to put it back on the queue
                 let nextMsg: string = this.messageQueue.shift();
                 try {
-                    if (this.webSocket.getBufferedAmount() > 0) {
+                    if (this.cloverWebSocketClient.getBufferedAmount() > 0) {
                         this.messageQueue.unshift(nextMsg);
                     } else {
-                        this.webSocket.send(nextMsg);
+                        this.cloverWebSocketClient.send(nextMsg);
                     }
                 } catch (e) {
                     // Failed to send, put it back
@@ -161,10 +161,10 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
     }
 
     private clearWebsocket(): void { // synchronized
-        if (this.webSocket != null) {
-            this.webSocket.clearListener();
+        if (this.cloverWebSocketClient != null) {
+            this.cloverWebSocketClient.clearListener();
         }
-        this.webSocket = null;
+        this.cloverWebSocketClient = null;
     }
 
 
@@ -178,15 +178,15 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
     protected initializeWithUri(deviceEndpoint: string): void { // synchronized
         // Primary end to the reconnect attempts
         this.setReconnecting(false);
-        if (this.webSocket != null) {
-            if (this.webSocket.isOpen() || this.webSocket.isConnecting()) {
+        if (this.cloverWebSocketClient != null) {
+            if (this.cloverWebSocketClient.isOpen() || this.cloverWebSocketClient.isConnecting()) {
                 return;
             } else {
                 this.clearWebsocket();
             }
         }
-        this.webSocket = new CloverWebSocketClient(deviceEndpoint, this, 5000, this.webSocketImplClass);
-        this.webSocket.connect();
+        this.cloverWebSocketClient = new CloverWebSocketClient(deviceEndpoint, this, 5000, this.webSocketImplClass);
+        this.cloverWebSocketClient.connect();
         this.logger.debug('connection attempt done.');
     }
 
@@ -196,13 +196,9 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
         // Attempt to clear out messages already in the send queue
         this.drainQueue();
 
-        if (this.webSocket != null) {
+        if (this.cloverWebSocketClient != null) {
             this.notifyDeviceDisconnected();
-            try {
-                this.webSocket.close();
-            } catch (e) {
-                this.logger.error('error disposing of transport.', e);
-            }
+            this.cloverWebSocketClient.close();
         }
         this.clearWebsocket();
     }
@@ -211,10 +207,10 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
         // Attempt to finish off the queue
         while (this.messageQueue.length > 0) {
             // let's see if we have connectivity
-            if (this.webSocket != null && this.webSocket.isOpen()) {
+            if (this.cloverWebSocketClient != null && this.cloverWebSocketClient.isOpen()) {
                 let nextMsg: string = this.messageQueue.shift();
                 try {
-                    this.webSocket.send(nextMsg);
+                    this.cloverWebSocketClient.send(nextMsg);
                 } catch (e) {
                     this.logger.debug('In process of shutting down, an error occurred trying to drain the message queue.  The messages unsent are ' + this.messageQueue);
                     break;
@@ -228,7 +224,7 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
 
     public connectionError(ws: CloverWebSocketClient, message?: string): void {
         this.logger.debug('Connection error...');
-        if (this.webSocket == ws) {
+        if (this.cloverWebSocketClient == ws) {
             for (let observer of this.observers) {
                 observer.onDeviceDisconnected(this, message);
                 let deviceErrorEvent: sdk.remotepay.CloverDeviceErrorEvent = new sdk.remotepay.CloverDeviceErrorEvent();
@@ -243,7 +239,7 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
 
     public onNotResponding(ws: CloverWebSocketClient): void {
         this.logger.debug('Not Responding...');
-        if (this.webSocket == ws) {
+        if (this.cloverWebSocketClient == ws) {
             for (let observer of this.observers) {
                 this.logger.debug('onNotResponding');
                 observer.onDeviceDisconnected(this);
@@ -253,7 +249,7 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
 
     public onPingResponding(ws: CloverWebSocketClient): void {
         this.logger.debug("Ping Responding");
-        if (this.webSocket == ws) {
+        if (this.cloverWebSocketClient == ws) {
             for (let observer of this.observers) {
                 this.logger.debug("onPingResponding");
                 observer.onDeviceReady(this);
@@ -263,7 +259,7 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
 
     public onOpen(ws: CloverWebSocketClient): void {
         this.logger.debug("Open...");
-        if (this.webSocket == ws) {
+        if (this.cloverWebSocketClient == ws) {
             // notify connected
             this.notifyDeviceConnected();
         }
@@ -272,11 +268,11 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
     public onClose(ws: CloverWebSocketClient, code: number, reason: string, remote: boolean): void {
         this.logger.debug("onClose: " + reason + ", remote? " + remote);
 
-        if (this.webSocket == ws) {
-            if (!this.webSocket.isClosing()) {
-                this.webSocket.clearListener();
-                if (!this.webSocket.isClosed()) {
-                    this.webSocket.close();
+        if (this.cloverWebSocketClient == ws) {
+            if (!this.cloverWebSocketClient.isClosing()) {
+                this.cloverWebSocketClient.clearListener();
+                if (!this.cloverWebSocketClient.isClosed()) {
+                    this.cloverWebSocketClient.close();
                 }
             }
             this.clearWebsocket();
@@ -307,7 +303,7 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
     }
 
     public onMessage_cwscl(ws: CloverWebSocketClient, message: string): void { // CloverWebSocketClientListener
-        if (this.webSocket == ws) {
+        if (this.cloverWebSocketClient == ws) {
             for (let observer of this.observers) {
                 this.logger.debug("Got message: " + message);
                 observer.onMessage(message);

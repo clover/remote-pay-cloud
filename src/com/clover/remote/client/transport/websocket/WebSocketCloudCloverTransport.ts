@@ -91,7 +91,7 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
         this.httpSupport.postData(alertEndpoint,
             (data) => this.deviceNotificationSent(data),
             (error) => {
-                this.connectionError(this.webSocket, `Error sending alert to device. Details: ${error.message}`);
+                this.connectionError(this.cloverWebSocketClient, `Error sending alert to device. Details: ${error.message}`);
                 // This may end a reconnect attempt
                 this.setReconnecting(false);
             },
@@ -116,7 +116,7 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
                 notificationResponse.host, notificationResponse.token, this.friendlyId, this.forceConnect);
             this.doOptionsCallToAvoid401Error(deviceWebSocketEndpoint);
         } else {
-            this.connectionError(this.webSocket, "Could not send alert to device.");
+            this.connectionError(this.cloverWebSocketClient, "Could not send alert to device.");
             // This may end a reconnect attempt
             this.setReconnecting(false);
         }
@@ -166,17 +166,17 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
             if (this.friendlyId == connectedId) {
                 // Do anything here?  This is already connected.
                 this.logger.debug("Trying to connect, but already connected to friendlyId '" + this.friendlyId + "'");
-                if (this.webSocket) {
-                    this.webSocket.close();
+                if (this.cloverWebSocketClient) {
+                    this.cloverWebSocketClient.close();
                 }
             } else {
-                this.connectionError(this.webSocket, "Device is already connected to '" + this.friendlyId + "'");
+                this.connectionError(this.cloverWebSocketClient, "Device is already connected to '" + this.friendlyId + "'");
                 // This may end a reconnect attempt
                 this.setReconnecting(false);
                 return; // done connecting
             }
             // If the device socket is already connected and good, just return.
-            if (this.webSocket && this.webSocket.getWebSocketState() == WebSocketState.OPEN) {
+            if (this.cloverWebSocketClient && this.cloverWebSocketClient.getWebSocketState() == WebSocketState.OPEN) {
                 // This may end a reconnect attempt
                 this.setReconnecting(false);
                 return; // done connecting
@@ -191,7 +191,7 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
      * @param ws
      */
     public onOpen(ws: CloverWebSocketClient): void {
-        if (this.webSocket == ws) {
+        if (this.cloverWebSocketClient == ws) {
             super.onOpen(ws);
             this.notifyDeviceReady();
         }
