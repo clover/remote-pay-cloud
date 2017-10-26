@@ -1,4 +1,4 @@
-import sdk = require('remote-pay-cloud-api');
+import * as sdk from 'remote-pay-cloud-api';
 
 import {CloverDeviceConfiguration} from './CloverDeviceConfiguration';
 import {DefaultCloverDevice} from './DefaultCloverDevice';
@@ -19,7 +19,6 @@ export class WebsocketCloudCloverDevice extends DefaultCloverDevice {
      */
     public dispose(): void {
         let remoteMessage: sdk.remotemessage.RemoteMessage = this.buildRemoteMessageToSend(new sdk.remotemessage.ShutDownMessage());
-        let msgId: string = remoteMessage.getId();
         this.sendRemoteMessage(remoteMessage);
         super.dispose();
     }
@@ -35,12 +34,12 @@ export class WebsocketCloudCloverDevice extends DefaultCloverDevice {
      * @param rMessage
      */
     protected handleRemoteMessageEVENT(rMessage: sdk.remotemessage.RemoteMessage) {
-        let method: sdk.remotemessage.Method = sdk.remotemessage.Method[rMessage.method];
+        let method: sdk.remotemessage.Method = sdk.remotemessage.Method[rMessage.getMethod()];
         if (method == null) {
-            this.logger.error('Unsupported method type: ' + rMessage.method);
+            this.logger.error('Unsupported method type: ' + rMessage.getMethod());
         }
         else {
-            var sdkMessage: sdk.remotemessage.Message = this.messageParser.parseMessageFromRemoteMessageObj(rMessage);
+            let sdkMessage: sdk.remotemessage.Message = this.messageParser.parseMessageFromRemoteMessageObj(rMessage);
             if (method == sdk.remotemessage.Method.FORCECONNECT) {
                 this.logger.info("Connection was stolen!  Will not attempt reconnect.", rMessage);
                 // Do we need to notify anyone?
@@ -73,7 +72,7 @@ export class WebsocketCloudCloverDevice extends DefaultCloverDevice {
      */
     protected handleRemoteMessage(rMessage: sdk.remotemessage.RemoteMessage) {
         try {
-            if (rMessage.method == sdk.remotemessage.Method.RESET) {
+            if (rMessage.getMethod() == sdk.remotemessage.Method.RESET) {
                 this.logger.info("Reset requested!  Will reconnect.");
                 this.transport.reset();
             } else {
@@ -81,7 +80,7 @@ export class WebsocketCloudCloverDevice extends DefaultCloverDevice {
             }
         }
         catch (eM) {
-            this.logger.error('Error processing message: ' + rMessage.payload, eM);
+            this.logger.error('Error processing message: ' + rMessage.getPayload(), eM);
         }
     }
 }

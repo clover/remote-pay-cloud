@@ -1,13 +1,10 @@
 import {WebSocketCloudCloverTransport} from '../transport/websocket/WebSocketCloudCloverTransport';
 import {CloverTransport} from '../transport/CloverTransport';
-import {CloverDeviceConfiguration} from './CloverDeviceConfiguration';
-import {DefaultCloverDevice} from './DefaultCloverDevice';
 import {WebsocketCloudCloverDevice} from './WebsocketCloudCloverDevice';
 
 import {WebSocketCloverDeviceConfiguration} from './WebSocketCloverDeviceConfiguration';
 import {HttpSupport} from '../../../util/HttpSupport';
 import {IImageUtil} from '../../../util/IImageUtil';
-
 
 /**
  * Configuration used to create a connection to a device via the Clover cloud.

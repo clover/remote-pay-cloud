@@ -1,7 +1,4 @@
-import sdk = require('remote-pay-cloud-api');
-
-var remotemessage = sdk.remotemessage;
-
+import {remotemessage} from 'remote-pay-cloud-api';
 
 /**
  * Maps constant message types to specific message class types.

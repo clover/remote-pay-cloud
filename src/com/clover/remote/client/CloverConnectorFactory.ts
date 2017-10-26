@@ -1,5 +1,4 @@
-import sdk = require('remote-pay-cloud-api');
-import {CloverDeviceConfiguration} from './device/CloverDeviceConfiguration';
+import * as sdk from 'remote-pay-cloud-api';
 import {WebSocketCloudCloverDeviceConfiguration} from './device/WebSocketCloudCloverDeviceConfiguration';
 import {Endpoints} from '../../util/Endpoints';
 import {HttpSupport} from '../../util/HttpSupport';
@@ -169,8 +168,8 @@ export class LegacyCloverConnector extends CloverConnector {
      * @returns {{}} the mapping from the device serial number to the device
      */
     protected static buildMapOfSerialToDevice(devicesVX): any {
-        var devices = null;
-        var deviceBySerial: { [key: string]: string } = {};
+        let devices = null;
+        let deviceBySerial: { [key: string]: string } = {};
         // depending on the version of the call, the devices might be in a slightly different format.
         // We would need to determine what devices were capable of doing what we want.  This means we
         // need to know if the device has the websocket connection enabled.  The best way to do this is
@@ -198,7 +197,7 @@ export class LegacyCloverConnector extends CloverConnector {
      * @param configuration
      */
     protected handleDeviceResult(devices, configuration): void {
-        var myDevice = devices[configuration.deviceSerialId];
+        let myDevice = devices[configuration.deviceSerialId];
         if (null == myDevice) {
             let errorResponse: sdk.remotepay.CloverDeviceErrorEvent = new sdk.remotepay.CloverDeviceErrorEvent();
             errorResponse.setCode(sdk.remotepay.DeviceErrorEventCode.InvalidConfig);

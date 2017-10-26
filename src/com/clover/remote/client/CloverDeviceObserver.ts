@@ -1,4 +1,4 @@
-import sdk = require('remote-pay-cloud-api');
+import * as sdk from 'remote-pay-cloud-api';
 import {CloverDevice} from './device/CloverDevice';
 
 /**
@@ -29,10 +29,10 @@ export interface CloverDeviceObserver {
      *
      * @param {UiState} uiState
      * @param {string} uiText
-     * @param {UiState.UiDirection} uiDirection
+     * @param {UiDirection} uiDirection
      * @param {InputOption[]} inputOptions
      */
-    onUiState(uiState: sdk.remotemessage.UiState, uiText: string, uiDirection: sdk.remotemessage.UiState.UiDirection, inputOptions: Array<sdk.remotemessage.InputOption>): void;
+    onUiState(uiState: sdk.remotemessage.UiState, uiText: string, uiDirection: sdk.remotemessage.UiDirection, inputOptions: Array<sdk.remotemessage.InputOption>): void;
 
     /**
      * Tip Added
@@ -190,7 +190,7 @@ export interface CloverDeviceObserver {
      *
      * @param {CloverDeviceErrorEvent} errorEvent
      */
-    onDeviceError(errorEvent: sdk.remotemessage.CloverDeviceErrorEvent): void;
+    onDeviceError(errorEvent: sdk.remotepay.CloverDeviceErrorEvent): void;
 
     /**
      * Print Refund Payment
@@ -324,12 +324,12 @@ export interface CloverDeviceObserver {
      *
      * @param printers
      */
-    onRetrievePrintersResponse(result: sdk.remotepay.ResponseCode, reason: string, printers: sdk.printer.Printer[]): void;
+    onRetrievePrintersResponse(result: sdk.remotepay.ResponseCode, printers: sdk.printer.Printer[]): void;
 
     /**
      * The status of the requested print job.
      *
      * @param status
      */
-    onPrintJobStatusResponse(result: sdk.remotepay.ResponseCode, reason: string, externalPrintJobId: string, status: sdk.remotepay.PrintJobStatusResponse.Status): void;
+    onPrintJobStatusResponse(result: sdk.remotepay.ResponseCode, externalPrintJobId: string, status: sdk.printer.PrintJobStatus): void;
 }

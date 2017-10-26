@@ -179,7 +179,7 @@ export abstract class CloverWebSocketInterface {
     }
 
     public getBufferedAmount(): number {
-        return this.webSocket.bufferedAmount;
+        return this.webSocket.hasOwnProperty("bufferedAmount") ? this.webSocket.bufferedAmount : 0;
     }
 
     public getProtocol(): string {
