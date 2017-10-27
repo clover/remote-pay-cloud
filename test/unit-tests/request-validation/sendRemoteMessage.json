@@ -1,0 +1,9 @@
+{
+  "method": "doTerminalMessage",
+  "args": "Hello World!",
+  "expected": {
+    "payload": "{\"method\": \"TERMINAL_MESSAGE\", \"version\": 0, \"text\": \"Hello World!\"}"
+  }
+}
+
+
