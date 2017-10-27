@@ -1,0 +1,529 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Clover SDK for Javascript Integration</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">Clover SDK for Javascript Integration</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> Clover SDK for Javascript Integration</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<p><img src="https://www.clover.com/assets/images/public-site/press/clover_primary_gray_rgb.png" alt="Clover logo"></p>
+				<h1 id="clover-sdk-for-javascript-integration">Clover SDK for JavaScript integration</h1>
+				<!---
+!!NOTE!!  The following is automatically updated to reflect the npm version.
+See the package.json postversion script, which maps to scripts/postversion.sh
+Do not change this or the versioning may not reflect the npm version correctly.
+--->
+				<h2 id="version">Version</h2>
+				<p>Current version: 1.4.2</p>
+				<h2 id="platforms-supported">Platforms supported</h2>
+				<ul>
+					<li>Macintosh</li>
+					<li>Linux</li>
+					<li>Windows (for version 1.3.2 of the SDK only)</li>
+				</ul>
+				<h2 id="overview">Overview</h2>
+				<p>This SDK provides an API that enables your JavaScript point-of-sale (POS) system to communicate with a <a href="https://www.clover.com/pos-hardware/">Clover® payment device</a>. Learn more about <a href="https://www.clover.com/integrations">Clover integrations</a>.</p>
+				<p>You can use the API in conjunction with:</p>
+				<ul>
+					<li>The proper browser framework from a Node.js <code>require</code> directive <a href="https://www.npmjs.com/package/remote-pay-cloud">hosted on npm</a></li>
+					<li>A server-based Node.js application by including a compatible <a href="https://www.npmjs.com/package/websocket">WebSocket</a> and <a href="https://www.npmjs.com/package/xmlhttprequest">XMLHttpRequest</a> library</li>
+				</ul>
+				<p>If used from a browser, the browser must support WebSockets. For more information, see <a href="http://caniuse.com/#feat=websockets">WebSocket Browser Support</a>.</p>
+				<h2 id="examples">Examples</h2>
+				<h3 id="application">Application</h3>
+				<p>A <a href="https://github.com/clover/clover-cloud-connector-example">sale/refund UI example project</a> that connects to a device via the Clover Cloud is available either for download and deployment, or direct deployment to a Heroku server.</p>
+				<h3 id="example-framework">Example framework</h3>
+				<p>Another <a href="https://github.com/clover/clover-cloud-connector-unit-examples">project</a> composed of small examples that connect to a device via the Clover Cloud is also available either for download and deployment, or direct deployment to a Heroku server.</p>
+				<p>Please report any questions, comments, or concerns by emailing us at <a href="mailto:semi-integrations@clover.com">semi-integrations@clover.com</a>.</p>
+				<h3 id="quick-start">Quick start</h3>
+				<p>Clover&#39;s Cloud Connector API is published as an npm package. It is intended for use in a browser environment or Node.js application.</p>
+				<p>The following example demonstrates how you can create a connection to a Clover device using plain JavaScript in the browser and the Cloud Pay Display app.</p>
+				<h4 id="make-a-sale">Make a sale</h4>
+				<pre><code><span class="hljs-keyword">var</span> $ = <span class="hljs-built_in">require</span>(<span class="hljs-string">'jQuery'</span>);
+
+<span class="hljs-keyword">var</span> clover = <span class="hljs-built_in">require</span>(<span class="hljs-string">"remote-pay-cloud"</span>);
+<span class="hljs-keyword">var</span> log = clover.Logger.create();
+
+<span class="hljs-keyword">var</span> connector = <span class="hljs-keyword">new</span> clover.CloverConnectorFactory().createICloverConnector({
+    <span class="hljs-string">"oauthToken"</span>: <span class="hljs-string">"1e7a9007-141a-293d-f41d-f603f0842139"</span>,
+    <span class="hljs-string">"merchantId"</span>: <span class="hljs-string">"BBFF8NBCXEMDV"</span>,
+    <span class="hljs-string">"clientId"</span>: <span class="hljs-string">"3RPTN642FHXTX"</span>,
+    <span class="hljs-string">"remoteApplicationId"</span>: <span class="hljs-string">"com.yourname.yourapplication:1.0.0-beta1"</span>,
+    <span class="hljs-string">"deviceSerialId"</span>: <span class="hljs-string">"C031UQ52340015"</span>,
+    <span class="hljs-string">"domain"</span>: <span class="hljs-string">"https://sandbox.dev.clover.com/"</span>
+});
+
+<span class="hljs-keyword">var</span> ExampleCloverConnectorListener = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">cloverConnector</span>) </span>{
+    clover.remotepay.ICloverConnectorListener.call(<span class="hljs-keyword">this</span>);
+    <span class="hljs-keyword">this</span>.cloverConnector = cloverConnector;
+};
+
+ExampleCloverConnectorListener.prototype = <span class="hljs-built_in">Object</span>.create(clover.remotepay.ICloverConnectorListener.prototype);
+ExampleCloverConnectorListener.prototype.constructor = ExampleCloverConnectorListener;
+
+ExampleCloverConnectorListener.prototype.onReady = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">merchantInfo</span>) </span>{
+    <span class="hljs-keyword">var</span> saleRequest = <span class="hljs-keyword">new</span> clover.remotepay.SaleRequest();
+    saleRequest.setExternalId(clover.CloverID.getNewId());
+    saleRequest.setAmount(<span class="hljs-number">10000</span>);
+    <span class="hljs-keyword">this</span>.cloverConnector.sale(saleRequest);
+};
+
+ExampleCloverConnectorListener.prototype.onVerifySignatureRequest = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">request</span>) </span>{
+    log.info(request);
+    <span class="hljs-keyword">this</span>.cloverConnector.acceptSignature(request);
+};
+
+ExampleCloverConnectorListener.prototype.onConfirmPaymentRequest = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">request</span>) </span>{
+  <span class="hljs-keyword">this</span>.cloverConnector.acceptPayment(request.payment);
+};
+
+ExampleCloverConnectorListener.prototype.onSaleResponse = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">response</span>) </span>{
+    log.info(response);
+    connector.dispose();
+    <span class="hljs-keyword">if</span>(!response.getIsSale()) {
+        <span class="hljs-built_in">console</span>.error(<span class="hljs-string">"Response is not an sale!"</span>);
+        <span class="hljs-built_in">console</span>.error(response);
+    }
+};
+
+<span class="hljs-keyword">var</span> connectorListener = <span class="hljs-keyword">new</span> ExampleCloverConnectorListener(connector);
+connector.addCloverConnectorListener(connectorListener);
+connector.initializeConnection();
+
+<span class="hljs-comment">// Close the connection cleanly on exit.  This should be done with all connectors.</span>
+$(<span class="hljs-built_in">window</span>).on(<span class="hljs-string">'beforeunload '</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">try</span> {
+        connector.dispose();
+    } <span class="hljs-keyword">catch</span> (e) {
+        <span class="hljs-built_in">console</span>.log(e);
+    }
+});
+</code></pre><h4 id="step-by-step-explanation">Step-by-Step Explanation</h4>
+				<h5 id="import-the-libraries-needed-to-create-the-clover-object">Import the libraries needed to create the Clover object</h5>
+				<pre><code><span class="hljs-attribute">var clover</span> = require(<span class="hljs-string">"remote-pay-cloud"</span>);
+</code></pre><h5 id="create-the-clover-connector-object">Create the Clover Connector object</h5>
+				<p>You will need to gather the configuration information in order to create the connector.  In this example, the configuration is hard-coded. Use the connector factory to create the connection.</p>
+				<pre><code><span class="hljs-keyword">var</span> connector = <span class="hljs-keyword">new</span> clover.CloverConnectorFactory().createICloverConnector({
+    <span class="hljs-string">"merchantId"</span>: <span class="hljs-string">"BBFF8NBCXEMDT"</span>,
+    <span class="hljs-string">"clientId"</span>: <span class="hljs-string">"3RPTN642FHXTC"</span>,
+    <span class="hljs-string">"remoteApplicationId"</span>: <span class="hljs-string">"com.yourname.yourapplication:1.0.0-beta1"</span>,
+    <span class="hljs-string">"deviceSerialId"</span>: <span class="hljs-string">"C031UQ52340045"</span>,
+    <span class="hljs-string">"domain"</span>: <span class="hljs-string">"https://sandbox.dev.clover.com/"</span>
+});
+</code></pre><p>You can configure the Clover Connector object in several ways. Here are a few examples of configurations you can use.</p>
+				<ol>
+					<li>With a clientID, domain, merchantId, and deviceSerialId<pre><code>{
+<span class="hljs-attr">"clientId"</span> : <span class="hljs-string">"3BZPZ6A6FQ8ZM"</span>,
+<span class="hljs-attr">"remoteApplicationId"</span>: <span class="hljs-string">"com.yourname.yourapplication:1.0.0-beta1"</span>,
+<span class="hljs-attr">"domain"</span> : <span class="hljs-string">"https://sandbox.dev.clover.com/"</span>,
+<span class="hljs-attr">"merchantId"</span> : <span class="hljs-string">"VKYQ0RVGMYHRS"</span>,
+<span class="hljs-attr">"deviceSerialId"</span> : <span class="hljs-string">"C021UQ52341078"</span>
+}
+</code></pre></li>
+					<li>With an oauthToken, domain, merchantId, clientId, and deviceSerialId<pre><code>{
+<span class="hljs-attr">"oauthToken"</span> : <span class="hljs-string">"6e6313e8-fe33-8662-7ff2-3a6690e0ff14"</span>,
+<span class="hljs-attr">"domain"</span> : <span class="hljs-string">"https://sandbox.dev.clover.com/"</span>,
+<span class="hljs-attr">"merchantId"</span> : <span class="hljs-string">"VKYQ0RVGMYHRS"</span>,
+<span class="hljs-attr">"clientId"</span> : <span class="hljs-string">"3BZPZ6A6FQ8ZM"</span>,
+<span class="hljs-attr">"remoteApplicationId"</span>: <span class="hljs-string">"com.yourname.yourapplication:1.0.0-beta1"</span>,
+<span class="hljs-attr">"deviceSerialId"</span> : <span class="hljs-string">"C021UQ52341078"</span>
+}
+</code></pre></li>
+				</ol>
+				<h5 id="define-a-listener-that-will-listen-for-events-produced-by-the-clover-connector">Define a listener that will listen for events produced by the Clover Connector</h5>
+				<p>The functions implemented will be called as the connector encounters the events. These functions can be found in the <code>clover.remotepay.ICloverConnectorListener</code>. </p>
+				<pre><code><span class="hljs-comment">// This overrides/implements the constructor function.  This example</span>
+<span class="hljs-comment">// expects that a CloverConnector implementation instance is passed to the created listener.</span>
+<span class="hljs-keyword">var</span> ExampleCloverConnectorListener = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">cloverConnector</span>) </span>{
+    clover.remotepay.ICloverConnectorListener.call(<span class="hljs-keyword">this</span>);
+    <span class="hljs-keyword">this</span>.cloverConnector = cloverConnector;
+};
+ExampleCloverConnectorListener.prototype = <span class="hljs-built_in">Object</span>.create(clover.remotepay.ICloverConnectorListener.prototype);
+ExampleCloverConnectorListener.prototype.constructor = ExampleCloverConnectorListener;
+
+<span class="hljs-comment">// The ICloverConnectorListener function that's called when the device is ready to be used</span>
+<span class="hljs-comment">// This example starts up a sale for $100</span>
+ExampleCloverConnectorListener.prototype.onReady: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">merchantInfo</span>) </span>{
+    <span class="hljs-keyword">var</span> saleRequest = <span class="hljs-keyword">new</span> clover.remotepay.SaleRequest();
+    saleRequest.setExternalId(clover.CloverID.getNewId());
+    saleRequest.setAmount(<span class="hljs-number">10000</span>);
+    <span class="hljs-keyword">this</span>.cloverConnector.sale(saleRequest);
+};
+
+<span class="hljs-comment">// The ICloverConnectorListener function that's called when the device needs to capture a signature</span>
+<span class="hljs-comment">// The signature will be either accepted or rejected</span>
+<span class="hljs-comment">// This example accepts the signature, sight-unseen</span>
+ExampleCloverConnectorListener.prototype.onVerifySignatureRequest = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">request</span>) </span>{
+    log.info(request);
+    <span class="hljs-keyword">this</span>.cloverConnector.acceptSignature(request);
+};
+
+<span class="hljs-comment">// The ICloverConnectorListener function that's called when the device detects a possible duplicate transaction,</span>
+<span class="hljs-comment">// due to the same card being used in a short period of time. This example accepts the duplicate payment challenge sight-unseen.</span>
+ExampleCloverConnectorListener.prototype.onConfirmPaymentRequest = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">request</span>) </span>{
+  <span class="hljs-keyword">this</span>.cloverConnector.acceptPayment(request.payment);
+};
+
+<span class="hljs-comment">// The ICloverConnectorListener function that's called when a sale request is completed.</span>
+<span class="hljs-comment">// This example logs the response and disposes of the connector.  If the response is not an expected</span>
+<span class="hljs-comment">// type, it will log an error.</span>
+ExampleCloverConnectorListener.prototype.onSaleResponse = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">response</span>) </span>{
+    log.info(response);
+    connector.dispose();
+    <span class="hljs-keyword">if</span>(!response.getIsSale()) {
+        <span class="hljs-built_in">console</span>.error(<span class="hljs-string">"Response is not an sale!"</span>);
+        <span class="hljs-built_in">console</span>.error(response);
+    }
+};
+</code></pre><h5 id="add-the-listener-instance-to-the-connector-and-initialize-the-connection-to-the-device">Add the listener instance to the connector and initialize the connection to the device</h5>
+				<pre><code><span class="hljs-keyword">var</span> connectorListener = <span class="hljs-function"><span class="hljs-keyword">new</span> <span class="hljs-title">ExampleCloverConnectorListener</span>(connector);
+<span class="hljs-title">connector</span>.<span class="hljs-title">addCloverConnectorListener</span>(connectorListener);
+<span class="hljs-title">connector</span>.<span class="hljs-title">initializeConnection</span>();</span>
+</code></pre><h5 id="clean-up-the-connection-on-exit-of-the-window">Clean up the connection on exit of the window</h5>
+				<p>This should be done with all connectors. The following example uses jQuery to add a hook for the window <code>beforeunload</code> event that ensures that the connector is disposed of.</p>
+				<pre><code>$(<span class="hljs-built_in">window</span>).on(<span class="hljs-string">'beforeunload '</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">try</span> {
+        connector.dispose();
+    } <span class="hljs-keyword">catch</span> (e) {
+        <span class="hljs-built_in">console</span>.log(e);
+    }
+});
+</code></pre><h2 id="typescript">Typescript</h2>
+				<p>This section demonstrates how you can make a connection to a Clover device using typescript in the browser and the Network Pay Display app.</p>
+				<h3 id="make-a-sale">Make a sale</h3>
+				<pre><code><span class="hljs-keyword">var</span> $ = <span class="hljs-built_in">require</span>(<span class="hljs-string">'jQuery'</span>);
+<span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> Clover <span class="hljs-keyword">from</span> <span class="hljs-string">'remote-pay-cloud'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> StandAloneExampleWebsocketPairedCloverDeviceConfiguration <span class="hljs-keyword">extends</span> Clover.WebSocketPairedCloverDeviceConfiguration {
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">constructor</span>(<span class="hljs-params"></span>) {
+        <span class="hljs-keyword">super</span>(
+            <span class="hljs-string">"wss://Clover-C030UQ50550081.local.:12345/remote_pay"</span>,
+            <span class="hljs-string">"test.js.test:0.0.1"</span>,
+            <span class="hljs-string">"My_Pos_System"</span>,
+            <span class="hljs-string">"8675309142856"</span>, 
+            <span class="hljs-literal">null</span>, 
+            Clover.BrowserWebSocketImpl.createInstance 
+        );
+    }
+
+    <span class="hljs-keyword">public</span> onPairingCode(pairingCode: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">void</span> {
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Pairing code is "</span> + pairingCode + <span class="hljs-string">" you will need to enter this on the device."</span>);
+    }
+
+    <span class="hljs-keyword">public</span> onPairingSuccess(authToken: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">void</span> {
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Pairing succeeded, authToken is "</span> + authToken);
+
+    }
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> StandAloneExampleCloverConnectorListener <span class="hljs-keyword">extends</span> Clover.remotepay.ICloverConnectorListener {
+    <span class="hljs-keyword">protected</span> cloverConnector: Clover.remotepay.ICloverConnector;
+    <span class="hljs-keyword">private</span> testStarted: <span class="hljs-built_in">boolean</span>;
+
+    <span class="hljs-keyword">constructor</span>(<span class="hljs-params">cloverConnector: Clover.remotepay.ICloverConnector</span>) {
+        <span class="hljs-keyword">super</span>();
+
+        <span class="hljs-keyword">this</span>.cloverConnector = cloverConnector;
+        <span class="hljs-keyword">this</span>.testStarted = <span class="hljs-literal">false</span>;
+    }
+    <span class="hljs-keyword">protected</span> onReady(merchantInfo: Clover.remotepay.MerchantInfo): <span class="hljs-built_in">void</span> {
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"In onReady, starting test"</span>, merchantInfo);
+        <span class="hljs-keyword">if</span>(!<span class="hljs-keyword">this</span>.testStarted) {
+            <span class="hljs-keyword">this</span>.testStarted = <span class="hljs-literal">true</span>;
+        }
+        <span class="hljs-keyword">let</span> saleRequest:Clover.remotepay.SaleRequest = <span class="hljs-keyword">new</span> Clover.remotepay.SaleRequest();
+        saleRequest.setExternalId(Clover.CloverID.getNewId());
+        saleRequest.setAmount(<span class="hljs-number">10</span>);
+        <span class="hljs-built_in">console</span>.log({message: <span class="hljs-string">"Sending sale"</span>, request: saleRequest});
+        <span class="hljs-keyword">this</span>.cloverConnector.sale(saleRequest);
+
+    }
+    <span class="hljs-keyword">public</span> onSaleResponse(response:Clover.remotepay.SaleResponse): <span class="hljs-built_in">void</span> {
+        <span class="hljs-keyword">try</span>{
+            <span class="hljs-built_in">console</span>.log({message: <span class="hljs-string">"Sale response received"</span>, response: response});
+            <span class="hljs-keyword">if</span> (!response.getIsSale()) {
+                <span class="hljs-built_in">console</span>.error(<span class="hljs-string">"Response is not a sale!"</span>);
+            }
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Test Completed.  Cleaning up."</span>);
+            <span class="hljs-keyword">this</span>.cloverConnector.showWelcomeScreen();
+            <span class="hljs-keyword">this</span>.cloverConnector.dispose();
+        } <span class="hljs-keyword">catch</span> (e) {
+            <span class="hljs-built_in">console</span>.error(e);
+        }
+    }
+    <span class="hljs-keyword">protected</span> onConfirmPaymentRequest(request: Clover.remotepay.ConfirmPaymentRequest): <span class="hljs-built_in">void</span> {
+        <span class="hljs-built_in">console</span>.log({message: <span class="hljs-string">"Automatically accepting payment"</span>, request: request});
+        <span class="hljs-keyword">this</span>.cloverConnector.acceptPayment(request.getPayment());
+    }
+    <span class="hljs-keyword">protected</span> onVerifySignatureRequest(request: Clover.remotepay.onVerifySignatureRequest): <span class="hljs-built_in">void</span> {
+        <span class="hljs-built_in">console</span>.log({message: <span class="hljs-string">"Automatically accepting signature"</span>, request: request});
+        <span class="hljs-keyword">this</span>.cloverConnector.acceptSignature(request);
+    }
+    <span class="hljs-keyword">protected</span> onDeviceError(deviceErrorEvent: Clover.remotepay.CloverDeviceErrorEvent): <span class="hljs-built_in">void</span> {
+        <span class="hljs-built_in">console</span>.error(<span class="hljs-string">"onDeviceError"</span>, deviceErrorEvent);
+    }
+}
+
+<span class="hljs-keyword">let</span> configuration = {};
+configuration[Clover.CloverConnectorFactoryBuilder.FACTORY_VERSION] = Clover.CloverConnectorFactoryBuilder.VERSION_12;
+<span class="hljs-keyword">let</span> connectorFactory: Clover.ICloverConnectorFactory = Clover.CloverConnectorFactoryBuilder.createICloverConnectorFactory(
+    configuration
+);
+
+<span class="hljs-keyword">let</span> cloverConnector: Clover.remotepay.ICloverConnector =
+    connectorFactory.createICloverConnector( <span class="hljs-keyword">new</span> StandAloneExampleWebsocketPairedCloverDeviceConfiguration());
+
+cloverConnector.addCloverConnectorListener(<span class="hljs-keyword">new</span> StandAloneExampleCloverConnectorListener(cloverConnector));
+
+$(<span class="hljs-built_in">window</span>).on(<span class="hljs-string">'beforeunload '</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">try</span> {
+        cloverConnector.dispose();
+    } <span class="hljs-keyword">catch</span> (e) {
+        <span class="hljs-built_in">console</span>.log(e);
+    }
+});
+
+cloverConnector.initializeConnection();
+</code></pre><h4 id="step-by-step-explanation">Step-by-Step Explanation</h4>
+				<h5 id="import-the-libraries-needed-to-create-the-clover-object">Import the libraries needed to create the Clover object</h5>
+				<pre><code><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> Clover <span class="hljs-keyword">from</span> <span class="hljs-string">'remote-pay-cloud'</span>;
+</code></pre><h5 id="create-the-clover-device-configuration-object">Create the Clover device Configuration object</h5>
+				<p>Depending on the mode of configuration, you may choose to use a WebSocketPairedCloverDeviceConfiguration or a WebSocketCloudCloverDeviceConfiguration.</p>
+				<pre><code>export <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StandAloneExampleWebsocketPairedCloverDeviceConfiguration</span> <span class="hljs-keyword">extends</span> </span>
+                 <span class="hljs-type">Clover</span>.<span class="hljs-type">WebSocketPairedCloverDeviceConfiguration</span> {
+...
+}
+</code></pre><p>There are many ways the Clover Connector object can be configured.  This includes a direct connection with a browser as shown here, using a browser to connect through the cloud (similar to the example above), or connecting using a Node.js application. </p>
+				<h5 id="define-a-listener-that-will-listen-for-events-produced-by-the-clover-connector">Define a listener that will listen for events produced by the Clover Connector</h5>
+				<p>The functions implemented will be called as the connector encounters the events.  These functions can be found in the <code>clover.remotepay.ICloverConnectorListener</code>. </p>
+				<pre><code>export <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StandAloneExampleCloverConnectorListener</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Clover</span>.<span class="hljs-title">remotepay</span>.<span class="hljs-title">ICloverConnectorListener</span> </span>{
+...
+}
+</code></pre><h5 id="create-the-clover-connector-factory-object">Create the Clover Connector Factory object</h5>
+				<p>The factory can be obtained using the builder.  If unspecified, the factory will produce 1.1.0-compatible connectors.  This example specifies the 1.2 version.</p>
+				<pre><code>let configuration = {}<span class="hljs-comment">;</span>
+configuration[<span class="hljs-keyword">Clover.CloverConnectorFactoryBuilder.FACTORY_VERSION] </span>= 
+      <span class="hljs-keyword">Clover.CloverConnectorFactoryBuilder.VERSION_12;
+</span>let connectorFactory: <span class="hljs-keyword">Clover.ICloverConnectorFactory </span>= 
+      <span class="hljs-keyword">Clover.CloverConnectorFactoryBuilder.createICloverConnectorFactory(configuration);</span>
+</code></pre><h5 id="create-the-clover-connector-object">Create the Clover Connector object</h5>
+				<p>Using the configuration object you created, call the factory function to get an instance of a Clover Connector.</p>
+				<pre><code>let <span class="hljs-keyword">cloverConnector: </span><span class="hljs-keyword">Clover.remotepay.ICloverConnector </span>=
+    connectorFactory.createICloverConnector(
+      new StandAloneExampleWebsocketPairedCloverDeviceConfiguration())<span class="hljs-comment">;</span>
+</code></pre><h5 id="add-the-listener-instance-to-the-connector-and-initialize-the-connection-to-the-device">Add the listener instance to the connector and initialize the connection to the device</h5>
+				<pre><code>cloverConnector.addCloverConnectorListener(<span class="hljs-function"><span class="hljs-keyword">new</span> <span class="hljs-title">StandAloneExampleCloverConnectorListener</span>(cloverConnector));
+<span class="hljs-title">cloverConnector</span>.<span class="hljs-title">initializeConnection</span>();</span>
+</code></pre><h5 id="clean-up-the-connection-on-exit-of-the-window">Clean up the connection on exit of the window</h5>
+				<p>This should be done with all connectors. The following example uses jQuery to add a hook for the window <code>beforeunload</code> event that ensures the connector is disposed of.</p>
+				<pre><code>$(<span class="hljs-built_in">window</span>).on(<span class="hljs-string">'beforeunload '</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">try</span> {
+        connector.dispose();
+    } <span class="hljs-keyword">catch</span> (e) {
+        <span class="hljs-built_in">console</span>.log(e);
+    }
+});
+</code></pre><h2 id="browser-versions-tested">Browser Versions Tested</h2>
+				<p>This library has been tested against the following browser types and versions:</p>
+				<ul>
+					<li>Chrome versions 54-58</li>
+					<li>Firefox version 49</li>
+				</ul>
+				<h2 id="build">Build</h2>
+				<p>To build run &quot;npm run build&quot;</p>
+				<h2 id="generate-documentation">Generate Documentation</h2>
+				<p>API documentation is generated at build time - <code>npm run build</code> </p>
+				<ul>
+					<li><a href="http://clover.github.io/remote-pay-cloud/1.4.0/">Online Docs</a></li>
+				</ul>
+				<h2 id="additional-resources">Additional resources</h2>
+				<ul>
+					<li><a href="https://github.com/clover/remote-pay-cloud/releases">Release Notes</a></li>
+					<li><a href="https://docs.clover.com/build/getting-started-with-cloverconnector/?sdk=browser">Tutorial for the Browser SDK</a></li>
+					<li><a href="http://clover.github.io/remote-pay-cloud-api/1.4.1/">API Class Documentation</a></li>
+					<li><a href="https://community.clover.com/index.html">Clover Developer Community</a></li>
+				</ul>
+				<h2 id="license">License</h2>
+				<p>Copyright © 2017 Clover Network, Inc. All rights reserved.</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_version_.html">"<wbr>Version"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_remote_client_cardentrymethods_.html">"remote/client/<wbr>Card<wbr>Entry<wbr>Methods"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_remote_client_cloverconnectorfactory_.html">"remote/client/<wbr>Clover<wbr>Connector<wbr>Factory"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_remote_client_cloverconnectorfactorybuilder_.html">"remote/client/<wbr>Clover<wbr>Connector<wbr>Factory<wbr>Builder"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_remote_client_cloverconnectorfactoryv2_.html">"remote/client/<wbr>Clover<wbr>Connector<wbr>Factory<wbr>V2"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_remote_client_icloverconnectorfactory_.html">"remote/client/IClover<wbr>Connector<wbr>Factory"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_remote_client_device_websocketcloudcloverdeviceconfiguration_.html">"remote/client/device/<wbr>Web<wbr>Socket<wbr>Cloud<wbr>Clover<wbr>Device<wbr>Configuration"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_remote_client_device_websocketpairedcloverdeviceconfiguration_.html">"remote/client/device/<wbr>Web<wbr>Socket<wbr>Paired<wbr>Clover<wbr>Device<wbr>Configuration"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_util_iimageutil_.html">"util/IImage<wbr>Util"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_util_imageutil_.html">"util/<wbr>Image<wbr>Util"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_websocket_browserwebsocketimpl_.html">"websocket/<wbr>Browser<wbr>Web<wbr>Socket<wbr>Impl"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_websocket_cloverwebsocketinterface_.html">"websocket/<wbr>Clover<wbr>Web<wbr>Socket<wbr>Interface"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_websocket_websocketlistener_.html">"websocket/<wbr>Web<wbr>Socket<wbr>Listener"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_websocket_websocketstate_.html">"websocket/<wbr>Web<wbr>Socket<wbr>State"</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
