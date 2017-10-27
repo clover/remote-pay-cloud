@@ -386,7 +386,7 @@ API documentation is generated at build time - `npm run build`
 ## Additional resources
 - [Release Notes](https://github.com/clover/remote-pay-cloud/releases)
 - [Tutorial for the Browser SDK](https://docs.clover.com/build/getting-started-with-cloverconnector/?sdk=browser)
-- [API Class Documentation](http://clover.github.io/remote-pay-cloud-api/1.4.0/)
+- [API Class Documentation](http://clover.github.io/remote-pay-cloud-api/1.4.1/)
 - [Clover Developer Community](https://community.clover.com/index.html)
 
 ## License 
