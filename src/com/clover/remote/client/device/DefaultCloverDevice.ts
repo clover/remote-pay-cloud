@@ -23,7 +23,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
     // Remote message version and message version are not the same.  Remote message version is used for high-level
     // feature detection - e.g. is message fragmentation supported or not?
     private static DEFAULT_REMOTE_MESSAGE_VERSION: number = 1;
-    private remoteMessageVersion: number = DefaultCloverDevice.DEFAULT_REMOTE_MESSAGE_VERSION;
+    private _remoteMessageVersion: number = DefaultCloverDevice.DEFAULT_REMOTE_MESSAGE_VERSION;
 
     private static REMOTE_SDK: string = Version.CLOVER_CLOUD_SDK + ":" + Version.CLOVER_CLOUD_SDK_VERSION;
     private static BASE64: string = "BASE64";
@@ -89,8 +89,25 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         // no-op
     }
 
+    public get remoteMessageVersion(): number {
+        return this._remoteMessageVersion;
+    }
+
+    /**
+     * Remote Message version is used for high-level feature detection e.g. is chunking supported.
+     * We set the remote version when incoming messages are handled (handleRemoteMessageCOMMAND).
+     * We only want to set _remoteMessageVersion if the inbound message is > than the version already set.
+     *
+     * @param {number} remoteMessageVersion
+     */
+    public set remoteMessageVersion(remoteMessageVersion: number) {
+        if (remoteMessageVersion > this._remoteMessageVersion) {
+            this._remoteMessageVersion = remoteMessageVersion;
+        }
+    }
+
     protected handleRemoteMessageCOMMAND(rMessage: sdk.remotemessage.RemoteMessage) {
-        this.remoteMessageVersion = Math.max(this.remoteMessageVersion, typeof rMessage["getVersion"] === "function" ? rMessage.getVersion() : DefaultCloverDevice.DEFAULT_REMOTE_MESSAGE_VERSION);
+        this.remoteMessageVersion = typeof rMessage["getVersion"] === "function" ? rMessage.getVersion() : DefaultCloverDevice.DEFAULT_REMOTE_MESSAGE_VERSION;
         let method: sdk.remotemessage.Method = sdk.remotemessage.Method[rMessage.getMethod()];
         if (method == null) {
             this.logger.error('Unsupported method type: ' + rMessage.getMethod());
@@ -694,7 +711,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         message.setOrder(order);
         message.setRequestInfo(requestInfo);
         message.setVersion(2);
-        this.sendObjectMessage_opt_version(message);
+        this.sendObjectMessage(message);
     }
 
     /**
@@ -773,12 +790,11 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
                 ptr.setId(printDeviceId);
                 message.setPrinter(ptr);
             }
-            if (this.isFragmentationSupported(this.remoteMessageVersion)) {
+            if (this.isFragmentationSupported()) {
                 // We need to be putting this in the attachment instead of the payload (for the remoteMessage)
                 let base64Png: string = message.getPng();
                 message.setPng(null);
-                this.sendObjectMessage_opt_version(message, this.remoteMessageVersion,
-                    base64Png, DefaultCloverDevice.BASE64);
+                this.sendObjectMessage(message, base64Png, DefaultCloverDevice.BASE64);
             } else {
                 this.sendObjectMessage(message);
             }
@@ -865,7 +881,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         message.setPaymentId(paymentId);
         message.setAmount(amount);
         message.setFullRefund(fullRefund);
-        this.sendObjectMessage_opt_version(message, 2);
+        this.sendObjectMessage(message);
     }
 
     /**
@@ -998,22 +1014,11 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         }
     }
 
-    /**
-     * Send the message to the device using the transport
-     *
-     * @param {sdk.remotemessage.Message} message
-     */
-    public sendObjectMessage(remoteMessage: sdk.remotemessage.Message): string {
-        return this.sendObjectMessage_opt_version(remoteMessage);
+    public sendObjectMessage(remoteMessage: sdk.remotemessage.Message, attachment?: string, attachmentEncoding?: string): string {
+        return this.buildRemoteMessages(remoteMessage, attachment, attachmentEncoding); // this now sends the messages and returns the ID
     }
 
-    private sendObjectMessage_opt_version(remoteMessage: sdk.remotemessage.Message, remoteMessageVersion?: number, attachment?: string, attachmentEncoding?: string): string {
-        return this.buildRemoteMessages(remoteMessage, remoteMessageVersion, attachment, attachmentEncoding); // this now sends the messages and returns the ID
-    }
-
-    private buildBaseRemoteMessage(remoteMessage: sdk.remotemessage.Message, remoteMessageVersion?: number): sdk.remotemessage.RemoteMessage {
-        remoteMessageVersion = this.getRemoteMessageVersion(remoteMessage, remoteMessageVersion);
-
+    private buildBaseRemoteMessage(remoteMessage: sdk.remotemessage.Message): sdk.remotemessage.RemoteMessage {
         // Make sure the message is not null
         if (remoteMessage == null) {
             this.logger.debug('Message is null');
@@ -1039,12 +1044,8 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         remoteMessageToReturn.setType(sdk.remotemessage.RemoteMessageType.COMMAND);
         remoteMessageToReturn.setPackageName(this.packageName);
         remoteMessageToReturn.setMethod(remoteMessage.getMethod().toString());
-        remoteMessageToReturn.setVersion(remoteMessageVersion);
+        remoteMessageToReturn.setVersion(this.remoteMessageVersion);
         return remoteMessageToReturn;
-    }
-
-    private getRemoteMessageVersion(remoteMessage: sdk.remotemessage.Message, remoteMessageVersion?: number) {
-        return remoteMessageVersion || remoteMessage.getVersion() || DefaultCloverDevice.DEFAULT_REMOTE_MESSAGE_VERSION;
     }
 
     /**
@@ -1068,23 +1069,22 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         return message;
     }
 
-    protected buildRemoteMessageToSend(message: sdk.remotemessage.Message, remoteMessageVersion?: number): sdk.remotemessage.RemoteMessage {
-        const remoteMessage: sdk.remotemessage.RemoteMessage = this.buildBaseRemoteMessage(message, remoteMessageVersion);
+    protected buildRemoteMessageToSend(message: sdk.remotemessage.Message): sdk.remotemessage.RemoteMessage {
+        const remoteMessage: sdk.remotemessage.RemoteMessage = this.buildBaseRemoteMessage(message);
         message = this.addSuppressElementsWrapper(message);
         remoteMessage.setPayload(JSON.stringify(message, DefaultCloverDevice.stringifyClover));
         return remoteMessage;
     }
 
-    protected buildRemoteMessages(message: sdk.remotemessage.Message, remoteMessageVersion?: number, attachment?: string, attachmentEncoding?: string): string {
-        const remoteMessage: sdk.remotemessage.RemoteMessage = this.buildBaseRemoteMessage(message, remoteMessageVersion);
+    protected buildRemoteMessages(message: sdk.remotemessage.Message, attachment?: string, attachmentEncoding?: string): string {
+        const remoteMessage: sdk.remotemessage.RemoteMessage = this.buildBaseRemoteMessage(message);
         message = this.addSuppressElementsWrapper(message);
         if (attachmentEncoding) {
             remoteMessage.setAttachmentEncoding(attachmentEncoding);
         }
         let messagePayload = JSON.stringify(message, DefaultCloverDevice.stringifyClover);
 
-        if (this.isFragmentationSupported(remoteMessageVersion)) {
-            // fragmenting is possible
+        if (this.isFragmentationSupported()) {
             const payloadTooLarge = (messagePayload ? messagePayload.length : 0) > this.maxMessageSizeInChars;
             if (payloadTooLarge || attachment) { // need to fragment
                 if (attachment && attachment.length > CloverConnector.MAX_PAYLOAD_SIZE) {
@@ -1132,6 +1132,9 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
                     }
                 }
             } else { // no need to fragment
+                if (messagePayload.length > this.maxMessageSizeInChars) {
+                    this.logger.warn(`The message payload is larger than the maxMessageSizeInChars but fragmentation is not supported by the apps installed on the device.  This may result in a payload that is too large to handle and a silent failure.`);
+                }
                 remoteMessage.setPayload(messagePayload);
                 if (attachment) {
                     remoteMessage.setAttachment(attachment);
@@ -1173,10 +1176,9 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
     /**
      * If the remote message version is 2, fragmentation is supported.
      *
-     * @param {number} version
      * @returns {boolean}
      */
-    private isFragmentationSupported(remoteMessageVersion: number) {
-        return remoteMessageVersion > 1;
+    private isFragmentationSupported() {
+        return this.remoteMessageVersion > 1;
     }
 }
