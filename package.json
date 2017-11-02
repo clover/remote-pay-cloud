@@ -27,6 +27,8 @@
   "scripts": {
     "build": "gulp",
     "updateVersion": "scripts/postversion.sh \"$npm_package_version\"",
+    "build-pidgin": "webpack --config ./pidgin/webpack.config.js",
+    "start-pidgin": "npm run build-pidgin && node ./pidgin/server.js"
     "test": "mocha test/unit-tests --exit"
   },
   "dependencies": {
@@ -37,6 +39,7 @@
   "devDependencies": {
     "@types/node": "7.0.5",
     "del": "2.2.2",
+    "express": "^4.16.2",
     "gulp": "3.9.1",
     "gulp-sourcemaps": "2.4.1",
     "gulp-typedoc": "^2.0.2",
@@ -44,6 +47,7 @@
     "chai": "4.1.2",
     "mocha": "4.0.1",
     "typedoc": "0.9.0",
+    "jquery": "^3.2.1",
     "ts-loader": "3.0.5",
     "merge2": "^1.2.0",
     "jsdoc": "3.4.3",

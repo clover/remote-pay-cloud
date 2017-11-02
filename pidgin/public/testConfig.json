@@ -1,0 +1,9 @@
+{
+  "cloud": {
+
+  },
+  "network": {
+
+  },
+  "definitionEndpoint": "http://localhost:3001/test-definitions"
+}
