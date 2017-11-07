@@ -1,9 +1,14 @@
 {
-  "cloud": {
-
-  },
-  "network": {
-
-  },
-  "definitionEndpoint": "http://localhost:3001/test-definitions"
+  "definitionEndpoint": "http://localhost:3001/test-definitions",
+  "connectorReadyTimeout": 15000,
+  "testExecutionTimeout": 300000,
+  "connectorConfigs": [
+    {
+      "applicationId": "",
+      "type": "network",
+      "wsScheme": "wss",
+      "ipAddress": "10.249.254.133",
+      "wsPort": "12345"
+    }
+  ]
 }

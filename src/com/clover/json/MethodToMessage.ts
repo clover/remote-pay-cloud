@@ -46,12 +46,6 @@ export class MethodToMessage {
         MethodToMessage.methodToType[remotemessage.Method.PAYMENT_CONFIRMED] = remotemessage.PaymentConfirmedMessage;
         MethodToMessage.methodToType[remotemessage.Method.PAYMENT_REJECTED] = remotemessage.PaymentRejectedMessage;
         MethodToMessage.methodToType[remotemessage.Method.PAYMENT_VOIDED] = remotemessage.PaymentVoidedMessage;
-        //MethodToMessage.methodToType[remotemessage.Method.//PRINT_PAYMENT] = remotemessage.;
-        //MethodToMessage.methodToType[remotemessage.Method.//REFUND_PRINT_PAYMENT] = remotemessage.;
-        //MethodToMessage.methodToType[remotemessage.Method.//PRINT_PAYMENT_MERCHANT_COPY] = remotemessage.;
-        //MethodToMessage.methodToType[remotemessage.Method.//PRINT_CREDIT] = remotemessage.;
-        //MethodToMessage.methodToType[remotemessage.Method.//PRINT_PAYMENT_DECLINE] = remotemessage.;
-        //MethodToMessage.methodToType[remotemessage.Method.//PRINT_CREDIT_DECLINE] = remotemessage.;
         MethodToMessage.methodToType[remotemessage.Method.PRINT_TEXT] = remotemessage.TextPrintMessage;
         MethodToMessage.methodToType[remotemessage.Method.PRINT_IMAGE] = remotemessage.ImagePrintMessage;
         MethodToMessage.methodToType[remotemessage.Method.TERMINAL_MESSAGE] = remotemessage.TerminalMessage;
