@@ -14,44 +14,57 @@ export class JSONToCustomObject {
     }
 
     /**
+     * Copies properties from a plain JavaScript object (sourceObject) into a remote-pay-cloud-api
+     * object (targetObject) that contains meta information.
      *
-     * @param {Object} jsonobject - an object
-     * @param {Object} customobject - an object that is expected to have meta information
-     *  attached to it.  This meta information is obtained via getMetaInfo on the passed customobject.
+     * Sample call:
+     *
+     *  const saleRequestJSON = {
+     *    amount: 5000,
+     *    cardEntryMethods: 1,
+     *    externalId: "testexternal",
+     *    tipMode: "NO_TIP"
+     *  };
+     *
+     *  const saleRequest = new sdk.remotepay.SaleRequest();
+     *  new JSONToCustomObject.transfertoObject(saleRequestJSON, saleRequest, true);
+     *
+     * @param {Object} sourceObject - A plain JavaScript Object.
+     * @param {Object} targetObject - Generally an sdk object that has meta information (getter/setters, etc.)
      * @param attachUnknownProperties - if true, then properties that are not recognized will still be
-     *  attached to the returned object, or; if the top level customobject has no meta information,
-     *  then a copy of the passed jsonobject will be returned.
+     *  attached to the returned object, or; if the top level targetObject has no meta information,
+     *  then a copy of the passed sourceObject will be returned.
      * @returns {Object | null}
      */
-    public transfertoObject(jsonobject: any, customobject: any, attachUnknownProperties: boolean): any {
-        if (typeof jsonobject === "string") {
+    public transfertoObject(sourceObject: any, targetObject: any, attachUnknownProperties: boolean): any {
+        if (typeof sourceObject === "string") {
             // This should not happen, primitives are set outside this.
             // Try to parse it as a json string
             try {
-                jsonobject = JSON.parse(jsonobject);
+                sourceObject = JSON.parse(sourceObject);
             } catch (e) {
                 this.log.warn(e);
             }
         }
         // First see if we can do this
-        if (customobject["getMetaInfo"] && typeof(customobject.getMetaInfo) === 'function') {
-            for (var key in jsonobject) {
+        if (targetObject["getMetaInfo"] && typeof(targetObject.getMetaInfo) === 'function') {
+            for (var key in sourceObject) {
                 // If the object is null or undefined (I don't think it can be undefined here...)
                 // Just set the field on the customobject to null or undefined.
-                if (jsonobject[key] === null || jsonobject[key] === undefined) {
-                    customobject[key] = jsonobject[key];
+                if (sourceObject[key] === null || sourceObject[key] === undefined) {
+                    targetObject[key] = sourceObject[key];
                 } else {
-                    var metaInfo = customobject.getMetaInfo(key);
+                    var metaInfo = targetObject.getMetaInfo(key);
                     if (metaInfo) {
                         // The field exists on the customObject.  Do some checks on type to
                         // make sure we set the field to the proper value.
                         if (this.isPrimitive(metaInfo)) {
                             // Hope for the same type?  There is the possibility
                             // of having different types that are compatible...
-                            customobject[key] = jsonobject[key];
+                            targetObject[key] = sourceObject[key];
                         } else if (this.isArray(metaInfo)) {
                             var elementType = this.getArrayType(metaInfo);
-                            var jsonArray = jsonobject[key];
+                            var jsonArray = sourceObject[key];
                             // This must be an array.
 
                             // The json from remote-pay has this structure for arrays:
@@ -61,58 +74,58 @@ export class JSONToCustomObject {
                                 jsonArray = jsonArray.elements;
                             }
                             if (Array.isArray(jsonArray)) {
-                                customobject[key] = [];
+                                targetObject[key] = [];
                                 for (var count = 0; count < jsonArray.length; count++) {
-                                    customobject[key][count] = new elementType;
-                                    var copied = this.transfertoObject(jsonArray[count], customobject[key][count], attachUnknownProperties);
+                                    targetObject[key][count] = new elementType;
+                                    var copied = this.transfertoObject(jsonArray[count], targetObject[key][count], attachUnknownProperties);
                                     if (copied) {
-                                        customobject[key][count] = copied;
+                                        targetObject[key][count] = copied;
                                     }
                                 }
                             } else {
                                 // Warn.  We will be tolerant...
                                 this.log.warn("Passed json contains field " + key + " of type " + typeof jsonArray +
-                                    ".  The field on the object is of type array.  No assignment will be made", jsonArray, jsonobject);
+                                    ".  The field on the object is of type array.  No assignment will be made", jsonArray, sourceObject);
                                 if (attachUnknownProperties) {
-                                    customobject["x_" + key] = jsonArray;
+                                    targetObject["x_" + key] = jsonArray;
                                 }
                             }
                         } else if (this.isObject(metaInfo)) {
                             // This is a base object.
-                            customobject[key] = {};
-                            var copied = this.transfertoObject(jsonobject[key], customobject[key], true);
+                            targetObject[key] = {};
+                            var copied = this.transfertoObject(sourceObject[key], targetObject[key], true);
                             if (copied) {
-                                customobject[key] = copied;
+                                targetObject[key] = copied;
                             }
                         } else {
                             var fieldType = metaInfo.type;
                             // Might be an enum.  Check here.
-                            if (fieldType[jsonobject[key]]) {
+                            if (fieldType[sourceObject[key]]) {
                                 // It is an 'enum', grab the enum value.
-                                customobject[key] = fieldType[jsonobject[key]];
+                                targetObject[key] = fieldType[sourceObject[key]];
                             } else {
                                 try {
                                     // The field is not primitive, or an array, or an 'enum'
                                     // Try to create an instance of the type
-                                    customobject[key] = new fieldType;
+                                    targetObject[key] = new fieldType;
                                 } catch (e) {
-                                    this.log.error("fieldType is ", fieldType, ", key is ", key, " for jsonobject ", jsonobject);
+                                    this.log.error("fieldType is ", fieldType, ", key is ", key, " for jsonobject ", sourceObject);
                                     throw e;
                                 }
-                                var copied = this.transfertoObject(jsonobject[key], customobject[key], attachUnknownProperties);
+                                var copied = this.transfertoObject(sourceObject[key], targetObject[key], attachUnknownProperties);
                                 if (copied) {
-                                    customobject[key] = copied;
+                                    targetObject[key] = copied;
                                 }
                             }
                         }
                     } else if (attachUnknownProperties) {
                         // Add the unknown information as properties.
-                        customobject[key] = JSON.parse(JSON.stringify(jsonobject));
+                        targetObject[key] = JSON.parse(JSON.stringify(sourceObject));
                     }
                 }
             }
         } else if (attachUnknownProperties) {
-            return JSON.parse(JSON.stringify(jsonobject));
+            return JSON.parse(JSON.stringify(sourceObject));
         }
         return null;
     };
