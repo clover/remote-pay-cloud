@@ -377,7 +377,7 @@ This library has been tested against the following browser types and versions:
 * Firefox version 49
 
 ## Build
-To build run "npm run build"
+To build run "npm run build" or "gradlew" 
 
 ## Generate Documentation
 API documentation is generated at build time - `npm run build` 
