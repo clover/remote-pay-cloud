@@ -8,13 +8,13 @@ node {
 }
 
 
-task build(type: GulpTask) {
+task build(type: GulpTask, dependsOn: installGulp) {
     args = ['default']
 }
 
-task mochaTest(type: NpmTask, dependsOn: [npmInstall, build]) {
+task test(type: NpmTask, dependsOn: [npmInstall, build]) {
     args = ['test']
 }
 
 
-defaultTasks 'mochaTest'
+defaultTasks 'build'

@@ -27,7 +27,7 @@
   "scripts": {
     "build": "gulp",
     "updateVersion": "scripts/postversion.sh \"$npm_package_version\"",
-    "test": "mocha --exit"
+    "test": "mocha test/unit-tests --exit"
   },
   "dependencies": {
     "eventemitter3": "1.1.1",
