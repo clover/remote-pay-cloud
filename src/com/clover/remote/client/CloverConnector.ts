@@ -130,7 +130,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
                 request.setTipAmount(0);
             }
             try {
-                this.saleAuth(request, false);
+                this.saleAuth(request);
             }
             catch (e) {
                 this.logger.debug("Error in sale", e);
@@ -145,7 +145,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
      * @param request
      * @param suppressTipScreen
      */
-    private saleAuth(request: sdk.remotepay.TransactionRequest, suppressTipScreen: boolean): void {
+    private saleAuth(request: sdk.remotepay.TransactionRequest): void {
         if (this.device && this.isReady) {
             this.lastRequest = request;
 
@@ -224,6 +224,8 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
                 }
                 if (req.getTipMode()) {
                     transactionSettings.setTipMode(CloverConnector.getV3TipModeFromRequestTipMode(req.getTipMode()));
+                } else if (req.getDisableTipOnScreen()) {
+                    transactionSettings.setTipMode(sdk.payments.TipMode.NO_TIP);
                 }
             }
 
@@ -348,7 +350,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
                 "Vault Card support is not enabled for the payment gateway. Original Request = " + request, CloverConnector.TxTypeRequestInfo.AUTH_REQUEST);
         } else {
             try {
-                this.saleAuth(request, true);
+                this.saleAuth(request);
             }
             catch (e) {
                 this.logger.debug("Error in auth", e);
@@ -391,7 +393,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
         }
         else {
             try {
-                this.saleAuth(request, true);
+                this.saleAuth(request);
             }
             catch (e) {
                 this.lastRequest = null;

@@ -1,0 +1,20 @@
+plugins {
+    id "com.moowork.node" version "1.2.0"
+    id "com.moowork.gulp" version "1.2.0"
+}
+
+node {
+    download = true
+}
+
+
+task build(type: GulpTask, dependsOn: installGulp) {
+    args = ['default']
+}
+
+task test(type: NpmTask, dependsOn: [npmInstall, build]) {
+    args = ['test']
+}
+
+
+defaultTasks 'build'

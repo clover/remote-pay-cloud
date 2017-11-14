@@ -118,7 +118,5 @@ export class WebSocketPairedCloverTransport extends WebSocketCloverTransport {
         this.pairingDeviceConfiguration = pairingDeviceConfiguration;
     }
 
-    public setAuthToken(authToken: string) {
-        this.authToken = authToken;
-    }
 }
+
