@@ -17,12 +17,10 @@ describe('RemoveConnectorListener()', function () {
         cloverConnector = cloverConnectorFactory.createICloverConnector(TestUtils.getWSDeviceConfig());
         cloverConnectorListener = TestUtils.buildCloverConnectionListener();
         cloverConnector.addCloverConnectorListener(cloverConnectorListener);
-        const log = console.log;
-        console.log = () => {
-            // no-op, prevents WS connection errors, etc. from being logged to the console.
-        };
+        TestUtils.disableConsole();
         cloverConnector.initializeConnection();
-        console.log = log;
+        TestUtils.enableConsole();
+
     });
 
     it(`test removeCloverConnectorListener doesn't throw error`, function (done) {
