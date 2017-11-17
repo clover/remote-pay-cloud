@@ -46,8 +46,12 @@ export class JSONToCustomObject {
                 this.log.warn(e);
             }
         }
+        // The sourceObject already has metainfo, we are done.
+        if (this.hasMetaInfo(sourceObject)) {
+            return sourceObject;
+        }
         // First see if we can do this
-        if (targetObject["getMetaInfo"] && typeof(targetObject.getMetaInfo) === 'function') {
+        if (this.hasMetaInfo(targetObject)) {
             for (var key in sourceObject) {
                 // If the object is null or undefined (I don't think it can be undefined here...)
                 // Just set the field on the customobject to null or undefined.
@@ -161,5 +165,9 @@ export class JSONToCustomObject {
      */
     public getValueType = function (metaInfo) {
         return metaInfo.valueType;
+    }
+
+    private hasMetaInfo = function(obj: any) {
+        return obj["getMetaInfo"] && typeof(obj.getMetaInfo) === 'function'
     }
 }

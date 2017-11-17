@@ -52,27 +52,43 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                 if (waitForResponse) {
                     action.result.responseTime = new Date();
                 }
-                try {
-                    processResultInternal(remoteResponse, expectedActionResponse.payload);
-                } catch (e) {
-                    handleActionFailure(`An error has occurred processing the result. Details: ${e.message}`, true);
+
+                const responseError = lodash.get(remoteResponse, "result", "") === "FAIL" || !lodash.get(remoteResponse, "success", true);
+                if (responseError) {
+                    action.result.pass = false;
+                    action.result.message = remoteResponse["message"] || remoteResponse["reason"] || `A failure occurred processing ${action.name}.`;
                 }
 
-                const store = lodash.get(expectedActionResponse, "store");
-                if (store) {
+                if (!responseError) {
                     try {
-                        for (let key in store) {
-                            storeResult(remoteResponse[key], store[key]);
-                        }
+                        processResultInternal(remoteResponse, expectedActionResponse.payload);
                     } catch (e) {
-                        Logger.log(LogLevel.ERROR, "Error storing results");
+                        handleActionFailure(`An error has occurred processing the result. Details: ${e.message}`, true);
+                    }
+
+                    const store = lodash.get(expectedActionResponse, "store");
+                    if (store) {
+                        try {
+                            for (let key in store) {
+                                storeResult(remoteResponse[key], store[key]);
+                            }
+                        } catch (e) {
+                            Logger.log(LogLevel.ERROR, "Error storing results");
+                        }
+                    }
+
+                    const responseError = lodash.get(remoteResponse, "result", "") === "FAIL" || !lodash.get(remoteResponse, "success", true);
+                    if (responseError) {
+                        action.result.pass = false;
+                        action.result.message = remoteResponse["message"] || remoteResponse["reason"] || `A failure occurred processing ${action.name}.`;
+                    } else {
+                        action.result.pass = true;
                     }
                 }
 
                 // Resolve the responses deferred.
                 if (resultDeferred) {
                     Logger.log(LogLevel.Info, `Action ${action.result.pass} and ${action.result.message}.`);
-                    action.result.pass = true;
                     resultDeferred.resolve();
                 }
             }
