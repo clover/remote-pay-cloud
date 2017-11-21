@@ -228,7 +228,6 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
                     transactionSettings.setTipMode(sdk.payments.TipMode.NO_TIP);
                 }
             }
-
             builder.setTransactionSettings(transactionSettings);
             let payIntent: sdk.remotemessage.PayIntent = builder.build();
             this.device.doTxStart(payIntent, null, paymentRequestType);
