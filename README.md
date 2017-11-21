@@ -9,7 +9,7 @@ Do not change this or the versioning may not reflect the npm version correctly.
 --->
 ## Version
 
-Current version: 1.4.1
+Current version: 1.4.2
 
 ## Platforms supported
 
@@ -377,7 +377,7 @@ This library has been tested against the following browser types and versions:
 * Firefox version 49
 
 ## Build
-To build run "npm run build"
+To build run "npm run build" or "gradlew" 
 
 ## Generate Documentation
 API documentation is generated at build time - `npm run build` 
@@ -386,7 +386,7 @@ API documentation is generated at build time - `npm run build`
 ## Additional resources
 - [Release Notes](https://github.com/clover/remote-pay-cloud/releases)
 - [Tutorial for the Browser SDK](https://docs.clover.com/build/getting-started-with-cloverconnector/?sdk=browser)
-- [API Class Documentation](http://clover.github.io/remote-pay-cloud-api/1.4.0/)
+- [API Class Documentation](http://clover.github.io/remote-pay-cloud-api/1.4.1/)
 - [Clover Developer Community](https://community.clover.com/index.html)
 
 ## License 

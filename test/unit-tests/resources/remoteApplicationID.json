@@ -1,0 +1,10 @@
+{
+  "method": "doTerminalMessage",
+  "args": "Hello World!",
+  "expected": {
+    "remoteApplicationID": "remote-pay-cloud-test",
+    "payload": "{\"method\": \"TERMINAL_MESSAGE\", \"version\": 0, \"text\": \"Hello World!\"}"
+  }
+}
+
+

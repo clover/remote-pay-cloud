@@ -26,7 +26,8 @@
   },
   "scripts": {
     "build": "gulp",
-    "updateVersion": "scripts/postversion.sh \"$npm_package_version\""
+    "updateVersion": "scripts/postversion.sh \"$npm_package_version\"",
+    "test": "mocha test/unit-tests --exit"
   },
   "dependencies": {
     "eventemitter3": "1.1.1",
@@ -40,6 +41,8 @@
     "gulp-sourcemaps": "2.4.1",
     "gulp-typedoc": "^2.0.2",
     "gulp-typescript": "3.2.2",
+    "chai": "4.1.2",
+    "mocha": "4.0.1",
     "typedoc": "0.9.0",
     "ts-loader": "3.0.5",
     "merge2": "^1.2.0",
