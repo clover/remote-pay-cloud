@@ -36,7 +36,7 @@ const create = () => {
                 if (validateTestDefinitionResponse(testDefinitionResponse)) {
                     const testCases = testDefinitionResponse["testCases"];
                     //const testCasesToRun = lodash.map(testCases, (testCase) => testCase);
-                    const testCasesToRun = [testCases["auth4.json"]];
+                    const testCasesToRun = [testCases["readCard2.json"]];
                     cloverConnectorTestManager.create().execute(testConfig, testCasesToRun);
                 }
             });
