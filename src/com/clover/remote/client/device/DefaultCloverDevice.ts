@@ -512,7 +512,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
 
     public notifyObserversTipAdjusted(tarm: sdk.remotemessage.TipAdjustResponseMessage): void {
         this.deviceObservers.forEach((obs) => {
-            obs.onAuthTipAdjusted(tarm.getPaymentId(), tarm.getAmount(), tarm.getSuccess);
+            obs.onAuthTipAdjusted(tarm.getPaymentId(), tarm.getAmount(), tarm.getSuccess());
         });
     }
 

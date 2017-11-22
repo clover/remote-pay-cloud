@@ -10,7 +10,7 @@ import * as sdk from "remote-pay-cloud-api";
 
 const create = (connectorConfig) => {
     return {
-        initializeConnection: function (testConfig) {
+        initializeConnection: function (testConfig, parentComponent) {
             Logger.log(LogLevel.TRACE, "Device Connection: Initializing connection to Clover Connector.");
             // Resolved when the device is ready to process requests.
             const connectionInitializedDeferred = new jQuery.Deferred();
@@ -41,7 +41,7 @@ const create = (connectorConfig) => {
                     Logger.log(LogLevel.TRACE, `Device Connection: Using cached auth token ${authToken}`);
                     networkConfiguration["authToken"] = authToken;
                 }
-                cloverDeviceConnectionConfiguration = getDeviceConfigurationForNetwork(Object.assign({}, baseConfiguration, networkConfiguration));
+                cloverDeviceConnectionConfiguration = getDeviceConfigurationForNetwork(Object.assign({}, baseConfiguration, networkConfiguration), parentComponent);
             } else {
                 Logger.log(LogLevel.TRACE, `Device Connection:  Connecting via the Cloud.`);
                 cloverDeviceConnectionConfiguration = getDeviceConfigurationForCloud(Object.assign({}, baseConfiguration, {
@@ -130,7 +130,7 @@ const create = (connectorConfig) => {
             connectionConfiguration.forceReconnect);
     };
 
-    function getDeviceConfigurationForNetwork(connectionConfiguration) {
+    function getDeviceConfigurationForNetwork(connectionConfiguration, parentComponent) {
         let deviceConfiguration = new WebSocketPairedCloverDeviceConfiguration(
             connectionConfiguration.endpoint,
             connectionConfiguration.applicationId,
@@ -144,9 +144,15 @@ const create = (connectorConfig) => {
             onPairingCode: function (pairingCode) {
                 let pairingCodeMessage = `Please enter pairing code ${pairingCode} on the device`;
                 Logger.log(LogLevel.INFO, `    >  ${pairingCodeMessage}`);
+                if (parentComponent) {
+                    parentComponent.setState({pairingCodeMsg: pairingCodeMessage});
+                }
             },
             onPairingSuccess: function (authToken) {
                 Logger.log(LogLevel.INFO, `    >  Got Pairing Auth Token: ${authToken}`);
+                if (parentComponent) {
+                    parentComponent.setState({pairingCodeMsg: undefined});
+                }
                 setAuthToken(authToken);
             }
         });

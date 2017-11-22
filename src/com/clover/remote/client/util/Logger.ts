@@ -13,23 +13,27 @@ export class Logger extends EventEmitter {
 
     public static create(): Logger {
         let log = new Logger();
+        let errString: string = "error";
 
         log.on("log", toConsole);
         log.silly = log.emit.bind(log, "log", "silly");
         log.verbose = log.emit.bind(log, "log", "verbose");
         log.info = log.emit.bind(log, "log", "info");
         log.warn = log.emit.bind(log, "log", "warn");
-        log.error = log.emit.bind(log, "log", "error");
+        log.error = log.emit.bind(log, "log", errString);
         log.debug = log.emit.bind(log, "log", "debug");
 
         log.enabled = false;
         return log;
 
         function toConsole() {
-            var args = [].slice.call(arguments),
-                errorLog = args && args.length > 0 ? args[0] === "error" : false;
+            let args = [].slice.call(arguments),
+                errorLog = args && args.length > 0 ? args[0] === errString : false;
             if (errorLog || log.enabled || DebugConfig.loggingEnabled) {
-                console.log.apply(console, arguments)
+                console.log.apply(console, arguments);
+                if (errorLog) {
+                    console.trace();
+                }
             }
         }
     }

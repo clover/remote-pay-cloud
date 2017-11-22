@@ -9,6 +9,8 @@ const WebsocketCloudCloverDevice = require("../../../dist/com/clover/remote/clie
 
 
     let testUtils = module.exports;
+    const log = console.log;
+    const trace = console.trace;
 
     testUtils.buildCloverConnectionListener = function () {
         return Object.assign({}, cloudApi.ICloverConnectorListener.prototype, {
@@ -34,13 +36,24 @@ const WebsocketCloudCloverDevice = require("../../../dist/com/clover/remote/clie
         // Because we aren't making a valid WebSocket connection remote-pay-cloud will log errors to the console
         // upon device instantiation. Store console.log and then set it to an no-op function to
         // prevent these errors from being logged.
-        const log = console.log;
-        console.log = () => {
+        this.disableConsole();
+        let device =  new WebsocketCloudCloverDevice(this.getWSDeviceConfig(remoteAppId));
+        this.enableConsole();
+        return device;
+    };
+
+    testUtils.disableConsole = function() {
+        console.log= () => {
             // no-op, prevents WS connection errors, etc. from being logged to the console.
         };
-        let device =  new WebsocketCloudCloverDevice(this.getWSDeviceConfig(remoteAppId));
+        console.trace= () => {
+            // no-op, prevents WS connection errors, etc. from being logged to the console.
+        };
+    };
+
+    testUtils.enableConsole = function() {
         console.log = log;
-        return device;
+        console.trace = trace;
     };
 
 })(module);

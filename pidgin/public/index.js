@@ -1,3 +1,10 @@
-import * as lstrNester from "./test-engine/CloverConnectorLstrNester";
+import React from 'react'
+import { render } from 'react-dom'
+import { BrowserRouter } from 'react-router-dom'
+import Layout from './react/Layout';
 
-export {lstrNester}
+render((
+    <BrowserRouter>
+        <Layout />
+    </BrowserRouter>
+), document.getElementById('react-root'));

@@ -87,7 +87,9 @@ const create = (resultCache, testConnector) => {
                 action = actionItr.next().value;
                 Logger.log(`Executing ${order} action ${action.name}.`);
                 executeActionInternal(action, actionResults)
-                    .then(() => executeBeforeOrAfterActions(executeActionsDeferred, actionItr, actionResults, before));
+                    .then(() => {
+                        executeBeforeOrAfterActions(executeActionsDeferred, actionItr, actionResults, before)
+                    });
             } else {
                 executeActionsDeferred.resolve();
             }
@@ -111,7 +113,9 @@ const create = (resultCache, testConnector) => {
             if (allActionsItr.hasNext()) {
                 action = allActionsItr.next().value;
                 executeActionInternal(action, actionResults)
-                    .then(() => executeActionIterations(executeActionIterationsDeferred, allActionsItr, actionResults));
+                    .then(() => {
+                        executeActionIterations(executeActionIterationsDeferred, allActionsItr, actionResults)
+                    });
             } else {
                 executeActionIterationsDeferred.resolve();
             }

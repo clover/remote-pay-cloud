@@ -82,7 +82,9 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                         action.result.pass = false;
                         action.result.message = remoteResponse["message"] || remoteResponse["reason"] || `A failure occurred processing ${action.name}.`;
                     } else {
-                        action.result.pass = true;
+                        if (action.result.pass !== false) {
+                            action.result.pass = true;
+                        }
                     }
                 }
 
@@ -351,7 +353,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                 Logger.log(LogLevel.ERROR, `"Invalid result [Object Expected] for storedValue key: ${templateValueFromTestCase}`);
                 return;
             }
-            for (let key in store) {
+            for (let key in templateValueFromTestCase) {
                 storeResult(valueFromResponse[key], templateValueFromTestCase[key]);
             }
         }

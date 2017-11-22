@@ -5,21 +5,23 @@ import {LogLevel, Logger} from "./util/Logger";
 
 const create = () => {
     return {
-        execute: function (testConfig, testCases) {
+        execute: function (testConfig, testCases, parentComponent, testObservable) {
             const connectorConfigs = testConfig["connectorConfigs"];
             // Create a test connector for each configuration.
             const testConnectors = connectorConfigs.map((connectorConfig) => testConnector.create(connectorConfig));
             // Initialize the testConnectors, continue when they are paired and ready to process requests.
             testConnectors.forEach((testConnector) => {
-                testConnector.initializeConnection(testConfig)
+                testConnector.initializeConnection(testConfig, parentComponent)
                     .then(() => {
                         const testCaseItr = iterable.makeIterator(testCases);
-                        runTests(testConfig, testCaseItr, testConnector);
+                        runTests(testConfig, testCaseItr, testConnector, testObservable);
                     })
-                    .fail((code) => handleDeviceFailure(code, testConnector));
+                    .fail((code) => {
+                        handleDeviceFailure(code, testConnector, parentComponent);
+                    });
             });
         }
-    }
+    };
 
     // Private members
 
@@ -30,15 +32,19 @@ const create = () => {
      * @param testCaseItr
      * @param testConnector
      */
-    function runTests(testConfig, testCaseItr, testConnector) {
+    function runTests(testConfig, testCaseItr, testConnector, testObservable) {
         // Iterate through the test cases serially.
         if (testCaseItr.hasNext()) {
             const testCase = testCaseItr.next().value;
-            prepareAndRunTest(testCase, testConnector, testConfig)
-                .then(() => runTests(testConfig, testCaseItr, testConnector))
+            prepareAndRunTest(testCase, testConnector, testConfig, testObservable)
+                .then(() => runTests(testConfig, testCaseItr, testConnector, testObservable))
                 .fail((code) => {
                     const message = (code == 504) ? `A timeout occurred running test case ${testCase.name}` : `An error was encountered running test case ${testCase.name}`;
                     Logger.log(LogLevel.ERROR, `Test Failure: ${message}.`);
+                    testObservable.next({
+                        name: testCase.name,
+                        message: message
+                    });
                 });
         } else {
             Logger.log(LogLevel.INFO, "All test cases have been executed.");
@@ -53,12 +59,12 @@ const create = () => {
      * @param testConnector
      * @param testConfig
      */
-    function prepareAndRunTest(testCase, testConnector, testConfig) {
+    function prepareAndRunTest(testCase, testConnector, testConfig, testObservable) {
         Logger.log(LogLevel.INFO, `Running test '${testCase.name}' ...`);
         const testCompleteDeferred = new jQuery.Deferred();
         testConnector.initializeConnection(testConfig)
             .then(() => {
-                runTest(testCompleteDeferred, testCase, testConnector)
+                runTest(testCompleteDeferred, testCase, testConnector, testObservable)
             })
             .fail((code) => handleDeviceFailure(code, testConnector));
 
@@ -75,7 +81,7 @@ const create = () => {
      * @param testCase
      * @param testConnector
      */
-    function runTest(testCompleteDeferred, testCase, testConnector) {
+    function runTest(testCompleteDeferred, testCase, testConnector, testObservable) {
         // Reset device (if necessary)
         const resetDevice = lodash.get(testCase, "resetDevice", false);
         if (resetDevice) {
@@ -86,7 +92,9 @@ const create = () => {
         let allTestActions = [];
         // Populate test actions for each iteration.
         for (let i = 0; i < iterations; i++) {
-            allTestActions = allTestActions.concat(testCase.testActions);
+            let nextIterationTestActions = testCase.testActions;
+            nextIterationTestActions.name += i;
+            allTestActions = allTestActions.concat(nextIterationTestActions);
         }
         const actionItr = iterable.makeIterator(allTestActions);
         actionExecutor.create(resultCache, testConnector).executeActions(actionItr)
@@ -94,6 +102,10 @@ const create = () => {
             // action result contains the status information for that action.
             .then((actionResults) => {
                 Logger.log(LogLevel.TRACE, actionResults);
+                testObservable.next([{
+                    name: testCase.name,
+                    testActions: actionResults
+                }]);
                 // If there is a delay between test executions
                 const delayBetween = lodash.get(testCase, "delayBetweenExecutions", 0);
                 if (delayBetween > 0) {
@@ -121,10 +133,13 @@ const create = () => {
         testCompleteDeferred.resolve();
     };
 
-    function handleDeviceFailure(code, testConnector) {
+    function handleDeviceFailure(code, testConnector, parentComponent) {
         const message = (code == 504) ? "Timed-out initializing a connection to the device" : "An error has occurred establishing a connection to the device";
         Logger.log(LogLevel.ERROR, `Device Connection Failure: ${message}.  The connection is being closed and no tests will be run on this device.`);
         testConnector.closeConnection();
+        if (parentComponent) {
+            parentComponent.setState({pairingCodeMsg: message});
+        }
     };
 
 };

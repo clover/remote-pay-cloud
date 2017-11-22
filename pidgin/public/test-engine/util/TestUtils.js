@@ -20,7 +20,7 @@ const create = () => {
                     lodash.set(action, "result", {});
                 }
                 action.result.pass = false;
-                action.result.reason = message;
+                action.result.message = message;
             }
             if (log) {
                 Logger.log(LogLevel.ERROR, message);
