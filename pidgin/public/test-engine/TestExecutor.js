@@ -2,6 +2,7 @@ import {JSONToCustomObject} from "../../../dist/com/clover/json/JSONToCustomObje
 import * as exchangeConstants from "./ExchangeConstants";
 import {LogLevel, Logger} from "./util/Logger";
 import * as testUtils from "./util/TestUtils";
+import * as sdk from "remote-pay-cloud-api";
 
 const create = (action, actionCompleteDeferred, testConnector, storedValues) => {
 
@@ -102,28 +103,38 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
          * @param event
          */
         processDeviceEvent: function (event) {
-            const inputOptions = lodash.get(action, ["context", "inputOptions"], null);
-            if (inputOptions) {
-                let option = lodash.find(inputOptions, ['on', event.getEventState()]);
-                if (option) {
-                    option.description = option.description || option.select;
-                    if (option.method) {
-                        executeRequest(option.method, option.response);
-                    } else {
-                        if (option.keyPress == null) {
-                            // No keypress specified...derive from inputs
-                            const pattern = new RegExp(option.description || option.select);
-                            const eventOptions = event.getInputOptions();
-                            option = null;
-                            eventOptions.some((eventOption) => {
+            const testDefInputOptions = lodash.get(action, ["context", "inputOptions"], null);
+            if (testDefInputOptions) {
+                let testDefInputOption = lodash.find(testDefInputOptions, ['on', event.getEventState()]);
+                if (testDefInputOption) {
+                    testDefInputOption.description = testDefInputOption.description || testDefInputOption.select;
+                    const eventOptions = event.getInputOptions();
+                    if (eventOptions) {
+                        let inputOption = null;
+                        // Find the matching input option from the device event.
+                        eventOptions.some((eventOption) => {
+                            if (testDefInputOption.select === eventOption.keyPress) {
+                                inputOption = eventOption;
+                                return true;
+                            } else if (testDefInputOption.method) {
+                                inputOption = null;
+                                cloverConnector[testDefInputOption.method](eventOption);
+                                return true;
+                            } else {
+                                const pattern = new RegExp(testDefInputOption.description);
                                 if (pattern.exec(eventOption.description)) {
-                                    option = eventOption;
+                                    inputOption = eventOption;
                                     return true;
                                 }
-                            });
-                        }
-                        if (option != null) {
-                            cloverConnector.invokeInputOption(option);
+                            }
+                        });
+                        if (inputOption) {
+                            // Transfers values from payload into the SDK class.
+                            let sdkInputOption = new sdk.remotepay.InputOption;
+                            new JSONToCustomObject().transfertoObject(inputOption, sdkInputOption, true);
+                            cloverConnector.invokeInputOption(sdkInputOption);
+                        } else {
+                            Logger.log(LogLevel.info, `No matching input option found for ${JSON.stringify(testDefInputOption)}`);
                         }
                     }
                 }
@@ -309,31 +320,27 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
             let expectedElement = expectedResponse[key];
             const remoteElement = remoteResponse[key];
             if (!lodash.isObject(expectedElement)) {
-                if (remoteElement) {
-                    if (!expectedElement) {
-                        handleActionFailure(`Expected value = null; Actual value = ${remoteElement}`);
-                    } else if (expectedElement !== "*") {
-                        // expected is not null or a wildcard
-                        if (lodash.startsWith(expectedElement, "$:")) {
-                            // Target is actually a stored variable
-                            const storedValue = storedValues[expectedElement.substring(2)];
-                            if (!storedValue) {
-                                handleActionFailure(`Cannot resolve expected value = ${expectedElement}; Actual value = ${resultElement}`);
-                                continue;
-                            } else if (lodash.isObject(storedValue) || lodash.isArray(storedValue)) {
-                                handleActionFailure(`Cannot resolve expected value [not a primitive] = ${expectedElement}; Actual value = ${remoteElement}`);
-                                continue;
-                            }
-                            expectedElement = storedValue;
+                if (expectedElement !== "*") {
+                    // expected is not null or a wildcard
+                    if (lodash.startsWith(expectedElement, "$:")) {
+                        // Target is actually a stored variable
+                        const storedValue = storedValues[expectedElement.substring(2)];
+                        if (!storedValue) {
+                            handleActionFailure(`${key}: Cannot resolve expected value = ${expectedElement}; Actual value = ${resultElement}`);
+                            continue;
+                        } else if (lodash.isObject(storedValue) || lodash.isArray(storedValue)) {
+                            handleActionFailure(`${key}: Cannot resolve expected value [not a primitive] = ${expectedElement}; Actual value = ${remoteElement}`);
+                            continue;
                         }
-                        // should match
-                        if (expectedElement !== remoteElement) {
-                            handleActionFailure(`${key} - Expected value = ${expectedElement}; Actual value = ${remoteElement}`);
-                        }
+                        expectedElement = storedValue;
                     }
-                } else if (expectedElement != null) {
+                    // should match
+                    if (expectedElement !== remoteElement) {
+                        handleActionFailure(`${key}: Expected value = ${expectedElement}; Actual value = ${remoteElement}`);
+                    }
+                } else if (!remoteElement) {
                     // Result is null, and expected is not null
-                    handleActionFailure(`${key} - Expected value = ${expectedElement}; Actual value = null`);
+                    handleActionFailure(`${key}: Expected value = ${expectedElement}; Actual value = null`);
                 }
             } else {
                 processResultInternal(remoteElement, expectedElement);

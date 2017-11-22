@@ -186,7 +186,10 @@ const create = () => {
                 method: "retrievePendingPayments"
             },
             "READ_CARD_DATA": {
-                method: "readCardData"
+                method: "readCardData",
+                payloadResolver: {
+                    type: sdk.remotepay.ReadCardDataRequest
+                }
             },
             "SEND_ACTIVITY_MESSAGE": {
                 method: "sendMessageToActivity"
