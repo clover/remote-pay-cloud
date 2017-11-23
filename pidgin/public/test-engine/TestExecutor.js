@@ -54,10 +54,14 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                     action.result.responseTime = new Date();
                 }
 
-                const responseError = lodash.get(remoteResponse, "result", "") === "FAIL" || !lodash.get(remoteResponse, "success", true);
-                if (responseError) {
-                    action.result.pass = false;
-                    action.result.message = remoteResponse["message"] || remoteResponse["reason"] || `A failure occurred processing ${action.name}.`;
+                const expectSuccess = lodash.get(expectedActionResponse, ["payload", "success"]);
+                let responseError = false;
+                if (expectSuccess) {
+                    responseError = lodash.get(remoteResponse, "result", "") === "FAIL" || !lodash.get(remoteResponse, "success", true);
+                    if (responseError) {
+                        action.result.pass = false;
+                        action.result.message = remoteResponse["message"] || remoteResponse["reason"] || `A failure occurred processing ${action.name}.`;
+                    }
                 }
 
                 if (!responseError) {
@@ -78,14 +82,8 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                         }
                     }
 
-                    const responseError = lodash.get(remoteResponse, "result", "") === "FAIL" || !lodash.get(remoteResponse, "success", true);
-                    if (responseError) {
-                        action.result.pass = false;
-                        action.result.message = remoteResponse["message"] || remoteResponse["reason"] || `A failure occurred processing ${action.name}.`;
-                    } else {
-                        if (action.result.pass !== false) {
-                            action.result.pass = true;
-                        }
+                    if (action.result.pass !== false) {
+                        action.result.pass = true;
                     }
                 }
 
@@ -129,10 +127,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                             }
                         });
                         if (inputOption) {
-                            // Transfers values from payload into the SDK class.
-                            let sdkInputOption = new sdk.remotepay.InputOption;
-                            new JSONToCustomObject().transfertoObject(inputOption, sdkInputOption, true);
-                            cloverConnector.invokeInputOption(sdkInputOption);
+                            cloverConnector.invokeInputOption(inputOption);
                         } else {
                             Logger.log(LogLevel.info, `No matching input option found for ${JSON.stringify(testDefInputOption)}`);
                         }
@@ -304,7 +299,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
             return resolveStoredValue(element);
         } else if (lodash.isArray(element)) {
             return element.map((arrElement) => resolveStoredValue(arrElement));
-        } else if (lodash.isNumber(element)) {
+        } else {
             return element;
         }
     };
