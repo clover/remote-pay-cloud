@@ -98,7 +98,7 @@ const create = () => {
             "VOID_PAYMENT": {
                 method: "voidPayment",
                 payloadResolver: {
-                    type: sdk.remotepay.VoidCreditRequest
+                    type: sdk.remotepay.VoidPaymentRequest
                 }
             },
             "REFUND_PAYMENT": {
