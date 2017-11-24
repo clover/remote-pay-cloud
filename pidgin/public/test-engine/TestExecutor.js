@@ -179,7 +179,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
         // indicate a failure on the action's result.
         if (responseTimeout && responseTimeout > 0) {
             setTimeout(() => {
-                if (resultDeferred.state === "pending") {
+                if (resultDeferred.state() === "pending") {
                     handleActionFailure(`Timeout: A response was not received within ${responseTimeout} milli(s).`);
                     executeActionDeferred.resolve();
                 }
