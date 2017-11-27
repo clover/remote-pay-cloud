@@ -62,6 +62,16 @@ export default class ChooseTests extends React.Component {
 
     onSelect2Change() {
         this.selectedTestCasesToRun = this.refs.allTestCasesSelect2.el.val();
+
+        let testCasesToRun = _.map(this.selectedTestCasesToRun, (fileName) => {
+            return this.testCases[fileName];
+        });
+
+
+        this.setState({
+            results: testCasesToRun
+        });
+
     }
 
     handleTestNameChange (e) {
@@ -87,9 +97,6 @@ export default class ChooseTests extends React.Component {
         let testCasesToRun = _.map(this.selectedTestCasesToRun, (fileName) => {
             return this.testCases[fileName];
         });
-        this.setState({
-            results: testCasesToRun
-        });
 
         let gridApi = this.refs.resGrid.gridApi;
         Subjects.create().testObservable.subscribe(value => {
@@ -101,8 +108,6 @@ export default class ChooseTests extends React.Component {
         });
 
         cloverConnectorTestManager.create().execute(this.testConfig, testCasesToRun);
-        //Remove all... Todo replace existing?
-        this.state.results = [];
     }
 
     render() {
