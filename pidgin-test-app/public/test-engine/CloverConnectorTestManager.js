@@ -2,6 +2,7 @@ import * as actionExecutor from "./ActionExecutor";
 import * as testConnector from "./TestConnector";
 import * as iterable from "./util/Iterable";
 import {LogLevel, Logger} from "./util/Logger";
+import * as EventService from "../app/EventService"
 
 const create = () => {
     return {
@@ -16,7 +17,9 @@ const create = () => {
                         const testCaseItr = iterable.makeIterator(testCases);
                         runTests(testConfig, testCaseItr, testConnector);
                     })
-                    .fail((code) => handleDeviceFailure(code, testConnector));
+                    .fail((code) => {
+                        handleDeviceFailure(code, testConnector);
+                    });
             });
         }
     };
@@ -39,6 +42,10 @@ const create = () => {
                 .fail((code) => {
                     const message = (code == 504) ? `A timeout occurred running test case ${testCase.name}` : `An error was encountered running test case ${testCase.name}`;
                     Logger.log(LogLevel.ERROR, `Test Failure: ${message}.`);
+                    EventService.get().testObservable.next({
+                        name: testCase.name,
+                        message: message
+                    });
                 });
         } else {
             Logger.log(LogLevel.INFO, "All test cases have been executed.");
@@ -86,7 +93,9 @@ const create = () => {
         let allTestActions = [];
         // Populate test actions for each iteration.
         for (let i = 0; i < iterations; i++) {
-            allTestActions = allTestActions.concat(testCase.testActions);
+            let nextIterationTestActions = testCase.testActions;
+            nextIterationTestActions.name += i;
+            allTestActions = allTestActions.concat(nextIterationTestActions);
         }
         const actionItr = iterable.makeIterator(allTestActions);
         actionExecutor.create(resultCache, testConnector).executeActions(actionItr)
@@ -94,6 +103,10 @@ const create = () => {
             // action result contains the status information for that action.
             .then((actionResults) => {
                 Logger.log(LogLevel.TRACE, actionResults);
+                EventService.get().testObservable.next([{
+                    name: testCase.name,
+                    testActions: actionResults
+                }]);
                 // If there is a delay between test executions
                 const delayBetween = lodash.get(testCase, "delayBetweenExecutions", 0);
                 if (delayBetween > 0) {
@@ -125,6 +138,9 @@ const create = () => {
         const message = (code == 504) ? "Timed-out initializing a connection to the device" : "An error has occurred establishing a connection to the device";
         Logger.log(LogLevel.ERROR, `Device Connection Failure: ${message}.  The connection is being closed and no tests will be run on this device.`);
         testConnector.closeConnection();
+        if (code === 504) {
+            EventService.get().pairingObservable.next(message);
+        }
     };
 
 };

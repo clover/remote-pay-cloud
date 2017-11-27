@@ -9,41 +9,60 @@ const create = () => {
          *
          * @param testConfig
          */
-        nestAndTest: function (testConfig) {
-            if (!testConfig || Object.keys(testConfig).length === 0) {
-                // try looking at the testConfig.json file.
-                jQuery.ajax({
-                    type: "GET",
-                    url: "../testConfig.json",
-                    error: (xhr, status, message) => {
-                        Logger.log(LogLevel.ERROR, `Failure: An error has occurred and the connection configuration could not be loaded: Details ${message}.`);
+        loadAndRunTests: function (testConfig) {
+            if (validateTestConfig(testConfig)) {
+                loadTests(testConfig).done((testDefinitionResponse) => {
+                    if (validateTestDefinitionResponse(testDefinitionResponse)) {
+                        const testCases = testDefinitionResponse["testCases"];
+                        const testCasesToRun = lodash.map(testCases, (testCase) => testCase);
+                        //const testCasesToRun = [testCases["infuse_test.json"]];
+                        cloverConnectorTestManager.create().execute(testConfig, testCasesToRun);
                     }
-                }).done(testConfig => {
-                    loadAndRunTests(testConfig);
                 });
             } else {
-                loadAndRunTests(testConfig);
+                Logger.log(LogLevel.ERROR, "Failure.  The tests could not be executed the configuration is not valid.");
             }
-        }
+        },
 
+
+
+        /**
+         * Loads the test definitions returns a Promise.
+         *
+         * @returns {*}
+         */
+        loadTests: function (testConfig) {
+            if (testConfig && testConfig.definitionEndpoint) {
+                // JQuery provided globally via a webpack plugin - https://stackoverflow.com/questions/40035976/how-to-configure-and-use-jquery-with-webpack
+                return jQuery.ajax({
+                    type: "GET",
+                    url: testConfig.definitionEndpoint,
+                    error: (xhr, status, message) => {
+                        message = message || "Is the test-definitions REST service up?";
+                        Logger.log(LogLevel.ERROR, `Failure: An error has occurred and the test definitions could not be loaded: Details: ${message}`);
+                    }
+                });
+            } else {
+                Logger.log(LogLevel.ERROR, "Failure: Cannot load test definitions.  Either no test configuration exists or a definitionEndpoint is not specified on the test configuration.");
+            }
+
+        },
+
+        /**
+         * Validate that the response from retrieving the test-definitions is valid.
+         *
+         * @param testDefinitionResponse
+         * @returns {boolean}
+         */
+        validateTestDefinitionResponse: function(testDefinitionResponse) {
+            if (!testDefinitionResponse || testDefinitionResponse.status !== "success") {
+                Logger.log(LogLevel.ERROR, `Failure: An error occurred retrieving the test definitions: Details: ${testDefinitionResponse.message}`);
+                return false;
+            }
+            return true;
+        }
     }
 
-    // Private members
-
-    function loadAndRunTests(testConfig) {
-        if (validateTestConfig(testConfig)) {
-            loadTests(testConfig).done((testDefinitionResponse) => {
-                if (validateTestDefinitionResponse(testDefinitionResponse)) {
-                    const testCases = testDefinitionResponse["testCases"];
-                    //const testCasesToRun = lodash.map(testCases, (testCase) => testCase);
-                    const testCasesToRun = [testCases["print1.json"]];
-                    cloverConnectorTestManager.create().execute(testConfig, testCasesToRun);
-                }
-            });
-        } else {
-            Logger.log(LogLevel.ERROR, "Failure.  The tests could not be executed the configuration is not valid.");
-        }
-    };
 
     /**
      * Validates that the test config is valid.
@@ -104,44 +123,10 @@ const create = () => {
         return isValid;
     };
 
-    /**
-     * Validate that the response from retrieving the test-definitions is valid.
-     *
-     * @param testDefinitionResponse
-     * @returns {boolean}
-     */
-    function validateTestDefinitionResponse(testDefinitionResponse) {
-        if (!testDefinitionResponse || testDefinitionResponse.status !== "success") {
-            Logger.log(LogLevel.ERROR, `Failure: An error occurred retrieving the test definitions: Details: ${testDefinitionResponse.message}`);
-            return false;
-        }
-        return true;
-    };
 
-    /**
-     * Loads the test definitions returns a Promise.
-     *
-     * @returns {*}
-     */
-    function loadTests(testConfig) {
-        if (testConfig && testConfig.definitionEndpoint) {
-            // JQuery provided globally via a webpack plugin - https://stackoverflow.com/questions/40035976/how-to-configure-and-use-jquery-with-webpack
-            return jQuery.ajax({
-                type: "GET",
-                url: testConfig.definitionEndpoint,
-                error: (xhr, status, message) => {
-                    message = message || "Is the test-definitions REST service up?";
-                    Logger.log(LogLevel.ERROR, `Failure: An error has occurred and the test definitions could not be loaded: Details: ${message}`);
-                }
-            });
-        } else {
-            Logger.log(LogLevel.ERROR, "Failure: Cannot load test definitions.  Either no test configuration exists or a definitionEndpoint is not specified on the test configuration.");
-        }
-
-    };
 };
 
-export {create}
+export {create};
 
 
 

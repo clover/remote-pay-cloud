@@ -8,9 +8,12 @@ import {ImageUtil} from "../../../dist/com/clover/util/ImageUtil";
 import {HttpSupport} from "../../../dist/com/clover/util/HttpSupport";
 import * as sdk from "remote-pay-cloud-api";
 
+import * as EventService from "../app/EventService"
+
+
 const create = (connectorConfig) => {
     return {
-        initializeConnection: function (testConfig) {
+        initializeConnection: function (testConfig, parentComponent) {
             Logger.log(LogLevel.TRACE, "Device Connection: Initializing connection to Clover Connector.");
             // Resolved when the device is ready to process requests.
             const connectionInitializedDeferred = new jQuery.Deferred();
@@ -41,7 +44,7 @@ const create = (connectorConfig) => {
                     Logger.log(LogLevel.TRACE, `Device Connection: Using cached auth token ${authToken}`);
                     networkConfiguration["authToken"] = authToken;
                 }
-                cloverDeviceConnectionConfiguration = getDeviceConfigurationForNetwork(Object.assign({}, baseConfiguration, networkConfiguration));
+                cloverDeviceConnectionConfiguration = getDeviceConfigurationForNetwork(Object.assign({}, baseConfiguration, networkConfiguration), parentComponent);
             } else {
                 Logger.log(LogLevel.TRACE, `Device Connection:  Connecting via the Cloud.`);
                 cloverDeviceConnectionConfiguration = getDeviceConfigurationForCloud(Object.assign({}, baseConfiguration, {
@@ -144,9 +147,13 @@ const create = (connectorConfig) => {
             onPairingCode: function (pairingCode) {
                 let pairingCodeMessage = `Please enter pairing code ${pairingCode} on the device`;
                 Logger.log(LogLevel.INFO, `    >  ${pairingCodeMessage}`);
+                EventService.get().pairingObservable.next(pairingCodeMessage);
+
             },
             onPairingSuccess: function (authToken) {
                 Logger.log(LogLevel.INFO, `    >  Got Pairing Auth Token: ${authToken}`);
+                EventService.get().pairingObservable.next(undefined);
+
                 setAuthToken(authToken);
             }
         });

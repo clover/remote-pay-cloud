@@ -9,7 +9,7 @@ export const LogLevel = {
 };
 
 export const Logger = {
-    log: function(level, toLog) {
+    log: function(level = 2, toLog) {
         if (level >= logLevel) {
             console.log(toLog);
             if (level === 5) {
