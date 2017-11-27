@@ -26,8 +26,10 @@ export default class ChooseTests extends React.Component {
         if (this.props.location.state) {
             this.testConfig = this.props.location.state.testConfig;
         } else {
+            let constants = Constants.create();
             // Navigated directly to ChooseTests(F5), pull from localsotrage
-            this.testConfig = JSON.parse(window.localStorage.getItem(Constants.create().localStorageConfigKey));
+            this.testConfig = JSON.parse(window.localStorage.getItem(constants.localStorageConfigKey));
+            this.selectedTestCasesToRun = JSON.parse(window.localStorage.getItem(constants.localStorageSelectedTests));
         }
         this.lNester.loadTests(this.testConfig).done((testDefinitionResponse) => {
             if (this.lNester.validateTestDefinitionResponse(testDefinitionResponse)) {
@@ -93,7 +95,6 @@ export default class ChooseTests extends React.Component {
     }
 
     runTests() {
-        this.selectedTestCasesToRun = this.refs.allTestCasesSelect2.el.val();
         let testCasesToRun = _.map(this.selectedTestCasesToRun, (fileName) => {
             return this.testCases[fileName];
         });

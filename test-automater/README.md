@@ -1,10 +1,10 @@
-# pidgin-test-app
+# Test Automater
 
 This application allows for manual execution of our automated test suite.  It assumes the test-definitions are being served from localhost:3001.
 
 Run:
 ```
-gradlew start
+gradlew build start
 ```
 and navigate to <a href="http://localhost:3000">localhost:3000<a>
 
