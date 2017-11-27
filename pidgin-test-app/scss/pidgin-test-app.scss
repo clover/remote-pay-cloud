@@ -25,6 +25,15 @@
   overflow: auto;
 }
 
+.pairing_code{
+  padding: 10px 10px 20px 10px;
+  text-align: center;
+}
+
+.pairing_code > span {
+  font-weight: bold;
+}
+
 .popup{
   background: white;
   box-shadow: 0 0 4px #000000;

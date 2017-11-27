@@ -8,6 +8,9 @@ import {ImageUtil} from "../../../dist/com/clover/util/ImageUtil";
 import {HttpSupport} from "../../../dist/com/clover/util/HttpSupport";
 import * as sdk from "remote-pay-cloud-api";
 
+import * as Subjects from "../app/Subjects"
+
+
 const create = (connectorConfig) => {
     return {
         initializeConnection: function (testConfig, parentComponent) {
@@ -130,7 +133,7 @@ const create = (connectorConfig) => {
             connectionConfiguration.forceReconnect);
     };
 
-    function getDeviceConfigurationForNetwork(connectionConfiguration, parentComponent) {
+    function getDeviceConfigurationForNetwork(connectionConfiguration) {
         let deviceConfiguration = new WebSocketPairedCloverDeviceConfiguration(
             connectionConfiguration.endpoint,
             connectionConfiguration.applicationId,
@@ -144,15 +147,13 @@ const create = (connectorConfig) => {
             onPairingCode: function (pairingCode) {
                 let pairingCodeMessage = `Please enter pairing code ${pairingCode} on the device`;
                 Logger.log(LogLevel.INFO, `    >  ${pairingCodeMessage}`);
-                if (parentComponent) {
-                    parentComponent.setState({pairingCodeMsg: pairingCodeMessage});
-                }
+                Subjects.create().pairingObservable.next(pairingCodeMessage);
+
             },
             onPairingSuccess: function (authToken) {
                 Logger.log(LogLevel.INFO, `    >  Got Pairing Auth Token: ${authToken}`);
-                if (parentComponent) {
-                    parentComponent.setState({pairingCodeMsg: undefined});
-                }
+                Subjects.create().pairingObservable.next(undefined);
+
                 setAuthToken(authToken);
             }
         });

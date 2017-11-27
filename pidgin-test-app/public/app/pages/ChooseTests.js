@@ -1,5 +1,4 @@
 import React from 'react'
-import Rx from 'rxjs'
 import Select2 from 'react-select2-wrapper';
 import ButtonNormal from '../components/ButtonNormal'
 import * as Constants from '../../Constants'
@@ -10,6 +9,7 @@ import ResultsGrid from "../components/ResultsGrid"
 import * as lstrNester from "../../test-engine/CloverConnectorLstrNester";
 import * as cloverConnectorTestManager from "../../test-engine/CloverConnectorTestManager";
 export {lstrNester}
+import * as Subjects from "../Subjects"
 
 export default class ChooseTests extends React.Component {
 
@@ -44,6 +44,12 @@ export default class ChooseTests extends React.Component {
                     testCases: testCasesToRun
                 });
             }
+        });
+
+        Subjects.create().pairingObservable.subscribe(msg => {
+            this.setState({
+                pairingCodeMsg: msg
+            });
         });
 
         this.runTests = this.runTests.bind(this);
@@ -81,13 +87,12 @@ export default class ChooseTests extends React.Component {
         let testCasesToRun = _.map(this.selectedTestCasesToRun, (fileName) => {
             return this.testCases[fileName];
         });
-        let testObservable = new Rx.Subject();
         this.setState({
             results: testCasesToRun
         });
 
         let gridApi = this.refs.resGrid.gridApi;
-        testObservable.subscribe(value => {
+        Subjects.create().testObservable.subscribe(value => {
             this.state.results.push(value);
             this.setState({
                 results: this.state.results
@@ -95,7 +100,7 @@ export default class ChooseTests extends React.Component {
             gridApi.refreshCells();
         });
 
-        cloverConnectorTestManager.create().execute(this.testConfig, testCasesToRun, this, testObservable);
+        cloverConnectorTestManager.create().execute(this.testConfig, testCasesToRun);
         //Remove all... Todo replace existing?
         this.state.results = [];
     }

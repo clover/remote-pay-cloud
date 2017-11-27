@@ -36,13 +36,13 @@ export default class Popup extends React.Component {
     render () {
         let popup;
         if (this.state.displayed) {
-            popup = (<div id="popup">
+            popup = (<span id="popup">
                 <div className={this.state.fadeBackground ? 'popup_full_opaque' : ''}/>
                 <div className={"popup popup_container"}>
                     <div className="close_popup" onClick={this.closeCallback}>X</div>
                     <div className="pairing_code">{this.props.message}</div>
                 </div>
-            </div>);
+            </span>);
         } else {
             popup = null;
         }

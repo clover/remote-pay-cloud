@@ -12,7 +12,7 @@ ext {
 }
 
 task build(type: NodeTask, dependsOn: npmInstall) {
-    script = [nodeModulesPath + './node_modules/webpack/bin/webpack']
+    script = [nodeModulesPath + '/webpack/bin/webpack']
 }
 
 task watch(type: NodeTask, dependsOn: npmInstall) {
@@ -21,7 +21,7 @@ task watch(type: NodeTask, dependsOn: npmInstall) {
 }
 
 task start(type: NodeTask, dependsOn: [npmInstall, build]) {
-    script = ['./pidgin/server.js']
+    script = ['./pidgin-test-app/server.js']
 }
 
 task sass(type: NodeTask, dependsOn: npmInstall) {
