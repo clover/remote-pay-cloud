@@ -1,0 +1,41 @@
+plugins {
+    id "com.moowork.node"
+}
+
+node {
+    download = true
+}
+
+ext {
+    nodeModulesPath = './node_modules'
+    scssFile = "scss/pidgin-test-app.scss"
+}
+
+task build(type: NodeTask, dependsOn: npmInstall) {
+    script = [nodeModulesPath + './node_modules/webpack/bin/webpack']
+}
+
+task watch(type: NodeTask, dependsOn: npmInstall) {
+    script = [nodeModulesPath + '/webpack/bin/webpack']
+    args = ['--watch']
+}
+
+task start(type: NodeTask, dependsOn: [npmInstall, build]) {
+    script = ['./pidgin/server.js']
+}
+
+task sass(type: NodeTask, dependsOn: npmInstall) {
+    script = file(nodeModulesPath + '/node-sass/bin/node-sass')
+    args = [scssFile, "-o", "public/css"]
+
+    inputs.files scssFile
+    outputs.file file('public/css/pidgin-test-app.scss')
+}
+
+task sassWatch(type: NodeTask, dependsOn: npmInstall) {
+    script = file(nodeModulesPath + '/node-sass/bin/node-sass')
+    args = ["scss/pidgin-test-app.scss", "-o", "public/css", "-w"]
+}
+
+
+defaultTasks 'start'

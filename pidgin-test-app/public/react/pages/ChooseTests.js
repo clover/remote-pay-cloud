@@ -107,7 +107,7 @@ export default class ChooseTests extends React.Component {
         };
 
         return (
-            <div>
+            <div className="column_plain center">
                 {this.state.pairingCodeMsg && <Popup message={this.state.pairingCodeMsg} closeCallback={closeCallback}/>}
 
 
@@ -125,10 +125,9 @@ export default class ChooseTests extends React.Component {
                         }
                     }
                 />
-                <ButtonNormal color="green" title="Run Tests" onClick={this.runTests}/>
+                <ButtonNormal style={"display: block"} color="green" title="Run Tests" onClick={this.runTests}/>
                 <br/>
                 <ButtonNormal color="white" title="Save Selected Tests to Local Storage" onClick={this.saveSelect2Selection} />
-                <br/>
                 <ButtonNormal color="white" title="Load Test Config from Local Storage" onClick={this.loadConfig}/>
                 <br/>
                 <br/>
