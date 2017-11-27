@@ -1,6 +1,6 @@
 # pidgin-test-app
 
-This app is for testing the pidgin-test-definitions.  It assumes the test-definitions are being served from localhost:3001.
+This application allows for manual execution of our automated test suite.  It assumes the test-definitions are being served from localhost:3001.
 
 Run:
 ```
