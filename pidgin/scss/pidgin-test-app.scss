@@ -1,0 +1,66 @@
+
+.normal_button {
+  border-radius: 3px;
+  border: none;
+  font-size: 16px;
+}
+
+.button_margin{
+  margin-left: 10px;
+}
+
+.popup_opaque{
+  position: absolute;
+  background-color: #e6e6e6;
+  opacity: 0.65;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.popup_full_opaque{
+  position: absolute;
+  background-color: #e6e6e6;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.popup_full_opaque_white{
+  position: absolute;
+  background-color: white;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.button_white{
+  background: white;
+  border: 1px solid black;
+}
+
+.button_green {
+  background: #547554;
+  color: white;
+}
+
+.button_red {
+  background: #ffb3b3;
+  color: black;
+}
+
+.normal_button:disabled{
+  opacity: 0.3;
+  filter: alpha(opacity=30);
+  color: grey;
+}
