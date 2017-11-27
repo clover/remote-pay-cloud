@@ -34,8 +34,7 @@
   "dependencies": {
     "eventemitter3": "1.1.1",
     "remote-pay-cloud-api": "1.4.2",
-    "typescript": "2.4.1",
-    "react-router-dom": "latest"
+    "typescript": "2.4.1"
   },
   "devDependencies": {
     "@types/node": "7.0.5",
@@ -47,8 +46,6 @@
     "gulp-typescript": "3.2.2",
     "chai": "4.1.2",
     "rxjs": "^5.5.2",
-    "react": "16.1.1",
-    "react-dom": "16.1.1",
     "mocha": "4.0.1",
     "typedoc": "0.9.0",
     "jquery": "^3.2.1",
