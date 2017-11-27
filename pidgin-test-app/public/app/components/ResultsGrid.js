@@ -14,21 +14,32 @@ export default class ResultsGrid extends Component {
             },
             columnDefs: ResultsGrid.createColumnDefs(),
             getNodeChildDetails: function getNodeChildDetails(rowItem) {
-                if (rowItem.testActions) {
-                    if (rowItem.testActions.before) {
-                        rowItem.testActions = rowItem.testActions.concat(rowItem.testActions.before);
+                if (rowItem.before || rowItem.after) {
+                    rowItem.beforeAndAfters = rowItem.beforeAndAfters || [];
+                    if (rowItem.before) {
+                        rowItem.before.forEach(beforeTest => {
+                            beforeTest.name += "(before)";
+                        });
+                        rowItem.beforeAndAfters = rowItem.beforeAndAfters.concat(rowItem.before);
                     }
+                    if (rowItem.after) {
+                        rowItem.after.forEach(afterTest => {
+                            afterTest.name += "(after)";
+                        });
+                        rowItem.beforeAndAfters = rowItem.beforeAndAfters.concat(rowItem.after);
+                    }
+
+                    return {
+                        group: true,
+                        expanded: true,
+                        children: rowItem.beforeAndAfters,
+                        key: rowItem.name
+                    };
+                } else if (rowItem.testActions) {
                     return {
                         group: true,
                         expanded: true,
                         children: rowItem.testActions,
-                        key: rowItem.name
-                    };
-                } else if (rowItem.before) {
-                    return {
-                        group: true,
-                        expanded: true,
-                        children: rowItem.before,
                         key: rowItem.name
                     };
                 } else {
@@ -48,20 +59,6 @@ export default class ResultsGrid extends Component {
     }
 
     static createColumnDefs() {
-        const getSimpleCellRenderer = function() {
-            function SimpleCellRenderer() {};
-            SimpleCellRenderer.prototype.init = function(params) {
-                if (params.node.parent && params.node.parent.data && params.node.parent.data.before) {
-                    this.txt = `${params.value}(before-test)`;
-                } else {
-                    this.txt = params.value;
-                }
-            };
-            SimpleCellRenderer.prototype.getGui = function() {
-                return this.txt;
-            };
-            return SimpleCellRenderer;
-        };
 
         return [
             {
@@ -70,8 +67,7 @@ export default class ResultsGrid extends Component {
                 cellRenderer: "group",
                 width: 100,
                 cellRendererParams: {
-                    padding: 10,
-                    innerRenderer: getSimpleCellRenderer()
+                    padding: 10
                 }
             },
             {
