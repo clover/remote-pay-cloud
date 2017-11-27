@@ -9,7 +9,7 @@ import ResultsGrid from "../components/ResultsGrid"
 import * as lstrNester from "../../test-engine/CloverConnectorLstrNester";
 import * as cloverConnectorTestManager from "../../test-engine/CloverConnectorTestManager";
 export {lstrNester}
-import * as Subjects from "../Subjects"
+import * as EventService from "../EventService"
 
 export default class ChooseTests extends React.Component {
 
@@ -46,7 +46,7 @@ export default class ChooseTests extends React.Component {
             }
         });
 
-        Subjects.create().pairingObservable.subscribe(msg => {
+        EventService.get().pairingObservable.subscribe(msg => {
             this.setState({
                 pairingCodeMsg: msg
             });
@@ -99,7 +99,7 @@ export default class ChooseTests extends React.Component {
         });
 
         let gridApi = this.refs.resGrid.gridApi;
-        Subjects.create().testObservable.subscribe(value => {
+        EventService.get().testObservable.subscribe(value => {
             this.state.results.push(value);
             this.setState({
                 results: this.state.results

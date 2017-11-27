@@ -2,7 +2,7 @@ import Rx from 'rxjs'
 
 const testObservable = new Rx.Subject();
 const pairingObservable = new Rx.Subject();
-const create = () => {
+const get = () => {
 
     return {
         testObservable: testObservable,
@@ -10,4 +10,4 @@ const create = () => {
     }
 };
 
-export {create}
+export {get}

@@ -8,7 +8,7 @@ import {ImageUtil} from "../../../dist/com/clover/util/ImageUtil";
 import {HttpSupport} from "../../../dist/com/clover/util/HttpSupport";
 import * as sdk from "remote-pay-cloud-api";
 
-import * as Subjects from "../app/Subjects"
+import * as EventService from "../app/EventService"
 
 
 const create = (connectorConfig) => {
@@ -147,12 +147,12 @@ const create = (connectorConfig) => {
             onPairingCode: function (pairingCode) {
                 let pairingCodeMessage = `Please enter pairing code ${pairingCode} on the device`;
                 Logger.log(LogLevel.INFO, `    >  ${pairingCodeMessage}`);
-                Subjects.create().pairingObservable.next(pairingCodeMessage);
+                EventService.get().pairingObservable.next(pairingCodeMessage);
 
             },
             onPairingSuccess: function (authToken) {
                 Logger.log(LogLevel.INFO, `    >  Got Pairing Auth Token: ${authToken}`);
-                Subjects.create().pairingObservable.next(undefined);
+                EventService.get().pairingObservable.next(undefined);
 
                 setAuthToken(authToken);
             }

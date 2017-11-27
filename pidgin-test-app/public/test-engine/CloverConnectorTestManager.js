@@ -2,7 +2,7 @@ import * as actionExecutor from "./ActionExecutor";
 import * as testConnector from "./TestConnector";
 import * as iterable from "./util/Iterable";
 import {LogLevel, Logger} from "./util/Logger";
-import * as Subjects from "../app/Subjects"
+import * as EventService from "../app/EventService"
 
 const create = () => {
     return {
@@ -42,7 +42,7 @@ const create = () => {
                 .fail((code) => {
                     const message = (code == 504) ? `A timeout occurred running test case ${testCase.name}` : `An error was encountered running test case ${testCase.name}`;
                     Logger.log(LogLevel.ERROR, `Test Failure: ${message}.`);
-                    Subjects.create().testObservable.next({
+                    EventService.get().testObservable.next({
                         name: testCase.name,
                         message: message
                     });
@@ -103,7 +103,7 @@ const create = () => {
             // action result contains the status information for that action.
             .then((actionResults) => {
                 Logger.log(LogLevel.TRACE, actionResults);
-                Subjects.create().testObservable.next([{
+                EventService.get().testObservable.next([{
                     name: testCase.name,
                     testActions: actionResults
                 }]);
@@ -139,7 +139,7 @@ const create = () => {
         Logger.log(LogLevel.ERROR, `Device Connection Failure: ${message}.  The connection is being closed and no tests will be run on this device.`);
         testConnector.closeConnection();
         if (code === 504) {
-            Subjects.create().pairingObservable.next(message);
+            EventService.get().pairingObservable.next(message);
         }
     };
 
