@@ -29,12 +29,9 @@ If used from a browser, the browser must support WebSockets. For more informatio
 
 ## Examples
 ### Application
-A [sale/refund UI example project](https://github.com/clover/clover-cloud-connector-example) that connects to a device via the Clover Cloud is available either for download and deployment, or direct deployment to a Heroku server.
 
-### Example framework
-Another [project](https://github.com/clover/clover-cloud-connector-unit-examples) composed of small examples that connect to a device via the Clover Cloud is also available either for download and deployment, or direct deployment to a Heroku server.
 
-Please report any questions, comments, or concerns by emailing us at [semi-integrations@clover.com](mailto:semi-integrations@clover.com).
+[Example applications](https://github.com/clover/remote-pay-cloud-examples) that connect to a device via the Clover Cloud Connector are available for download/local deployment.
 
 ### Quick start
 
