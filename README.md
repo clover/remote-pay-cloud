@@ -215,6 +215,8 @@ $(window).on('beforeunload ', function () {
 ## Typescript
 This section demonstrates how you can make a connection to a Clover device using typescript in the browser and the Network Pay Display app.
 
+**NOTE:** The Secure Network Pay Display app is currently in Beta. If you're interested in using a local network connection, please contact Clover's Developer Relations team at [semi-integrations@clover.com](mailto:semi-integrations@clover.com). 
+
 ### Make a sale
 ```
 var $ = require('jQuery');
