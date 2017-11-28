@@ -7,7 +7,6 @@ node {
     download = true
 }
 
-
 task build(type: GulpTask, dependsOn: [installGulp, npmInstall]) {
     args = ['default']
 }

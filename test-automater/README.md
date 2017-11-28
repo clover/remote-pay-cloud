@@ -4,7 +4,7 @@ This application allows for manual execution of our automated test suite.  It as
 
 Run:
 ```
-gradlew build start
+gradlew build startTestApp
 ```
 and navigate to <a href="http://localhost:3000">localhost:3000<a>
 
