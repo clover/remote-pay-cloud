@@ -22,30 +22,41 @@ export default class ChooseTests extends React.Component {
 
         this.constants = Constants.create();
 
-        this.state.testConfig = JSON.parse(window.localStorage.getItem(this.constants.localStorageConfigKey));
-        if (this.state.testConfig) {
-            Logger.log(LogLevel.INFO, `Loaded config from local storage`);
-            this.state.onlyOneConnectorConfig = this.state.testConfig.connectorConfigs.length === 1 ? true : false;
-        } else {
-            jQuery.ajax({
-                type: "GET",
-                url: "../testConfig.json",
-                error: (xhr, status, message) => {
-                    Logger.log(LogLevel.ERROR, `Failure: An error has occurred and the connection configuration could not be loaded: Details ${message}.`);
-                }
-            }).done(testConfig => {
-                this.setState({
-                    testConfig: testConfig
-                });
-                this.state.onlyOneConnectorConfig = this.state.testConfig.connectorConfigs.length === 1 ? true : false;
+        jQuery.ajax({
+            type: "GET",
+            url: "../testConfig.json",
+            error: (xhr, status, message) => {
+                Logger.log(LogLevel.ERROR, `Failure: An error has occurred and the connection configuration could not be loaded: Details ${message}.`);
+            }
+        }).done(testConfig => {
+            this.setState({
+                testConfig: testConfig
             });
-        }
+            this.state.onlyOneConnectorConfig = this.state.testConfig.connectorConfigs.length === 1 ? true : false;
+            this.loadTests();
+        });
 
         this.savedTests = JSON.parse(window.localStorage.getItem(this.constants.localStorageSelectedTests));
 
         this.lNester = lstrNester.create();
-        this.testCases;
 
+        EventService.get().pairingObservable.subscribe(msg => {
+            this.setState({
+                pairingCodeMsg: msg
+            });
+        });
+
+        this.runTests = this.runTests.bind(this);
+        this.onRunTestChange = this.onRunTestChange.bind(this);
+        this.toggleTestConnectors = this.toggleTestConnectors.bind(this);
+        this.handleTestNameChange = this.handleTestNameChange.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
+        this.loadConfig = this.loadConfig.bind(this);
+        this.saveSelect2Selection = this.saveSelect2Selection.bind(this);
+        this.loadTestsIntoSelect2 = this.loadTestsIntoSelect2.bind(this);
+    }
+
+    loadTests() {
         this.lNester.loadTests(this.state.testConfig).done((testDefinitionResponse) => {
             if (this.lNester.validateTestDefinitionResponse(testDefinitionResponse)) {
                 this.testCases = testDefinitionResponse["testCases"];
@@ -62,22 +73,6 @@ export default class ChooseTests extends React.Component {
                 });
             }
         });
-
-        EventService.get().pairingObservable.subscribe(msg => {
-            this.setState({
-                pairingCodeMsg: msg
-            });
-        });
-
-        this.runTests = this.runTests.bind(this);
-        this.onRunTestChange = this.onRunTestChange.bind(this);
-        this.toggleTestConnectors = this.toggleTestConnectors.bind(this);
-        this.handleTestNameChange = this.handleTestNameChange.bind(this);
-        this.toggleModal = this.toggleModal.bind(this);
-        this.loadConfig = this.loadConfig.bind(this);
-        this.saveSelect2Selection = this.saveSelect2Selection.bind(this);
-        this.loadTestsIntoSelect2 = this.loadTestsIntoSelect2.bind(this);
-
     }
 
     onRunTestChange() {
@@ -86,7 +81,6 @@ export default class ChooseTests extends React.Component {
         let testCasesToRun = _.map(this.selectedTestCasesToRun, (fileName) => {
             return this.testCases[fileName];
         });
-
 
         this.setState({
             results: testCasesToRun
@@ -149,7 +143,6 @@ export default class ChooseTests extends React.Component {
     }
 
     render() {
-
         let closeCallback = () => {
             this.state.pairingCodeMsg = undefined;
         };
