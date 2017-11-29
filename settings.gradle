@@ -1,1 +1,1 @@
-include 'test-automater'
+include 'integration-test'

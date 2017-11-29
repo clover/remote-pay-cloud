@@ -1,6 +1,6 @@
 .idea
 node_modules
-test-automater
+integration-test
 test
 remote-pay-cloud.iml
 npm-debug.log
