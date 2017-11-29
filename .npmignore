@@ -1,4 +1,9 @@
-/.idea
-/node_modules/
+.idea
+node_modules
+test-automater
+test
 remote-pay-cloud.iml
 npm-debug.log
+.gradle
+gradle
+src

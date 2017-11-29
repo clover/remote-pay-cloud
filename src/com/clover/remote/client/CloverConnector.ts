@@ -468,10 +468,10 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
 
     public vaultCard(cardEntryMethods: number): void {
         if (!this.device || !this.isReady) {
-            this.deviceObserver.onVaultCardResponse(false, sdk.remotepay.ResponseCode.ERROR, "Device connection Error", "In vaultCard: The Clover device is not connected.", null);
+            this.deviceObserver.onVaultCardResponseInternal(false, sdk.remotepay.ResponseCode.ERROR, "Device connection Error", "In vaultCard: The Clover device is not connected.", null);
         }
         else if (!this.merchantInfo.getSupportsVaultCards()) {
-            this.deviceObserver.onVaultCardResponse(false, sdk.remotepay.ResponseCode.UNSUPPORTED, "Merchant Configuration Validation Error", "In vaultCard: VaultCard/Payment Tokens are not enabled for the payment gateway.", null);
+            this.deviceObserver.onVaultCardResponseInternal(false, sdk.remotepay.ResponseCode.UNSUPPORTED, "Merchant Configuration Validation Error", "In vaultCard: VaultCard/Payment Tokens are not enabled for the payment gateway.", null);
         }
         else {
             this.device.doVaultCard(cardEntryMethods ? cardEntryMethods : this.getCardEntryMethods());
@@ -1065,6 +1065,7 @@ export namespace CloverConnector {
 
         public onAuthTipAdjusted(paymentId: string, tipAmount: number, success: boolean): void;
         public onAuthTipAdjusted(result: sdk.remotepay.ResponseCode, reason: string, message: string): void;
+        // Weird mechanism to overload via TypeScript - https://blog.mariusschulz.com/2016/08/18/function-overloads-in-typescript
         public onAuthTipAdjusted(resultStatusOrPaymentId: any, reasonOrTipAmount: any, messageOrSuccess: any): void {
             if (typeof resultStatusOrPaymentId == 'string') {
                 if (messageOrSuccess) {
@@ -1185,6 +1186,7 @@ export namespace CloverConnector {
         public onFinishOk(payment: sdk.payments.Payment, signature: sdk.base.Signature, requestInfo: string): void;
         public onFinishOk(credit: sdk.payments.Credit): void;
         public onFinishOk(refund: sdk.payments.Refund): void;
+        // Weird mechanism to overload via TypeScript - https://blog.mariusschulz.com/2016/08/18/function-overloads-in-typescript
         public onFinishOk(paymentCreditOrRefund: any, signature?: sdk.base.Signature, requestInfo?: string): void {
             if (paymentCreditOrRefund instanceof sdk.payments.Payment /* && signature */) {
                 this.onFinishOkPayment(paymentCreditOrRefund, signature, requestInfo);
@@ -1348,20 +1350,17 @@ export namespace CloverConnector {
             this.lastPRR = response; // set this so we have the appropriate information for when onFinish(Refund) is called
         }
 
-        public onVaultCardResponse(vaultedCard: sdk.payments.VaultedCard, code: string, reason: string): void;
-        public onVaultCardResponse(success: boolean, code: sdk.remotepay.ResponseCode, reason: string, message: string, vaultedCard: sdk.payments.VaultedCard): void;
-        public onVaultCardResponse(vaultedCardOrSuccess: any, code: any, reason: string, message?: string, vaultedCard?: sdk.payments.VaultedCard): void {
-            if (vaultedCardOrSuccess instanceof sdk.payments.VaultedCard) {
-                let success: boolean = (code == sdk.remotepay.ResponseCode.SUCCESS);
-                this.onVaultCardResponse(success, success ? sdk.remotepay.ResponseCode.SUCCESS : sdk.remotepay.ResponseCode.FAIL, null, null, vaultedCardOrSuccess);
-            }
-            else {
-                this.cloverConnector.device.doShowWelcomeScreen();
-                let response: sdk.remotepay.VaultCardResponse = new sdk.remotepay.VaultCardResponse();
-                response.setCard(vaultedCard);
-                CloverConnector.populateBaseResponse(response, vaultedCardOrSuccess, code, reason, message);
-                this.cloverConnector.broadcaster.notifyOnVaultCardRespose(response);
-            }
+        public onVaultCardResponse(vaultedCard: sdk.payments.VaultedCard, code: string, reason: string): void {
+            let success: boolean = (code == sdk.remotepay.ResponseCode.SUCCESS);
+            this.onVaultCardResponseInternal(success, success ? sdk.remotepay.ResponseCode.SUCCESS : sdk.remotepay.ResponseCode.FAIL, null, null, vaultedCard);
+        }
+
+        public onVaultCardResponseInternal(success: boolean, code: sdk.remotepay.ResponseCode, reason: string, message: string, vaultedCard: sdk.payments.VaultedCard): void {
+            this.cloverConnector.device.doShowWelcomeScreen();
+            let response: sdk.remotepay.VaultCardResponse = new sdk.remotepay.VaultCardResponse();
+            response.setCard(vaultedCard);
+            CloverConnector.populateBaseResponse(response, success, code, reason, message);
+            this.cloverConnector.broadcaster.notifyOnVaultCardRespose(response);
         }
 
         public onCapturePreAuth(statusOrCode: any,
