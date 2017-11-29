@@ -16,17 +16,20 @@ export default class ResultsGrid extends Component {
             getNodeChildDetails: function getNodeChildDetails(rowItem) {
                 if (rowItem.before || rowItem.after) {
                     rowItem.beforeAndAfters = rowItem.beforeAndAfters || [];
-                    if (rowItem.before) {
-                        rowItem.before.forEach(beforeTest => {
-                            beforeTest.name += "(before)";
-                        });
-                        rowItem.beforeAndAfters = rowItem.beforeAndAfters.concat(rowItem.before);
-                    }
-                    if (rowItem.after) {
-                        rowItem.after.forEach(afterTest => {
-                            afterTest.name += "(after)";
-                        });
-                        rowItem.beforeAndAfters = rowItem.beforeAndAfters.concat(rowItem.after);
+                    if (rowItem.beforeAndAfters.length === 0) {
+                        //Don't reinitialize
+                        if (rowItem.before) {
+                            rowItem.before.forEach(beforeTest => {
+                                beforeTest.name += "(before)";
+                            });
+                            rowItem.beforeAndAfters = rowItem.beforeAndAfters.concat(rowItem.before);
+                        }
+                        if (rowItem.after) {
+                            rowItem.after.forEach(afterTest => {
+                                afterTest.name += "(after)";
+                            });
+                            rowItem.beforeAndAfters = rowItem.beforeAndAfters.concat(rowItem.after);
+                        }
                     }
 
                     return {

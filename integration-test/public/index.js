@@ -1,10 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { BrowserRouter } from 'react-router-dom'
-import Layout from './app/Layout';
+import ChooseTests from "./app/ChooseTests";
 
 render((
-    <BrowserRouter>
-        <Layout />
-    </BrowserRouter>
+        <ChooseTests/>
 ), document.getElementById('react-root'));
