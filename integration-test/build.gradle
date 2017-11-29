@@ -28,13 +28,13 @@ task build(type: NodeTask, dependsOn: [npmInstall, sass]) {
     script = [nodeModulesPath + '/webpack/bin/webpack']
 }
 
-task watchWebpack(type: NodeTask, dependsOn: npmInstall) {
+task watchTestApp(type: NodeTask, dependsOn: npmInstall) {
     script = [nodeModulesPath + '/webpack/bin/webpack']
     args = ['--watch']
 }
 
 task startTestApp(type: NodeTask, dependsOn: [npmInstall, build]) {
-    script = ['./test-automater/server.js']
+    script = ['./integration-test/server.js']
 }
 
 defaultTasks 'build'

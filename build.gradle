@@ -11,9 +11,9 @@ task build(type: GulpTask, dependsOn: [installGulp, npmInstall]) {
     args = ['default']
 }
 
+// Executes the Unit Tests.
 task test(type: NpmTask, dependsOn: [npmInstall, build]) {
     args = ['test']
 }
-
 
 defaultTasks 'build'
