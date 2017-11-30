@@ -47,6 +47,7 @@ export default class TestRunner extends React.Component {
         });
 
         this.runTests = this.runTests.bind(this);
+        this.toggleSelections = this.toggleSelections.bind(this);
         this.onRunTestChange = this.onRunTestChange.bind(this);
         this.toggleTestConnectors = this.toggleTestConnectors.bind(this);
         this.handleTestNameChange = this.handleTestNameChange.bind(this);
@@ -151,6 +152,14 @@ export default class TestRunner extends React.Component {
         }));
     }
 
+    toggleSelections(event) {
+        let selectedItems = [];
+        if (event && event.target.checked) {
+            selectedItems = jQuery(this.refs.allTestCasesSelect2.el).find('option').map(function() { return this.value });
+        }
+        this.refs.allTestCasesSelect2.el.val(selectedItems).trigger('change');
+    }
+
     render() {
         let closeCallback = () => {
             this.state.pairingCodeMsg = undefined;
@@ -175,7 +184,6 @@ export default class TestRunner extends React.Component {
                         </button>
                     </div>
                 </div>}
-
                 <br/>
                 <div className="column_plain center">
                     <img className="clover_logo" src={"images/clover_logo.png"}/>
@@ -183,7 +191,6 @@ export default class TestRunner extends React.Component {
                 <br/>
                 <br/>
                 {this.state.pairingCodeMsg && <Popup message={this.state.pairingCodeMsg} closeCallback={closeCallback}/>}
-
                 <Modal show={this.state.displayModal} onHide={this.toggleModal}>
                     <Modal.Header closeButton>
                         <Modal.Title>Save Seleted Tests</Modal.Title>
@@ -196,11 +203,14 @@ export default class TestRunner extends React.Component {
                         <Button onClick={this.toggleModal}>Close</Button>
                     </Modal.Footer>
                 </Modal>
-
+                <div className="column_plain center">
+                    <span>Select/Deselect all tests: <input type="checkbox" onChange={this.toggleSelections}/></span>
+                </div>
                 <div className="column_plain center">
                     <div>
                         <Select2
                             style={{width: '400px'}}
+                            id="testCaseSelect"
                             ref="allTestCasesSelect2"
                             multiple
                             onChange={this.onRunTestChange}
@@ -214,15 +224,20 @@ export default class TestRunner extends React.Component {
                             }
                         />
                         <ButtonGroup style={{position: "absolute"}}>
-                            <Button bsStyle="primary" className={"btn-margin"} onClick={this.runTests}>Run Tests</Button>
-                            <Button bsStyle="default" className={"btn-margin"} onClick={this.toggleModal}>Save Tests</Button>
-                            <DropdownButton title="Load Test Set" id="bg-nested-dropdown">
-                                {menuItems}
-                            </DropdownButton>
+                            <Button bsStyle="primary" className={"btn-margin"} onClick={this.runTests}>Execute</Button>
                         </ButtonGroup>
                     </div>
                 </div>
-                <br/>
+                <br/><br/>
+                <div className="column_plain center">
+                    <ButtonGroup style={{position: "absolute"}}>
+                        <Button bsStyle="default" className={"btn-margin"} onClick={this.toggleModal}>Save selected tests as suite</Button>
+                        <DropdownButton title="Load suite" id="bg-nested-dropdown">
+                            {menuItems}
+                        </DropdownButton>
+                    </ButtonGroup>
+                </div>
+                <br/><br/>
                 <div className="column_plain center">
                     <Button bsStyle="default" className={"btn-margin"} onClick={this.toggleTestConnectors}>{this.state.displayConnectorConfig ? "Hide Connector Config" : "View Test Connector Configs"}</Button>
                     {this.state.displayConnectorConfig && <textarea rows="15" cols="80" defaultValue={JSON.stringify(this.state.testConfig, undefined, 4)}></textarea>}
