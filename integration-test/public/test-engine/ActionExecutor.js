@@ -46,7 +46,7 @@ const create = (resultCache, testConnector) => {
             const action = actionItr.next().value;
             const beforeActionItr = iterable.makeIterator(action["before"] || []);
             const executeBeforeActionsDeferred = new jQuery.Deferred();
-            executeBeforeOrAfterActions(executeBeforeActionsDeferred, beforeActionItr, actionResults)
+            executeBeforeOrAfterActions(executeBeforeActionsDeferred, beforeActionItr)
                 .then(() => {
                     const iterations = lodash.get(action, ["parameters", "iterations"], 1);
                     let allActionIterations = [];
@@ -61,7 +61,7 @@ const create = (resultCache, testConnector) => {
                 .then(() => {
                     const executeAfterActionsDeferred = new jQuery.Deferred();
                     const afterActionItr = iterable.makeIterator(action["after"] || []);
-                    return executeBeforeOrAfterActions(executeAfterActionsDeferred, afterActionItr, actionResults, false);
+                    return executeBeforeOrAfterActions(executeAfterActionsDeferred, afterActionItr, false);
                 })
                 .then(() => {
                     executeActionsInternal(actionsCompleteDeferred, actionItr, actionResults);
@@ -79,23 +79,25 @@ const create = (resultCache, testConnector) => {
      * @param actionResults
      * @param before
      */
-    function executeBeforeOrAfterActions(executeActionsDeferred, actionItr, actionResults, before = true) {
+    function executeBeforeOrAfterActions(executeActionsDeferred, actionItr, before = true) {
         let action = null;
         try {
             const order = before ? "before" : "after";
             if (actionItr.hasNext()) {
                 action = actionItr.next().value;
                 Logger.log(`Executing ${order} action ${action.name}.`);
-                executeActionInternal(action, actionResults)
+                // Set the action as before/after for reporting purposes.
+                //before ? action.before = true : action.before = false;
+                executeActionInternal(action, [])
                     .then(() => {
-                        executeBeforeOrAfterActions(executeActionsDeferred, actionItr, actionResults, before)
+                        executeBeforeOrAfterActions(executeActionsDeferred, actionItr,  before)
                     });
             } else {
                 executeActionsDeferred.resolve();
             }
         } catch (e) {
             const beforeOrAfter = before ? "before" : "after";
-            handleActionFailure(action, actionResults, `An error has occurred executing ${beforeOrAfter} action.  Details: ${e.message}`, true);
+            handleActionFailure(action, [], `An error has occurred executing ${beforeOrAfter} action.  Details: ${e.message}`, true);
             executeActionsDeferred.resolve();
         }
         return executeActionsDeferred.promise();

@@ -1,8 +1,8 @@
 import React, {Component} from "react";
-
 import {AgGridReact} from "ag-grid-react";
 
 export default class ResultsGrid extends Component {
+
     constructor(props) {
         super(props);
 
@@ -17,7 +17,7 @@ export default class ResultsGrid extends Component {
                 if (rowItem.before || rowItem.after) {
                     rowItem.beforeAndAfters = rowItem.beforeAndAfters || [];
                     if (rowItem.beforeAndAfters.length === 0) {
-                        //Don't reinitialize
+                        // Don't reinitialize
                         if (rowItem.before) {
                             rowItem.before.forEach(beforeTest => {
                                 beforeTest.name += "(before)";
@@ -31,7 +31,6 @@ export default class ResultsGrid extends Component {
                             rowItem.beforeAndAfters = rowItem.beforeAndAfters.concat(rowItem.after);
                         }
                     }
-
                     return {
                         group: true,
                         expanded: true,
@@ -54,15 +53,22 @@ export default class ResultsGrid extends Component {
         this.onGridReady = this.onGridReady.bind(this);
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if (this.gridApi) {
+            // Update the grid data, only if it changed.
+            if (!this.props.rowData.equals(prevProps.rowData)) {
+                this.gridApi.setRowData(this.props.rowData.toJS());
+            }
+        }
+    }
+
     onGridReady(params) {
         this.gridApi = params.api;
         this.columnApi = params.columnApi;
-
         this.gridApi.sizeColumnsToFit();
     }
 
     static createColumnDefs() {
-
         return [
             {
                 headerName: "Name",
@@ -74,14 +80,16 @@ export default class ResultsGrid extends Component {
                 }
             },
             {
-                headerName: "Pass",
+                headerName: "Status",
                 field: "result.pass",
                 width: 60,
-                cellStyle: function(params) {
+                cellRenderer: (params) => {
                     if (params.value) {
-                        return {color: 'black', backgroundColor: 'green'};
+                        return `<span class="text-success"><b>Pass</b></span>`;
                     } else if (params.value === false) {
-                        return {color: 'black', backgroundColor: 'red'};
+                        return `<span class="text-danger"><b>Fail</b></span>`;
+                    } else {
+                        return `<span>...</span>`;
                     }
                 }
             },
@@ -96,13 +104,10 @@ export default class ResultsGrid extends Component {
         return (
             <div style={{height: 400, width: "100%"}} className="ag-fresh">
                 <AgGridReact
-                    // properties
                     columnDefs={this.state.columnDefs}
-                    rowData={this.props.rowData}
+                    rowData={this.props.rowData.toJS()}
                     gridOptions={this.state.gridOptions}
                     getNodeChildDetails={this.state.getNodeChildDetails}
-
-                    // events
                     onGridReady={this.onGridReady}>
                 </AgGridReact>
             </div>

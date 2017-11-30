@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
-import ChooseTests from "./app/ChooseTests";
+import TestRunner from "./app/TestRunner";
 
 render((
-        <ChooseTests/>
+        <TestRunner/>
 ), document.getElementById('react-root'));

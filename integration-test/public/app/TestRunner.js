@@ -1,23 +1,23 @@
-import React from 'react'
-import Select2 from 'react-select2-wrapper';
-import * as Constants from '../Constants'
-import Popup from "./components/Popup"
-import ResultsGrid from "./components/ResultsGrid"
+import React from "react";
+import Select2 from "react-select2-wrapper";
+import * as Constants from "../Constants";
+import Popup from "./components/Popup";
+import ResultsGrid from "./components/ResultsGrid";
 
-import { LogLevel, Logger } from '../test-engine/util/Logger'
+import {List, fromJS} from "immutable";
+import {LogLevel, Logger} from "../test-engine/util/Logger";
 import * as lstrNester from "../test-engine/CloverConnectorLstrNester";
 import * as cloverConnectorTestManager from "../test-engine/CloverConnectorTestManager";
-export {lstrNester}
 import * as EventService from "./EventService"
 import {Button, ButtonGroup, DropdownButton, MenuItem, Modal} from "react-bootstrap";
 
-export default class ChooseTests extends React.Component {
+export default class TestRunner extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
             testCases: ["loading..."],
-            results: []
+            results: List()
         };
 
         this.constants = Constants.create();
@@ -67,7 +67,6 @@ export default class ChooseTests extends React.Component {
                         text: value.name
                     });
                 });
-
                 this.setState({
                     testCases: testCasesToRun
                 });
@@ -76,14 +75,8 @@ export default class ChooseTests extends React.Component {
     }
 
     onRunTestChange() {
-        this.selectedTestCasesToRun = this.refs.allTestCasesSelect2.el.val();
-
-        let testCasesToRun = _.map(this.selectedTestCasesToRun, (fileName) => {
-            return this.testCases[fileName];
-        });
-
         this.setState({
-            results: testCasesToRun
+            results: this.getTestCasesToRun()
         });
     }
 
@@ -126,20 +119,36 @@ export default class ChooseTests extends React.Component {
     }
 
     runTests() {
-        let testCasesToRun = _.map(this.selectedTestCasesToRun, (fileName) => {
-            return this.testCases[fileName];
+        const testCasesToRun = this.getTestCasesToRun();
+
+        // Reset the state so that results are cleared for each test run.
+        this.setState({
+            results: testCasesToRun
         });
 
-        let gridApi = this.refs.resGrid.gridApi;
-        EventService.get().testObservable.subscribe(value => {
-            this.state.results.push(value);
+        EventService.get().testObservable.subscribe(update => {
+            // Update the results, if a test name match is found.
+            // Currently, assumes there are no duplicate test names.
+            const updatedResults = this.state.results.update(
+                this.state.results.findIndex(function(item) {
+                    return item.get("name") === update.name;
+                }), function() {
+                    return fromJS(update);
+                }
+            );
             this.setState({
-                results: this.state.results
+                results: updatedResults
             });
-            gridApi.refreshCells();
         });
 
-        cloverConnectorTestManager.create().execute(this.state.testConfig, testCasesToRun);
+        cloverConnectorTestManager.create().execute(this.state.testConfig, testCasesToRun.toJS());
+    }
+
+    getTestCasesToRun() {
+        this.selectedTestCasesToRun = this.refs.allTestCasesSelect2.el.val();
+        return fromJS(lodash.map(this.selectedTestCasesToRun, (fileName) => {
+            return this.testCases[fileName];
+        }));
     }
 
     render() {
@@ -160,7 +169,7 @@ export default class ChooseTests extends React.Component {
                 {this.state.onlyOneConnectorConfig &&
                 <div className="column_plain center">
                     <div className="alert alert-danger alert-dismissible show" style={{width: "50%"}} role="alert">
-                        <strong>Warning!</strong> You should really be running with one Network and one Cloud connector!
+                        <strong>Warning!</strong> To completely test the JavaScript SDK you should be running with one Network and one Cloud connector!
                         <button type="button" className="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -204,8 +213,6 @@ export default class ChooseTests extends React.Component {
                                 }
                             }
                         />
-
-
                         <ButtonGroup style={{position: "absolute"}}>
                             <Button bsStyle="primary" className={"btn-margin"} onClick={this.runTests}>Run Tests</Button>
                             <Button bsStyle="default" className={"btn-margin"} onClick={this.toggleModal}>Save Tests</Button>
@@ -222,9 +229,8 @@ export default class ChooseTests extends React.Component {
                 </div>
                 <br/>
                 <br/>
-                <ResultsGrid ref="resGrid" rowData={this.state.results}/>
+                <ResultsGrid rowData={this.state.results}/>
             </div>
-
         );
     }
 }

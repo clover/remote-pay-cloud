@@ -1,4 +1,4 @@
-import Rx from 'rxjs'
+import Rx from "rxjs";
 
 const testObservable = new Rx.Subject();
 const pairingObservable = new Rx.Subject();
