@@ -169,7 +169,7 @@ export default class TestRunner extends React.Component {
                 {this.state.onlyOneConnectorConfig &&
                 <div className="column_plain center">
                     <div className="alert alert-danger alert-dismissible show" style={{width: "50%"}} role="alert">
-                        <strong>Warning!</strong> To completely test the JavaScript SDK you should be running with one Network and one Cloud connector!
+                        <strong>Warning!</strong> To completely test the JavaScript SDK you should be running with one Network and one Cloud connector configuration!
                         <button type="button" className="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
