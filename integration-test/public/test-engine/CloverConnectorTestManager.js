@@ -48,6 +48,7 @@ const create = () => {
                     });
                 });
         } else {
+            testConnector.closeConnection();
             Logger.log(LogLevel.INFO, "All test cases have been executed.");
         }
     };
@@ -103,10 +104,10 @@ const create = () => {
             // action result contains the status information for that action.
             .then((actionResults) => {
                 Logger.log(LogLevel.TRACE, actionResults);
-                EventService.get().testObservable.next([{
+                EventService.get().testObservable.next({
                     name: testCase.name,
                     testActions: actionResults
-                }]);
+                });
                 // If there is a delay between test executions
                 const delayBetween = lodash.get(testCase, "delayBetweenExecutions", 0);
                 if (delayBetween > 0) {
