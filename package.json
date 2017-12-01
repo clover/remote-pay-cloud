@@ -1,6 +1,6 @@
 {
   "name": "remote-pay-cloud",
-  "version": "1.4.3",
+  "version": "1.4.3-alpha.8",
   "description": "Access Clover devices through the cloud.",
   "keywords": [
     "clover",
@@ -29,6 +29,7 @@
     "updateVersion": "scripts/postversion.sh \"$npm_package_version\"",
     "build-pidgin": "webpack --config ./pidgin/webpack.config.js",
     "start-pidgin": "npm run build-pidgin && node ./pidgin/server.js",
+    "dev-publish": "npm version prerelease --no-git-tag-version && npm publish --tag dev",
     "test": "mocha test/unit-tests --exit"
   },
   "dependencies": {
