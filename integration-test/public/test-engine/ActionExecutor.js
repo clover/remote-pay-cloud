@@ -2,13 +2,15 @@ import * as testExecutor from "./TestExecutor";
 import {LogLevel, Logger} from "./util/Logger";
 import * as iterable from "./util/Iterable";
 import * as testUtils from "./util/TestUtils";
+import * as EventService from "../app/EventService";
+import * as ActionStatus from "./ActionStatus";
 
 /**
  * Utility for executing actions.
  *
  * @returns {{executeActions: executeActions, executeAction: executeAction}}
  */
-const create = (resultCache, testConnector) => {
+const create = (resultCache, testConnector, testCase) => {
 
     return {
 
@@ -130,7 +132,21 @@ const create = (resultCache, testConnector) => {
 
     function executeActionInternal(action, actionResults) {
         Logger.log(LogLevel.INFO, `Executing action ${action.name}`);
+
+        if (!action.result) {
+            action.result = {};
+        }
+
+        action.result.status = ActionStatus.get().executing;
         actionResults.push(action);
+
+        if (testCase) {
+            EventService.get().testObservable.next({
+                name: testCase.name,
+                testActions: actionResults
+            });
+        }
+
         const actionCompleteDeferred = new jQuery.Deferred();
         const executor = testExecutor.create(action, actionCompleteDeferred, testConnector, resultCache);
         // Update the listener with the current executor

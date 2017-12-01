@@ -2,7 +2,7 @@ import {JSONToCustomObject} from "../../../dist/com/clover/json/JSONToCustomObje
 import * as exchangeConstants from "./ExchangeConstants";
 import {LogLevel, Logger} from "./util/Logger";
 import * as testUtils from "./util/TestUtils";
-import * as sdk from "remote-pay-cloud-api";
+import * as ActionStatus from "./ActionStatus";
 
 const create = (action, actionCompleteDeferred, testConnector, storedValues) => {
 
@@ -20,7 +20,10 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
             const executeActionDeferred = new jQuery.Deferred();
 
             // Record request time
-            action.result = {};
+            if (!action.result) {
+                action.result = {};
+            }
+
             action.result.requestTime = new Date();
 
             // Wait for a delay, if any
@@ -59,7 +62,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                 if (expectSuccess) {
                     responseError = lodash.get(remoteResponse, "result", "") === "FAIL" || !lodash.get(remoteResponse, "success", true);
                     if (responseError) {
-                        action.result.pass = false;
+                        action.result.status = ActionStatus.get().fail;
                         action.result.message = remoteResponse["message"] || remoteResponse["reason"] || `A failure occurred processing ${action.name}.`;
                     }
                 }
@@ -82,14 +85,15 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                         }
                     }
 
-                    if (action.result.pass !== false) {
-                        action.result.pass = true;
+                    if (action.result.status !== ActionStatus.get().fail) {
+                        action.result.status = ActionStatus.get().pass;
                     }
                 }
 
                 // Resolve the responses deferred.
                 if (resultDeferred) {
-                    Logger.log(LogLevel.Info, `Action ${action.result.pass} and ${action.result.message}.`);
+                    const message = action.result.message || "n/a";
+                    Logger.log(LogLevel.Info, `Action status ${action.result.status} and ${message}.`);
                     resultDeferred.resolve();
                 }
             }

@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {AgGridReact} from "ag-grid-react";
+import * as ActionStatus from "../../test-engine/ActionStatus";
 
 export default class ResultsGrid extends Component {
 
@@ -81,15 +82,17 @@ export default class ResultsGrid extends Component {
             },
             {
                 headerName: "Status",
-                field: "result.pass",
+                field: "result.status",
                 width: 60,
                 cellRenderer: (params) => {
-                    if (params.value) {
-                        return `<span class="text-success"><b>Pass</b></span>`;
-                    } else if (params.value === false) {
-                        return `<span class="text-danger"><b>Fail</b></span>`;
+                    if (params.value === ActionStatus.get().pass) {
+                        return `<span class="text-success"><b>${params.value}</b></span>`;
+                    } else if (params.value === ActionStatus.get().fail) {
+                        return `<span class="text-danger"><b>${params.value}</b></span>`;
+                    } else if (params.value === ActionStatus.get().executing) {
+                        return `<span class="text-info"><b>... ${params.value}</b></span>`;
                     } else {
-                        return `<span>...</span>`;
+                        return `<span></span>`;
                     }
                 }
             },
@@ -102,7 +105,7 @@ export default class ResultsGrid extends Component {
 
     render() {
         return (
-            <div style={{height: 400, width: "100%"}} className="ag-fresh">
+            <div style={{height: 500, width: "100%"}} className="ag-fresh">
                 <AgGridReact
                     columnDefs={this.state.columnDefs}
                     rowData={this.props.rowData.toJS()}

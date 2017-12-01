@@ -99,7 +99,7 @@ const create = () => {
             allTestActions = allTestActions.concat(nextIterationTestActions);
         }
         const actionItr = iterable.makeIterator(allTestActions);
-        actionExecutor.create(resultCache, testConnector).executeActions(actionItr)
+        actionExecutor.create(resultCache, testConnector, testCase).executeActions(actionItr)
             // actionResults is an array of all actions that were executed. The 'result' property on each
             // action result contains the status information for that action.
             .then((actionResults) => {
