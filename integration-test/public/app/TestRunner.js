@@ -10,6 +10,7 @@ import * as lstrNester from "../test-engine/CloverConnectorLstrNester";
 import * as cloverConnectorTestManager from "../test-engine/CloverConnectorTestManager";
 import * as EventService from "./EventService"
 import {Button, ButtonGroup, DropdownButton, MenuItem, Modal} from "react-bootstrap";
+import * as ActionStatus from "../test-engine/ActionStatus";
 
 export default class TestRunner extends React.Component {
 
@@ -134,6 +135,25 @@ export default class TestRunner extends React.Component {
                 this.state.results.findIndex(function(item) {
                     return item.get("name") === update.name;
                 }), function() {
+                    update.result = {};
+                    if (update.testActions) {
+                        // Roll-up action status to the test.
+                        for (let i = 0; i < update.testActions.length; i++) {
+                            const action = update.testActions[i];
+                            if (action.result) {
+                                if (action.result !== ActionStatus.get().pass) {
+                                    update.result.status = action.result.status;
+                                    break;
+                                }
+                            } else {
+                                update.result.status = ActionStatus.get().executing;
+                                break;
+                            }
+                        }
+                        if (!update.result.status) {
+                            update.result.status = ActionStatus.get().pass;
+                        }
+                    }
                     return fromJS(update);
                 }
             );
