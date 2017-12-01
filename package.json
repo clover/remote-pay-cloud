@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "eventemitter3": "1.1.1",
-    "remote-pay-cloud-api": "1.4.2",
+    "remote-pay-cloud-api": "dev",
     "typescript": "2.4.1"
   },
   "devDependencies": {
