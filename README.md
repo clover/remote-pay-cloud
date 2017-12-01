@@ -15,7 +15,7 @@ Current version: 1.4.2
 
 - Macintosh
 - Linux
-- Windows (for version 1.3.2 of the SDK only)
+- Windows (for version 1.3.2 and >=1.4.2)
 
 ## Overview
 This SDK provides an API that enables your JavaScript point-of-sale (POS) system to communicate with a [Clover® payment device](https://www.clover.com/pos-hardware/). Learn more about [Clover integrations](https://www.clover.com/integrations).
