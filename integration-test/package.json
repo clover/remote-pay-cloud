@@ -15,7 +15,7 @@
     "immutable": "^3.8.2",
     "select2": "3.5.1",
     "webpack": "3.8.1",
-    "remote-pay-cloud": "1.4.2",
+    "remote-pay-cloud": "dev",
     "react-select2-wrapper": "1.0.4-beta5",
     "babel-cli": "^6.11.4",
     "babel-core": "^6.13.2",
