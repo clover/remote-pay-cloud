@@ -5,7 +5,7 @@ const create = () => {
     return {
 
         /**
-         * Fire off the test engine.
+         * Fire off the test engine.  This function can be used to manually run tests (outside of the automater UI).
          *
          * @param testConfig
          */
@@ -23,8 +23,6 @@ const create = () => {
                 Logger.log(LogLevel.ERROR, "Failure.  The tests could not be executed the configuration is not valid.");
             }
         },
-
-
 
         /**
          * Loads the test definitions returns a Promise.
@@ -63,7 +61,6 @@ const create = () => {
         }
     }
 
-
     /**
      * Validates that the test config is valid.
      *
@@ -83,7 +80,7 @@ const create = () => {
             }
         });
         return isValid;
-    };
+    }
 
     /**
      * Validates that each connector config. within the test config is valid.
@@ -121,8 +118,7 @@ const create = () => {
             });
         }
         return isValid;
-    };
-
+    }
 
 };
 
