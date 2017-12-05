@@ -18,23 +18,23 @@ export default class TestRunner extends React.Component {
         super(props);
         this.state = {
             testCases: ["loading..."],
-            results: List()
+            results: List(),
+            testConfig: {}
         };
 
         this.constants = Constants.create();
 
         jQuery.ajax({
             type: "GET",
-            url: "../testConfig.json",
-            error: (xhr, status, message) => {
-                Logger.log(LogLevel.ERROR, `Failure: An error has occurred and the connection configuration could not be loaded: Details ${message}.`);
-            }
-        }).done(testConfig => {
+            url: "../testConfig.json"
+        }).done((testConfig) => {
             this.setState({
-                testConfig: testConfig
+                testConfig: testConfig,
             });
-            this.state.onlyOneConnectorConfig = this.state.testConfig.connectorConfigs.length === 1 ? true : false;
             this.loadTests();
+        }).fail((xhr, status, error) => {
+            Logger.log(LogLevel.ERROR, `Failure: An error has occurred and the connection configuration could not be loaded: Details ${error}.`);
+            this.state.noTestConfig = true;
         });
 
         this.savedTests = JSON.parse(window.localStorage.getItem(this.constants.localStorageSelectedTests));
@@ -180,37 +180,57 @@ export default class TestRunner extends React.Component {
         this.refs.allTestCasesSelect2.el.val(selectedItems).trigger('change');
     }
 
-    render() {
-        let closeCallback = () => {
-            this.state.pairingCodeMsg = undefined;
-        };
+    isTestConfigValid() {
+        const testConfig = this.state.testConfig;
+        return testConfig && testConfig.connectorConfigs && testConfig.connectorConfigs.length > 0;
+    }
 
-        let savedTests = JSON.parse(window.localStorage.getItem(this.constants.localStorageSelectedTests));
-        let menuItems = [];
-        if (savedTests) {
-            lodash.forEach(savedTests, (value, key) => {
-                menuItems.push(<MenuItem key={key} onSelect={() => {this.loadTestsIntoSelect2(value)}}>{key}</MenuItem>);
-            });
+    getConnectorConfigWarning() {
+        let warning = null;
+        const testConfig = this.state.testConfig;
+        if (this.isTestConfigValid() && testConfig.connectorConfigs.length === 1) {
+            warning = <div className="column_plain center">
+                <div className="alert alert-danger alert-dismissible show" style={{width: "50%"}} role="alert">
+                    <strong>Warning!</strong> To completely test the JavaScript SDK you should be running with one Network and one Cloud connector configuration!
+                    <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
         }
+        return warning;
+    }
 
-        return (
-            <div>
-                {this.state.onlyOneConnectorConfig &&
-                <div className="column_plain center">
-                    <div className="alert alert-danger alert-dismissible show" style={{width: "50%"}} role="alert">
-                        <strong>Warning!</strong> To completely test the JavaScript SDK you should be running with one Network and one Cloud connector configuration!
-                        <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                </div>}
+    noTestConfigError() {
+        let noTestConfig = null;
+        if (!this.isTestConfigValid()) {
+            noTestConfig = <Popup message="testConfig.json is required.  Please create a testConfig file and place it in integration-test/public.  Please see exampleTestConfig.json for an example." closeCallback={()=> {}}/>
+        }
+        return noTestConfig;
+    }
+
+    getUiBody() {
+        let uiBody = null;
+        if (this.isTestConfigValid()) {
+            let savedTests = JSON.parse(window.localStorage.getItem(this.constants.localStorageSelectedTests));
+            let menuItems = [];
+            if (savedTests) {
+                lodash.forEach(savedTests, (value, key) => {
+                    menuItems.push(<MenuItem key={key} onSelect={() => {this.loadTestsIntoSelect2(value)}}>{key}</MenuItem>);
+                });
+            }
+            let closeCallback = () => {
+                this.state.pairingCodeMsg = undefined;
+            };
+            uiBody = <div>
                 <br/>
                 <div className="column_plain center">
                     <img className="clover_logo" src={"images/clover_logo.png"}/>
                 </div>
                 <br/>
                 <br/>
-                {this.state.pairingCodeMsg && <Popup message={this.state.pairingCodeMsg} closeCallback={closeCallback}/>}
+                {this.state.pairingCodeMsg &&
+                <Popup message={this.state.pairingCodeMsg} closeCallback={closeCallback}/>}
                 <Modal show={this.state.displayModal} onHide={this.toggleModal}>
                     <Modal.Header closeButton>
                         <Modal.Title>Save Seleted Tests</Modal.Title>
@@ -251,7 +271,8 @@ export default class TestRunner extends React.Component {
                 <br/><br/>
                 <div className="column_plain center">
                     <ButtonGroup style={{position: "absolute"}}>
-                        <Button bsStyle="default" className={"btn-margin"} onClick={this.toggleModal}>Save selected tests as suite</Button>
+                        <Button bsStyle="default" className={"btn-margin"} onClick={this.toggleModal}>Save selected
+                            tests as suite</Button>
                         <DropdownButton title="Load suite" id="bg-nested-dropdown">
                             {menuItems}
                         </DropdownButton>
@@ -259,13 +280,27 @@ export default class TestRunner extends React.Component {
                 </div>
                 <br/><br/>
                 <div className="column_plain center">
-                    <Button bsStyle="default" className={"btn-margin"} onClick={this.toggleTestConnectors}>{this.state.displayConnectorConfig ? "Hide Connector Config" : "View Test Connector Configs"}</Button>
-                    {this.state.displayConnectorConfig && <textarea rows="15" cols="80" defaultValue={JSON.stringify(this.state.testConfig, undefined, 4)}></textarea>}
+                    <Button bsStyle="default" className={"btn-margin"}
+                            onClick={this.toggleTestConnectors}>{this.state.displayConnectorConfig ? "Hide Connector Config" : "View Test Connector Configs"}</Button>
+                    {this.state.displayConnectorConfig && <textarea rows="15" cols="80"
+                                                                    defaultValue={JSON.stringify(this.state.testConfig, undefined, 4)}></textarea>}
                 </div>
                 <br/>
                 <br/>
                 <ResultsGrid rowData={this.state.results}/>
             </div>
+        }
+        return uiBody;
+    }
+
+    render() {
+        return(
+            <div>
+              {this.noTestConfigError()}
+              {this.getConnectorConfigWarning()}
+              {this.getUiBody()}
+            </div>
         );
+
     }
 }
