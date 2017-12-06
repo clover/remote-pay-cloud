@@ -1,5 +1,4 @@
 import * as sdk from "remote-pay-cloud-api";
-import {CardEntryMethods} from "../../../dist/com/clover/remote/client/CardEntryMethods";
 
 const create = () => {
 

@@ -1,4 +1,4 @@
-import {JSONToCustomObject} from "../../../dist/com/clover/json/JSONToCustomObject";
+import * as clover from "remote-pay-cloud";
 import * as exchangeConstants from "./ExchangeConstants";
 import {LogLevel, Logger} from "./util/Logger";
 import * as testUtils from "./util/TestUtils";
@@ -105,7 +105,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
          * @param event
          */
         processDeviceEvent: function (event) {
-            const testDefInputOptions = lodash.get(action, ["context", "inputOptions"], null);
+            const testDefInputOptions = this.getInputOptions();
             if (testDefInputOptions) {
                 let testDefInputOption = lodash.find(testDefInputOptions, ['on', event.getEventState()]);
                 if (testDefInputOption) {
@@ -138,6 +138,14 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                     }
                 }
             }
+        },
+
+        /**
+         * For now, retrieves input options off of the action's context.  In the future this can pull/set
+         * global input option overrides.
+         */
+        getInputOptions: function() {
+            return lodash.get(action, ["context", "inputOptions"], null);
         },
 
         confirmPaymentChallenge: function (name) {
@@ -260,7 +268,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
             // Create a new instance of the sdk class.
             const sdkClass = new sdkClassConstructorRef;
             // Transfers values from payload into the SDK class.
-            new JSONToCustomObject().transfertoObject(payload, sdkClass, true);
+            new clover.JSONToCustomObject().transfertoObject(payload, sdkClass, true);
             payload = sdkClass;
         }
         return payload;

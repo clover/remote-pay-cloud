@@ -1,15 +1,8 @@
 import * as testCloverConnectorListener from "./TestCloverConnectorListener";
 import {LogLevel, Logger} from "./util/Logger";
-import {WebSocketCloudCloverDeviceConfiguration} from "../../../dist/com/clover/remote/client/device/WebSocketCloudCloverDeviceConfiguration";
-import {WebSocketPairedCloverDeviceConfiguration} from "../../../dist/com/clover/remote/client/device/WebSocketPairedCloverDeviceConfiguration";
-import {CloverConnectorFactoryBuilder} from "../../../dist/com/clover/remote/client/CloverConnectorFactoryBuilder";
-import {BrowserWebSocketImpl} from "../../../dist/com/clover/websocket/BrowserWebSocketImpl";
-import {ImageUtil} from "../../../dist/com/clover/util/ImageUtil";
-import {HttpSupport} from "../../../dist/com/clover/util/HttpSupport";
+import * as clover from "remote-pay-cloud";
 import * as sdk from "remote-pay-cloud-api";
-
 import * as EventService from "../app/EventService"
-
 
 const create = (connectorConfig) => {
     return {
@@ -28,8 +21,8 @@ const create = (connectorConfig) => {
                 "applicationId": connectorConfig.applicationId,
                 "posName": "Cloud Starter POS",
                 "serialNumber": "Register_1",
-                "webSocketFactoryFunction": BrowserWebSocketImpl.createInstance,
-                "imageUtil": new ImageUtil()
+                "webSocketFactoryFunction": clover.BrowserWebSocketImpl.createInstance,
+                "imageUtil": new clover.ImageUtil()
             };
             let cloverDeviceConnectionConfiguration = null;
             const useCloudConfiguration = connectorConfig.type === "cloud";
@@ -50,15 +43,15 @@ const create = (connectorConfig) => {
                 cloverDeviceConnectionConfiguration = getDeviceConfigurationForCloud(Object.assign({}, baseConfiguration, {
                     "accessToken": connectorConfig.accessToken,
                     "cloverServer": connectorConfig.cloverServer,
-                    "httpSupport": new HttpSupport(XMLHttpRequest),
+                    "httpSupport": new clover.HttpSupport(XMLHttpRequest),
                     "merchantId": connectorConfig.merchantId,
                     "deviceId": connectorConfig.deviceId,
                     "friendlyId": "Automated Test"
                 }));
             }
             let builderConfiguration = {};
-            builderConfiguration[CloverConnectorFactoryBuilder.FACTORY_VERSION] = CloverConnectorFactoryBuilder.VERSION_12;
-            let cloverConnectorFactory = CloverConnectorFactoryBuilder.createICloverConnectorFactory(builderConfiguration);
+            builderConfiguration[clover.CloverConnectorFactoryBuilder.FACTORY_VERSION] = clover.CloverConnectorFactoryBuilder.VERSION_12;
+            let cloverConnectorFactory = clover.CloverConnectorFactoryBuilder.createICloverConnectorFactory(builderConfiguration);
             cloverConnector = cloverConnectorFactory.createICloverConnector(cloverDeviceConnectionConfiguration);
             const startupListener = buildCloverConnectionStartUpListener(cloverConnector, connectionInitializedDeferred);
             cloverConnector.addCloverConnectorListener(startupListener);
@@ -120,7 +113,7 @@ const create = (connectorConfig) => {
     };
 
     function getDeviceConfigurationForCloud(connectionConfiguration) {
-        return new WebSocketCloudCloverDeviceConfiguration(
+        return new clover.WebSocketCloudCloverDeviceConfiguration(
             connectionConfiguration.applicationId,
             connectionConfiguration.webSocketFactoryFunction,
             connectionConfiguration.imageUtil,
@@ -134,7 +127,7 @@ const create = (connectorConfig) => {
     };
 
     function getDeviceConfigurationForNetwork(connectionConfiguration) {
-        let deviceConfiguration = new WebSocketPairedCloverDeviceConfiguration(
+        let deviceConfiguration = new clover.WebSocketPairedCloverDeviceConfiguration(
             connectionConfiguration.endpoint,
             connectionConfiguration.applicationId,
             connectionConfiguration.posName,

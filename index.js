@@ -35,7 +35,7 @@ var WebSocketCloverTransport = require('./dist/com/clover/remote/client/transpor
 var WebSocketState = require('./dist/com/clover/websocket/WebSocketState.js').WebSocketState;
 var CloverWebSocketInterface = require('./dist/com/clover/websocket/CloverWebSocketInterface.js').CloverWebSocketInterface;
 var BrowserWebSocketImpl = require('./dist/com/clover/websocket/BrowserWebSocketImpl.js').BrowserWebSocketImpl;
-
+var JSONToCustomObject = require('./dist/com/clover/json/JSONToCustomObject.js').JSONToCustomObject;
 
 var CloverConnectorFactoryBuilder = require('./dist/com/clover/remote/client/CloverConnectorFactoryBuilder.js').CloverConnectorFactoryBuilder;
 var ICloverConnectorFactory = require('./dist/com/clover/remote/client/ICloverConnectorFactory.js').ICloverConnectorFactory;
@@ -66,6 +66,7 @@ module.exports = {
     WebSocketCloverTransport: WebSocketCloverTransport,
     CloverWebSocketInterface: CloverWebSocketInterface,
     BrowserWebSocketImpl: BrowserWebSocketImpl,
+    JSONToCustomObject: JSONToCustomObject,
     ImageUtil: ImageUtil,
     Logger: Logger,
     HttpSupport: HttpSupport,
