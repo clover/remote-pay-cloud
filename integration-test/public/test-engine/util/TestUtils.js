@@ -1,8 +1,9 @@
 import {LogLevel, Logger} from "./Logger";
 import * as ActionStatus from "../ActionStatus";
+
 const create = () => {
 
-    var vals = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z"];
+    const vals = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z"];
 
     return {
         getNextId: function () {
