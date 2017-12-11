@@ -302,8 +302,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
             // Create a new instance of the sdk class.
             const sdkClass = new sdkClassConstructorRef;
             // Transfers values from payload into the SDK class.
-            new clover.JSONToCustomObject().transfertoObject(payload, sdkClass, true);
-            payload = sdkClass;
+            payload = Object.assign(sdkClass, payload);
         }
         return payload;
     };
@@ -492,7 +491,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
             responseAssertionDeferred.resolve();
             deviceEventsAssertionDeferred.resolve();
         }
-        const tempListener = Object.assign({}, sdk.remotepay.ICloverConnectorListener.prototype, {
+        const tempListener = Object.assign({}, clover.remotepay.ICloverConnectorListener.prototype, {
             onResetDeviceResponse: function (response) {
                 afterReset();
             }

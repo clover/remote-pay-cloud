@@ -21,11 +21,12 @@ const create = (connectorConfig) => {
                 "applicationId": connectorConfig.applicationId,
                 "posName": "Cloud Starter POS",
                 "serialNumber": "Register_1",
-                "webSocketFactoryFunction": clover.BrowserWebSocketImpl.createInstance,
-                "imageUtil": new clover.ImageUtil()
+                "webSocketFactoryFunction": clover.BrowserWebSocketImpl ? clover.BrowserWebSocketImpl.createInstance : null,
+                "imageUtil": clover.ImageUtil ? new clover.ImageUtil() : null
             };
             let cloverDeviceConnectionConfiguration = null;
             const useCloudConfiguration = connectorConfig.type === "cloud";
+            const legacy = connectorConfig.legacy;
             if (!useCloudConfiguration) {
                 Logger.log(LogLevel.TRACE, `Device Connection:  Connecting via the Network.`);
                 const endpoint = `${connectorConfig.wsScheme}://${connectorConfig.ipAddress}:${connectorConfig.wsPort}/remote_pay`;
@@ -40,19 +41,35 @@ const create = (connectorConfig) => {
                 cloverDeviceConnectionConfiguration = getDeviceConfigurationForNetwork(Object.assign({}, baseConfiguration, networkConfiguration), parentComponent);
             } else {
                 Logger.log(LogLevel.TRACE, `Device Connection:  Connecting via the Cloud.`);
-                cloverDeviceConnectionConfiguration = getDeviceConfigurationForCloud(Object.assign({}, baseConfiguration, {
-                    "accessToken": connectorConfig.accessToken,
-                    "cloverServer": connectorConfig.cloverServer,
-                    "httpSupport": new clover.HttpSupport(XMLHttpRequest),
-                    "merchantId": connectorConfig.merchantId,
-                    "deviceId": connectorConfig.deviceId,
-                    "friendlyId": "Automated Test"
-                }));
+                if (!legacy) {
+                    cloverDeviceConnectionConfiguration = getDeviceConfigurationForCloud(Object.assign({}, baseConfiguration, {
+                        "accessToken": connectorConfig.accessToken,
+                        "cloverServer": connectorConfig.cloverServer,
+                        "httpSupport": clover.HttpSupport ? new clover.HttpSupport(XMLHttpRequest) : null,
+                        "merchantId": connectorConfig.merchantId,
+                        "deviceId": connectorConfig.deviceId,
+                        "friendlyId": "Automated Test"
+                    }));
+                } else {
+                    cloverDeviceConnectionConfiguration = {
+                        "remoteApplicationId": connectorConfig.applicationId,
+                        "clientId": connectorConfig.clientId,
+                        "domain": connectorConfig.cloverServer,
+                        "oauthToken": connectorConfig.accessToken,
+                        "deviceId": connectorConfig.deviceId,
+                        "merchantId": connectorConfig.merchantId,
+                        "friendlyId": connectorConfig.friendlyId,
+                    }
+                }
             }
             const builderConfiguration = {};
-            builderConfiguration[clover.CloverConnectorFactoryBuilder.FACTORY_VERSION] = clover.CloverConnectorFactoryBuilder.VERSION_12;
-            const cloverConnectorFactory = clover.CloverConnectorFactoryBuilder.createICloverConnectorFactory(builderConfiguration);
-            cloverConnector = cloverConnectorFactory.createICloverConnector(cloverDeviceConnectionConfiguration);
+            if (!legacy) {
+                builderConfiguration[clover.CloverConnectorFactoryBuilder.FACTORY_VERSION] = clover.CloverConnectorFactoryBuilder.VERSION_12;
+                const cloverConnectorFactory = clover.CloverConnectorFactoryBuilder.createICloverConnectorFactory(builderConfiguration);
+                cloverConnector = cloverConnectorFactory.createICloverConnector(cloverDeviceConnectionConfiguration);
+            } else {
+                cloverConnector = new clover.CloverConnectorFactory().createICloverConnector(cloverDeviceConnectionConfiguration);
+            }
             defaultListener = buildCloverConnectionListener(cloverConnector, connectionInitializedDeferred);
             this.setListener(defaultListener);
             cloverConnector.initializeConnection();
@@ -124,6 +141,12 @@ const create = (connectorConfig) => {
      */
     function buildCloverConnectionListener(cloverConnector, connectionInitializedDeferred) {
         return Object.assign({}, sdk.remotepay.ICloverConnectorListener.prototype, testCloverConnectorListener.create(cloverConnector), {
+
+            // For legacy support
+            onReady: function(merchantInfo) {
+                this.onDeviceReady(merchantInfo);
+            },
+
             onDeviceReady: function (merchantInfo) {
                 Logger.log(LogLevel.INFO, {message: "Device Ready to process requests!", merchantInfo: merchantInfo});
                 connectionInitializedDeferred.resolve("Device Ready");
