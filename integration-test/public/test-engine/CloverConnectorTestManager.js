@@ -1,4 +1,4 @@
-import * as actionExecutor from "./ActionExecutor";
+import * as testExecutor from "./TestExecutor";
 import * as testConnector from "./TestConnector";
 import * as iterable from "./util/Iterable";
 import {LogLevel, Logger} from "./util/Logger";
@@ -37,16 +37,7 @@ const create = () => {
         // Iterate through the test cases serially.
         if (testCaseItr.hasNext()) {
             const testCase = testCaseItr.next().value;
-            prepareAndRunTest(testCase, testConnector, testConfig)
-                .then(() => runTests(testConfig, testCaseItr, testConnector))
-                .fail((code) => {
-                    const message = (code == 504) ? `A timeout occurred running test case ${testCase.name}` : `An error was encountered running test case ${testCase.name}`;
-                    Logger.log(LogLevel.ERROR, `Test Failure: ${message}.`);
-                    EventService.get().testObservable.next({
-                        name: testCase.name,
-                        message: message
-                    });
-                });
+            prepareAndRunTest(testCase, testConnector, testConfig).then(() => runTests(testConfig, testCaseItr, testConnector));
         } else {
             testConnector.closeConnection();
             Logger.log(LogLevel.INFO, "All test cases have been executed.");
@@ -64,11 +55,7 @@ const create = () => {
     function prepareAndRunTest(testCase, testConnector, testConfig) {
         Logger.log(LogLevel.INFO, `Running test '${testCase.name}' ...`);
         const testCompleteDeferred = new jQuery.Deferred();
-        testConnector.initializeConnection(testConfig)
-            .then(() => {
-                runTest(testCompleteDeferred, testCase, testConnector)
-            })
-            .fail((code) => handleDeviceFailure(code, testConnector));
+        testConnector.initializeConnection(testConfig).then(() => runTest(testCompleteDeferred, testCase, testConnector));
 
         // If the test has not been completed in testConfig["testExecutionTimeout"] millis, timeout and reject.
         const testExecutionTimeout = testConfig["testExecutionTimeout"] || 15000;
@@ -84,39 +71,49 @@ const create = () => {
      * @param testConnector
      */
     function runTest(testCompleteDeferred, testCase, testConnector) {
+        const run = () => {
+            const resultCache = {};
+            const iterations = lodash.get(testCase, "iterations", 1);
+            let allTestActions = [];
+            // Populate test actions for each iteration.
+            for (let i = 0; i < iterations; i++) {
+                let nextIterationTestActions = testCase.testActions;
+                nextIterationTestActions.name += i;
+                allTestActions = allTestActions.concat(nextIterationTestActions);
+            }
+            const actionItr = iterable.makeIterator(allTestActions);
+            testExecutor.create(resultCache, testConnector, testCase).executeActions(actionItr)
+                // actionResults is an array of all actions that were executed. The 'result' property on each
+                // action result contains the status information for that action.
+                .then((actionResults) => {
+                    Logger.log(LogLevel.TRACE, actionResults);
+                    EventService.get().testObservable.next({
+                        name: testCase.name,
+                        testActions: actionResults
+                    });
+                    // If there is a delay between test executions
+                    const delayBetween = lodash.get(testCase, "delayBetweenExecutions", 0);
+                    if (delayBetween > 0) {
+                        setTimeout(() => completeTest(testCompleteDeferred, testCase, testConnector), delayBetween);
+                    } else {
+                        completeTest(testCompleteDeferred, testCase, testConnector);
+                        completeTest(testCompleteDeferred, testCase, testConnector);
+                    }
+                });
+        }
         // Reset device (if necessary)
         const resetDevice = lodash.get(testCase, "resetDevice", false);
         if (resetDevice) {
-            testConnector.cloverConnector.resetDevice();
-        }
-        const resultCache = {};
-        const iterations = lodash.get(testCase, "iterations", 1);
-        let allTestActions = [];
-        // Populate test actions for each iteration.
-        for (let i = 0; i < iterations; i++) {
-            let nextIterationTestActions = testCase.testActions;
-            nextIterationTestActions.name += i;
-            allTestActions = allTestActions.concat(nextIterationTestActions);
-        }
-        const actionItr = iterable.makeIterator(allTestActions);
-        actionExecutor.create(resultCache, testConnector, testCase).executeActions(actionItr)
-            // actionResults is an array of all actions that were executed. The 'result' property on each
-            // action result contains the status information for that action.
-            .then((actionResults) => {
-                Logger.log(LogLevel.TRACE, actionResults);
-                EventService.get().testObservable.next({
-                    name: testCase.name,
-                    testActions: actionResults
-                });
-                // If there is a delay between test executions
-                const delayBetween = lodash.get(testCase, "delayBetweenExecutions", 0);
-                if (delayBetween > 0) {
-                    setTimeout(() => completeTest(testCompleteDeferred, testCase, testConnector), delayBetween);
-                } else {
-                    completeTest(testCompleteDeferred, testCase, testConnector);
-                    completeTest(testCompleteDeferred, testCase, testConnector);
+            const tempListener = Object.assign({}, sdk.remotepay.ICloverConnectorListener.prototype, {
+                onResetDeviceResponse: function (response) {
+                    run();
                 }
             });
+            testConnector.setListener(tempListener);
+            testConnector.cloverConnector.resetDevice();
+        } else {
+            run();
+        }
     };
 
     /**

@@ -49,12 +49,12 @@ const create = (connectorConfig) => {
                     "friendlyId": "Automated Test"
                 }));
             }
-            let builderConfiguration = {};
+            const builderConfiguration = {};
             builderConfiguration[clover.CloverConnectorFactoryBuilder.FACTORY_VERSION] = clover.CloverConnectorFactoryBuilder.VERSION_12;
-            let cloverConnectorFactory = clover.CloverConnectorFactoryBuilder.createICloverConnectorFactory(builderConfiguration);
+            const cloverConnectorFactory = clover.CloverConnectorFactoryBuilder.createICloverConnectorFactory(builderConfiguration);
             cloverConnector = cloverConnectorFactory.createICloverConnector(cloverDeviceConnectionConfiguration);
-            const startupListener = buildCloverConnectionStartUpListener(cloverConnector, connectionInitializedDeferred);
-            cloverConnector.addCloverConnectorListener(startupListener);
+            defaultListener = buildCloverConnectionListener(cloverConnector, connectionInitializedDeferred);
+            this.setListener(defaultListener);
             cloverConnector.initializeConnection();
 
             const connectorReadyTimeout = testConfig["connectorReadyTimeout"] || 15000;
@@ -66,9 +66,9 @@ const create = (connectorConfig) => {
         closeConnection: function () {
             if (cloverConnector != null) {
                 Logger.log(LogLevel.INFO, "Closing Clover Connector.");
-                if (listener != null) {
-                    cloverConnector.removeCloverConnectorListener(listener);
-                    listener = null;
+                if (currentListener != null) {
+                    cloverConnector.removeCloverConnectorListener(currentListener);
+                    currentListener = null;
                 }
                 cloverConnector.dispose();
                 cloverConnector = null;
@@ -79,16 +79,38 @@ const create = (connectorConfig) => {
             return cloverConnector;
         },
 
-        getListener: function () {
-            return listener;
+        getListener: function() {
+            return currentListener;
+        },
+
+        /**
+         * We only want one listener, since we are going to be re-setting listeners in a few places we will manage
+         * everything here.
+         *
+         * @param listenerToSet
+         */
+        setListener: function(listenerToSet) {
+            if (cloverConnector) {
+                if (currentListener) {
+                    cloverConnector.removeCloverConnectorListener(currentListener);
+                }
+                cloverConnector.addCloverConnectorListener(listenerToSet);
+                currentListener = listenerToSet;
+            }
+        },
+
+        restoreListener: function() {
+            this.setListener(defaultListener);
         }
-    }
+
+    };
 
     // Private Members
 
-    var cloverConnector = null;
-    var listener = null;
-    var authToken = null;
+    let cloverConnector = null;
+    let currentListener = null;
+    let defaultListener = null;
+    let authToken = null;
 
     /**
      * The definition of the listener.  It extends the functionality to the "interface" ICloverConnectorListener.
@@ -100,13 +122,10 @@ const create = (connectorConfig) => {
      *
      * @constructor
      */
-    function buildCloverConnectionStartUpListener(cloverConnector, connectionInitializedDeferred) {
-        return Object.assign({}, sdk.remotepay.ICloverConnectorListener.prototype, {
+    function buildCloverConnectionListener(cloverConnector, connectionInitializedDeferred) {
+        return Object.assign({}, sdk.remotepay.ICloverConnectorListener.prototype, testCloverConnectorListener.create(cloverConnector), {
             onDeviceReady: function (merchantInfo) {
                 Logger.log(LogLevel.INFO, {message: "Device Ready to process requests!", merchantInfo: merchantInfo});
-                cloverConnector.removeCloverConnectorListener(this);
-                listener = Object.assign({}, sdk.remotepay.ICloverConnectorListener.prototype, testCloverConnectorListener.create(cloverConnector));
-                cloverConnector.addCloverConnectorListener(listener);
                 connectionInitializedDeferred.resolve("Device Ready");
             }
         });

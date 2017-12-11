@@ -1,47 +1,48 @@
 import * as exchangeConstants from "./ExchangeConstants";
+import {LogLevel, Logger} from "./util/Logger";
 
 const create = (cloverConnector) => {
 
-    var cloverConnector = cloverConnector;
-    var testExecutor = null;
-    var responseMethods = exchangeConstants.create().responseMethods;
-    
+    const responseMethods = exchangeConstants.create().responseMethods;
+    let actionExecutor = null;
+
     return {
         setTestExecutor: function (testExecutorIn) {
-            testExecutor = testExecutorIn;
+            actionExecutor = testExecutorIn;
         },
 
         onDeviceActivityStart: function (event) {
-            testExecutor.processDeviceEvent(event);
-            testExecutor.processResult(responseMethods.onDeviceActivityStart, event);
+            Logger.log(LogLevel.INFO, `onDeviceActivityStart: ${event}`);
+            actionExecutor.processDeviceActivityStart(event);
         },
 
         onDeviceActivityEnd: function (event) {
-            testExecutor.processResult(responseMethods.onDeviceActivityEnd, event);
+            Logger.log(LogLevel.INFO, `onDeviceActivityEnd: ${event}`);
+            actionExecutor.processDeviceActivityEnd(event);
         },
 
         onDeviceError: function (event) {
-            testExecutor.processResult(responseMethods.onDeviceError, event);
+            Logger.log(LogLevel.ERROR, event);
         },
 
         onPreAuthResponse: function (response) {
-            testExecutor.processResult(responseMethods.onPreAuthResponse, response);
+            actionExecutor.processResult(responseMethods.onPreAuthResponse, response);
         },
 
         onAuthResponse: function (response) {
-            testExecutor.processResult(responseMethods.onAuthResponse, response);
+            actionExecutor.processResult(responseMethods.onAuthResponse, response);
         },
 
         onTipAdjustAuthResponse: function (response) {
-            testExecutor.processResult(responseMethods.onTipAdjustAuthResponse, response);
+            actionExecutor.processResult(responseMethods.onTipAdjustAuthResponse, response);
         },
 
         onCapturePreAuthResponse: function (response) {
-            testExecutor.processResult(responseMethods.onCapturePreAuthResponse, response);
+            actionExecutor.processResult(responseMethods.onCapturePreAuthResponse, response);
         },
 
         onVerifySignatureRequest: function (request) {
-            if (testExecutor.acceptSignature()) {
+            if (actionExecutor.acceptSignature()) {
                 cloverConnector.acceptSignature(request);
             } else {
                 cloverConnector.rejectSignature(request);
@@ -50,7 +51,7 @@ const create = (cloverConnector) => {
 
         onConfirmPaymentRequest: function (request) {
             request.challenges.forEach((challenge) => {
-                if (!testExecutor.confirmPaymentChallenge(challenge.type)) {
+                if (!actionExecutor.confirmPaymentChallenge(challenge.type)) {
                     cloverConnector.rejectPayment(request.getPayment(), challenge);
                     return;
                 }
@@ -60,28 +61,28 @@ const create = (cloverConnector) => {
         },
 
         onCloseoutResponse: function (response) {
-            testExecutor.processResult(responseMethods.onCloseoutResponse, response);
+            actionExecutor.processResult(responseMethods.onCloseoutResponse, response);
         },
 
         onSaleResponse: function (response) {
-            testExecutor.processResult(responseMethods.onSaleResponse, response);
+            actionExecutor.processResult(responseMethods.onSaleResponse, response);
         },
 
         onManualRefundResponse: function (response) {
-            testExecutor.processResult(responseMethods.onManualRefundResponse, response);
+            actionExecutor.processResult(responseMethods.onManualRefundResponse, response);
         },
 
 
         onRefundPaymentResponse: function (response) {
-            testExecutor.processResult(responseMethods.onRefundPaymentResponse, response);
+            actionExecutor.processResult(responseMethods.onRefundPaymentResponse, response);
         },
 
         onTipAdded: function (message) {
-            testExecutor.processResult(responseMethods.onTipAdded, message);
+            actionExecutor.processResult(responseMethods.onTipAdded, message);
         },
 
         onVoidPaymentResponse: function (response) {
-            testExecutor.processResult(responseMethods.onVoidPaymentResponse, response);
+            actionExecutor.processResult(responseMethods.onVoidPaymentResponse, response);
         },
 
         onDeviceDisconnected: function () {
@@ -90,73 +91,71 @@ const create = (cloverConnector) => {
         onDeviceConnected: function () {
         },
 
-        onDeviceReady: function (merchantInfo) {
-        },
-
         onVaultCardResponse: function (response) {
-            testExecutor.processResult(responseMethods.onVaultCardResponse, response);
+            actionExecutor.processResult(responseMethods.onVaultCardResponse, response);
         },
 
         onPrintJobStatusResponse: function (response) {
-            testExecutor.processResult(responseMethods.onPrintJobStatusResponse, response);
+            actionExecutor.processResult(responseMethods.onPrintJobStatusResponse, response);
         },
 
         onRetrievePrintersResponse: function (response) {
-            testExecutor.processResult(responseMethods.onRetrievePrintersResponse, response);
+            actionExecutor.processResult(responseMethods.onRetrievePrintersResponse, response);
         },
 
         onPrintManualRefundReceipt: function (message) {
-            testExecutor.processResult(responseMethods.onPrintManualRefundReceipt, message);
+            actionExecutor.processResult(responseMethods.onPrintManualRefundReceipt, message);
         },
 
         onPrintManualRefundDeclineReceipt: function (message) {
-            testExecutor.processResult(responseMethods.onPrintManualRefundDeclineReceipt, message);
+            actionExecutor.processResult(responseMethods.onPrintManualRefundDeclineReceipt, message);
         },
 
         onPrintPaymentReceipt: function (message) {
-            testExecutor.processResult(responseMethods.onPrintPaymentReceipt, message);
+            actionExecutor.processResult(responseMethods.onPrintPaymentReceipt, message);
         },
 
         onPrintPaymentDeclineReceipt: function (message) {
-            testExecutor.processResult(responseMethods.onPrintPaymentDeclineReceipt, message);
+            actionExecutor.processResult(responseMethods.onPrintPaymentDeclineReceipt, message);
         },
 
         onPrintPaymentMerchantCopyReceipt: function (message) {
-            testExecutor.processResult(responseMethods.onPrintPaymentMerchantCopyReceipt, message);
+            actionExecutor.processResult(responseMethods.onPrintPaymentMerchantCopyReceipt, message);
         },
 
         onPrintRefundPaymentReceipt: function (message) {
-            testExecutor.processResult(responseMethods.onPrintRefundPaymentReceipt, message);
+            actionExecutor.processResult(responseMethods.onPrintRefundPaymentReceipt, message);
         },
 
         onRetrievePendingPaymentsResponse: function (response) {
-            testExecutor.processResult(responseMethods.onRetrievePendingPaymentsResponse, response);
+            actionExecutor.processResult(responseMethods.onRetrievePendingPaymentsResponse, response);
         },
 
         onReadCardDataResponse: function (response) {
-            testExecutor.processResult(responseMethods.onReadCardDataResponse, response);
+            actionExecutor.processResult(responseMethods.onReadCardDataResponse, response);
         },
 
         onMessageFromActivity: function (message) {
-            testExecutor.processResult(responseMethods.onMessageFromActivity, message);
+            actionExecutor.processResult(responseMethods.onMessageFromActivity, message);
         },
 
         onCustomActivityResponse: function (response) {
-            testExecutor.processResult(responseMethods.onCustomActivityResponse, response);
+            actionExecutor.processResult(responseMethods.onCustomActivityResponse, response);
         },
 
         onRetrieveDeviceStatusResponse: function (response) {
-            testExecutor.processResult(responseMethods.onRetrieveDeviceStatusResponse, response);
+            actionExecutor.processResult(responseMethods.onRetrieveDeviceStatusResponse, response);
         },
 
         onResetDeviceResponse: function (response) {
-            testExecutor.processResult(responseMethods.onResetDeviceResponse, response);
+            actionExecutor.processResult(responseMethods.onResetDeviceResponse, response);
         },
 
         onRetrievePaymentResponse: function (response) {
-            testExecutor.processResult(responseMethods.onRetrievePaymentResponse, response);
+            actionExecutor.processResult(responseMethods.onRetrievePaymentResponse, response);
         }
     }
+
 };
 
 export {create}

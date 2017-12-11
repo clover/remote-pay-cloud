@@ -21,10 +21,19 @@ const create = () => {
                     lodash.set(action, "result", {});
                 }
                 action.result.status = ActionStatus.get().fail;
-                action.result.message = message;
+                this.addMessageToResult(action, message);
             }
             if (log) {
                 Logger.log(LogLevel.ERROR, message);
+            }
+        },
+
+        addMessageToResult: function(action, message) {
+            if (message && message.length > 0) {
+                if (!action.result.messages) {
+                    action.result.messages = [];
+                }
+                action.result.messages.push(message);
             }
         }
     }
