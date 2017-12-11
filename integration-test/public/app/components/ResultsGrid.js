@@ -89,6 +89,8 @@ export default class ResultsGrid extends Component {
                         return `<span class="text-success"><b>${params.value}</b></span>`;
                     } else if (params.value === ActionStatus.get().fail) {
                         return `<span class="text-danger"><b>${params.value}</b></span>`;
+                    } else if (params.value === ActionStatus.get().manual) {
+                        return `<span class="text-warning"><b>${params.value}</b></span>`;
                     } else if (params.value === ActionStatus.get().executing) {
                         return `<span class="text-info"><b>... ${params.value}</b></span>`;
                     } else {
@@ -97,8 +99,13 @@ export default class ResultsGrid extends Component {
                 }
             },
             {
-                headerName: "Message",
-                field: "result.message"
+                headerName: "Messages",
+                field: "result.messages",
+                cellRenderer: (params) => {
+                    if (params.value) {
+                        return `<span>${params.value.join(",")}</span>`
+                    }
+                }
             }
         ];
     }

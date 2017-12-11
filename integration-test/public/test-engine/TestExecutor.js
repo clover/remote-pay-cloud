@@ -1,383 +1,168 @@
-import * as clover from "remote-pay-cloud";
-import * as exchangeConstants from "./ExchangeConstants";
+import * as actionExecutor from "./ActionExecutor";
 import {LogLevel, Logger} from "./util/Logger";
+import * as iterable from "./util/Iterable";
 import * as testUtils from "./util/TestUtils";
+import * as EventService from "../app/EventService";
 import * as ActionStatus from "./ActionStatus";
 
-const create = (action, actionCompleteDeferred, testConnector, storedValues) => {
-
-    let resultDeferred = null;
-    let cloverConnector = testConnector.getCloverConnector();
-    let delay = lodash.get(action, ["parameters", "delay"], 0);
-    let responseTimeout = lodash.get(action, ["parameters", "responseTimeout"], 30000);
-    let waitForResponse = lodash.get(action, ["parameters", "waitForResponse"], true);
-    if (action.response != null) {
-        waitForResponse = true;
-    }
+/**
+ * Utility for executing test case actions.
+ *
+ * @returns {{executeActions: executeActions, executeAction: executeAction}}
+ */
+const create = (resultCache, testConnector, testCase) => {
 
     return {
-        executeAction: function () {
-            const executeActionDeferred = new jQuery.Deferred();
-
-            // Record request time
-            if (!action.result) {
-                action.result = {};
-            }
-
-            action.result.requestTime = new Date();
-
-            // Wait for a delay, if any
-            if (delay > 0) {
-                setTimeout(() => {
-                    executeActionInternal()
-                        .then((action) => {
-                            executeActionDeferred.resolve(action);
-                        });
-                }, delay);
-            } else {
-                executeActionInternal()
-                    .then((action) => {
-                        executeActionDeferred.resolve(action);
-                    });
-            }
-            return executeActionDeferred;
-        },
 
         /**
-         * Processes the response from the device.
+         * Executes an actions iterable. Returns a promise that is resolved when all actions have completed.
          *
-         * @param remoteMethod
-         * @param remoteResponse
+         * @param actionItr
          */
-        processResult: function (remoteMethod, remoteResponse) {
-            const expectedActionResponse = lodash.get(action, ["assert", "response"]);
-            if (expectedActionResponse && expectedActionResponse.method === remoteMethod) {
-                Logger.log(LogLevel.info, `Processing response ${remoteMethod}`);
-                if (waitForResponse) {
-                    action.result.responseTime = new Date();
-                }
-
-                const expectSuccess = lodash.get(expectedActionResponse, ["payload", "success"]);
-                let responseError = false;
-                if (expectSuccess) {
-                    responseError = lodash.get(remoteResponse, "result", "") === "FAIL" || !lodash.get(remoteResponse, "success", true);
-                    if (responseError) {
-                        action.result.status = ActionStatus.get().fail;
-                        action.result.message = remoteResponse["message"] || remoteResponse["reason"] || `A failure occurred processing ${action.name}.`;
-                    }
-                }
-
-                if (!responseError) {
-                    try {
-                        processResultInternal(remoteResponse, expectedActionResponse.payload);
-                    } catch (e) {
-                        handleActionFailure(`An error has occurred processing the result. Details: ${e.message}`, true);
-                    }
-
-                    const store = lodash.get(expectedActionResponse, "store");
-                    if (store) {
-                        try {
-                            for (let key in store) {
-                                storeResult(remoteResponse[key], store[key]);
-                            }
-                        } catch (e) {
-                            Logger.log(LogLevel.ERROR, "Error storing results");
-                        }
-                    }
-
-                    if (action.result.status !== ActionStatus.get().fail) {
-                        action.result.status = ActionStatus.get().pass;
-                    }
-                }
-
-                // Resolve the responses deferred.
-                if (resultDeferred) {
-                    const message = action.result.message || "n/a";
-                    Logger.log(LogLevel.Info, `Action status ${action.result.status} and ${message}.`);
-                    resultDeferred.resolve();
-                }
-            }
+        executeActions: function (actionItr) {
+            const actionsCompleteDeferred = new jQuery.Deferred();
+            return executeActionsInternal(actionsCompleteDeferred, actionItr);
         },
 
         /**
-         * Processes device events, executing actions for any input options specified in the test case.
+         * Executes an action. Returns a promise that is resolved when the action has completed.
          *
-         * @param event
+         * @param action
          */
-        processDeviceEvent: function (event) {
-            const testDefInputOptions = this.getInputOptions();
-            if (testDefInputOptions) {
-                let testDefInputOption = lodash.find(testDefInputOptions, ['on', event.getEventState()]);
-                if (testDefInputOption) {
-                    testDefInputOption.description = testDefInputOption.description || testDefInputOption.select;
-                    const eventOptions = event.getInputOptions();
-                    if (eventOptions) {
-                        let inputOption = null;
-                        // Find the matching input option from the device event.
-                        eventOptions.some((eventOption) => {
-                            if (testDefInputOption.select === eventOption.keyPress) {
-                                inputOption = eventOption;
-                                return true;
-                            } else if (testDefInputOption.method) {
-                                inputOption = null;
-                                cloverConnector[testDefInputOption.method](eventOption);
-                                return true;
-                            } else {
-                                const pattern = new RegExp(testDefInputOption.description);
-                                if (pattern.exec(eventOption.description)) {
-                                    inputOption = eventOption;
-                                    return true;
-                                }
-                            }
-                        });
-                        if (inputOption) {
-                            cloverConnector.invokeInputOption(inputOption);
-                        } else {
-                            Logger.log(LogLevel.info, `No matching input option found for ${JSON.stringify(testDefInputOption)}`);
-                        }
-                    }
-                }
-            }
-        },
-
-        /**
-         * For now, retrieves input options off of the action's context.  In the future this can pull/set
-         * global input option overrides.
-         */
-        getInputOptions: function() {
-            return lodash.get(action, ["context", "inputOptions"], null);
-        },
-
-        confirmPaymentChallenge: function (name) {
-            const deviceRequests = lodash.get(action, ["context", "deviceRequests"]);
-            if (deviceRequests) {
-                const confirmMappings = deviceRequests.paymentConfirmation;
-                if (confirmMappings != null && "REJECT" === confirmMappings[name]) {
-                    return false;
-                }
-            }
-            // Accept by default
-            return true;
-        },
-
-        acceptSignature: function () {
-            const deviceRequests = lodash.get(action, ["context", "deviceRequests"]);
-            if (deviceRequests && "REJECT" === deviceRequests.signatureVerification) {
-                return false;
-            }
-            // Accept by default
-            return true;
+        executeAction: function (action) {
+            return executeActionInternal(action);
         }
     };
 
     /**
-     * Executes the action.
+     * For each root action we need to serially execute all before actions, action iterations, and after actions.
+     *
+     * @param actionsCompleteDeferred
+     * @param actionItr
      */
-    function executeActionInternal() {
-        const executeActionDeferred = new jQuery.Deferred();
-        resultDeferred = new jQuery.Deferred();
-        if (executeRequest()) {
-            if (waitForResponse) {
-                resultDeferred.promise().then(() => {
-                    executeActionDeferred.resolve();
+    function executeActionsInternal(actionsCompleteDeferred, actionItr, actionResults) {
+        if (!actionResults) {
+            actionResults = [];
+        }
+        if (actionItr.hasNext()) {
+            const action = actionItr.next().value;
+            const beforeActionItr = iterable.makeIterator(action["before"] || []);
+            const executeBeforeActionsDeferred = new jQuery.Deferred();
+            executeBeforeOrAfterActions(executeBeforeActionsDeferred, beforeActionItr)
+                .then(() => {
+                    const iterations = lodash.get(action, ["parameters", "iterations"], 1);
+                    let allActionIterations = [];
+                    // Populate test actions for each iteration.
+                    for (let i = 0; i < iterations; i++) {
+                        allActionIterations = allActionIterations.concat(action);
+                    }
+                    const executeActionIterationsDeferred = new jQuery.Deferred();
+                    const allActionsItr = iterable.makeIterator(allActionIterations);
+                    return executeActionIterations(executeActionIterationsDeferred, allActionsItr, actionResults);
+                })
+                .then(() => {
+                    const executeAfterActionsDeferred = new jQuery.Deferred();
+                    const afterActionItr = iterable.makeIterator(action["after"] || []);
+                    return executeBeforeOrAfterActions(executeAfterActionsDeferred, afterActionItr, false);
+                })
+                .then(() => {
+                    executeActionsInternal(actionsCompleteDeferred, actionItr, actionResults);
                 });
-            } else {
-                executeActionDeferred.resolve();
-            }
         } else {
-            executeActionDeferred.resolve();
+            actionsCompleteDeferred.resolve(actionResults);
         }
-        // If a responseTimeout has been set for the action and a response has not been received within the timeout
-        // indicate a failure on the action's result.
-        if (responseTimeout && responseTimeout > 0) {
-            setTimeout(() => {
-                if (resultDeferred.state() === "pending") {
-                    handleActionFailure(`Timeout: A response was not received within ${responseTimeout} milli(s).`);
-                    executeActionDeferred.resolve();
-                }
-            }, responseTimeout);
-        }
-        return executeActionDeferred.promise();
-    }
-
-    /**
-     * Executes a request to the Clover Connector for the specified action.
-     *
-     * @param action
-     * @returns {boolean}
-     */
-    function executeRequest() {
-        const requestFromActionDefinition = lodash.get(action, ["context", "request"]);
-        const methodFromActionDefinition = lodash.get(requestFromActionDefinition, "method");
-        // See the resolveRequestParameters function for an explanation of the purpose of methodMapping.
-        const methodMapping = exchangeConstants.create().testActionToRemoteCall[methodFromActionDefinition];
-        if (methodMapping) {
-            const payload = resolveRequestParameters(requestFromActionDefinition, methodMapping);
-            const methodToCall = lodash.get(methodMapping, "method");
-            Logger.log(LogLevel.INFO, `Executing remote request, method: ${methodFromActionDefinition}.`);
-            if (!methodToCall) {
-                const message = `Test Failure: Unsupported method type: ${method}`;
-                handleActionFailure(message, true);
-                return false;
-            }
-            cloverConnector[methodToCall](payload);
-            return true;
-        } else {
-            const message = `Test Failure: A mapping for method ${methodFromActionDefinition} was not found in ExchangeConstants.requestDefToMethod.`;
-            handleActionFailure(message, true);
-            return false;
-        }
+        return actionsCompleteDeferred.promise();
     };
 
     /**
-     *  The request payload in the test definition is defined as JSON.  The SDK works with JavaScript objects
-     *  from remote-pay-cloud-api that have meta-data. The correct types need to be created from the test case JSON.
-     *  This method uses a simple mapping (ExchangeConstants.testActionToRemoteCall) to properly build the remote-pay-cloud-api
-     *  JavaScript Objects.
+     * Executes before/after actions.
+     *
+     * @param actionItr
+     * @param actionResults
+     * @param before
      */
-    function resolveRequestParameters(requestFromActionDefinition, methodMapping) {
-        const request = lodash.get(action, ["context", "request"]);
-        const payloadResolver = lodash.get(methodMapping, "payloadResolver");
-        let payload = lodash.get(request, "payload", {});
-        if (payloadResolver) {
-            if (lodash.isArray(payloadResolver)) {
-                payload = payloadResolver.map(() => resolveRequestParameter(requestFromActionDefinition, payloadResolver))
-            } else if (lodash.isFunction(payloadResolver)) {
-                payload = payloadResolver(payload);
+    function executeBeforeOrAfterActions(executeActionsDeferred, actionItr, before = true) {
+        let action = null;
+        try {
+            const order = before ? "before" : "after";
+            if (actionItr.hasNext()) {
+                action = actionItr.next().value;
+                Logger.log(`Executing ${order} action ${action.name}.`);
+                // Set the action as before/after for reporting purposes.
+                //before ? action.before = true : action.before = false;
+                executeActionInternal(action, [])
+                    .then(() => {
+                        executeBeforeOrAfterActions(executeActionsDeferred, actionItr,  before)
+                    });
             } else {
-                payload = resolveRequestParameter(requestFromActionDefinition, payloadResolver);
+                executeActionsDeferred.resolve();
             }
+        } catch (e) {
+            const beforeOrAfter = before ? "before" : "after";
+            handleActionFailure(action, [], `An error has occurred executing ${beforeOrAfter} action.  Details: ${e.message}`, true);
+            executeActionsDeferred.resolve();
         }
-        // No payloadResolver, return parameters as they exist in the test cases request.
-        return payload;
+        return executeActionsDeferred.promise();
     };
 
     /**
-     * See resolveRequestParameters
+     * Executes each action iteration.
      *
-     * @param requestFromActionDefinition
-     * @param payloadResolver
+     * @param allActionsItr
+     * @param actionResults
      */
-    function resolveRequestParameter(requestFromActionDefinition, payloadResolver) {
-        const key = lodash.get(payloadResolver, "key");
-        const type = lodash.get(payloadResolver, "type");
-        let payload = resolveStoredValues(lodash.get(requestFromActionDefinition, key || "payload"));
-        if (type) {
-            // payloadResolver.type is a reference to the constructor of the SDK class type.
-            const sdkClassConstructorRef = lodash.bind(payloadResolver.type, this);
-            // Create a new instance of the sdk class.
-            const sdkClass = new sdkClassConstructorRef;
-            // Transfers values from payload into the SDK class.
-            new clover.JSONToCustomObject().transfertoObject(payload, sdkClass, true);
-            payload = sdkClass;
-        }
-        return payload;
-    };
-
-    function resolveStoredValues(payload) {
-        // If payload is null or undefined so be it.  Passing an empty object to the clover connector
-        // when it is expecting null/undefined will cause problems.
-        const resolved = payload ? {} : null;
-        if (payload) {
-            for (let key in payload) {
-                resolved[key] = resolveStoredValue(payload[key]);
-            }
-        }
-        return resolved;
-    };
-
-    function resolveStoredValue(element) {
-        if (lodash.isString(element)) {
-            if (lodash.startsWith(element, "$:")) {
-                // Value is populated from a stored variable
-                const storedValueKey = element.substring(2);
-                const storedValue = storedValues[storedValueKey];
-                if (!storedValue) {
-                    const message = `A stored value for ${storedValueKey} was not found.`;
-                    handleActionFailure(message, true);
-                }
-                return storedValue || "";
-            } else if (lodash.startsWith(element, "#:")) {
-                //  Value is populated from a function
-                const storedValueFunction = element.substring(2);
-                const testUtilsIn = testUtils.create();
-                if (storedValueFunction === "GEN_EXT_ID") {
-                    return testUtilsIn.getNextId();
-                }
-            }
-            // Just use the existing value
-            return element;
-        } else if (lodash.isObject(element)) {
-            return resolveStoredValue(element);
-        } else if (lodash.isArray(element)) {
-            return element.map((arrElement) => resolveStoredValue(arrElement));
-        } else {
-            return element;
-        }
-    };
-
-    /**
-     * Validate the actual response against the expected response.
-     *
-     * @param remoteResponse
-     * @param expectedResponse
-     */
-    function processResultInternal(remoteResponse, expectedResponse) {
-        for (let key in expectedResponse) {
-            let expectedElement = expectedResponse[key];
-            const remoteElement = remoteResponse[key];
-            if (!lodash.isObject(expectedElement)) {
-                if (expectedElement !== "*") {
-                    // expected is not null or a wildcard
-                    if (lodash.startsWith(expectedElement, "$:")) {
-                        // Target is actually a stored variable
-                        const storedValue = storedValues[expectedElement.substring(2)];
-                        if (!storedValue) {
-                            handleActionFailure(`${key}: Cannot resolve expected value = ${expectedElement}; Actual value = ${resultElement}`);
-                            continue;
-                        } else if (lodash.isObject(storedValue) || lodash.isArray(storedValue)) {
-                            handleActionFailure(`${key}: Cannot resolve expected value [not a primitive] = ${expectedElement}; Actual value = ${remoteElement}`);
-                            continue;
-                        }
-                        expectedElement = storedValue;
-                    }
-                    // should match
-                    if (expectedElement !== remoteElement) {
-                        handleActionFailure(`${key}: Expected value = ${expectedElement}; Actual value = ${remoteElement}`);
-                    }
-                } else if (!remoteElement) {
-                    // Result is null, and expected is not null
-                    handleActionFailure(`${key}: Expected value = ${expectedElement}; Actual value = null`);
-                }
+    function executeActionIterations(executeActionIterationsDeferred, allActionsItr, actionResults) {
+        let action = null;
+        try {
+            if (allActionsItr.hasNext()) {
+                action = allActionsItr.next().value;
+                executeActionInternal(action, actionResults)
+                    .then(() => {
+                        executeActionIterations(executeActionIterationsDeferred, allActionsItr, actionResults)
+                    });
             } else {
-                processResultInternal(remoteElement, expectedElement);
+                executeActionIterationsDeferred.resolve();
             }
+        } catch (e) {
+            handleActionFailure(action, actionResults, `An error has occurred executing action iteration for ${action.name}.  Details: ${e.message}`, true);
+            executeActionIterationsDeferred.resolve();
         }
+        return executeActionIterationsDeferred.promise();
     };
 
-    function storeResult(valueFromResponse, templateValueFromTestCase) {
-        if (!valueFromResponse) {
-            Logger.log(LogLevel.ERROR, `No result for storedValue key: ${templateValueFromTestCase}`);
-            return;
+    function executeActionInternal(action, actionResults) {
+        Logger.log(LogLevel.INFO, `Executing action ${action.name}`);
+
+        if (!action.result) {
+            action.result = {};
         }
-        if (!lodash.isObject(templateValueFromTestCase) && !lodash.isArray(templateValueFromTestCase)) {
-            storedValues[templateValueFromTestCase] = valueFromResponse;
-        } else if (lodash.isObject(templateValueFromTestCase)) {
-            if (!lodash.isObject(valueFromResponse)) {
-                Logger.log(LogLevel.ERROR, `"Invalid result [Object Expected] for storedValue key: ${templateValueFromTestCase}`);
-                return;
-            }
-            for (let key in templateValueFromTestCase) {
-                storeResult(valueFromResponse[key], templateValueFromTestCase[key]);
-            }
+
+        action.result.status = ActionStatus.get().executing;
+        actionResults.push(action);
+
+        if (testCase) {
+            EventService.get().testObservable.next({
+                name: testCase.name,
+                testActions: actionResults
+            });
         }
+
+        const actionCompleteDeferred = new jQuery.Deferred();
+        const executor = actionExecutor.create(action, actionCompleteDeferred, testConnector, resultCache);
+        // Update the listener with the current executor
+        testConnector.getListener().setTestExecutor(executor);
+        executor.executeAction()
+            .then((action) => {
+                actionCompleteDeferred.resolve(action);
+            });
+        return actionCompleteDeferred.promise();
     };
 
-    function handleActionFailure(message, log = false) {
-        testUtils.create().handleActionFailure(action, message, log);
-        resultDeferred.resolve();
+    function handleActionFailure(action, actionResults, message, log = false) {
+       actionResults.push(action);
+       testUtils.create().handleActionFailure(action, message, log);
     };
-
 };
 
 export {create}
+
