@@ -1,3 +1,4 @@
+import * as sdk from "remote-pay-cloud-api";
 import * as exchangeConstants from "./ExchangeConstants";
 import {LogLevel, Logger} from "./util/Logger";
 import * as testUtils from "./util/TestUtils";
@@ -69,8 +70,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                 if (expectSuccess) {
                     responseError = lodash.get(remoteResponse, "result", "") === "FAIL" || !lodash.get(remoteResponse, "success", true);
                     if (responseError) {
-                        action.result.status = ActionStatus.get().fail;
-                        addMessageToResult(remoteResponse["message"] || remoteResponse["reason"] || `A failure occurred processing ${action.name}.`);
+                        handleActionFailure(`A failure occurred processing the response for action: ${action.name}.  Details: ${JSON.stringify(remoteResponse)}.`, false, true);
                     }
                 }
 
@@ -95,13 +95,13 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                     if (action.result.status !== ActionStatus.get().fail) {
                         action.result.status = ActionStatus.get().pass;
                     }
-                }
 
-                // Resolve the responses deferred.
-                if (responseAssertionDeferred) {
-                    Logger.log(LogLevel.Info, `Action ${action.name} has completed, status: ${action.result.status}`);
-                    responseAssertionDeferred.resolve();
+                    // Resolve the responses deferred.
+                    if (responseAssertionDeferred) {
+                        responseAssertionDeferred.resolve();
+                    }
                 }
+                Logger.log(LogLevel.Info, `Action ${action.name} has completed, status: ${action.result.status}`);
             }
         },
 
@@ -486,8 +486,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
         if (reset) {
             // Save the current onResetDeviceResponse function, so that we can reset it after a response has been received.
             const savedResetDeviceResponseHandler = testConnector.getListener().onResetDeviceResponse;
-            // Reset the device on failure.
-            const afterReset = () => {
+            testConnector.getListener().onResetDeviceResponse = (response) => {
                 const testConnectorListener = testConnector.getListener();
                 if (testConnectorListener) {
                     testConnector.getListener().onResetDeviceResponse = savedResetDeviceResponseHandler;
@@ -495,16 +494,62 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                 responseAssertionDeferred.resolve();
                 deviceEventsAssertionDeferred.resolve();
             }
-            testConnector.getListener().onResetDeviceResponse = (response) => {
-                afterReset();
-            }
             cloverConnector.resetDevice();
-            // This should only ever be needed if a reset response is not received.
-            setTimeout(function () {
-                afterReset();
-            }, 5000);
+            setTimeout(() => {
+                lastDitchEffortToRecoverDeviceState();
+            }, 2500);
         }
     };
+
+    /**
+     * See PAY-3924.  Device resets are not always reliable.  On recent SDK versions we can make a final attempt
+     * to get the device back into a normal state by retrieving the status, and then selecting input options.
+     * This isn't perfect and we could take this further, but it seems to be working for most cases now.
+     */
+    function lastDitchEffortToRecoverDeviceState() {
+        // RetrieveDeviceStatusRequest not available in all SDK versions.
+        if (sdk.remotepay.RetrieveDeviceStatusRequest) {
+            const listener = testConnector.getListener();
+            if (listener) {
+                // Save the current onResetDeviceResponse function, so that we can reset it after a response has been received.
+                const savedOnDeviceActivityStart = listener.onDeviceActivityStart;
+                listener.onDeviceActivityStart = (response) => {
+                    const eventOptions = lodash.get(response, "inputOptions", []);
+                    if (eventOptions) {
+                        const keysToPress = ["ENTER", "ESC"];
+                        eventOptions.forEach((eventOption) => {
+                            if (keysToPress.indexOf(eventOption.keyPress) > -1) {
+                                cloverConnector.invokeInputOption(eventOption);
+                                // If we are back on the payment screen, we are done!
+                                // The ESC input option will be invoked which will send the device to the welcome screen.
+                                if (lodash.startsWith(response.message, "Customer is choosing")) {
+                                    listener.onDeviceActivityStart = savedOnDeviceActivityStart;
+                                    // Pause a bit to allow the device to receive and redirect after receiving the input option.
+                                    setTimeout(() => {
+                                        responseAssertionDeferred.resolve();
+                                        deviceEventsAssertionDeferred.resolve();
+                                    }, 2500);
+                                }
+                            }
+                        });
+                    }
+                }
+                const retrieveDeviceStatusRequest = new sdk.remotepay.RetrieveDeviceStatusRequest();
+                retrieveDeviceStatusRequest.setSendLastMessage(true);
+                cloverConnector.retrieveDeviceStatus(retrieveDeviceStatusRequest);
+            }
+            setTimeout(() => {
+                // Worst case, we couldn't execute input options to get the device in the correct state.
+                // We are probably broken for future tests but we will continue.
+                if (responseAssertionDeferred.state() === "pending") {
+                    Logger.log(LogLevel.ERROR, "lastDitchEffortToRecoverDeviceState has failed.  The device is likely in a bad state and future tests will likely fail.");
+                    responseAssertionDeferred.resolve();
+                    deviceEventsAssertionDeferred.resolve();
+                }
+
+            }, 10000);
+        }
+    }
 
     function pushDeviceEvent(deviceEvent, startEvent = true) {
         deviceEvent.isStart = startEvent;
