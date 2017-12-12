@@ -104,13 +104,17 @@ const create = () => {
         // Reset device (if necessary)
         const resetDevice = lodash.get(testCase, "resetDevice", false);
         if (resetDevice) {
-            const tempListener = Object.assign({}, sdk.remotepay.ICloverConnectorListener.prototype, {
-                onResetDeviceResponse: function (response) {
-                    run();
+            // Save the current onResetDeviceResponse function, so that we can reset it after a response has been received.
+            const savedResetDeviceResponseHandler = testConnector.getListener().onResetDeviceResponse;
+            // Reset the device on failure.
+            testConnector.getListener().onResetDeviceResponse = (response) => {
+                const testConnectorListener = testConnector.getListener();
+                if (testConnectorListener) {
+                    testConnector.getListener().onResetDeviceResponse = savedResetDeviceResponseHandler;
                 }
-            });
-            testConnector.setListener(tempListener);
-            testConnector.cloverConnector.resetDevice();
+                run();
+            }
+            testConnector.getCloverConnector().resetDevice();
         } else {
             run();
         }
