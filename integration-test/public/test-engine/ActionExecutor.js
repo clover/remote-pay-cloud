@@ -1,4 +1,3 @@
-import * as clover from "remote-pay-cloud";
 import * as exchangeConstants from "./ExchangeConstants";
 import {LogLevel, Logger} from "./util/Logger";
 import * as testUtils from "./util/TestUtils";
@@ -151,7 +150,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                         } else {
                             Logger.log(LogLevel.warn, `No matching input option found for ${JSON.stringify(testDefInputOption)}`);
                             if (performDeviceEventAssertion()) {
-                                handleActionFailure(`Device assertions could not be performed because an input option could not be found.  Device Event: ${JSON.stringify(deviceEvent)}, Input Option not found: ${JSON.stringify(testDefInputOption)}`);
+                                handleActionFailure(`Device assertions could not be performed because an input option could not be found.  Device Event: ${JSON.stringify(deviceEvent)}, Input Option not found: ${JSON.stringify(testDefInputOption)}`, false, true);
                             }
                         }
 
@@ -210,8 +209,8 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
         // Execute the request on the Clover Connector.
         executeRequest();
 
-        // If we aren't waiting for a response, set the status and resolve responseAssertionDeferred.
-        if (!waitForResponse) {
+        // If we aren't waiting for a response, or if there is nothing to assert on, set the status and resolve responseAssertionDeferred.
+        if (!waitForResponse || (!performResponseAssertion() && !performDeviceEventAssertion())) {
             action.result.status = ActionStatus.get().manual;
             responseAssertionDeferred.resolve();
         }
@@ -220,7 +219,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
         if (performResponseAssertion() && responseTimeout && responseTimeout > 0) {
             setTimeout(() => {
                 if (responseAssertionDeferred.state() === "pending") {
-                    handleActionFailure(`Timeout: A response was not received within ${responseTimeout} milli(s).`);
+                    handleActionFailure(`Timeout: A response was not received within ${responseTimeout} milli(s).`, false, true);
                 }
             }, responseTimeout);
         }
@@ -251,14 +250,14 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
             Logger.log(LogLevel.INFO, `Executing remote request, method: ${methodFromActionDefinition}.`);
             if (!methodToCall) {
                 const message = `Test Failure: Unsupported method type: ${method}`;
-                handleActionFailure(message, true);
+                handleActionFailure(message, true, true);
                 return false;
             }
             cloverConnector[methodToCall](payload);
             return true;
         } else {
             const message = `Test Failure: A mapping for method ${methodFromActionDefinition} was not found in ExchangeConstants.requestDefToMethod.`;
-            handleActionFailure(message, true);
+            handleActionFailure(message, true, true);
             return false;
         }
     };
@@ -327,7 +326,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                 const storedValue = storedValues[storedValueKey];
                 if (!storedValue) {
                     const message = `A stored value for ${storedValueKey} was not found.`;
-                    handleActionFailure(message, true);
+                    handleActionFailure(message, true, true);
                 }
                 return storedValue || "";
             } else if (lodash.startsWith(element, "#:")) {
@@ -482,26 +481,29 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
         testUtils.create().addMessageToResult(action, message);
     }
 
-    function handleActionFailure(message = null, log = false) {
+    function handleActionFailure(message = null, log = false, reset = false) {
         testUtils.create().handleActionFailure(action, message, log);
-
-        // Reset the device on failure.
-        const afterReset = () => {
-            cloverConnector.restoreListener();
-            responseAssertionDeferred.resolve();
-            deviceEventsAssertionDeferred.resolve();
-        }
-        const tempListener = Object.assign({}, clover.remotepay.ICloverConnectorListener.prototype, {
-            onResetDeviceResponse: function (response) {
+        if (reset) {
+            // Save the current onResetDeviceResponse function, so that we can reset it after a response has been received.
+            const savedResetDeviceResponseHandler = testConnector.getListener().onResetDeviceResponse;
+            // Reset the device on failure.
+            const afterReset = () => {
+                const testConnectorListener = testConnector.getListener();
+                if (testConnectorListener) {
+                    testConnector.getListener().onResetDeviceResponse = savedResetDeviceResponseHandler;
+                }
+                responseAssertionDeferred.resolve();
+                deviceEventsAssertionDeferred.resolve();
+            }
+            testConnector.getListener().onResetDeviceResponse = (response) => {
                 afterReset();
             }
-        });
-        cloverConnector.setListener(tempListener);
-        cloverConnector.resetDevice();
-        // This should only ever be needed if a reset response is not received.
-        setTimeout(function () {
-            afterReset();
-        }, 5000);
+            cloverConnector.resetDevice();
+            // This should only ever be needed if a reset response is not received.
+            setTimeout(function () {
+                afterReset();
+            }, 5000);
+        }
     };
 
     function pushDeviceEvent(deviceEvent, startEvent = true) {

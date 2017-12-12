@@ -70,8 +70,8 @@ const create = (connectorConfig) => {
             } else {
                 cloverConnector = new clover.CloverConnectorFactory().createICloverConnector(cloverDeviceConnectionConfiguration);
             }
-            defaultListener = buildCloverConnectionListener(cloverConnector, connectionInitializedDeferred);
-            this.setListener(defaultListener);
+            listener = buildCloverConnectionListener(cloverConnector, connectionInitializedDeferred);
+            cloverConnector.addCloverConnectorListener(listener);
             cloverConnector.initializeConnection();
 
             const connectorReadyTimeout = testConfig["connectorReadyTimeout"] || 15000;
@@ -83,9 +83,9 @@ const create = (connectorConfig) => {
         closeConnection: function () {
             if (cloverConnector != null) {
                 Logger.log(LogLevel.INFO, "Closing Clover Connector.");
-                if (currentListener != null) {
-                    cloverConnector.removeCloverConnectorListener(currentListener);
-                    currentListener = null;
+                if (listener != null) {
+                    cloverConnector.removeCloverConnectorListener(listener);
+                    listener = null;
                 }
                 cloverConnector.dispose();
                 cloverConnector = null;
@@ -97,27 +97,7 @@ const create = (connectorConfig) => {
         },
 
         getListener: function() {
-            return currentListener;
-        },
-
-        /**
-         * We only want one listener, since we are going to be re-setting listeners in a few places we will manage
-         * everything here.
-         *
-         * @param listenerToSet
-         */
-        setListener: function(listenerToSet) {
-            if (cloverConnector) {
-                if (currentListener) {
-                    cloverConnector.removeCloverConnectorListener(currentListener);
-                }
-                cloverConnector.addCloverConnectorListener(listenerToSet);
-                currentListener = listenerToSet;
-            }
-        },
-
-        restoreListener: function() {
-            this.setListener(defaultListener);
+            return listener;
         }
 
     };
@@ -125,8 +105,7 @@ const create = (connectorConfig) => {
     // Private Members
 
     let cloverConnector = null;
-    let currentListener = null;
-    let defaultListener = null;
+    let listener = null;
     let authToken = null;
 
     /**
