@@ -511,9 +511,9 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
      * the payment and return to the welcome screen.
      */
     function lastDitchEffortToRecoverDeviceState() {
-        // RetrieveDeviceStatusRequest not available in all SDK versions.
-        if (sdk.remotepay.RetrieveDeviceStatusRequest) {
-            if (responseAssertionDeferred.state() !== "resolved") {
+        if (responseAssertionDeferred.state() !== "resolved") {
+            // RetrieveDeviceStatusRequest not available in all SDK versions.
+            if (sdk.remotepay.RetrieveDeviceStatusRequest) {
                 const listener = testConnector.getListener();
                 if (listener) {
                     // Save the current onResetDeviceResponse function, so that we can reset it after a response has been received.
@@ -543,16 +543,16 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                     retrieveDeviceStatusRequest.setSendLastMessage(true);
                     cloverConnector.retrieveDeviceStatus(retrieveDeviceStatusRequest);
                 }
-                setTimeout(() => {
-                    // Worst case, we couldn't execute input options to get the device in the correct state.
-                    // We are probably broken for future tests but we will continue.
-                    if (responseAssertionDeferred.state() === "pending") {
-                        Logger.log(LogLevel.ERROR, "lastDitchEffortToRecoverDeviceState has failed.  The device is likely in a bad state and future tests will likely fail.");
-                        responseAssertionDeferred.resolve();
-                        deviceEventsAssertionDeferred.resolve();
-                    }
-                }, 10000);
             }
+            setTimeout(() => {
+                // Worst case, we couldn't execute input options to get the device in the correct state.
+                // We are probably broken for future tests but we will continue.
+                if (responseAssertionDeferred.state() === "pending") {
+                    Logger.log(LogLevel.ERROR, "lastDitchEffortToRecoverDeviceState has failed.  The device is likely in a bad state and future tests will likely fail.");
+                    responseAssertionDeferred.resolve();
+                    deviceEventsAssertionDeferred.resolve();
+                }
+            }, 10000);
         }
     }
 
