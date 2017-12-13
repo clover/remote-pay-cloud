@@ -53,7 +53,6 @@ const create = (cloverConnector) => {
             request.challenges.forEach((challenge) => {
                 if (!actionExecutor.confirmPaymentChallenge(challenge.type)) {
                     cloverConnector.rejectPayment(request.getPayment(), challenge);
-                    return;
                 }
             });
             // accept by default

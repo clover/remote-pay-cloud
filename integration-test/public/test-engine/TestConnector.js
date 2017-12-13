@@ -32,7 +32,7 @@ const create = (connectorConfig) => {
                 const endpoint = `${connectorConfig.wsScheme}://${connectorConfig.ipAddress}:${connectorConfig.wsPort}/remote_pay`;
                 const networkConfiguration = {
                     "endpoint": endpoint
-                }
+                };
                 const authToken = getAuthToken();
                 if (authToken && authToken.length > 0) {
                     Logger.log(LogLevel.TRACE, `Device Connection: Using cached auth token ${authToken}`);
@@ -131,7 +131,7 @@ const create = (connectorConfig) => {
                 connectionInitializedDeferred.resolve("Device Ready");
             }
         });
-    };
+    }
 
     function getDeviceConfigurationForCloud(connectionConfiguration) {
         return new clover.WebSocketCloudCloverDeviceConfiguration(
@@ -145,7 +145,7 @@ const create = (connectorConfig) => {
             connectionConfiguration.deviceId,
             connectionConfiguration.friendlyId,
             connectionConfiguration.forceReconnect);
-    };
+    }
 
     function getDeviceConfigurationForNetwork(connectionConfiguration) {
         let deviceConfiguration = new clover.WebSocketPairedCloverDeviceConfiguration(
@@ -172,15 +172,15 @@ const create = (connectorConfig) => {
             }
         });
         return deviceConfiguration;
-    };
+    }
 
     function getAuthToken() {
         return authToken;
-    };
+    }
 
     function setAuthToken(authTokenIn) {
         authToken = authTokenIn;
-    };
+    }
 
 };
 
