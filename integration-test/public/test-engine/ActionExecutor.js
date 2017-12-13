@@ -454,7 +454,9 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
             Logger.log(LogLevel.INFO, testActionDeviceEvents);
             handleActionFailure();
         } else {
-            action.result.status = ActionStatus.get().pass;
+            if (action.result.status !== ActionStatus.get().fail) {
+                action.result.status = ActionStatus.get().pass;
+            }
             deviceEventsAssertionDeferred.resolve();
         }
     };
@@ -502,52 +504,55 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
     };
 
     /**
-     * See PAY-3924.  Device resets are not always reliable.  On recent SDK versions we can make a final attempt
-     * to get the device back into a normal state by retrieving the status, and then selecting input options.
-     * This isn't perfect and we could take this further, but it seems to be working for most cases now.
+     * See PAY-3924.  In the event that a device reset does not work this is a last ditch effort to get the device
+     * into a working state (only supported on SDKs that support onDeviceActivityStart).  A device status call is
+     * made with the sendLastMessage flag set to true, which will send the last UI event.  We handle this event and
+     * attempt to select buttons to return to the payment screen (won't work with all flows) so that we can cancel
+     * the payment and return to the welcome screen.
      */
     function lastDitchEffortToRecoverDeviceState() {
         // RetrieveDeviceStatusRequest not available in all SDK versions.
         if (sdk.remotepay.RetrieveDeviceStatusRequest) {
-            const listener = testConnector.getListener();
-            if (listener) {
-                // Save the current onResetDeviceResponse function, so that we can reset it after a response has been received.
-                const savedOnDeviceActivityStart = listener.onDeviceActivityStart;
-                listener.onDeviceActivityStart = (response) => {
-                    const eventOptions = lodash.get(response, "inputOptions", []);
-                    if (eventOptions) {
-                        const keysToPress = ["ENTER", "ESC"];
-                        eventOptions.forEach((eventOption) => {
-                            if (keysToPress.indexOf(eventOption.keyPress) > -1) {
-                                cloverConnector.invokeInputOption(eventOption);
-                                // If we are back on the payment screen, we are done!
-                                // The ESC input option will be invoked which will send the device to the welcome screen.
-                                if (lodash.startsWith(response.message, "Customer is choosing")) {
-                                    listener.onDeviceActivityStart = savedOnDeviceActivityStart;
-                                    // Pause a bit to allow the device to receive and redirect after receiving the input option.
-                                    setTimeout(() => {
-                                        responseAssertionDeferred.resolve();
-                                        deviceEventsAssertionDeferred.resolve();
-                                    }, 2500);
+            if (responseAssertionDeferred.state() !== "resolved") {
+                const listener = testConnector.getListener();
+                if (listener) {
+                    // Save the current onResetDeviceResponse function, so that we can reset it after a response has been received.
+                    const savedOnDeviceActivityStart = listener.onDeviceActivityStart;
+                    listener.onDeviceActivityStart = (response) => {
+                        const eventOptions = lodash.get(response, "inputOptions", []);
+                        if (eventOptions) {
+                            const keysToPress = ["ENTER", "ESC"];
+                            eventOptions.forEach((eventOption) => {
+                                if (keysToPress.indexOf(eventOption.keyPress) > -1) {
+                                    cloverConnector.invokeInputOption(eventOption);
+                                    // If we are back on the payment screen, we are done!
+                                    // The ESC input option will be invoked which will send the device to the welcome screen.
+                                    if (lodash.startsWith(response.message, "Customer is choosing")) {
+                                        listener.onDeviceActivityStart = savedOnDeviceActivityStart;
+                                        // Pause a bit to allow the device to receive and redirect after receiving the input option.
+                                        setTimeout(() => {
+                                            responseAssertionDeferred.resolve();
+                                            deviceEventsAssertionDeferred.resolve();
+                                        }, 2500);
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        }
                     }
+                    const retrieveDeviceStatusRequest = new sdk.remotepay.RetrieveDeviceStatusRequest();
+                    retrieveDeviceStatusRequest.setSendLastMessage(true);
+                    cloverConnector.retrieveDeviceStatus(retrieveDeviceStatusRequest);
                 }
-                const retrieveDeviceStatusRequest = new sdk.remotepay.RetrieveDeviceStatusRequest();
-                retrieveDeviceStatusRequest.setSendLastMessage(true);
-                cloverConnector.retrieveDeviceStatus(retrieveDeviceStatusRequest);
+                setTimeout(() => {
+                    // Worst case, we couldn't execute input options to get the device in the correct state.
+                    // We are probably broken for future tests but we will continue.
+                    if (responseAssertionDeferred.state() === "pending") {
+                        Logger.log(LogLevel.ERROR, "lastDitchEffortToRecoverDeviceState has failed.  The device is likely in a bad state and future tests will likely fail.");
+                        responseAssertionDeferred.resolve();
+                        deviceEventsAssertionDeferred.resolve();
+                    }
+                }, 10000);
             }
-            setTimeout(() => {
-                // Worst case, we couldn't execute input options to get the device in the correct state.
-                // We are probably broken for future tests but we will continue.
-                if (responseAssertionDeferred.state() === "pending") {
-                    Logger.log(LogLevel.ERROR, "lastDitchEffortToRecoverDeviceState has failed.  The device is likely in a bad state and future tests will likely fail.");
-                    responseAssertionDeferred.resolve();
-                    deviceEventsAssertionDeferred.resolve();
-                }
-
-            }, 10000);
         }
     }
 
