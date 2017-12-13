@@ -72,7 +72,7 @@ const create = (resultCache, testConnector, testCase) => {
             actionsCompleteDeferred.resolve(actionResults);
         }
         return actionsCompleteDeferred.promise();
-    };
+    }
 
     /**
      * Executes before/after actions.
@@ -103,7 +103,7 @@ const create = (resultCache, testConnector, testCase) => {
             executeActionsDeferred.resolve();
         }
         return executeActionsDeferred.promise();
-    };
+    }
 
     /**
      * Executes each action iteration.
@@ -128,7 +128,7 @@ const create = (resultCache, testConnector, testCase) => {
             executeActionIterationsDeferred.resolve();
         }
         return executeActionIterationsDeferred.promise();
-    };
+    }
 
     function executeActionInternal(action, actionResults) {
         Logger.log(LogLevel.INFO, `Executing action ${action.name}`);
@@ -156,12 +156,12 @@ const create = (resultCache, testConnector, testCase) => {
                 actionCompleteDeferred.resolve(action);
             });
         return actionCompleteDeferred.promise();
-    };
+    }
 
     function handleActionFailure(action, actionResults, message, log = false) {
        actionResults.push(action);
        testUtils.create().handleActionFailure(action, message, log);
-    };
+    }
 };
 
 export {create}

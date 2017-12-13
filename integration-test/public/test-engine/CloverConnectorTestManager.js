@@ -42,7 +42,7 @@ const create = () => {
             testConnector.closeConnection();
             Logger.log(LogLevel.INFO, "All test cases have been executed.");
         }
-    };
+    }
 
     /**
      * Makes sure that the Clover Connector is ready to process requests
@@ -61,7 +61,7 @@ const create = () => {
         const testExecutionTimeout = testConfig["testExecutionTimeout"] || 15000;
         setTimeout(() => testCompleteDeferred.reject(504), testExecutionTimeout);
         return testCompleteDeferred.promise();
-    };
+    }
 
     /**
      * Runs each test (all actions), testCompleteDeferred doesn't resolve until all test actions have completed.
@@ -100,25 +100,25 @@ const create = () => {
                         completeTest(testCompleteDeferred, testCase, testConnector);
                     }
                 });
-        }
+        };
         // Reset device (if necessary)
         const resetDevice = lodash.get(testCase, "resetDevice", false);
         if (resetDevice) {
             // Save the current onResetDeviceResponse function, so that we can reset it after a response has been received.
             const savedResetDeviceResponseHandler = testConnector.getListener().onResetDeviceResponse;
             // Reset the device on failure.
-            testConnector.getListener().onResetDeviceResponse = (response) => {
+            testConnector.getListener().onResetDeviceResponse = () => {
                 const testConnectorListener = testConnector.getListener();
                 if (testConnectorListener) {
                     testConnector.getListener().onResetDeviceResponse = savedResetDeviceResponseHandler;
                 }
                 run();
-            }
+            };
             testConnector.getCloverConnector().resetDevice();
         } else {
             run();
         }
-    };
+    }
 
     /**
      * Test clean-up utility. Resolves testCompleteDeferred when all actions have been completed.
@@ -134,16 +134,16 @@ const create = () => {
             testConnector.closeConnection();
         }
         testCompleteDeferred.resolve();
-    };
+    }
 
     function handleDeviceFailure(code, testConnector) {
-        const message = (code == 504) ? "Timed-out initializing a connection to the device" : "An error has occurred establishing a connection to the device";
+        const message = (code === 504) ? "Timed-out initializing a connection to the device" : "An error has occurred establishing a connection to the device";
         Logger.log(LogLevel.ERROR, `Device Connection Failure: ${message}.  The connection is being closed and no tests will be run on this device.`);
         testConnector.closeConnection();
         if (code === 504) {
             EventService.get().pairingObservable.next(message);
         }
-    };
+    }
 
 };
 

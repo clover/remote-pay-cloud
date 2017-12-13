@@ -260,7 +260,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
             handleActionFailure(message, true, true);
             return false;
         }
-    };
+    }
 
     /**
      *  The request payload in the test definition is defined as JSON.  The SDK works with JavaScript objects
@@ -283,7 +283,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
         }
         // No payloadResolver, return parameters as they exist in the test cases request.
         return payload;
-    };
+    }
 
     /**
      * See resolveRequestParameters
@@ -304,7 +304,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
             payload = Object.assign(sdkClass, payload);
         }
         return payload;
-    };
+    }
 
     function resolveStoredValues(payload) {
         // If payload is null or undefined so be it.  Passing an empty object to the clover connector
@@ -316,7 +316,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
             }
         }
         return resolved;
-    };
+    }
 
     function resolveStoredValue(element) {
         if (lodash.isString(element)) {
@@ -346,7 +346,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
         } else {
             return element;
         }
-    };
+    }
 
     /**
      * Validate the actual response against the expected response.
@@ -385,7 +385,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                 assertResult(remoteElement, expectedElement);
             }
         }
-    };
+    }
 
     /**
      * Assert the device events, if the action has a "deviceEvent" assertion.
@@ -459,7 +459,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
             }
             deviceEventsAssertionDeferred.resolve();
         }
-    };
+    }
 
     function storeResult(valueFromResponse, templateValueFromTestCase) {
         if (!valueFromResponse) {
@@ -477,7 +477,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                 storeResult(valueFromResponse[key], templateValueFromTestCase[key]);
             }
         }
-    };
+    }
 
     function addMessageToResult(message) {
         testUtils.create().addMessageToResult(action, message);
@@ -501,7 +501,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                 lastDitchEffortToRecoverDeviceState();
             }, 2500);
         }
-    };
+    }
 
     /**
      * See PAY-3924.  In the event that a device reset does not work this is a last ditch effort to get the device
@@ -567,11 +567,11 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
      */
     function getInputOptions() {
         return lodash.get(action, ["context", "inputOptions"], null);
-    };
+    }
 
     function buildSimpleDeviceEvent(deviceEvent) {
         return lodash.pick(deviceEvent, ["eventState", "message"]);
-    };
+    }
 
 };
 
