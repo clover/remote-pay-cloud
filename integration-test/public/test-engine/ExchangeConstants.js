@@ -197,7 +197,10 @@ const create = () => {
                 method: "startCustomActivity"
             },
             "DEVICE_STATUS": {
-                method: "retrieveDeviceStatus"
+                method: "retrieveDeviceStatus",
+                payloadResolver: {
+                    type: sdk.remotepay.RetrieveDeviceStatusRequest
+                }
             },
             "RETRIEVE_PAYMENT": {
                 method: "retrievePayment"

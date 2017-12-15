@@ -153,15 +153,14 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                                 handleActionFailure(`Device assertions could not be performed because an input option could not be found.  Device Event: ${JSON.stringify(deviceEvent)}, Input Option not found: ${JSON.stringify(testDefInputOption)}`, false, true);
                             }
                         }
-
-                        // Once all of the input options have been invoked, assert the device events. Call with a
-                        // delay to allow the invocation of the input option to execute on the device.
-                        if (performDeviceEventAssertion()) {
-                            if (invokedInputOptionCount === testDefInputOptions.length) {
-                                setTimeout(() => assertDeviceEvents(), 3000);
-                            }
-                        }
                     }
+                }
+            }
+            // Once all of the input options have been invoked, assert the device events. Call with a
+            // delay to allow the invocation of the input option to execute on the device.
+            if (performDeviceEventAssertion()) {
+                if (!testDefInputOptions || (invokedInputOptionCount === testDefInputOptions.length)) {
+                    setTimeout(() => assertDeviceEvents(), 2500);
                 }
             }
         },
@@ -394,8 +393,10 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
         const testActionDeviceEvents = lodash.get(action, ["assert", "deviceEvent", "flow", "events"], []);
         const flowComparisonType = lodash.get(action, ["assert", "deviceEvent", "flow", "comparisonType"], "STRICT");
         const eventTypeFilter = lodash.get(action, ["assert", "deviceEvent", "flow", "eventTypeFilter"], "ALL");
+
+        const assertUtils = utils.create();
+        let actualDeviceEvents = [];
         // Filter the device events based on the test definition, e.g. we have only defined start or end events in our test def.
-        let actualDeviceEvents = Array.prototype.push.apply([], receivedDeviceEvents);
         if (eventTypeFilter !== "ALL") {
             actualDeviceEvents = lodash.filter(receivedDeviceEvents, (deviceEvent) => {
                 if (eventTypeFilter === "START_ONLY" && deviceEvent.isStart) {
@@ -406,25 +407,32 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                 }
                 return false;
             });
+        } else {
+            actualDeviceEvents = receivedDeviceEvents.slice(0);
         }
 
-        const assertUtils = utils.create();
+        Logger.log(LogLevel.INFO, "Device Events received (filtered):");
+        Logger.log(LogLevel.INFO, actualDeviceEvents);
 
         let deviceEventFlowFailed = false;
-        // Assert the device event flow.
-        if (flowComparisonType === "STRICT") {
-            deviceEventFlowFailed = !assertUtils.match(testActionDeviceEvents, actualDeviceEvents);
-        } else if (flowComparisonType === "ORDERED") {
-            deviceEventFlowFailed = !assertUtils.containsSequence(testActionDeviceEvents, actualDeviceEvents);
-        }
-        if (deviceEventFlowFailed) {
-            addMessageToResult(`The events received from the device during execution did not match the flow defined in the test definition.  Test Definition Events: ${JSON.stringify(testActionDeviceEvents)} Actual Device Events: ${JSON.stringify(actualDeviceEvents)}`);
+        if (testActionDeviceEvents && testActionDeviceEvents.length > 0) {
+            // Assert the device event flow.
+            if (flowComparisonType === "STRICT") {
+                deviceEventFlowFailed = !assertUtils.match(testActionDeviceEvents, actualDeviceEvents);
+            } else if (flowComparisonType === "ORDERED") {
+                deviceEventFlowFailed = !assertUtils.containsSequence(testActionDeviceEvents, actualDeviceEvents);
+            }
+            if (deviceEventFlowFailed) {
+                Logger.log(LogLevel.INFO, "Event flow defined in test definition:");
+                Logger.log(LogLevel.INFO, testActionDeviceEvents);
+                addMessageToResult(`The events received from the device during execution did not match the flow defined in the test definition.  Test Definition Events: ${JSON.stringify(testActionDeviceEvents)} Actual Device Events: ${JSON.stringify(actualDeviceEvents)}`);
+            }
         }
 
         // Assert the device event exclusions
         let deviceEventExclusionsFailed = false;
         const testActionDeviceEventExclusions = lodash.get(action, ["assert", "deviceEvent", "exclusions"], []);
-        if (testActionDeviceEventExclusions.length > 0) {
+        if (testActionDeviceEventExclusions && testActionDeviceEventExclusions.length > 0) {
             deviceEventExclusionsFailed = testActionDeviceEventExclusions.some((exclusion) => {
                 let matchFound = assertUtils.contains(actualDeviceEvents, exclusion);
                 if (matchFound) {
@@ -437,7 +445,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
         // Assert the device event counts
         let deviceEventCountsFailed = false;
         const testActionDeviceEventCounts = lodash.get(action, ["assert", "deviceEvent", "counts"], []);
-        if (testActionDeviceEventCounts.length > 0) {
+        if (testActionDeviceEventCounts && testActionDeviceEventCounts.length > 0) {
             testActionDeviceEventCounts.forEach((testActionDeviceEventForCount) => {
                 let occurrences = assertUtils.occurrencesIn(actualDeviceEvents, testActionDeviceEventForCount, true);
                 if(occurrences !== testActionDeviceEventForCount.count) {
@@ -448,10 +456,6 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
         }
 
         if (deviceEventFlowFailed || deviceEventExclusionsFailed || deviceEventCountsFailed) {
-            Logger.log(LogLevel.INFO, "Device Events received:");
-            Logger.log(LogLevel.INFO, actualDeviceEvents);
-            Logger.log(LogLevel.INFO, "Event flow defined in test definition:");
-            Logger.log(LogLevel.INFO, testActionDeviceEvents);
             handleActionFailure();
         } else {
             if (action.result.status !== ActionStatus.get().fail) {
