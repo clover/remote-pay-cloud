@@ -200,7 +200,10 @@ const create = () => {
                 method: "retrieveDeviceStatus"
             },
             "RETRIEVE_PAYMENT": {
-                method: "retrievePayment"
+                method: "retrievePayment",
+                payloadResolver: {
+                    type: sdk.remotepay.RetrievePaymentRequest
+                }
             }
         }
     }
