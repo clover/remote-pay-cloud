@@ -241,10 +241,22 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
     function executeRequest() {
         const requestFromActionDefinition = lodash.get(action, ["context", "request"]);
         const methodFromActionDefinition = lodash.get(requestFromActionDefinition, "method");
+
         // See the resolveRequestParameters function for an explanation of the purpose of methodMapping.
         const methodMapping = exchangeConstants.create().testActionToRemoteCall[methodFromActionDefinition];
         if (methodMapping) {
             const payload = resolveRequestParameters(requestFromActionDefinition, methodMapping);
+            // Store request values per the test definition.
+            const store = lodash.get(requestFromActionDefinition, "store");
+            if (store) {
+                try {
+                    for (let key in store) {
+                        storeResult(payload[key], store[key]);
+                    }
+                } catch (e) {
+                    Logger.log(LogLevel.ERROR, "Error storing results");
+                }
+            }
             const methodToCall = lodash.get(methodMapping, "method");
             Logger.log(LogLevel.INFO, `Executing remote request, method: ${methodFromActionDefinition}.`);
             if (!methodToCall) {

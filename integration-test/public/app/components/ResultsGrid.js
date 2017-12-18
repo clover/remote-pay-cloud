@@ -103,7 +103,7 @@ export default class ResultsGrid extends Component {
                 field: "result.messages",
                 cellRenderer: (params) => {
                     if (params.value) {
-                        return `<span>${params.value.join(",")}</span>`
+                        return `<span>${params.value.join(" ")}</span>`
                     }
                 }
             }

@@ -203,7 +203,10 @@ const create = () => {
                 }
             },
             "RETRIEVE_PAYMENT": {
-                method: "retrievePayment"
+                method: "retrievePayment",
+                payloadResolver: {
+                    type: sdk.remotepay.RetrievePaymentRequest
+                }
             }
         }
     }
