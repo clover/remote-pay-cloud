@@ -1,0 +1,21 @@
+{
+  "name": "test-engine",
+  "version": "1.0.9",
+  "scripts": {
+    "build": "webpack --config ./webpack.config.js"
+  },
+  "dependencies": {
+    "immutable": "^3.8.2",
+    "webpack": "3.8.1",
+    "remote-pay-cloud": "dev",
+    "babel-cli": "^6.11.4",
+    "babel-core": "^6.13.2",
+    "babel-preset-env": "1.6.1",
+    "babel-loader": "^7.1.2",
+    "rxjs": "5.5.2",
+    "rsvp": "^4.7.0",
+    "lodash": "^4.17.4",
+    "whatwg-fetch": "^2.0.3",
+    "promise-polyfill": "^6.1.0"
+  }
+}

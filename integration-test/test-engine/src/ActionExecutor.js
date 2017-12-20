@@ -1,16 +1,17 @@
+import * as RSVP from "rsvp";
 import * as sdk from "remote-pay-cloud-api";
 import * as exchangeConstants from "./ExchangeConstants";
 import {LogLevel, Logger} from "./util/Logger";
 import * as testUtils from "./util/TestUtils";
 import * as utils from "./util/Utils";
-import * as ActionStatus from "./ActionStatus";
+import ActionStatus from "./ActionStatus";
 
 const create = (action, actionCompleteDeferred, testConnector, storedValues) => {
 
     // Resolved when the response assertions have been completed.
-    let responseAssertionDeferred = new jQuery.Deferred();
+    let responseAssertionDeferred = RSVP.defer();
     // Resolved when the device event assertions have been completed.
-    let deviceEventsAssertionDeferred = new jQuery.Deferred();
+    let deviceEventsAssertionDeferred = RSVP.defer();
 
     // All UI state events received during the execution of this action.
     const receivedDeviceEvents = [];
@@ -28,10 +29,6 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
 
     return {
         executeAction: function () {
-            const executeActionDeferred = new jQuery.Deferred();
-
-            const allDeferreds = [responseAssertionDeferred, deviceEventsAssertionDeferred];
-
             // Record request time
             if (!action.result) {
                 action.result = {};
@@ -39,16 +36,15 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
 
             action.result.requestTime = new Date();
 
-            jQuery.when(...allDeferreds).then(() => {
-                executeActionDeferred.resolve(action);
-            });
-
             // Wait for a delay, if any, and then begin execution.
             setTimeout(() => {
                 executeActionInternal();
             }, delay);
 
-            return executeActionDeferred;
+            return RSVP.all([
+                responseAssertionDeferred.promise,
+                deviceEventsAssertionDeferred.promise
+            ]);
         },
 
         /**
@@ -92,8 +88,8 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                         }
                     }
 
-                    if (action.result.status !== ActionStatus.get().fail) {
-                        action.result.status = ActionStatus.get().pass;
+                    if (action.result.status !== ActionStatus.fail) {
+                        action.result.status = ActionStatus.pass;
                     }
 
                     // Resolve the responses deferred.
@@ -101,7 +97,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                         responseAssertionDeferred.resolve();
                     }
                 }
-                Logger.log(LogLevel.Info, `Action ${action.name} has completed, status: ${action.result.status}`);
+                Logger.log(LogLevel.Info, `Action ${action.name} has completed, status: ${action.result.status}.`);
             }
         },
 
@@ -210,14 +206,14 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
 
         // If we aren't waiting for a response, or if there is nothing to assert on, set the status and resolve responseAssertionDeferred.
         if (!waitForResponse || (!performResponseAssertion() && !performDeviceEventAssertion())) {
-            action.result.status = ActionStatus.get().manual;
+            action.result.status = ActionStatus.manual;
             responseAssertionDeferred.resolve();
         }
 
         // If a responseTimeout has been set for the action and a response has not been received within the timeout indicate a failure on the action's result.
         if (performResponseAssertion() && responseTimeout && responseTimeout > 0) {
             setTimeout(() => {
-                if (responseAssertionDeferred.state() === "pending") {
+                if (isDeferredPending(responseAssertionDeferred)) {
                     handleActionFailure(`Timeout: A response was not received within ${responseTimeout} milli(s).`, false, true);
                 }
             }, responseTimeout);
@@ -470,8 +466,8 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
         if (deviceEventFlowFailed || deviceEventExclusionsFailed || deviceEventCountsFailed) {
             handleActionFailure();
         } else {
-            if (action.result.status !== ActionStatus.get().fail) {
-                action.result.status = ActionStatus.get().pass;
+            if (action.result.status !== ActionStatus.fail) {
+                action.result.status = ActionStatus.pass;
             }
             deviceEventsAssertionDeferred.resolve();
         }
@@ -527,7 +523,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
      * the payment and return to the welcome screen.
      */
     function lastDitchEffortToRecoverDeviceState() {
-        if (responseAssertionDeferred.state() !== "resolved") {
+        if (isDeferredPending(responseAssertionDeferred)) {
             // RetrieveDeviceStatusRequest not available in all SDK versions.
             if (sdk.remotepay.RetrieveDeviceStatusRequest) {
                 const listener = testConnector.getListener();
@@ -563,7 +559,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
             setTimeout(() => {
                 // Worst case, we couldn't execute input options to get the device in the correct state.
                 // We are probably broken for future tests but we will continue.
-                if (responseAssertionDeferred.state() === "pending") {
+                if (isDeferredPending(responseAssertionDeferred)) {
                     Logger.log(LogLevel.ERROR, "lastDitchEffortToRecoverDeviceState has failed.  The device is likely in a bad state and future tests will likely fail.");
                     responseAssertionDeferred.resolve();
                     deviceEventsAssertionDeferred.resolve();
@@ -575,6 +571,16 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
     function pushDeviceEvent(deviceEvent, startEvent = true) {
         deviceEvent.isStart = startEvent;
         receivedDeviceEvents.push(deviceEvent);
+    }
+
+    function isDeferredPending(deferred) {
+        return getDeferredState(deferred) === 0;
+    }
+
+    function getDeferredState(deferred) {
+        // RSVP provides the state as a private variable.
+        // var PENDING = void 0; var FULFILLED = 1; var REJECTED = 2;
+        return deferred.promise._state;
     }
 
     /**

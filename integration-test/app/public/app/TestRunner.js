@@ -1,16 +1,13 @@
 import React from "react";
 import Select2 from "react-select2-wrapper";
+import "whatwg-fetch";
 import * as Constants from "../Constants";
 import Popup from "./components/Popup";
 import ResultsGrid from "./components/ResultsGrid";
 
 import {List, fromJS} from "immutable";
-import {LogLevel, Logger} from "../test-engine/util/Logger";
-import * as lstrNester from "../test-engine/CloverConnectorLstrNester";
-import * as cloverConnectorTestManager from "../test-engine/CloverConnectorTestManager";
-import * as EventService from "./EventService"
+import {cloverConnectorTestManager, lstrNester, ActionStatus, EventService, Logger, LogLevel} from "test-engine";
 import {Button, ButtonGroup, DropdownButton, MenuItem, Modal} from "react-bootstrap";
-import * as ActionStatus from "../test-engine/ActionStatus";
 
 export default class TestRunner extends React.Component {
 
@@ -24,15 +21,13 @@ export default class TestRunner extends React.Component {
 
         this.constants = Constants.create();
 
-        jQuery.ajax({
-            type: "GET",
-            url: "../testConfig.json"
-        }).done((testConfig) => {
+        fetch("../testConfig.json")
+            .then((response) => response.json()).then((testConfig) => {
             this.setState({
                 testConfig: testConfig,
             });
             this.loadTests();
-        }).fail((xhr, status, error) => {
+        }).catch((xhr, status, error) => {
             Logger.log(LogLevel.ERROR, `Failure: An error has occurred and the connection configuration could not be loaded: Details ${error}.`);
             this.state.noTestConfig = true;
         });
@@ -41,7 +36,7 @@ export default class TestRunner extends React.Component {
 
         this.lNester = lstrNester.create();
 
-        EventService.get().pairingObservable.subscribe(msg => {
+        EventService.pairingObservable.subscribe(msg => {
             this.setState({
                 pairingCodeMsg: msg
             });
@@ -59,21 +54,23 @@ export default class TestRunner extends React.Component {
     }
 
     loadTests() {
-        this.lNester.loadTests(this.state.testConfig).done((testDefinitionResponse) => {
-            if (this.lNester.validateTestDefinitionResponse(testDefinitionResponse)) {
-                this.testCases = testDefinitionResponse["testCases"];
-                const testCasesToRun = [];
-                lodash.forEach(this.testCases, (value, key) => {
-                    testCasesToRun.push({
-                        id: key,
-                        text: value.name
+        this.lNester.loadTests(this.state.testConfig)
+            .then((response) => response.json())
+            .then((testDefinitionResponse) => {
+                if (this.lNester.validateTestDefinitionResponse(testDefinitionResponse)) {
+                    this.testCases = testDefinitionResponse["testCases"];
+                    const testCasesToRun = [];
+                    lodash.forEach(this.testCases, (value, key) => {
+                        testCasesToRun.push({
+                            id: key,
+                            text: value.name
+                        });
                     });
-                });
-                this.setState({
-                    testCases: testCasesToRun
-                });
-            }
-        });
+                    this.setState({
+                        testCases: testCasesToRun
+                    });
+                }
+            });
     }
 
     onRunTestChange() {
@@ -88,7 +85,7 @@ export default class TestRunner extends React.Component {
         });
     }
 
-    handleTestNameChange (e) {
+    handleTestNameChange(e) {
         this.testConfigName = e.target.value;
     }
 
@@ -128,30 +125,30 @@ export default class TestRunner extends React.Component {
             results: testCasesToRun
         });
 
-        EventService.get().testObservable.subscribe(update => {
+        EventService.testObservable.subscribe(update => {
             // Update the results, if a test name match is found.
             // Currently, assumes there are no duplicate test names.
             const updatedResults = this.state.results.update(
-                this.state.results.findIndex(function(item) {
+                this.state.results.findIndex(function (item) {
                     return item.get("name") === update.name;
-                }), function() {
+                }), function () {
                     update.result = {};
                     if (update.testActions) {
                         // Roll-up action status to the test.
                         for (let i = 0; i < update.testActions.length; i++) {
                             const action = update.testActions[i];
                             if (action.result) {
-                                if (action.result !== ActionStatus.get().pass) {
+                                if (action.result !== ActionStatus.pass) {
                                     update.result.status = action.result.status;
                                     break;
                                 }
                             } else {
-                                update.result.status = ActionStatus.get().executing;
+                                update.result.status = ActionStatus.executing;
                                 break;
                             }
                         }
                         if (!update.result.status) {
-                            update.result.status = ActionStatus.get().pass;
+                            update.result.status = ActionStatus.pass;
                         }
                     }
                     return fromJS(update);
@@ -175,7 +172,9 @@ export default class TestRunner extends React.Component {
     toggleSelections(event) {
         let selectedItems = [];
         if (event && event.target.checked) {
-            selectedItems = jQuery(this.refs.allTestCasesSelect2.el).find('option').map(function() { return this.value });
+            selectedItems = jQuery(this.refs.allTestCasesSelect2.el).find('option').map(function () {
+                return this.value
+            });
         }
         this.refs.allTestCasesSelect2.el.val(selectedItems).trigger('change');
     }
@@ -191,7 +190,8 @@ export default class TestRunner extends React.Component {
         if (this.isTestConfigValid() && testConfig.connectorConfigs.length === 1) {
             warning = <div className="column_plain center">
                 <div className="alert alert-danger alert-dismissible show" style={{width: "50%"}} role="alert">
-                    <strong>Warning!</strong> To completely test the JavaScript SDK you should be running with one Network and one Cloud connector configuration!
+                    <strong>Warning!</strong> To completely test the JavaScript SDK you should be running with one
+                    Network and one Cloud connector configuration!
                     <button type="button" className="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -204,7 +204,10 @@ export default class TestRunner extends React.Component {
     noTestConfigError() {
         let noTestConfig = null;
         if (!this.isTestConfigValid()) {
-            noTestConfig = <Popup message="testConfig.json is required.  Please create a testConfig file and place it in integration-test/public.  Please see exampleTestConfig.json for an example." closeCallback={()=> {}}/>
+            noTestConfig = <Popup
+                message="testConfig.json is required.  Please create a testConfig file and place it in integration-test/public.  Please see exampleTestConfig.json for an example."
+                closeCallback={() => {
+                }}/>
         }
         return noTestConfig;
     }
@@ -216,7 +219,9 @@ export default class TestRunner extends React.Component {
             let menuItems = [];
             if (savedTests) {
                 lodash.forEach(savedTests, (value, key) => {
-                    menuItems.push(<MenuItem key={key} onSelect={() => {this.loadTestsIntoSelect2(value)}}>{key}</MenuItem>);
+                    menuItems.push(<MenuItem key={key} onSelect={() => {
+                        this.loadTestsIntoSelect2(value)
+                    }}>{key}</MenuItem>);
                 });
             }
             let closeCallback = () => {
@@ -294,11 +299,11 @@ export default class TestRunner extends React.Component {
     }
 
     render() {
-        return(
+        return (
             <div>
-              {this.noTestConfigError()}
-              {this.getConnectorConfigWarning()}
-              {this.getUiBody()}
+                {this.noTestConfigError()}
+                {this.getConnectorConfigWarning()}
+                {this.getUiBody()}
             </div>
         );
 

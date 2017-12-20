@@ -34,7 +34,7 @@ task watchTestApp(type: NodeTask, dependsOn: npmInstall) {
 }
 
 task startTestApp(type: NodeTask, dependsOn: [npmInstall, build]) {
-    script = ['./integration-test/server.js']
+    script = ['./integration-test/app/server.js']
 }
 
 defaultTasks 'build'
