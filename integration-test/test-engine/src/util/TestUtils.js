@@ -1,5 +1,5 @@
 import {LogLevel, Logger} from "./Logger";
-import * as ActionStatus from "../ActionStatus";
+import ActionStatus from "../ActionStatus";
 
 const create = () => {
 
@@ -20,7 +20,7 @@ const create = () => {
                 if (!lodash.has(action, "result")) {
                     lodash.set(action, "result", {});
                 }
-                action.result.status = ActionStatus.get().fail;
+                action.result.status = ActionStatus.fail;
                 this.addMessageToResult(action, message);
             }
             if (log) {

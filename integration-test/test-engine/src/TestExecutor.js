@@ -1,9 +1,11 @@
+import * as RSVP from "rsvp";
 import * as actionExecutor from "./ActionExecutor";
 import {LogLevel, Logger} from "./util/Logger";
 import * as iterable from "./util/Iterable";
 import * as testUtils from "./util/TestUtils";
-import * as EventService from "../app/EventService";
-import * as ActionStatus from "./ActionStatus";
+import ActionStatus from "./ActionStatus";
+import EventService from "./EventService";
+import TestContext from "./TestContext";
 
 /**
  * Utility for executing test case actions.
@@ -20,7 +22,7 @@ const create = (resultCache, testConnector, testCase) => {
          * @param actionItr
          */
         executeActions: function (actionItr) {
-            const actionsCompleteDeferred = new jQuery.Deferred();
+            const actionsCompleteDeferred = RSVP.defer();
             return executeActionsInternal(actionsCompleteDeferred, actionItr);
         },
 
@@ -47,7 +49,7 @@ const create = (resultCache, testConnector, testCase) => {
         if (actionItr.hasNext()) {
             const action = actionItr.next().value;
             const beforeActionItr = iterable.makeIterator(action["before"] || []);
-            const executeBeforeActionsDeferred = new jQuery.Deferred();
+            const executeBeforeActionsDeferred = RSVP.defer();
             executeBeforeOrAfterActions(executeBeforeActionsDeferred, beforeActionItr)
                 .then(() => {
                     const iterations = lodash.get(action, ["parameters", "iterations"], 1);
@@ -56,12 +58,12 @@ const create = (resultCache, testConnector, testCase) => {
                     for (let i = 0; i < iterations; i++) {
                         allActionIterations = allActionIterations.concat(action);
                     }
-                    const executeActionIterationsDeferred = new jQuery.Deferred();
+                    const executeActionIterationsDeferred = RSVP.defer();
                     const allActionsItr = iterable.makeIterator(allActionIterations);
                     return executeActionIterations(executeActionIterationsDeferred, allActionsItr, actionResults);
                 })
                 .then(() => {
-                    const executeAfterActionsDeferred = new jQuery.Deferred();
+                    const executeAfterActionsDeferred = RSVP.defer();
                     const afterActionItr = iterable.makeIterator(action["after"] || []);
                     return executeBeforeOrAfterActions(executeAfterActionsDeferred, afterActionItr, false);
                 })
@@ -71,7 +73,7 @@ const create = (resultCache, testConnector, testCase) => {
         } else {
             actionsCompleteDeferred.resolve(actionResults);
         }
-        return actionsCompleteDeferred.promise();
+        return actionsCompleteDeferred.promise;
     }
 
     /**
@@ -102,7 +104,7 @@ const create = (resultCache, testConnector, testCase) => {
             handleActionFailure(action, [], `An error has occurred executing ${beforeOrAfter} action.  Details: ${e.message}`, true);
             executeActionsDeferred.resolve();
         }
-        return executeActionsDeferred.promise();
+        return executeActionsDeferred.promise;
     }
 
     /**
@@ -127,7 +129,7 @@ const create = (resultCache, testConnector, testCase) => {
             handleActionFailure(action, actionResults, `An error has occurred executing action iteration for ${action.name}.  Details: ${e.message}`, true);
             executeActionIterationsDeferred.resolve();
         }
-        return executeActionIterationsDeferred.promise();
+        return executeActionIterationsDeferred.promise;
     }
 
     function executeActionInternal(action, actionResults) {
@@ -137,25 +139,25 @@ const create = (resultCache, testConnector, testCase) => {
             action.result = {};
         }
 
-        action.result.status = ActionStatus.get().executing;
+        action.result.status = ActionStatus.executing;
         actionResults.push(action);
 
         if (testCase) {
-            EventService.get().testObservable.next({
+            EventService.testObservable.next({
                 name: testCase.name,
                 testActions: actionResults
             });
         }
 
-        const actionCompleteDeferred = new jQuery.Deferred();
+        const actionCompleteDeferred = RSVP.defer();
         const executor = actionExecutor.create(action, actionCompleteDeferred, testConnector, resultCache);
         // Update the listener with the current executor
-        testConnector.getListener().setTestExecutor(executor);
+        TestContext.setCurrentTestExecutor(executor);
         executor.executeAction()
             .then((action) => {
                 actionCompleteDeferred.resolve(action);
             });
-        return actionCompleteDeferred.promise();
+        return actionCompleteDeferred.promise;
     }
 
     function handleActionFailure(action, actionResults, message, log = false) {

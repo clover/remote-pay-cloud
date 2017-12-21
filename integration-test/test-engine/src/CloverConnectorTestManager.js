@@ -1,8 +1,9 @@
+import * as RSVP from "rsvp";
 import * as testExecutor from "./TestExecutor";
 import * as testConnector from "./TestConnector";
 import * as iterable from "./util/Iterable";
 import {LogLevel, Logger} from "./util/Logger";
-import * as EventService from "../app/EventService"
+import EventService from "./EventService"
 
 const create = () => {
     return {
@@ -10,6 +11,7 @@ const create = () => {
             const connectorConfigs = testConfig["connectorConfigs"];
             // Create a test connector for each configuration.
             const testConnectors = connectorConfigs.map((connectorConfig) => testConnector.create(connectorConfig));
+            const testCaseItr = iterable.makeIterator(testCases);
             // Initialize the testConnectors, continue when they are paired and ready to process requests.
             testConnectors.forEach((testConnector) => {
                 testConnector.initializeConnection(testConfig)
@@ -17,8 +19,8 @@ const create = () => {
                         const testCaseItr = iterable.makeIterator(testCases);
                         runTests(testConfig, testCaseItr, testConnector);
                     })
-                    .fail((code) => {
-                        handleDeviceFailure(code, testConnector);
+                    .catch((error) => {
+                        handleDeviceFailure(error, testConnector);
                     });
             });
         }
@@ -54,13 +56,12 @@ const create = () => {
      */
     function prepareAndRunTest(testCase, testConnector, testConfig) {
         Logger.log(LogLevel.INFO, `Running test '${testCase.name}' ...`);
-        const testCompleteDeferred = new jQuery.Deferred();
+        const testCompleteDeferred = RSVP.defer();
         testConnector.initializeConnection(testConfig).then(() => runTest(testCompleteDeferred, testCase, testConnector));
-
         // If the test has not been completed in testConfig["testExecutionTimeout"] millis, timeout and reject.
         const testExecutionTimeout = testConfig["testExecutionTimeout"] || 15000;
         setTimeout(() => testCompleteDeferred.reject(504), testExecutionTimeout);
-        return testCompleteDeferred.promise();
+        return testCompleteDeferred.promise;
     }
 
     /**
@@ -83,11 +84,11 @@ const create = () => {
             }
             const actionItr = iterable.makeIterator(allTestActions);
             testExecutor.create(resultCache, testConnector, testCase).executeActions(actionItr)
-                // actionResults is an array of all actions that were executed. The 'result' property on each
-                // action result contains the status information for that action.
+            // actionResults is an array of all actions that were executed. The 'result' property on each
+            // action result contains the status information for that action.
                 .then((actionResults) => {
                     Logger.log(LogLevel.TRACE, actionResults);
-                    EventService.get().testObservable.next({
+                    EventService.testObservable.next({
                         name: testCase.name,
                         testActions: actionResults
                     });
@@ -141,7 +142,7 @@ const create = () => {
         Logger.log(LogLevel.ERROR, `Device Connection Failure: ${message}.  The connection is being closed and no tests will be run on this device.`);
         testConnector.closeConnection();
         if (code === 504) {
-            EventService.get().pairingObservable.next(message);
+            EventService.pairingObservable.next(message);
         }
     }
 

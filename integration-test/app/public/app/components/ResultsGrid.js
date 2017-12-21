@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {AgGridReact} from "ag-grid-react";
-import * as ActionStatus from "../../test-engine/ActionStatus";
+import {ActionStatus} from "test-engine";
 
 export default class ResultsGrid extends Component {
 
@@ -85,13 +85,13 @@ export default class ResultsGrid extends Component {
                 field: "result.status",
                 width: 60,
                 cellRenderer: (params) => {
-                    if (params.value === ActionStatus.get().pass) {
+                    if (params.value === ActionStatus.pass) {
                         return `<span class="text-success"><b>${params.value}</b></span>`;
-                    } else if (params.value === ActionStatus.get().fail) {
+                    } else if (params.value === ActionStatus.fail) {
                         return `<span class="text-danger"><b>${params.value}</b></span>`;
-                    } else if (params.value === ActionStatus.get().manual) {
+                    } else if (params.value === ActionStatus.manual) {
                         return `<span class="text-warning"><b>${params.value}</b></span>`;
-                    } else if (params.value === ActionStatus.get().executing) {
+                    } else if (params.value === ActionStatus.executing) {
                         return `<span class="text-info"><b>... ${params.value}</b></span>`;
                     } else {
                         return `<span></span>`;
