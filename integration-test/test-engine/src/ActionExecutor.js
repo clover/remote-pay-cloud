@@ -398,9 +398,9 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
      * Assert the device events, if the action has a "deviceEvent" assertion.
      */
     function assertDeviceEvents() {
+        const eventTypeFilter = lodash.get(action, ["assert", "deviceEvent", "eventTypeFilter"], "ALL"); // Applies to count and flow, not exclusions
         const testActionDeviceEvents = lodash.get(action, ["assert", "deviceEvent", "flow", "events"], []);
         const flowComparisonType = lodash.get(action, ["assert", "deviceEvent", "flow", "comparisonType"], "STRICT");
-        const eventTypeFilter = lodash.get(action, ["assert", "deviceEvent", "flow", "eventTypeFilter"], "ALL");
 
         const assertUtils = utils.create();
         let actualDeviceEvents = [];
@@ -442,7 +442,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
         const testActionDeviceEventExclusions = lodash.get(action, ["assert", "deviceEvent", "exclusions"], []);
         if (testActionDeviceEventExclusions && testActionDeviceEventExclusions.length > 0) {
             deviceEventExclusionsFailed = testActionDeviceEventExclusions.some((exclusion) => {
-                let matchFound = assertUtils.contains(actualDeviceEvents, exclusion);
+                let matchFound = assertUtils.contains(receivedDeviceEvents, exclusion);
                 if (matchFound) {
                     addMessageToResult(`An excluded device event was found: ${JSON.stringify(exclusion)}`);
                 }
