@@ -2,39 +2,32 @@ plugins {
     id "com.moowork.node"
 }
 
-node {
-    download = true
-}
-
 ext {
-    nodeModulesPath = './node_modules'
-    scssFile = "scss/test-automater.scss"
+  nodeModulesPath = './node_modules'
+  scssFile = 'scss/test-automater.scss'
 }
 
 task sass(type: NodeTask, dependsOn: npmInstall) {
-    script = file(nodeModulesPath + '/node-sass/bin/node-sass')
-    args = [scssFile, "-o", "public/css"]
-
-    inputs.files scssFile
-    outputs.file file('public/css/test-automater.scss')
+  script = file(nodeModulesPath + '/node-sass/bin/node-sass')
+  args = [scssFile, "-o", "public/css"]
 }
 
 task sassWatch(type: NodeTask, dependsOn: npmInstall) {
-    script = file(nodeModulesPath + '/node-sass/bin/node-sass')
-    args = ["scss/test-automater.scss", "-o", "public/css", "-w"]
+  script = file(nodeModulesPath + '/node-sass/bin/node-sass')
+  args = [scssFile, "-o", "public/css", "-w"]
 }
 
 task build(type: NodeTask, dependsOn: [npmInstall, sass]) {
-    script = [nodeModulesPath + '/webpack/bin/webpack']
+  script = file(nodeModulesPath + '/webpack/bin/webpack')
 }
 
 task watchTestApp(type: NodeTask, dependsOn: npmInstall) {
-    script = [nodeModulesPath + '/webpack/bin/webpack']
-    args = ['--watch']
+  script = file(nodeModulesPath + '/webpack/bin/webpack')
+  args = ['--watch']
 }
 
 task startTestApp(type: NodeTask, dependsOn: [npmInstall, build]) {
-    script = ['./integration-test/app/server.js']
+  script = file('server.js')
 }
 
 defaultTasks 'build'

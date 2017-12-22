@@ -1,1 +1,1 @@
-include 'integration-test', 'integration-test:app'
+include 'integration-test:app', 'integration-test:test-engine'

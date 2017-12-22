@@ -5,6 +5,8 @@ plugins {
 
 node {
     download = true
+    version = '8.9.3'
+    npmVersion = '5.5.1'
 }
 
 task build(type: GulpTask, dependsOn: [installGulp, npmInstall]) {
