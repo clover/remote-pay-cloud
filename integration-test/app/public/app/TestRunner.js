@@ -1,7 +1,7 @@
 import React from "react";
 import Select2 from "react-select2-wrapper";
 import "whatwg-fetch";
-import * as Constants from "../Constants";
+import Constants from "./Constants";
 import Popup from "./components/Popup";
 import ResultsGrid from "./components/ResultsGrid";
 
@@ -19,8 +19,6 @@ export default class TestRunner extends React.Component {
             testConfig: {}
         };
 
-        this.constants = Constants.create();
-
         fetch("../testConfig.json")
             .then((response) => response.json()).then((testConfig) => {
             this.setState({
@@ -32,7 +30,7 @@ export default class TestRunner extends React.Component {
             this.state.noTestConfig = true;
         });
 
-        this.savedTests = JSON.parse(window.localStorage.getItem(this.constants.localStorageSelectedTests));
+        this.savedTests = JSON.parse(window.localStorage.getItem(Constants.localStorageSelectedTests));
 
         this.lNester = lstrNester.create();
 
@@ -103,9 +101,9 @@ export default class TestRunner extends React.Component {
 
     saveSelect2Selection() {
         let testName = this.refs.testName.value;
-        let currTests = JSON.parse(window.localStorage.getItem(this.constants.localStorageSelectedTests)) || {};
+        let currTests = JSON.parse(window.localStorage.getItem(Constants.localStorageSelectedTests)) || {};
         currTests[testName] = this.selectedTestCasesToRun;
-        window.localStorage.setItem(this.constants.localStorageSelectedTests, JSON.stringify(currTests));
+        window.localStorage.setItem(Constants.localStorageSelectedTests, JSON.stringify(currTests));
         this.setState({
             displayModal: !this.state.displayModal
         });
@@ -215,7 +213,7 @@ export default class TestRunner extends React.Component {
     getUiBody() {
         let uiBody = null;
         if (this.isTestConfigValid()) {
-            let savedTests = JSON.parse(window.localStorage.getItem(this.constants.localStorageSelectedTests));
+            let savedTests = JSON.parse(window.localStorage.getItem(Constants.localStorageSelectedTests));
             let menuItems = [];
             if (savedTests) {
                 lodash.forEach(savedTests, (value, key) => {

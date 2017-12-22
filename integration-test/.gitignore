@@ -1,5 +1,5 @@
 node_modules
-public/css/
-public/testConfig.json
+app/public/css/
+app/public/testConfig.json
 built/
 .gradle/
