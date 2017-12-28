@@ -1,3 +1,4 @@
+# src should not be here, we need to publish it for typings.
 .idea
 node_modules
 integration-test
@@ -6,4 +7,3 @@ remote-pay-cloud.iml
 npm-debug.log
 .gradle
 gradle
-src
