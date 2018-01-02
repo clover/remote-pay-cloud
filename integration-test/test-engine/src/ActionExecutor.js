@@ -98,6 +98,12 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                     }
                 }
                 Logger.log(LogLevel.Info, `Action ${action.name} has completed, status: ${action.result.status}.`);
+            } else if (expectedActionResponse.method !== remoteMethod) {
+                handleActionFailure(`Expected method ${expectedActionResponse.method} does not equal actual method ${remoteMethod}.`, true);
+                // Resolve the responses deferred.
+                if (responseAssertionDeferred) {
+                    responseAssertionDeferred.resolve();
+                }
             }
         },
 
