@@ -127,6 +127,9 @@ const create = () => {
                     type: sdk.remotepay.CloseoutRequest
                 }
             },
+            "DISPLAY_RECEIPT_OPTIONS": {
+                method: "displayPaymentReceiptOptions"
+            },
             "PRINT": {
                 method: "print"
             },
@@ -160,10 +163,10 @@ const create = () => {
             "SHOW_MESSAGE": {
                 method: "showMessage"
             },
-            "SHOW_WELCOME": {
+            "SHOW_WELCOME_SCREEN": {
                 method: "showWelcomeScreen"
             },
-            "SHOW_THANK_YOU": {
+            "SHOW_THANK_YOU_SCREEN": {
                 method: "showThankYouScreen"
             },
             "SHOW_DISPLAY_ORDER": {
