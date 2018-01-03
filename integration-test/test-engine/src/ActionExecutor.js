@@ -10,6 +10,9 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
 
     // Resolved when the response assertions have been completed.
     let responseAssertionDeferred = RSVP.defer();
+    // toggled to true when responseAssertionDeferred has resolved.
+    let hasResponseAssertionDeferredResolved = false;
+
     // Resolved when the device event assertions have been completed.
     let deviceEventsAssertionDeferred = RSVP.defer();
 
@@ -94,7 +97,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
 
                     // Resolve the responses deferred.
                     if (responseAssertionDeferred) {
-                        responseAssertionDeferred.resolve();
+                        resolveResponseAssertionDeferred();
                     }
                 }
                 Logger.log(LogLevel.Info, `Action ${action.name} has completed, status: ${action.result.status}.`);
@@ -102,7 +105,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                 handleActionFailure(`Expected method ${expectedActionResponse.method} does not equal actual method ${remoteMethod}.`, true);
                 // Resolve the responses deferred.
                 if (responseAssertionDeferred) {
-                    responseAssertionDeferred.resolve();
+                    resolveResponseAssertionDeferred();
                 }
             }
         },
@@ -199,7 +202,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
     function executeActionInternal() {
         // A response assertion was not specified in the test-case, resolve the response assertion deferred, there is no work to be done.
         if (!performResponseAssertion()) {
-            responseAssertionDeferred.resolve();
+            resolveResponseAssertionDeferred();
         }
 
         // A device assertion was not specified in the test-case, resolve the device event assertion deferred, there is no work to be done.
@@ -213,7 +216,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
         // If we aren't waiting for a response, or if there is nothing to assert on, set the status and resolve responseAssertionDeferred.
         if (!waitForResponse || (!performResponseAssertion() && !performDeviceEventAssertion())) {
             action.result.status = ActionStatus.manual;
-            responseAssertionDeferred.resolve();
+            resolveResponseAssertionDeferred();
         }
 
         // If a responseTimeout has been set for the action and a response has not been received within the timeout indicate a failure on the action's result.
@@ -511,7 +514,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                 if (testConnectorListener) {
                     testConnector.getListener().onResetDeviceResponse = savedResetDeviceResponseHandler;
                 }
-                responseAssertionDeferred.resolve();
+                resolveResponseAssertionDeferred();
                 deviceEventsAssertionDeferred.resolve();
             }
             cloverConnector.resetDevice();
@@ -549,7 +552,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                                         listener.onDeviceActivityStart = savedOnDeviceActivityStart;
                                         // Pause a bit to allow the device to receive and redirect after receiving the input option.
                                         setTimeout(() => {
-                                            responseAssertionDeferred.resolve();
+                                            resolveResponseAssertionDeferred();
                                             deviceEventsAssertionDeferred.resolve();
                                         }, 2500);
                                     }
@@ -567,7 +570,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                 // We are probably broken for future tests but we will continue.
                 if (isDeferredPending(responseAssertionDeferred)) {
                     Logger.log(LogLevel.ERROR, "lastDitchEffortToRecoverDeviceState has failed.  The device is likely in a bad state and future tests will likely fail.");
-                    responseAssertionDeferred.resolve();
+                    resolveResponseAssertionDeferred();
                     deviceEventsAssertionDeferred.resolve();
                 }
             }, 10000);
@@ -580,13 +583,12 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
     }
 
     function isDeferredPending(deferred) {
-        return getDeferredState(deferred) === 0;
+        return !hasResponseAssertionDeferredResolved;
     }
 
-    function getDeferredState(deferred) {
-        // RSVP provides the state as a private variable.
-        // var PENDING = void 0; var FULFILLED = 1; var REJECTED = 2;
-        return deferred.promise._state;
+    function resolveResponseAssertionDeferred() {
+        hasResponseAssertionDeferredResolved = true;
+        responseAssertionDeferred.resolve();
     }
 
     /**
@@ -595,10 +597,6 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
      */
     function getInputOptions() {
         return lodash.get(action, ["context", "inputOptions"], null);
-    }
-
-    function buildSimpleDeviceEvent(deviceEvent) {
-        return lodash.pick(deviceEvent, ["eventState", "message"]);
     }
 
 };

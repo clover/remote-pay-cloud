@@ -11,7 +11,6 @@ const create = () => {
             const connectorConfigs = testConfig["connectorConfigs"];
             // Create a test connector for each configuration.
             const testConnectors = connectorConfigs.map((connectorConfig) => testConnector.create(connectorConfig));
-            const testCaseItr = iterable.makeIterator(testCases);
             // Initialize the testConnectors, continue when they are paired and ready to process requests.
             testConnectors.forEach((testConnector) => {
                 testConnector.initializeConnection(testConfig)
@@ -57,7 +56,7 @@ const create = () => {
     function prepareAndRunTest(testCase, testConnector, testConfig) {
         Logger.log(LogLevel.INFO, `Running test '${testCase.name}' ...`);
         const testCompleteDeferred = RSVP.defer();
-        testConnector.initializeConnection(testConfig).then(() => runTest(testCompleteDeferred, testCase, testConnector));
+        testConnector.initializeConnection(testConfig).then(() => runTest(testCompleteDeferred, testCase, testConnector, testConfig));
         // If the test has not been completed in testConfig["testExecutionTimeout"] millis, timeout and reject.
         const testExecutionTimeout = testConfig["testExecutionTimeout"] || 15000;
         setTimeout(() => testCompleteDeferred.reject(504), testExecutionTimeout);
@@ -71,7 +70,7 @@ const create = () => {
      * @param testCase
      * @param testConnector
      */
-    function runTest(testCompleteDeferred, testCase, testConnector) {
+    function runTest(testCompleteDeferred, testCase, testConnector, testConfig) {
         const run = () => {
             const resultCache = {};
             const iterations = lodash.get(testCase, "iterations", 1);
@@ -83,7 +82,7 @@ const create = () => {
                 allTestActions = allTestActions.concat(nextIterationTestActions);
             }
             const actionItr = iterable.makeIterator(allTestActions);
-            testExecutor.create(resultCache, testConnector, testCase).executeActions(actionItr)
+            testExecutor.create(resultCache, testConnector, testConfig, testCase).executeActions(actionItr)
             // actionResults is an array of all actions that were executed. The 'result' property on each
             // action result contains the status information for that action.
                 .then((actionResults) => {
