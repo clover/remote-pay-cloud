@@ -12,7 +12,7 @@ import TestContext from "./TestContext";
  *
  * @returns {{executeActions: executeActions, executeAction: executeAction}}
  */
-const create = (resultCache, testConnector, testCase) => {
+const create = (resultCache, testConnector, testConfig, testCase) => {
 
     return {
 
@@ -94,7 +94,7 @@ const create = (resultCache, testConnector, testCase) => {
                 //before ? action.before = true : action.before = false;
                 executeActionInternal(action, [])
                     .then(() => {
-                        executeBeforeOrAfterActions(executeActionsDeferred, actionItr,  before)
+                        executeBeforeOrAfterActions(executeActionsDeferred, actionItr, before)
                     });
             } else {
                 executeActionsDeferred.resolve();
@@ -150,19 +150,32 @@ const create = (resultCache, testConnector, testCase) => {
         }
 
         const actionCompleteDeferred = RSVP.defer();
-        const executor = actionExecutor.create(action, actionCompleteDeferred, testConnector, resultCache);
-        // Update the listener with the current executor
-        TestContext.setCurrentTestExecutor(executor);
-        executor.executeAction()
-            .then((action) => {
+        testConnector.initializeConnection(testConfig)
+            .then(() => {
+                const executor = actionExecutor.create(action, actionCompleteDeferred, testConnector, resultCache);
+                // Update the listener with the current executor
+                TestContext.setCurrentTestExecutor(executor);
+                executor.executeAction()
+                    .then(() => {
+                        // Dispose the connector and reinitialize if dispose flag is set
+                        const disposeConnectorAfterExecution = lodash.get(action, ["parameters", "disposeConnectorAfterExecution"], false);
+                        if (disposeConnectorAfterExecution) {
+                            testConnector.closeConnection();
+                        }
+                        actionCompleteDeferred.resolve(action);
+                    });
+            })
+            .catch((e) => {
+                handleActionFailure(action, [], `An error has occurred and a connection to the device could not be established.`, true);
                 actionCompleteDeferred.resolve(action);
             });
+
         return actionCompleteDeferred.promise;
     }
 
     function handleActionFailure(action, actionResults, message, log = false) {
-       actionResults.push(action);
-       testUtils.create().handleActionFailure(action, message, log);
+        actionResults.push(action);
+        testUtils.create().handleActionFailure(action, message, log);
     }
 };
 
