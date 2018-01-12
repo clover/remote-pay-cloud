@@ -101,12 +101,14 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                     }
                 }
                 Logger.log(LogLevel.Info, `Action ${action.name} has completed, status: ${action.result.status}.`);
-            } else if (expectedActionResponse.method !== remoteMethod) {
+            } else if (expectedActionResponse && expectedActionResponse.method !== remoteMethod) {
                 handleActionFailure(`Expected method ${expectedActionResponse.method} does not equal actual method ${remoteMethod}.`, true);
                 // Resolve the responses deferred.
                 if (responseAssertionDeferred) {
                     resolveResponseAssertionDeferred();
                 }
+            } else {
+                Logger.log(LogLevel.INFO, "processResult - expectedActionResponse is null or undefined.");
             }
         },
 
