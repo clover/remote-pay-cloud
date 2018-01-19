@@ -146,7 +146,7 @@ const create = (connectorConfig) => {
             connectionConfiguration.merchantId,
             connectionConfiguration.deviceId,
             connectionConfiguration.friendlyId,
-            connectionConfiguration.forceReconnect);
+            true);
     }
 
     function getDeviceConfigurationForNetwork(connectionConfiguration) {

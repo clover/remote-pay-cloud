@@ -135,39 +135,36 @@ const create = (resultCache, testConnector, testConfig, testCase) => {
     function executeActionInternal(action, actionResults) {
         Logger.log(LogLevel.INFO, `Executing action ${action.name}`);
 
-        if (!action.result) {
-            action.result = {};
-        }
-
-        action.result.status = ActionStatus.executing;
-        actionResults.push(action);
-
-        if (testCase) {
-            EventService.testObservable.next({
-                name: testCase.name,
-                testActions: actionResults
-            });
+        // Dispose the connector and reinitialize if dispose flag is set
+        const disposeConnectorBeforeExecution = lodash.get(action, ["parameters", "disposeConnectorBeforeExecution"], false);
+        if (disposeConnectorBeforeExecution) {
+            testConnector.closeConnection();
         }
 
         const actionCompleteDeferred = RSVP.defer();
         testConnector.initializeConnection(testConfig)
             .then(() => {
+                if (!action.result) {
+                    action.result = {};
+                }
+
+                action.result.status = ActionStatus.executing;
+                actionResults.push(action);
+
+                if (testCase) {
+                    EventService.testObservable.next({
+                        name: testCase.name,
+                        testActions: actionResults
+                    });
+                }
+
                 const executor = actionExecutor.create(action, actionCompleteDeferred, testConnector, resultCache);
                 // Update the listener with the current executor
                 TestContext.setCurrentTestExecutor(executor);
                 executor.executeAction()
-                    .then(() => {
-                        // Dispose the connector and reinitialize if dispose flag is set
-                        const disposeConnectorAfterExecution = lodash.get(action, ["parameters", "disposeConnectorAfterExecution"], false);
-                        if (disposeConnectorAfterExecution) {
-                            testConnector.closeConnection();
-                        }
+                    .then((action) => {
                         actionCompleteDeferred.resolve(action);
                     });
-            })
-            .catch((e) => {
-                handleActionFailure(action, [], `An error has occurred and a connection to the device could not be established.`, true);
-                actionCompleteDeferred.resolve(action);
             });
 
         return actionCompleteDeferred.promise;

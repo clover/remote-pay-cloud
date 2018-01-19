@@ -56,6 +56,11 @@ const create = () => {
     function prepareAndRunTest(testCase, testConnector, testConfig) {
         Logger.log(LogLevel.INFO, `Running test '${testCase.name}' ...`);
         const testCompleteDeferred = RSVP.defer();
+        // Dispose the connector and reinitialize if dispose flag is set
+        const disposeBetweenExecutions = lodash.get(testCase, ["parameters", "disposeConnectorBeforeExecution"], false);
+        if (disposeBetweenExecutions) {
+            testConnector.closeConnection();
+        }
         testConnector.initializeConnection(testConfig).then(() => runTest(testCompleteDeferred, testCase, testConnector, testConfig));
         // If the test has not been completed in testConfig["testExecutionTimeout"] millis, timeout and reject.
         const testExecutionTimeout = testConfig["testExecutionTimeout"] || 15000;
@@ -73,7 +78,7 @@ const create = () => {
     function runTest(testCompleteDeferred, testCase, testConnector, testConfig) {
         const run = () => {
             const resultCache = {};
-            const iterations = lodash.get(testCase, "iterations", 1);
+            const iterations = lodash.get(testCase, ["parameters", "iterations"], 1);
             let allTestActions = [];
             // Populate test actions for each iteration.
             for (let i = 0; i < iterations; i++) {
@@ -92,7 +97,7 @@ const create = () => {
                         testActions: actionResults
                     });
                     // If there is a delay between test executions
-                    const delayBetween = lodash.get(testCase, "delayBetweenExecutions", 0);
+                    const delayBetween = lodash.get(testCase, ["parameters", "delayBeforeExecution"], 0);
                     if (delayBetween > 0) {
                         setTimeout(() => completeTest(testCompleteDeferred, testCase, testConnector), delayBetween);
                     } else {
@@ -102,7 +107,7 @@ const create = () => {
                 });
         };
         // Reset device (if necessary)
-        const resetDevice = lodash.get(testCase, "resetDevice", false);
+        const resetDevice = lodash.get(testCase, ["parameters", "resetDevice"], false);
         if (resetDevice) {
             // Save the current onResetDeviceResponse function, so that we can reset it after a response has been received.
             const savedResetDeviceResponseHandler = testConnector.getListener().onResetDeviceResponse;
@@ -128,11 +133,6 @@ const create = () => {
      * @param testConnector
      */
     function completeTest(testCompleteDeferred, testCase, testConnector) {
-        // Dispose the connector and reinitialize if dispose flag is set
-        const disposeBetweenExecutions = lodash.get(testCase, "disposeBetweenExecutions", false);
-        if (disposeBetweenExecutions) {
-            testConnector.closeConnection();
-        }
         testCompleteDeferred.resolve();
     }
 

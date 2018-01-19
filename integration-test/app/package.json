@@ -25,6 +25,6 @@
     "babel-loader": "^7.1.2",
     "rxjs": "5.5.2",
     "node-sass": "4.7.2",
-    "test-engine": "1.0.x"
+    "test-engine": "1.0.25"
   }
 }

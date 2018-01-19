@@ -1,10 +1,10 @@
 {
   "name": "test-engine",
-  "version": "1.0.21",
+  "version": "1.0.25",
   "dependencies": {
     "immutable": "^3.8.2",
     "webpack": "3.8.1",
-    "remote-pay-cloud": "dev",
+    "remote-pay-cloud": "1.4.3",
     "babel-cli": "^6.11.4",
     "babel-core": "^6.13.2",
     "babel-preset-env": "1.6.1",

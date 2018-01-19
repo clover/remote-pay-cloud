@@ -9,7 +9,7 @@ Do not change this or the versioning may not reflect the npm version correctly.
 --->
 ## Version
 
-Current version: 1.4.2
+Current version: 1.4.3
 
 ## Platforms supported
 
@@ -33,6 +33,13 @@ Please see the [Getting started with Clover Connector tutorial for JavaScript](h
 
 ### Examples
 Example applications can be found on [GitHub](https://github.com/clover/remote-pay-cloud-examples).
+
+### Additional resources
+- [Online Docs](http://clover.github.io/remote-pay-cloud/1.4.3/)
+- [Release Notes](https://github.com/clover/remote-pay-cloud/releases)
+- [Tutorial for the Browser SDK](https://docs.clover.com/build/getting-started-with-cloverconnector/?sdk=browser)
+- [API Class Documentation](http://clover.github.io/remote-pay-cloud-api/1.4.2/)
+- [Clover Developer Community](https://community.clover.com/index.html)
 
 ## License 
 Copyright © 2017 Clover Network, Inc. All rights reserved.

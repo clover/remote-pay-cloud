@@ -20,7 +20,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
     const receivedDeviceEvents = [];
 
     const cloverConnector = testConnector.getCloverConnector();
-    const delay = lodash.get(action, ["parameters", "delay"], 0);
+    const delayBeforeExecution = lodash.get(action, ["parameters", "delayBeforeExecution"], 0);
     const responseTimeout = lodash.get(action, ["parameters", "responseTimeout"], 30000);
 
     let invokedInputOptionCount = 0;
@@ -42,7 +42,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
             // Wait for a delay, if any, and then begin execution.
             setTimeout(() => {
                 executeActionInternal();
-            }, delay);
+            }, delayBeforeExecution);
 
             return RSVP.all([
                 responseAssertionDeferred.promise,
