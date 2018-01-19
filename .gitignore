@@ -3,3 +3,11 @@
 /.idea
 /*.iml
 .DS_Store
+gradle
+.gradle
+dist
+dist
+gradlew
+integration-test
+gradlew.bat
+src
