@@ -5,9 +5,9 @@ const path = require('path');
 var APP_DIR = path.resolve(__dirname, 'public');
 
 module.exports = {
-    entry: {
-        index_js: APP_DIR + "/index.js"
-    },
+    entry: [
+        "babel-polyfill", APP_DIR + "/index.js"
+    ],
     resolve: {
         extensions: [".js"],
         alias: {

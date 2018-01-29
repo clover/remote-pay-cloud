@@ -11,11 +11,13 @@ const create = (cloverConnector) => {
         onDeviceActivityStart: function (event) {
             Logger.log(LogLevel.INFO, `onDeviceActivityStart: ${event}`);
             getCurrentTestExecutor().processDeviceActivityStart(event);
+            getCurrentTestExecutor().processResult(responseMethods.onDeviceActivityStart, event);
         },
 
         onDeviceActivityEnd: function (event) {
             Logger.log(LogLevel.INFO, `onDeviceActivityEnd: ${event}`);
             getCurrentTestExecutor().processDeviceActivityEnd(event);
+            getCurrentTestExecutor().processResult(responseMethods.onDeviceActivityEnd, event);
         },
 
         onDeviceError: function (event) {

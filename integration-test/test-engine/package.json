@@ -1,6 +1,6 @@
 {
   "name": "test-engine",
-  "version": "1.0.25",
+  "version": "1.0.38",
   "dependencies": {
     "immutable": "^3.8.2",
     "webpack": "3.8.1",

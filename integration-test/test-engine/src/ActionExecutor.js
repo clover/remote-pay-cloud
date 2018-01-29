@@ -26,7 +26,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
     let invokedInputOptionCount = 0;
 
     let waitForResponse = lodash.get(action, ["parameters", "waitForResponse"], true);
-    if (action.response != null) {
+    if (action.response || action.waitUntil) {
         waitForResponse = true;
     }
 
@@ -57,7 +57,24 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
          * @param remoteResponse
          */
         processResult: function (remoteMethod, remoteResponse) {
-            const expectedActionResponse = lodash.get(action, ["assert", "response"]);
+            let waitUntil = false;
+            let expectedActionResponse = lodash.get(action, ["assert", "response"]);
+            if (!expectedActionResponse) {
+                expectedActionResponse = lodash.get(action, ["waitUntil", "response"]);
+                waitUntil = lodash.has(action, ["waitUntil"]);
+                if (waitUntil) {
+                    // Reset the action's result state.
+                    action.result.status = null;
+                    action.result.messages = [];
+                    setTimeout(() => {
+                        if (isDeferredPending(responseAssertionDeferred) || isDeferredPending(deviceEventsAssertionDeferred)) {
+                            action.result.messages = [];
+                            handleActionFailure(`Timeout: The response we are waiting for has not arrived in ${responseTimeout} milli(s).`, false, true);
+                        }
+                    }, responseTimeout);
+                }
+            }
+
             if (expectedActionResponse && expectedActionResponse.method === remoteMethod) {
                 Logger.log(LogLevel.info, `Processing response ${remoteMethod}`);
                 if (waitForResponse) {
@@ -66,16 +83,22 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
 
                 const expectSuccess = lodash.get(expectedActionResponse, ["payload", "success"]);
                 let responseError = false;
-                if (expectSuccess) {
-                    responseError = lodash.get(remoteResponse, "result", "") === "FAIL" || !lodash.get(remoteResponse, "success", true);
-                    if (responseError) {
-                        handleActionFailure(`A failure occurred processing the response for action: ${action.name}.  Details: ${JSON.stringify(remoteResponse)}.`, false, true);
+                if (!waitUntil) {
+                    if (expectSuccess) {
+                        responseError = lodash.get(remoteResponse, "result", "") === "FAIL" || !lodash.get(remoteResponse, "success", true);
+                        if (responseError) {
+                            handleActionFailure(`A failure occurred processing the response for action: ${action.name}.  Details: ${JSON.stringify(remoteResponse)}.`, false, true);
+                        }
                     }
                 }
 
                 if (!responseError) {
                     try {
                         assertResult(remoteResponse, expectedActionResponse.payload);
+                        // If the action's status is not ActionStatus.fail, then all assertions have passed.
+                        if (action.result.status !== ActionStatus.fail) {
+                            action.result.status = ActionStatus.pass;
+                        }
                     } catch (e) {
                         handleActionFailure(`An error has occurred processing the result. Details: ${e.message}`, true);
                     }
@@ -91,24 +114,18 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                         }
                     }
 
-                    if (action.result.status !== ActionStatus.fail) {
-                        action.result.status = ActionStatus.pass;
-                    }
-
                     // Resolve the responses deferred.
                     if (responseAssertionDeferred) {
-                        resolveResponseAssertionDeferred();
+                        // If a 'waitUntil' has been defined on the action we only want to resolve when the correct response has been received (e.g. all assertions pass).
+                        if (!waitUntil || (waitUntil && action.result.status === ActionStatus.pass)) {
+                            if (waitUntil) {
+                                action.result.messages = [];
+                            }
+                            resolveResponseAssertionDeferred();
+                            Logger.log(LogLevel.Info, `Action ${action.name} has completed, status: ${action.result.status}.`);
+                        }
                     }
                 }
-                Logger.log(LogLevel.Info, `Action ${action.name} has completed, status: ${action.result.status}.`);
-            } else if (expectedActionResponse && expectedActionResponse.method !== remoteMethod) {
-                handleActionFailure(`Expected method ${expectedActionResponse.method} does not equal actual method ${remoteMethod}.`, true);
-                // Resolve the responses deferred.
-                if (responseAssertionDeferred) {
-                    resolveResponseAssertionDeferred();
-                }
-            } else {
-                Logger.log(LogLevel.INFO, "processResult - expectedActionResponse is null or undefined.");
             }
         },
 
@@ -203,20 +220,20 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
      */
     function executeActionInternal() {
         // A response assertion was not specified in the test-case, resolve the response assertion deferred, there is no work to be done.
-        if (!performResponseAssertion()) {
+        if (!performResponseAssertion() && !waitForResponse) {
             resolveResponseAssertionDeferred();
         }
 
         // A device assertion was not specified in the test-case, resolve the device event assertion deferred, there is no work to be done.
         if (!performDeviceEventAssertion()) {
-            deviceEventsAssertionDeferred.resolve();
+            resolveDeviceEventsAssertionDeferred();
         }
 
         // Execute the request on the Clover Connector.
         executeRequest();
 
-        // If we aren't waiting for a response, or if there is nothing to assert on, set the status and resolve responseAssertionDeferred.
-        if (!waitForResponse || (!performResponseAssertion() && !performDeviceEventAssertion())) {
+        // If we aren't waiting for a response and not performing any assertions set the status to manual check required and resolve responseAssertionDeferred.
+        if (!waitForResponse && !performResponseAssertion() && !performDeviceEventAssertion()) {
             action.result.status = ActionStatus.manual;
             resolveResponseAssertionDeferred();
         }
@@ -467,7 +484,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
         if (testActionDeviceEventCounts && testActionDeviceEventCounts.length > 0) {
             testActionDeviceEventCounts.forEach((testActionDeviceEventForCount) => {
                 let occurrences = assertUtils.occurrencesIn(actualDeviceEvents, testActionDeviceEventForCount, true);
-                if(occurrences !== testActionDeviceEventForCount.count) {
+                if (occurrences !== testActionDeviceEventForCount.count) {
                     addMessageToResult(`A device event count mismatch was found: Test Definition Event: ${JSON.stringify(testActionDeviceEventForCount)}`);
                     deviceEventCountsFailed = true;
                 }
@@ -480,7 +497,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
             if (action.result.status !== ActionStatus.fail) {
                 action.result.status = ActionStatus.pass;
             }
-            deviceEventsAssertionDeferred.resolve();
+            resolveDeviceEventsAssertionDeferred();
         }
     }
 
@@ -517,7 +534,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                     testConnector.getListener().onResetDeviceResponse = savedResetDeviceResponseHandler;
                 }
                 resolveResponseAssertionDeferred();
-                deviceEventsAssertionDeferred.resolve();
+                resolveDeviceEventsAssertionDeferred();
             }
             cloverConnector.resetDevice();
             setTimeout(() => {
@@ -555,7 +572,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                                         // Pause a bit to allow the device to receive and redirect after receiving the input option.
                                         setTimeout(() => {
                                             resolveResponseAssertionDeferred();
-                                            deviceEventsAssertionDeferred.resolve();
+                                            resolveDeviceEventsAssertionDeferred();
                                         }, 2500);
                                     }
                                 }
@@ -573,7 +590,7 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
                 if (isDeferredPending(responseAssertionDeferred)) {
                     Logger.log(LogLevel.ERROR, "lastDitchEffortToRecoverDeviceState has failed.  The device is likely in a bad state and future tests will likely fail.");
                     resolveResponseAssertionDeferred();
-                    deviceEventsAssertionDeferred.resolve();
+                    resolveDeviceEventsAssertionDeferred();
                 }
             }, 10000);
         }
@@ -591,6 +608,10 @@ const create = (action, actionCompleteDeferred, testConnector, storedValues) => 
     function resolveResponseAssertionDeferred() {
         hasResponseAssertionDeferredResolved = true;
         responseAssertionDeferred.resolve();
+    }
+
+    function resolveDeviceEventsAssertionDeferred() {
+        deviceEventsAssertionDeferred.resolve();
     }
 
     /**

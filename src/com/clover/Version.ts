@@ -4,9 +4,9 @@
 export class Version {
 
     /**
-     * @type {string} - The current verion of this library
+     * @type {string} - The current version of this library
      */
-    public static CLOVER_CLOUD_SDK_VERSION = "1.4.2";
+    public static CLOVER_CLOUD_SDK_VERSION = "1.4.3";
 
     /**
      * @type {string} - The current SDK name.
