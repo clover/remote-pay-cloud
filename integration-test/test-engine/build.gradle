@@ -1,9 +1,0 @@
-plugins {
-    id "com.moowork.node"
-}
-
-task build(type: NodeTask, dependsOn: npmInstall) {
-  script = file('./node_modules/webpack/bin/webpack')
-}
-
-defaultTasks 'build'
