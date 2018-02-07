@@ -31,7 +31,7 @@ If used from a browser, the browser must support WebSockets. For more informatio
 
 Please see the [Getting started with Clover Connector tutorial for JavaScript](https://docs.clover.com/build/getting-started-with-cloverconnector/?sdk=browser).
 
-Install your choice of pay display app on the Clover device:
+As a good starting point, install your choice of pay display app on the Clover device:
 - Cloud Pay Display app for cloud-based interactions between your POS system and the Clover device
 - [Secure Network Pay Display app](https://docs.clover.com/build/secure-network-pay-display/) for wireless local network-based interactions between your POS system and the Clover device
 
