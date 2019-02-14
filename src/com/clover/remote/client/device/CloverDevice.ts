@@ -13,6 +13,7 @@ export abstract class CloverDevice {
     protected packageName: string;
     protected applicationId: string;
     protected supportsAck: boolean = false;
+    protected supportsVoidPaymentResponse: boolean = false;
 
     /**
      * Constructor
@@ -77,7 +78,17 @@ export abstract class CloverDevice {
      * @param {sdk.payments.Payment} payment
      * @param {sdk.order.VoidReason} reason
      */
-    public abstract doVoidPayment(payment: sdk.payments.Payment, reason: sdk.order.VoidReason): void;
+    public abstract doVoidPayment(payment: sdk.payments.Payment, reason: sdk.order.VoidReason, disablePrinting: boolean, disableReceiptSelection: boolean, extras: object): void;
+
+    /**
+     * Void Payment Refund
+     *
+     * @param {string} orderId
+     * @param {string} refundId
+     * @param {boolean} disablePrinting
+     * @param {boolean} disableReceiptSelection
+     */
+    public abstract doVoidPaymentRefund(orderId: string, refundId: string, disablePrinting: boolean, disableReceiptSelection: boolean, extras: object): void;
 
     /**
      * Capture Auth
@@ -118,8 +129,17 @@ export abstract class CloverDevice {
      * @param {string} paymentId
      * @param {number} amount
      * @param {boolean} fullRefund
+     * @param {boolean} disablePrinting
+     * @param {boolean} disableReceiptSelection
      */
-    public abstract doPaymentRefund(orderId: string, paymentId: string, amount: number, fullRefund: boolean): void;
+    public abstract doPaymentRefund(orderId: string, paymentId: string, amount: number, fullRefund: boolean, disablePrinting?: boolean, disableReceiptSelection?: boolean, extras?: object): void;
+
+    /**
+     * Payment Refund
+     *
+     * @param {sdk.remotepay.RefundPaymentRequest} request
+     */
+    public abstract doPaymentRefundByRequest(request: sdk.remotepay.RefundPaymentRequest): void;
 
     /**
      * Tip Adjust Auth
@@ -137,6 +157,9 @@ export abstract class CloverDevice {
      */
     public abstract doPrintText(textLines: Array<string>, printRequestId?: string, printDeviceId?: string): void;
 
+
+    public abstract doSendDebugLog(message: string): void;
+
     /**
      * Show Welcome Screen
      */
@@ -147,8 +170,11 @@ export abstract class CloverDevice {
      *
      * @param {string} orderId
      * @param {string} paymentId
+     * @param {string} refundId
+     * @param {string} creditId
+     * @param {boolean} disablePrinting
      */
-    public abstract doShowPaymentReceiptScreen(orderId: string, paymentId: string): void;
+    public abstract doShowReceiptScreen(orderId: string, paymentId: string, refundId: string, creditId: string, disablePrinting: boolean): void;
 
     /**
      * Show Thank You Screen
@@ -259,6 +285,10 @@ export abstract class CloverDevice {
      */
     public abstract doRetrievePayment(externalPaymentId: string): void;
 
+    public abstract doRegisterForCustomerProvidedData(configurations: Array<sdk.loyalty.LoyaltyDataConfig>);
+
+    public abstract doSetCustomerInfo (customerInfo: sdk.remotepay.CustomerInfo);
+
     /**
      * Get printers attached to this device.
      */
@@ -274,7 +304,7 @@ export abstract class CloverDevice {
      *
      * @param {boolean} supportsAck
      */
-    public setSupportsAcks(supportsAck: boolean): void {
+    public setSupportsAck(supportsAck: boolean): void {
         this.supportsAck = supportsAck;
     }
 
@@ -283,7 +313,15 @@ export abstract class CloverDevice {
      *
      * @returns boolean - Flag indicating if this device supports acks
      */
-    public supportsAcks(): boolean {
+    public getSupportsAck(): boolean {
         return this.supportsAck;
+    }
+
+    public setSupportsVoidPaymentResponse(supportsVoidPaymentResponse: boolean): void {
+        this.supportsVoidPaymentResponse = supportsVoidPaymentResponse;
+    }
+
+    public getSupportsVoidPaymentResponse(): boolean {
+        return this.supportsVoidPaymentResponse;
     }
 }

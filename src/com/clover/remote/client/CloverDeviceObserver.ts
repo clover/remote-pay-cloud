@@ -19,10 +19,9 @@ export interface CloverDeviceObserver {
     /**
      * Transaction Start Response
      *
-     * @param {TxStartResponseResult} result
-     * @param {string} externalId
+     * @param {TxStartResponseMessage} txStartResponseMessage
      */
-    onTxStartResponse(result: sdk.remotemessage.TxStartResponseResult, externalId: string, requestInfo: string): void;
+    onTxStartResponse(txStartResponseMessage: sdk.remotemessage.TxStartResponseMessage): void;
 
     /**
      * UI State change
@@ -44,11 +43,9 @@ export interface CloverDeviceObserver {
     /**
      * Auth Tip Adjusted
      *
-     * @param {string} paymentId
-     * @param {number} amount
-     * @param {boolean} success
+     * @param {TipAdjustResponseMessage} tipAdjustResponseMessage
      */
-    onAuthTipAdjusted(paymentId: string, amount: number, success: boolean): void;
+    onAuthTipAdjusted(tipAdjustResponseMessage: sdk.remotemessage.TipAdjustResponseMessage, result?: sdk.remotepay.ResponseCode): void;
 
     /**
      * Cashback Selected
@@ -68,7 +65,8 @@ export interface CloverDeviceObserver {
      * Finish Ok
      *
      * @param {Payment} payment
-     * @param {Signature2} signature2
+     * @param {Signature} signature2
+     * @param requestInfo
      */
     onFinishOk(payment: sdk.payments.Payment, signature2: sdk.base.Signature, requestInfo: string): void;
 
@@ -95,7 +93,7 @@ export interface CloverDeviceObserver {
      * Verify Signature
      *
      * @param {Payment} payment
-     * @param {Signature2} signature
+     * @param {Signature} signature
      */
     onVerifySignature(payment: sdk.payments.Payment, signature: sdk.base.Signature): void;
 
@@ -110,13 +108,16 @@ export interface CloverDeviceObserver {
     /**
      * Payment Voided
      *
-     * @param {Payment} payment
-     * @param {VoidReason} voidReason
-     * @param {ResultStatus} result
-     * @param {string} reason
-     * @param {string} message
+     * @param {VoidPaymentResponseMessage} voidPaymentResponseMessage
      */
-    onPaymentVoided(payment: sdk.payments.Payment, voidReason: sdk.order.VoidReason, result: sdk.remotemessage.ResultStatus, reason: string, message: string): void;
+    onPaymentVoided(voidPaymentResponseMessage: sdk.remotemessage.VoidPaymentResponseMessage): void;
+
+    /**
+     * Refund Voided
+     *
+     * @param {VoidPaymentRefundResponseMessage} voidPaymentRefundResponseMessage
+     */
+    onPaymentRefundVoidResponse(voidPaymentRefundResponseMessage: sdk.remotemessage.VoidPaymentRefundResponseMessage);
 
     /**
      * Key Pressed
@@ -128,37 +129,31 @@ export interface CloverDeviceObserver {
     /**
      * Payment Refund Response
      *
-     * @param {string} orderId
-     * @param {string} paymentId
-     * @param {Refund} refund
-     * @param {TxState} code
+     * @param {RefundResponseMessage} refundResponseMessage
      */
-    onPaymentRefundResponse(orderId: string, paymentId: string, refund: sdk.payments.Refund, code: sdk.remotemessage.TxState, reason: sdk.remotemessage.ErrorCode, message: string): void;
+    onPaymentRefundResponse(refundResponseMessage: sdk.remotemessage.RefundResponseMessage): void;
 
     /**
      * Vault Card Response
      *
-     * @param {VaultedCard} vaultedCard
-     * @param {string} code
-     * @param {string} reason
+     * @param {VaultCardResponseMessage} vaultCardResponseMessage
+     * @param {ResponseCode} code
+     * @param {string} message
      */
-    onVaultCardResponse(vaultedCard: sdk.payments.VaultedCard, code: string, reason: string): void;
+    onVaultCardResponse(vaultCardResponseMessage: sdk.remotemessage.VaultCardResponseMessage, code?: sdk.remotepay.ResponseCode, message?: string): void;
 
     /**
      * Capture Pre-Auth
      *
-     * @param {ResultStatus} status
-     * @param {string} reason
-     * @param {string} paymentId
-     * @param {number} amount
-     * @param {number} tipAmount
+     * @param {CapturePreAuthResponseMessage} capturePreAuthResponseMessage
      */
-    onCapturePreAuth(status: sdk.remotemessage.ResultStatus, reason: string, paymentId: string, amount: number, tipAmount: number): void;
+    onCapturePreAuth(capturePreAuthResponseMessage: sdk.remotemessage.CapturePreAuthResponseMessage): void;
 
     /**
      * Closeout Response
      *
      * @param {ResultStatus} status base @param {string} reason
+     * @param reason
      * @param {Batch} batch
      */
     onCloseoutResponse(status: sdk.remotemessage.ResultStatus, reason: string, batch: sdk.payments.Batch): void;
@@ -167,6 +162,7 @@ export interface CloverDeviceObserver {
      * Device Disconnected
      *
      * @param {CloverDevice} device
+     * @param message
      */
     onDeviceDisconnected(device: CloverDevice, message?: string): void;
 
@@ -294,12 +290,9 @@ export interface CloverDeviceObserver {
     /**
      * The result of a request for device status
      *
-     * @param result
-     * @param reason
-     * @param state
-     * @param data
+     * @param {RetrieveDeviceStatusResponseMessage} retrieveDeviceStatusResponseMessage
      */
-    onDeviceStatusResponse(result: sdk.remotepay.ResponseCode, reason: string, state: sdk.remotemessage.ExternalDeviceState, data: sdk.remotemessage.ExternalDeviceStateData): void;
+    onDeviceStatusResponse(retrieveDeviceStatusResponseMessage: sdk.remotemessage.RetrieveDeviceStatusResponseMessage): void;
 
     /**
      * The result of a request for the device to reset
@@ -313,15 +306,14 @@ export interface CloverDeviceObserver {
     /**
      * The result of a request to get a single payment.
      *
-     * @param result
-     * @param reason
-     * @param payment
+     * @param {RetrievePaymentResponseMessage} retrievePaymentResponseMessage
      */
-    onRetrievePaymentResponse(result: sdk.remotepay.ResponseCode, reason: string, externalPaymentId: string, queryStatus: sdk.remotemessage.QueryStatus, payment: sdk.payments.Payment): void;
+    onRetrievePaymentResponse(retrievePaymentResponseMessage: sdk.remotemessage.RetrievePaymentResponseMessage): void;
 
     /**
      * The result of a request to get printers attached to the device.
      *
+     * @param result
      * @param printers
      */
     onRetrievePrintersResponse(result: sdk.remotepay.ResponseCode, printers: sdk.printer.Printer[]): void;
@@ -329,7 +321,24 @@ export interface CloverDeviceObserver {
     /**
      * The status of the requested print job.
      *
+     * @param result
+     * @param externalPrintJobId
      * @param status
      */
     onPrintJobStatusResponse(result: sdk.remotepay.ResponseCode, externalPrintJobId: string, status: sdk.printer.PrintJobStatus): void;
+
+    /**
+     * The result of the customer provided data message
+     *
+     * @param status
+     * @param eventId
+     * @param config
+     * @param data
+     */
+    onCustomerProvidedDataMessage(status: sdk.remotepay.ResponseCode, eventId: string, config: sdk.loyalty.LoyaltyDataConfig, data: string): void;
+
+    onInvalidStateTransitionResponse(result: sdk.remotemessage.ResultStatus, reason: string, requestedTransition: string, state: sdk.remotepay.ExternalDeviceState, data: sdk.remotemessage.ExternalDeviceStateData);
+
+    onDisplayReceiptOptionsResponse(result: sdk.remotemessage.ResultStatus, reason: string);
+
 }

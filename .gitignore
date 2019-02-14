@@ -12,3 +12,4 @@ npm-debug.log
 built
 bundle
 .gradle
+local.properties

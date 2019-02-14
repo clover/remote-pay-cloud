@@ -9,19 +9,17 @@ import {Logger} from '../../util/Logger';
  * initiated from this class, and many of the low level functionality is housed here.
  */
 export class CloverWebSocketClient implements WebSocketListener {
-    private endpoint: string; // URI
     listener: CloverWebSocketClientListener;
-    heartbeatInterval: number;
-    // private WebSocketFactory factory;
+
+    private endpoint: string; // URI
     private webSocketImplClass: any;
     private socket: CloverWebSocketInterface;
     private notifyClose: boolean;
 
     private logger: Logger = Logger.create();
 
-    constructor(endpoint: string, listener: CloverWebSocketClientListener, heartbeatInterval: number, webSocketImplClass: any) {
+    constructor(endpoint: string, listener: CloverWebSocketClientListener, webSocketImplClass: any) {
         this.listener = listener;
-        this.heartbeatInterval = heartbeatInterval >= 0 ? Math.min(100, heartbeatInterval) : heartbeatInterval; // can be negative, but > than 100 ms
         this.endpoint = endpoint;
         this.webSocketImplClass = webSocketImplClass;
     }
