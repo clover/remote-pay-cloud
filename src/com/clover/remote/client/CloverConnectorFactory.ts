@@ -88,7 +88,6 @@ export class LegacyCloverConnector extends CloverConnector {
      * @param configuration - the raw configuration object
      */
     protected initializeLegacyConnection(configuration: any) {
-
         if (configuration.oauthToken) {
             this.onceWeHaveTheAccessToken(configuration);
         } else {

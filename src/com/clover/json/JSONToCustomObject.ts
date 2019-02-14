@@ -43,7 +43,7 @@ export class JSONToCustomObject {
             try {
                 sourceObject = JSON.parse(sourceObject);
             } catch (e) {
-                this.log.warn(e);
+                this.log.warn(`Invalid JSON: Failed to parse JSON string: ${sourceObject}.`);
             }
         }
         // The sourceObject already has metainfo, we are done.
@@ -114,7 +114,6 @@ export class JSONToCustomObject {
                                     targetObject[key] = new fieldType;
                                 } catch (e) {
                                     this.log.error("fieldType is ", fieldType, ", key is ", key, " for jsonobject ", sourceObject);
-                                    throw e;
                                 }
                                 var copied = this.transfertoObject(sourceObject[key], targetObject[key], attachUnknownProperties);
                                 if (copied) {

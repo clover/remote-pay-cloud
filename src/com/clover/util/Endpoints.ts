@@ -10,6 +10,10 @@ export class Endpoints {
     static ACCESS_TOKEN_KEY: string = "axsTkn";
     static ACCESS_TOKEN_SUFFIX: string = "?access_token={" + Endpoints.ACCESS_TOKEN_KEY + "}";
 
+    // The key of the server identifier that COS will return in the cloud server URL.
+    // See WebSocketCloudCloverTransport.initialize
+    static CLOUD_SERVER_IDENTIFIER_KEY: string = "server";
+
     static ACCOUNT_V3_KEY: string = "acntId";
     static ACCOUNT_V3_PATH: string = "v3/accounts/{" + Endpoints.ACCOUNT_V3_KEY + "}";
     static DEVELOPER_V3_KEY: string = "dId";
@@ -43,8 +47,12 @@ export class Endpoints {
     static WEBSOCKET_TOKEN_SUFFIX: string = "?token={" + Endpoints.WEBSOCKET_TOKEN_KEY + "}";
     static WEBSOCKET_FRIENDLY_ID_KEY: string = "wsFriendlyId";
     static WEBSOCKET_FRIENDLY_ID_SUFFIX = "&friendlyId={" + Endpoints.WEBSOCKET_FRIENDLY_ID_KEY + "}";
-    static WEBSOCKET_FORCE_CONNECT_ID_KEY: string = "wsForceConnect";
-    static WEBSOCKET_FORCE_CONNECT_ID_SUFFIX = "&forceConnect={" + Endpoints.WEBSOCKET_FORCE_CONNECT_ID_KEY + "}";
+    static WEBSOCKET_FORCE_CONNECT_KEY: string = "wsForceConnect";
+    static WEBSOCKET_FORCE_CONNECT_SUFFIX = "&forceConnect={" + Endpoints.WEBSOCKET_FORCE_CONNECT_KEY + "}";
+    static WEBSOCKET_MERCHANT_ID_KEY: string = "mid";
+    static WEBSOCKET_MERCHANT_ID_SUFFIX = "&wsMid={" + Endpoints.WEBSOCKET_MERCHANT_ID_KEY + "}";
+    static WEBSOCKET_ACCESS_TOKEN_KEY: string = "accessToken";
+    static WEBSOCKET_ACCESS_TOKEN_SUFFIX = "&wsAccessToken={" + Endpoints.WEBSOCKET_ACCESS_TOKEN_KEY + "}";
 
     static OAUTH_PATH: string = "oauth/authorize?response_type=token";
     static OAUTH_CLIENT_ID_KEY = "client_id";
@@ -86,25 +94,34 @@ export class Endpoints {
      * The endpoint used to connect to a websocket on the server that will proxy to a device.  Used by
      * remote-pay cloud connectors.
      *
-     * @param {string} domain - the clover server.  EX: https://www.clover.com, http://localhost:9000
-     * @param {string} wsToken - the token used to contact the device.
+     * @param {any} - notificationResponse - The notification response from COS.
      * @param {string} friendlyId - an id used to identify the POS.
      * @param {boolean} forceConnect - if true, then the attempt will overtake any existing connection
+     * @param {boolean} merchantId - unique identifier for the merchant.
+     * @param {boolean} accessToken - mid access token
      * @returns {string} The endpoint used to connect to a websocket on the server that will proxy to a device
      */
-    public static getDeviceWebSocketEndpoint(domain: string, wsToken: string, friendlyId: string, forceConnect: boolean): string {
-        var variables = {};
-        variables[Endpoints.WEBSOCKET_TOKEN_KEY] = wsToken;
-        variables[Endpoints.DOMAIN_KEY] = domain;
-        variables[Endpoints.WEBSOCKET_FRIENDLY_ID_KEY] = friendlyId;
-        variables[Endpoints.WEBSOCKET_FORCE_CONNECT_ID_KEY] = forceConnect;
+    public static getDeviceWebSocketEndpoint(notificationResponse: any, friendlyId: string, forceConnect: boolean, merchantId: string, accessToken: string): string {
+        const variables = {};
+        variables[Endpoints.WEBSOCKET_TOKEN_KEY] = notificationResponse.token;
+        variables[Endpoints.DOMAIN_KEY] = notificationResponse.host;
+        variables[Endpoints.WEBSOCKET_FRIENDLY_ID_KEY] = encodeURIComponent(friendlyId);
+        variables[Endpoints.WEBSOCKET_FORCE_CONNECT_KEY] = forceConnect;
+        variables[Endpoints.WEBSOCKET_MERCHANT_ID_KEY] = merchantId;
+        variables[Endpoints.WEBSOCKET_ACCESS_TOKEN_KEY] = accessToken;
 
-        let merchantEndpointPath: string = Endpoints.DOMAIN_PATH + Endpoints.WEBSOCKET_PATH +
+        let deviceWebSocketEndpointPath: string = Endpoints.DOMAIN_PATH + Endpoints.WEBSOCKET_PATH +
             Endpoints.WEBSOCKET_TOKEN_SUFFIX +
             Endpoints.WEBSOCKET_FRIENDLY_ID_SUFFIX +
-            Endpoints.WEBSOCKET_FORCE_CONNECT_ID_SUFFIX;
+            Endpoints.WEBSOCKET_FORCE_CONNECT_SUFFIX +
+            Endpoints.WEBSOCKET_MERCHANT_ID_SUFFIX +
+            Endpoints.WEBSOCKET_ACCESS_TOKEN_SUFFIX;
 
-        return Endpoints.setVariables(merchantEndpointPath, variables);
+        if (notificationResponse.serverIdentifier) {
+            deviceWebSocketEndpointPath += "&" + Endpoints.CLOUD_SERVER_IDENTIFIER_KEY + "=" + notificationResponse.serverIdentifier;
+        }
+
+        return Endpoints.setVariables(deviceWebSocketEndpointPath, variables);
     }
 
     /**
@@ -131,6 +148,7 @@ export class Endpoints {
      * @param {string} domain - the clover server.  EX: https://www.clover.com, http://localhost:9000
      * @param {string} merchantId - the id of the merchant to use when getting the merchant.
      * @param {string} accessToken - the OAuth token used when accessing the server
+     *
      * @returns {string}
      */
     public static getDevicesEndpoint(domain: string, merchantId: string, accessToken: string): string {
@@ -158,6 +176,20 @@ export class Endpoints {
 
         let alertDeviceEndpointPath: string = Endpoints.DOMAIN_PATH + Endpoints.REMOTE_PAY_PATH + Endpoints.ACCESS_TOKEN_SUFFIX;
         return Endpoints.setVariables(alertDeviceEndpointPath, variables);
+    }
+
+    public static parseQueryString(queryString: String) {
+        let queryStringStartIndex = queryString.indexOf("?");
+        queryString = queryString.substring(queryStringStartIndex + 1, queryString.length);
+        var params = {}, queries, temp, i, l;
+        // Split into key/value pairs
+        queries = queryString.split("&");
+        // Convert the array of strings into an object
+        for (i = 0, l = queries.length; i < l; i++) {
+            temp = queries[i].split('=');
+            params[temp[0]] = temp[1];
+        }
+        return params;
     }
 
     /**

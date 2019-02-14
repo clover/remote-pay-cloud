@@ -65,24 +65,20 @@ export class WebsocketCloudCloverDevice extends DefaultCloverDevice {
 
     /**
      * Handles "RESET" and "SHUTDOWN" messages that originate from the server. The RESET message is a request that the connection be
-     * severed and re-established.  This is done because open long-lived connections can cause load balancers orother proxy
+     * severed and re-established.  This is done because open long-lived connections can cause load balancers or other proxy
      * type servers to hang when an attempt to restart them is made. The SHUTDOWN message is sent when Cloud Pay Display stops.
      *
      * @param rMessage
      */
     protected handleRemoteMessage(rMessage: sdk.remotemessage.RemoteMessage) {
         try {
-            if (rMessage.getMethod() === sdk.remotemessage.Method.RESET) {
+            if (rMessage.getMethod() === sdk.remotemessage.Method.RESET || rMessage.getMethod() === sdk.remotemessage.Method.SHUTDOWN) {
                 this.logger.info("Reset requested!  Will reconnect.");
                 this.transport.reset();
-            } else if (rMessage.getMethod() === sdk.remotemessage.Method.SHUTDOWN) {
-                this.logger.info("Cloud Pay Display has stopped!  Will disconnect.");
-                this.transport.dispose();
             } else {
                 super.handleRemoteMessage(rMessage);
             }
-        }
-        catch (eM) {
+        } catch (eM) {
             this.logger.error('Error processing message: ' + rMessage.getPayload(), eM);
         }
     }

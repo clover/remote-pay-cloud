@@ -48,6 +48,7 @@ export namespace PayIntent {
         private germanInfo: sdk.payments.GermanInfo;
         private cashAdvanceCustomerIdentification: sdk.payments.CashAdvanceCustomerIdentification;
         private transactionSettings: sdk.payments.TransactionSettings;
+        private passThroughValues: object;
 
         public static buildTransactionSettingsFromPayIntent(payIntent: sdk.remotemessage.PayIntent): sdk.payments.TransactionSettings {
             let transactionSettings: sdk.payments.TransactionSettings = new sdk.payments.TransactionSettings();
@@ -110,6 +111,8 @@ export namespace PayIntent {
             this.applicationTracking = payIntent.getApplicationTracking();
             this.allowPartialAuth = payIntent.getAllowPartialAuth();
             this.germanInfo = payIntent.getGermanInfo();
+
+
             if (payIntent.getTransactionSettings() != null) {
                 this.transactionSettings = payIntent.getTransactionSettings();
             } else {
@@ -291,6 +294,11 @@ export namespace PayIntent {
 
         public setCardNotPresent(cardNotPresent: boolean = false): Builder {
             this.isCardNotPresent = cardNotPresent;
+            return this;
+        }
+
+        public setPassThroughValues(passThroughValues: object): Builder {
+            this.passThroughValues = passThroughValues;
             return this;
         }
 

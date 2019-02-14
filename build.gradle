@@ -5,8 +5,8 @@ plugins {
 
 node {
     download = true
-    version = '8.9.3'
-    npmVersion = '5.5.1'
+    version = '8.10.0'
+    npmVersion = '5.6.0'
 }
 
 task build(type: GulpTask, dependsOn: [installGulp, npmInstall]) {
@@ -16,6 +16,10 @@ task build(type: GulpTask, dependsOn: [installGulp, npmInstall]) {
 // Executes the Unit Tests.
 task test(type: NpmTask, dependsOn: [npmInstall, build]) {
     args = ['test']
+}
+
+task clean(type: Delete) {
+  delete 'dist', 'docs'
 }
 
 defaultTasks 'build'

@@ -31,6 +31,7 @@ export class MethodToMessage {
         MethodToMessage.methodToType[remotemessage.Method.SHOW_PAYMENT_RECEIPT_OPTIONS] = remotemessage.ShowPaymentReceiptOptionsMessage;
         MethodToMessage.methodToType[remotemessage.Method.REFUND_RESPONSE] = remotemessage.RefundResponseMessage;
         MethodToMessage.methodToType[remotemessage.Method.REFUND_REQUEST] = remotemessage.RefundRequestMessage;
+        MethodToMessage.methodToType[remotemessage.Method.REFUND_PRINT_PAYMENT] = remotemessage.RefundPaymentPrintMessage;
         MethodToMessage.methodToType[remotemessage.Method.TX_START] = remotemessage.TxStartRequestMessage;
         MethodToMessage.methodToType[remotemessage.Method.TX_START_RESPONSE] = remotemessage.TxStartResponseMessage;
         MethodToMessage.methodToType[remotemessage.Method.KEY_PRESS] = remotemessage.KeyPressMessage;
@@ -56,6 +57,8 @@ export class MethodToMessage {
         MethodToMessage.methodToType[remotemessage.Method.CASHBACK_SELECTED] = remotemessage.CashbackSelectedMessage;
         MethodToMessage.methodToType[remotemessage.Method.PARTIAL_AUTH] = remotemessage.PartialAuthMessage;
         MethodToMessage.methodToType[remotemessage.Method.VOID_PAYMENT] = remotemessage.VoidPaymentMessage;
+        MethodToMessage.methodToType[remotemessage.Method.VOID_PAYMENT_RESPONSE] = remotemessage.VoidPaymentResponseMessage;
+        MethodToMessage.methodToType[remotemessage.Method.VOID_PAYMENT_REFUND_RESPONSE] = remotemessage.VoidPaymentRefundResponseMessage;
         MethodToMessage.methodToType[remotemessage.Method.ORDER_ACTION_ADD_DISCOUNT] = remotemessage.OrderActionAddDiscountMessage;
         MethodToMessage.methodToType[remotemessage.Method.ORDER_ACTION_REMOVE_DISCOUNT] = remotemessage.OrderActionRemoveDiscountMessage;
         MethodToMessage.methodToType[remotemessage.Method.ORDER_ACTION_ADD_LINE_ITEM] = remotemessage.OrderActionAddLineItemMessage;
@@ -88,5 +91,14 @@ export class MethodToMessage {
         MethodToMessage.methodToType[remotemessage.Method.GET_PRINTERS_RESPONSE] = remotemessage.GetPrintersResponseMessage;
         MethodToMessage.methodToType[remotemessage.Method.PRINT_JOB_STATUS_REQUEST] = remotemessage.PrintJobStatusRequestMessage;
         MethodToMessage.methodToType[remotemessage.Method.PRINT_JOB_STATUS_RESPONSE] = remotemessage.PrintJobStatusResponseMessage;
+        MethodToMessage.methodToType[remotemessage.Method.PRINT_CREDIT] = remotemessage.CreditPrintMessage;
+        MethodToMessage.methodToType[remotemessage.Method.PRINT_CREDIT_DECLINE] = remotemessage.DeclineCreditPrintMessage;
+        MethodToMessage.methodToType[remotemessage.Method.PRINT_PAYMENT] = remotemessage.PaymentPrintMessage;
+        MethodToMessage.methodToType[remotemessage.Method.PRINT_PAYMENT_DECLINE] = remotemessage.DeclinePaymentPrintMessage;
+        MethodToMessage.methodToType[remotemessage.Method.PRINT_PAYMENT_MERCHANT_COPY] = remotemessage.PaymentPrintMerchantCopyMessage;
+        MethodToMessage.methodToType[remotemessage.Method.REFUND_PRINT_PAYMENT] = remotemessage.RefundPaymentPrintMessage;
+        MethodToMessage.methodToType[remotemessage.Method.CUSTOMER_PROVIDED_DATA_MESSAGE] = remotemessage.CustomerProvidedDataMessage;
+        MethodToMessage.methodToType[remotemessage.Method.INVALID_STATE_TRANSITION] = remotemessage.InvalidStateTransitionMessage;
+        MethodToMessage.methodToType[remotemessage.Method.SHOW_RECEIPT_OPTIONS_RESPONSE] = remotemessage.ShowReceiptOptionsResponseMessage;
     }
 }

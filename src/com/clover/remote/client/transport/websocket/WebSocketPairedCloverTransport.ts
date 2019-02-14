@@ -21,19 +21,16 @@ export class WebSocketPairedCloverTransport extends WebSocketCloverTransport {
     isPairing: boolean = true;
 
     public constructor(endpoint: string,
-                       heartbeatInterval: number,
                        reconnectDelay: number,
-                       retriesUntilDisconnect: number,
                        posName: string,
                        serialNumber: string,
                        authToken: string,
                        webSocketImplClass: any) {
-        super(heartbeatInterval, reconnectDelay, retriesUntilDisconnect, webSocketImplClass);
+        super(reconnectDelay, webSocketImplClass);
         this.endpoint = endpoint;
         this.posName = posName;
         this.serialNumber = serialNumber;
         this.authToken = authToken;
-
         this.initialize();
     }
 

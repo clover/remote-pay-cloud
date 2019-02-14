@@ -1,7 +1,6 @@
 # src should not be here, we need to publish it for typings.
 .idea
 node_modules
-integration-test
 test
 remote-pay-cloud.iml
 npm-debug.log

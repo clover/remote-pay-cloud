@@ -19,19 +19,10 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
     private reconnectDelay: number = 3000;
 
     /**
-     * We do not wantto start up multiple reconnect threads.  This should alleviate that
+     * We do not want to start up multiple reconnect threads.  This should alleviate that
      * @type {boolean}
      */
     private reconnecting: boolean = false;
-
-    /**
-     * Subclasses need to set this at times.
-     *
-     * @param newValue
-     */
-    protected setReconnecting(newValue: boolean): void {
-        this.reconnecting = newValue;
-    }
 
     cloverWebSocketClient: CloverWebSocketClient;
 
@@ -57,15 +48,45 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
 
     messageParser: RemoteMessageParser;
 
-    reconnector = function () {
-        if (!this.shutdown) {
-            try {
-                this.initialize();
-            } catch (e) {
-                this.reconnect();
+    public static METHOD: string = "method";
+    public static PAYLOAD: string = "payload";
+
+    public constructor(reconnectDelay: number, webSocketImplClass: any) {
+        super();
+        this.reconnectDelay = Math.max(0, reconnectDelay);
+        this.webSocketImplClass = webSocketImplClass;
+        // from WebSocketCloverDeviceConfiguration.getMessagePackageName, which needs to be changeable
+        // 'com.clover.remote_protocol_broadcast.app'
+        this.messageParser = RemoteMessageParser.getDefaultInstance();
+        const messageSenderId = setInterval(() => {
+            if (!this.shutdown) {
+                this.sendMessageThread();
+            } else {
+                clearInterval(messageSenderId);
             }
-        }
-    }.bind(this);
+        }, 100);
+    }
+
+    protected getReconnector(): Function {
+        return () => {
+            if (!this.shutdown) {
+                try {
+                    this.initialize(true);
+                } catch (e) {
+                    this.reconnect();
+                }
+            }
+        };
+    }
+
+    /**
+     * Subclasses need to set this at times.
+     *
+     * @param newValue
+     */
+    protected setReconnecting(newValue: boolean): void {
+        this.reconnecting = newValue;
+    }
 
     public reconnect(): void {
         // If we are already reconnecting, do not start another.
@@ -75,7 +96,7 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
                 this.logger.debug("Not attempting to reconnect, shutdown...");
                 return;
             }
-            setTimeout(this.reconnector, this.reconnectDelay);
+            setTimeout(this.getReconnector(), this.reconnectDelay);
         } else {
             this.logger.debug("Already attempting to reconnect, will ignore additional request");
         }
@@ -90,28 +111,6 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
         } catch (e) {
             this.logger.error('error resetting transport.', e);
         }
-    }
-
-    public static METHOD: string = "method";
-    public static PAYLOAD: string = "payload";
-
-    public constructor(heartbeatInterval: number,
-                       reconnectDelay: number,
-                       retriesUntilDisconnect: number,
-                       webSocketImplClass: any) {
-        super();
-        this.reconnectDelay = Math.max(0, reconnectDelay);
-        this.webSocketImplClass = webSocketImplClass;
-        // from WebSocketCloverDeviceConfiguration.getMessagePackageName, which needs to be changeable
-        // 'com.clover.remote_protocol_broadcast.app'
-        this.messageParser = RemoteMessageParser.getDefaultInstance();
-        const messageSenderId = setInterval(() => {
-            if (!this.shutdown) {
-                this.sendMessageThread();
-            } else {
-                clearInterval(messageSenderId);
-            }
-        }, 100);
     }
 
     /**
@@ -167,8 +166,7 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
         this.cloverWebSocketClient = null;
     }
 
-
-    protected abstract initialize(): void
+    protected abstract initialize(isReconnectAttempt: Boolean): void
 
     /**
      * Called from subclasses at the end of the constructor.
@@ -185,7 +183,7 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
                 this.clearWebsocket();
             }
         }
-        this.cloverWebSocketClient = new CloverWebSocketClient(deviceEndpoint, this, 5000, this.webSocketImplClass);
+        this.cloverWebSocketClient = new CloverWebSocketClient(deviceEndpoint, this, this.webSocketImplClass);
         this.cloverWebSocketClient.connect();
         this.logger.debug('connection attempt done.');
     }
@@ -195,9 +193,8 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
 
         // Attempt to clear out messages already in the send queue
         this.drainQueue();
-
-        if (this.cloverWebSocketClient != null) {
-            this.notifyDeviceDisconnected();
+        this.notifyDeviceDisconnected();
+        if (this.cloverWebSocketClient) {
             this.cloverWebSocketClient.close();
         }
         this.clearWebsocket();
