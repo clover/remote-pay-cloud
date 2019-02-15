@@ -15,7 +15,7 @@ gulp.task('clean', function () {
 /**
  * transpiles the typescript source, generates source maps, and type definitions.
  */
-gulp.task('transpile', ['clean'], () => {
+gulp.task('transpile', gulp.series(['clean'], () => {
     const tsProject = ts.createProject('tsconfig.json', {});
     const tsResult = gulp.src(["src/**/*.ts"])
         .pipe(sourcemaps.init())
@@ -27,13 +27,13 @@ gulp.task('transpile', ['clean'], () => {
             .pipe(sourcemaps.write('maps/'))
             .pipe(gulp.dest('dist/'))
     ]);
-});
+}));
 
-gulp.task('bundle', ['transpile'], () => {
+gulp.task('bundle', gulp.series(['transpile'], () => {
     return gulp.src('./index.js')
         .pipe(webpack(require('./webpack.config.js')))
         .pipe(gulp.dest('dist/bundle/'));
-});
+}));
 
 gulp.task("typedoc", () => {
     return gulp
@@ -54,8 +54,7 @@ gulp.task("typedoc", () => {
 
             "src/com/clover/util/ImageUtil.ts",
             "src/com/clover/util/IImageUtil.ts",
-            "src/com/clover/Version.ts",
-            "src/CloverID.ts"
+            "src/com/clover/Version.ts"
         ])
     .pipe(typedoc({
         exclude: "**/*.d.ts",
@@ -67,4 +66,4 @@ gulp.task("typedoc", () => {
     }));
 });
 
-gulp.task('default', ['clean', 'bundle', 'typedoc']);
+gulp.task('default', gulp.series(['clean', 'bundle', 'typedoc']));

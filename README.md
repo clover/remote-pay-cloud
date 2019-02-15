@@ -9,7 +9,7 @@ Do not change this or the versioning may not reflect the npm version correctly.
 --->
 ## Version
 
-Current version: 3.0.0
+Current version: 3.0.1
 
 ## Platforms supported
 
