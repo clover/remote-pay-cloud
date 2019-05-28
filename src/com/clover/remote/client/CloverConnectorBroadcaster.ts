@@ -177,7 +177,7 @@ export class CloverConnectorBroadcaster
         this.logger.debug('Sending Disconnect notification to listeners', message);
         this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
             try {
-                listener.onDeviceDisconnected();  // changed the name in 1.3
+                listener.onDeviceDisconnected();  // changed from onDisconnected in 1.3
                 listener.onDisconnected(); // left here for backwards compatibility.  Deprecated in 1.3*
             } catch (e) {
                 this.logger.error(e);
@@ -189,8 +189,8 @@ export class CloverConnectorBroadcaster
         this.logger.debug('Sending Ready notification to listeners');
         this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
             try {
-                listener.onDeviceReady(merchantInfo);  // changed the name in 1.3
-                listener.onReady(merchantInfo);        // left here for backwards compatibility.  Deprecated in 1.3*
+                listener.onDeviceReady(merchantInfo);  // changed from onReady in 1.3
+                listener.onReady(merchantInfo); // left here for backwards compatibility.  Deprecated in 1.3*
             } catch (e) {
                 this.logger.error(e);
             }

@@ -8,26 +8,58 @@ import {CloverTransport} from './CloverTransport';
  */
 export interface CloverTransportObserver {
     /**
-     * Device is there but not yet ready for use
+     * Notify observers that we are connected.  What "connected" means depends on the transport mechanism.
      *
-     * @param {CloverTransport} transport - the transport holding the notifications
+     * For network (SNPD) this means that we have connected to the Clover device.
+     * For cloud (CPD) this means that we have connected to the cloud proxy.
+     */
+    onConnected(transport: CloverTransport): void;
+
+    /**
+     * @param transport
+     * @deprecated - see onConnected.
      */
     onDeviceConnected(transport: CloverTransport): void;
 
     /**
-     * Device is there and ready for use
+     * Notify observers that we are ready to send messages.  This has different meanings depending on the transport mechanism.
      *
-     * @param {CloverTransport} transport - the transport holding the notifications
+     * For network (SNPD) this means that we have connected to and successfully pinged the Clover device.
+     * For cloud (CPD) this means that we have connected to and successfully pinged the cloud proxy.
+     *
+     * This is generally used to indicate that we are clear to initiate the device via a Discovery Request.
+     *
+     * Note: this does not mean the device is ready to take a payment through the SDK, which is solely determined
+     * by the receipt of a Discovery Response (see DefaultCloverDevice.notifyObserversReady).
+     */
+    onReady(transport: CloverTransport): void;
+
+    /**
+     * @param transport
+     * @deprecated - see onReady.
      */
     onDeviceReady(transport: CloverTransport): void;
 
     /**
-     * Device is not there anymore
+     * Notify observers that the connection attempt is complete.  This is critical for retry logic at the device level.
      *
-     * @param {CloverTransport} transport - the transport holding the notifications
-     * @param {string} message - an optional message
+     * @param transport
      */
-    onDeviceDisconnected(transport: CloverTransport, message?: string): void;
+    onConnectionAttemptComplete(transport: CloverTransport): void;
+
+    /**
+     * Notify observers that we are disconnected.  What "disconnected" means depends on the transport mechanism.
+     *
+     * For network (SNPD) this means that we have disconnected from the Clover device.
+     * For cloud (CPD) this means that we have disconnected from the cloud proxy.
+     */
+    onDisconnected(transport: CloverTransport, message?: string): void;
+
+    /**
+     * @param transport
+     * @deprecated - see onDisconnected.
+     */
+    onDeviceDisconnected(transport: CloverTransport): void;
 
     /**
      * Device experienced an error on the transport.

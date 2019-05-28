@@ -29,13 +29,14 @@ export class RemoteMessageParser extends JSONToCustomObject {
      */
     public parseMessageFromRemoteMessageObj(remoteMessageObj: sdk.remotemessage.RemoteMessage,
                                             attachUnknownProperties: boolean = false): sdk.remotemessage.Message {
-        var responseMessageType = MethodToMessage.getType(remoteMessageObj.getMethod());
+        const responseMessageType = MethodToMessage.getType(remoteMessageObj.getMethod());
+        let messageToPopulate = null;
         if (responseMessageType) {
-            var messageToPopulate = new responseMessageType;
+            messageToPopulate = new responseMessageType;
             if (remoteMessageObj.getPayload()) {
                 // Older versions of the remote-pay lib did not return a body here
-                var payload = JSON.parse(remoteMessageObj.getPayload());
-                var copied = this.transfertoObject(payload, messageToPopulate, attachUnknownProperties);
+                const payload = JSON.parse(remoteMessageObj.getPayload());
+                const copied = this.transfertoObject(payload, messageToPopulate, attachUnknownProperties);
                 if (copied) {
                     return copied;
                 }
@@ -49,7 +50,7 @@ export class RemoteMessageParser extends JSONToCustomObject {
      * @returns {sdk.remotemessage.RemoteMessage} - object populated from the input json object.
      */
     public parseToRemoteMessage(remoteMessage: any) {
-        var remoteMessageObj = new sdk.remotemessage.RemoteMessage();
+        const remoteMessageObj = new sdk.remotemessage.RemoteMessage();
         this.transfertoObject(remoteMessage, remoteMessageObj, false);
         return remoteMessageObj;
     }

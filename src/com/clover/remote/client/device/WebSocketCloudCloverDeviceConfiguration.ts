@@ -39,9 +39,9 @@ export class WebSocketCloudCloverDeviceConfiguration extends WebSocketCloverDevi
      *  in debugging and may be sent to other clients if they attempt to connect to the same device.  It will also be
      *  sent to other clients that are currently connected if this device does a forceConnect.
      * @param {boolean} forceConnect - if true, overtake any existing connection.
-     * @param {number} [heartbeatInterval] - Frequency at which we will ping the device - millis. Defaults to -1 (disabled), minimum value is 2500 millis.
-     * @param {number} [reconnectDelay] - upon disconnect, duration to wait until a reconnect is attempted - millis. Defaults to 3000 (millis), minimum value is 3000 millis.
-     * @param {number} [heartbeatDisconnectTimeout] - If a response to a heartbeat ping is not received within this time we will call disconnect.  Defaults to 3000 (millis).
+     * @param {number} heartbeatInterval - Frequency at which we will ping the device - millis. Defaults to -1, which means the heartbeat check is disabled.
+     * @param {number} reconnectDelay - upon disconnect, duration to wait until a reconnect is attempted - millis. Defaults to 3000 (millis), minimum value is 3000 millis. To disable the reconnect set to -1.
+     * @param {number} heartbeatDisconnectTimeout - If a response to a heartbeat ping is not received within this time we will call disconnect.
      */
     constructor(applicationId: string,
                 webSocketFactoryFunction: any,
@@ -87,7 +87,7 @@ export class WebSocketCloudCloverDeviceConfiguration extends WebSocketCloverDevi
         // this is where we determine more about the transport...
         // The connection is paired:
         let transport = new WebSocketCloudCloverTransport(
-            this.reconnectDelay,
+            this.getReconnectDelay(),
             this.webSocketImplClass,
             this.cloverServer,
             this.merchantId,

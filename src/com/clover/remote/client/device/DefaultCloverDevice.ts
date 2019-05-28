@@ -7,6 +7,7 @@ import {ObjectMessageSender} from '../transport/ObjectMessageSender';
 import {CloverTransportObserver} from '../transport/CloverTransportObserver';
 import {CloverDeviceConfiguration} from './CloverDeviceConfiguration';
 import {IImageUtil} from '../../../util/IImageUtil';
+import {Constants} from '../../../util/Constants';
 import {Logger} from '../util/Logger';
 import {Version} from '../../../Version';
 import {remotemessage} from "remote-pay-cloud-api";
@@ -34,12 +35,26 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
     private static id: number = 0;
 
     private msgIdToTask: { [key: string]: Function; } = {};
-    private cloverDeviceConfiguration: CloverDeviceConfiguration;
     private imageUtil: IImageUtil;
-    private maxMessageSizeInChars: number;
 
-    private heartbeatPongReceivedTimeout: any;
-    private heartbeatCheckIntervalId: any;
+    private readonly cloverDeviceConfiguration: CloverDeviceConfiguration;
+    private readonly maxMessageSizeInChars: number;
+
+    private static INITIAL_HEARTBEAT_DELAY: number = 15000; // millis
+    // Timer id for the heartbeat loop.  This state is required so that we can clear the timeout and stop the heartbeat check when we are not connected to the device.
+    private heartbeatTimer: any = null;
+    // Timer id for the heartbeat response.  This state is required so that we do not have more than one ongoing heartbeat request.  The timeout is cleared when a PONG is received,
+    // thus allowing another heartbeat check.
+    private heartbeatResponseTimer: any = null;
+    // Timer id for the reconnect loop.  This state is required so that we can clear the timeout and stop the reconnect loop when we are connected to the device.
+    private reconnectTimer: any = null;
+    // Flag that prevents multiple unresolved reconnect attempts.  Reset in onConnectionAttemptComplete.
+    private reconnecting: boolean = false;
+
+    private readonly heartbeatIntervalInMillis: number = null;
+    private readonly heartbeatDisconnectTimeoutInMillis: number = null;
+    private readonly reconnectDelayInMillis: number;
+    private readonly forceConnect: boolean;
 
     constructor(configuration: CloverDeviceConfiguration) {
         super(
@@ -51,63 +66,194 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         this.maxMessageSizeInChars = Math.max(1000, configuration.getMaxMessageCharacters());
         this.transport.subscribe(this);
         this.transport.setObjectMessageSender(this);
+        this.reconnectDelayInMillis = this.cloverDeviceConfiguration["getReconnectDelay"] ? this.cloverDeviceConfiguration["getReconnectDelay"]() : -1;
+        this.heartbeatIntervalInMillis = this.cloverDeviceConfiguration["getHeartbeatInterval"] ? this.cloverDeviceConfiguration["getHeartbeatInterval"]() : -1;
+        this.heartbeatDisconnectTimeoutInMillis = this.cloverDeviceConfiguration["getHeartbeatDisconnectTimeout"] ? this.cloverDeviceConfiguration["getHeartbeatDisconnectTimeout"]() : -1;
+        this.forceConnect = this.cloverDeviceConfiguration["getForceConnect"] ? this.cloverDeviceConfiguration["getForceConnect"]() : -1;
     }
 
     /**
-     * Device is there but not yet ready for use
-     *
-     * @param {CloverTransport} transport - the transport holding the notifications
+     * @param transport
+     * @deprecated - see onConnected.
      */
-    public onDeviceConnected(transport: CloverTransport): void {
-        this.clearHeartbeatChecks();
+    onDeviceConnected(transport: CloverTransport): void {
+        this.onConnected(transport);
+    }
+
+    /**
+     * We are connected.  What "connected" means depends on the transport mechanism.
+     *
+     * For network (SNPD) this means that we have connected to the Clover device.
+     * For cloud (CPD) this means that we have connected to the cloud proxy.
+     */
+    public onConnected(transport: CloverTransport): void {
+        // We must initiate the heartbeat to allow non-direct transports' reconnect logic to work upon.
+        // initial connection.  If the device is not connected to the proxy and we were initiating the heartbeat
+        // in onDeviceReady the heartbeat would never be initiated and the reconnect logic wouldn't work,
+        // resulting in a failure to connect and no retries.  If we don't do this with a delay the initial
+        // connection attempt may not be complete and we may send two discovery requests.
+        setTimeout(() => this.initiateHeartbeat(), DefaultCloverDevice.INITIAL_HEARTBEAT_DELAY);
         this.notifyObserversConnected(transport);
     }
 
     /**
-     * Device is there and ready for use
-     *
-     * @param {CloverTransport} transport - the transport holding the notifications
+     * The connection attempt is complete.  Set the reconnecting flag to false so that the reconnect loop can try again (if running).
+     * @param transport
      */
-    public onDeviceReady(transport: CloverTransport): void {
-        this.clearHeartbeatChecks();
-        this.doDiscoveryRequest();
-        this.initiateHeartbeatCheck();
+    public onConnectionAttemptComplete(transport: CloverTransport): void {
+        this.reconnecting = false;
     }
 
     /**
-     * Starts a poller (interval) that pings the device at a configurable interval (heartbeatInterval on transport).
-     * Disconnects if a PONG response is not received within DefaultCloverDevice.HEARTBEAT_RECEIVE_POING_WITHIN.
+     * @param transport
+     * @deprecated - see onReady.
      */
-    private initiateHeartbeatCheck() {
-        const heartbeatInterval = this.cloverDeviceConfiguration["getHeartbeatInterval"]() || -1;
-        const heartBeatDisconnectTimeout = this.cloverDeviceConfiguration["getHeartbeatDisconnectTimeout"]() || 3000;
-        if (heartbeatInterval && heartbeatInterval != -1) {
-            if (!this.heartbeatCheckIntervalId) {
-                this.heartbeatCheckIntervalId = setInterval(() => {
-                    this.logger.info(`${new Date().toISOString()} - Checking device/internet connection, check interval set to ${heartbeatInterval} millis.`);
-                    this.sendPing();
-                    this.heartbeatPongReceivedTimeout = setTimeout(() => {
-                        this.logger.info(`${new Date().toISOString()} - The websocket is being disconnected.  We have not received a PONG from the device in ${heartBeatDisconnectTimeout} millis.  Either the internet connection is bad or the device cannot be reached.`);
-                        if (this.transport) {
-                            this.transport.reset(); // Closes and initializes re-connection.
-                        }
-                    }, heartBeatDisconnectTimeout)
-                }, heartbeatInterval);
+    onDeviceReady(transport: CloverTransport): void {
+        this.onReady(transport);
+    }
+
+    /**
+     * We are ready to send messages.  This has different meanings depending on the transport mechanism.
+     *
+     * For network (SNPD) this means that we have connected to and successfully pinged the Clover device.
+     * For cloud (CPD) this means that we have connected to and successfully pinged the cloud proxy.
+     *
+     * This is generally used to indicate that we are clear to initiate the device via a Discovery Request.
+     *
+     * Note: this does not mean the device is ready to take a payment through the SDK, which is solely determined
+     * by the receipt of a Discovery Response (see DefaultCloverDevice.notifyObserversReady).
+     */
+    public onReady(transport: CloverTransport): void {
+        this.doDiscoveryRequest();
+    }
+
+    /**
+     * Executes a device heartbeat check (via PING) when we are connected to the device. If a PING request is not answered
+     * within this.heartbeatResponseTimer disconnect will be called and the SDK will start reconnect attempts.
+     */
+    private initiateHeartbeat(): void {
+        if (this.heartbeatIntervalInMillis === -1) {
+            this.logger.info(`${new Date().toISOString()} - Device heartbeat checks are disabled, the heartbeatInterval is set to -1.`);
+            return;
+        }
+        if (this.heartbeatTimer) {
+            return; // A heartbeatTimer already exists, don't create another.
+        }
+        const performHeartbeat = () => {
+            try {
+                if (!this.heartbeatResponseTimer) {
+                    this.logger.info(`${new Date().toISOString()} - Executing device heartbeat check ...`);
+                    this.sendPingToDevice();
+                    this.heartbeatResponseTimer = setTimeout(() => {
+                        const disconnectMessage = `Disconnecting: We have not received a heartbeat response from the device in ${this.heartbeatDisconnectTimeoutInMillis} millis.`;
+                        this.logger.warn(`${new Date().toISOString()} - ${disconnectMessage}`);
+                        this.onDisconnected(this.transport, disconnectMessage);
+                    }, this.heartbeatDisconnectTimeoutInMillis)
+                } else {
+                    this.logger.info(`${new Date().toISOString()} - A heartbeat request is already outstanding, this interval will be skipped.`);
+                }
+                // Schedule future heartbeats.
+                this.heartbeatTimer = setTimeout(performHeartbeat, this.heartbeatIntervalInMillis);
+            } catch (e) {
+                this.logger.info(`${new Date().toISOString()} - Error caught executing device heartbeat checks.  Message: ${e.message}.`);
             }
+        };
+        // First time in, perform the heartbeat immediately.
+        performHeartbeat();
+    }
+
+    private stopHeartbeat(): void {
+        if (this.heartbeatIntervalInMillis !== -1) {
+            this.logger.info(`${new Date().toISOString()} - Stopping device heartbeat checks.`);
+            clearTimeout(this.heartbeatTimer);
+            this.heartbeatTimer = null;
+            this.clearHeartbeartResponseTimer();
+        }
+    }
+
+    private clearHeartbeartResponseTimer(): void {
+        clearTimeout(this.heartbeatResponseTimer);
+        this.heartbeatResponseTimer = null;
+    }
+
+    /**
+     * Executes a device reconnect when we are not connected to the device and reconnect is enabled.
+     *
+     * The reconnect logic has been moved from the websocket transport layer to the device level to support non-direct connection
+     * transports (e.g. cloud).  For non-direct transports the transport layer does not tell the entire truth about the connection
+     * status as it only indicates the SDKs connection to the proxy layer.  In order to accurately determine the connection status
+     * to the device we must rely on the Discovery Response (notifyObserversReady) and a device PING/PONG (see pingDevice).
+     */
+    private initiateReconnect(): void {
+        if (this.reconnectDelayInMillis === -1) {
+            this.logger.info(`${new Date().toISOString()} - Device reconnection is disabled, the reconnectDelay is set to -1.`);
+            return;
+        }
+        if (!this.transport || this.transport.isShutdown()) {
+            return; // The transport is shutdown, the connector has been disposed.
+        }
+        if (this.reconnectTimer) {
+            return; // A reconnectTimer already exists, don't create another.
+        }
+        const performReconnect = () => {
+            try {
+                if (this.transport && !this.transport.isShutdown()) {
+                    if (!this.reconnecting) {
+                        this.logger.info(`${new Date().toISOString()} - Not connected to your Clover device.  Attempting to reconnect now ...`);
+                        this.transport.initialize();
+                        this.reconnecting = true;
+                    } else {
+                        this.logger.debug(`${new Date().toISOString()} - A reconnection attempt is already outstanding, this attempt will be skipped.`);
+                    }
+                }
+            } catch (e) {
+                this.logger.error(`${new Date().toISOString()} - An exception was caught in the reconnect loop.  Message: ${e.message}.`);
+            }
+            // Schedule future reconnect attempts.
+            this.reconnectTimer = setTimeout(performReconnect, this.reconnectDelayInMillis);
+        };
+        // First time in, perform the reconnect attempt immediately.
+        performReconnect();
+    }
+
+    private stopReconnect(): void {
+        if (this.reconnectDelayInMillis !== -1) {
+            this.logger.info(`${new Date().toISOString()} - Stopping reconnect loop.`);
+            clearTimeout(this.reconnectTimer);
+            this.reconnectTimer = null;
         }
     }
 
     /**
-     * Device is not there anymore
-     *
-     * @param {CloverTransport} transport - the transport holding the notifications
+     * @param transport
+     * @deprecated - see onDisconnected.
      */
-    public onDeviceDisconnected(transport: CloverTransport, message?: string): void {
-        this.clearHeartbeatChecks();
-        this.notifyObserversDisconnected(transport, message);
+    onDeviceDisconnected(transport: CloverTransport, message?: string): void {
+        this.onDisconnected(transport, message);
+    }
+
+    /**
+     * We are disconnected.  What "disconnected" means depends on the transport mechanism.
+     *
+     * For network (SNPD) this means that we have disconnected from the Clover device.
+     * For cloud (CPD) this means that we have disconnected from the cloud proxy.
+     */
+    public onDisconnected(transport: CloverTransport, message?: string): void {
+        // For CPD if we already have a device connected don't attempt reconnect
+        if (!message || message.indexOf(Constants.device_already_connected) == -1) {
+            this.stopHeartbeat(); // We are offline, kill the heartbeat.
+            this.reconnecting = false;
+            this.initiateReconnect();
+            this.notifyObserversDisconnected(transport, message);
+        }
     }
 
     public onDeviceError(deviceError: sdk.remotepay.CloverDeviceErrorEvent): void {
+        // A deviceError code of sdk.remotepay.DeviceErrorEventCode.AccessDenied indicates that another
+        // POS is already connected to the Clover Device. In this case we want to disable the reconnect loop.
+        if (deviceError.getCode() && deviceError.getCode() === sdk.remotepay.DeviceErrorEventCode.AccessDenied) {
+            this.stopReconnect();
+        }
         this.notifyObserversDeviceError(deviceError);
     }
 
@@ -116,25 +262,16 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
     }
 
     protected handleRemoteMessagePING() {
-        this.sendPong();
+        this.respondToDevicePing();
     }
 
     protected handleRemoteMessagePONG() {
-        this.logger.debug("Received pong" + new Date().toISOString());
-        clearTimeout(this.heartbeatPongReceivedTimeout);
+        this.clearHeartbeartResponseTimer();
+        this.logger.debug("Received pong " + new Date().toISOString());
     }
 
     public get remoteMessageVersion(): number {
         return this._remoteMessageVersion;
-    }
-
-    private clearHeartbeatChecks() {
-        if (this.heartbeatCheckIntervalId) {
-            clearInterval(this.heartbeatCheckIntervalId);
-        }
-        if (this.heartbeatPongReceivedTimeout) {
-            clearTimeout(this.heartbeatPongReceivedTimeout);
-        }
     }
 
     /**
@@ -164,37 +301,37 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
                 case sdk.remotemessage.Method.BREAK:
                     break;
                 case sdk.remotemessage.Method.CASHBACK_SELECTED:
-                    this.notifyObserversCashbackSelected(<sdk.remotemessage.CashbackSelectedMessage> sdkMessage);
+                    this.notifyObserversCashbackSelected(<sdk.remotemessage.CashbackSelectedMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.ACK:
-                    this.notifyObserverAck(<sdk.remotemessage.AcknowledgementMessage> sdkMessage);
+                    this.notifyObserverAck(<sdk.remotemessage.AcknowledgementMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.DISCOVERY_RESPONSE:
                     this.logger.debug('Got a Discovery Response');
-                    this.notifyObserversReady(this.transport, <sdk.remotemessage.DiscoveryResponseMessage> sdkMessage);
+                    this.notifyObserversReady(this.transport, <sdk.remotemessage.DiscoveryResponseMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.CONFIRM_PAYMENT_MESSAGE:
-                    this.notifyObserversConfirmPayment(<sdk.remotemessage.ConfirmPaymentMessage> sdkMessage);
+                    this.notifyObserversConfirmPayment(<sdk.remotemessage.ConfirmPaymentMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.FINISH_CANCEL:
-                    this.notifyObserversFinishCancel(<sdk.remotemessage.FinishCancelMessage> sdkMessage);
+                    this.notifyObserversFinishCancel(<sdk.remotemessage.FinishCancelMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.FINISH_OK:
-                    this.notifyObserversFinishOk(<sdk.remotemessage.FinishOkMessage> sdkMessage);
+                    this.notifyObserversFinishOk(<sdk.remotemessage.FinishOkMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.KEY_PRESS:
-                    this.notifyObserversKeyPressed(<sdk.remotemessage.KeyPressMessage> sdkMessage);
+                    this.notifyObserversKeyPressed(<sdk.remotemessage.KeyPressMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.ORDER_ACTION_RESPONSE:
                     break;
                 case sdk.remotemessage.Method.PARTIAL_AUTH:
-                    this.notifyObserversPartialAuth(<sdk.remotemessage.PartialAuthMessage> sdkMessage);
+                    this.notifyObserversPartialAuth(<sdk.remotemessage.PartialAuthMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.VOID_PAYMENT_RESPONSE:
-                    this.notifyObserversPaymentVoided(<sdk.remotemessage.VoidPaymentResponseMessage> sdkMessage);
+                    this.notifyObserversPaymentVoided(<sdk.remotemessage.VoidPaymentResponseMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.VOID_PAYMENT_REFUND_RESPONSE:
-                    this.notifyObserversPaymentRefundVoided(<sdk.remotemessage.VoidPaymentRefundResponseMessage> sdkMessage);
+                    this.notifyObserversPaymentRefundVoided(<sdk.remotemessage.VoidPaymentRefundResponseMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.PAYMENT_VOIDED:
                     // currently this only gets called during a TX, so falls outside our current process flow
@@ -202,46 +339,46 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
                     //this.notifyObserversPaymentVoided(vpMessage.payment, vpMessage.voidReason, ResultStatus.SUCCESS, null, null);
                     break;
                 case sdk.remotemessage.Method.TIP_ADDED:
-                    this.notifyObserversTipAdded(<sdk.remotemessage.TipAddedMessage> sdkMessage);
+                    this.notifyObserversTipAdded(<sdk.remotemessage.TipAddedMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.TX_START_RESPONSE:
-                    this.notifyObserverTxStart(<sdk.remotemessage.TxStartResponseMessage> sdkMessage);
+                    this.notifyObserverTxStart(<sdk.remotemessage.TxStartResponseMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.TX_STATE:
-                    this.notifyObserversTxState(<sdk.remotemessage.TxStateMessage> sdkMessage);
+                    this.notifyObserversTxState(<sdk.remotemessage.TxStateMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.UI_STATE:
-                    this.notifyObserversUiState(<sdk.remotemessage.UiStateMessage> sdkMessage);
+                    this.notifyObserversUiState(<sdk.remotemessage.UiStateMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.VERIFY_SIGNATURE:
-                    this.notifyObserversVerifySignature(<sdk.remotemessage.VerifySignatureMessage> sdkMessage);
+                    this.notifyObserversVerifySignature(<sdk.remotemessage.VerifySignatureMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.REFUND_RESPONSE:
-                    this.notifyObserversPaymentRefundResponse(<sdk.remotemessage.RefundResponseMessage> sdkMessage);
+                    this.notifyObserversPaymentRefundResponse(<sdk.remotemessage.RefundResponseMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.REFUND_REQUEST:
                     //Outbound no-op
                     break;
                 case sdk.remotemessage.Method.TIP_ADJUST_RESPONSE:
-                    this.notifyObserversTipAdjusted(<sdk.remotemessage.TipAdjustResponseMessage> sdkMessage);
+                    this.notifyObserversTipAdjusted(<sdk.remotemessage.TipAdjustResponseMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.VAULT_CARD_RESPONSE:
-                    this.notifyObserverVaultCardResponse(<sdk.remotemessage.VaultCardResponseMessage> sdkMessage);
+                    this.notifyObserverVaultCardResponse(<sdk.remotemessage.VaultCardResponseMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.CAPTURE_PREAUTH_RESPONSE:
-                    this.notifyObserversCapturePreAuth(<sdk.remotemessage.CapturePreAuthResponseMessage> sdkMessage);
+                    this.notifyObserversCapturePreAuth(<sdk.remotemessage.CapturePreAuthResponseMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.CLOSEOUT_RESPONSE:
-                    this.notifyObserversCloseout(<sdk.remotemessage.CloseoutResponseMessage> sdkMessage);
+                    this.notifyObserversCloseout(<sdk.remotemessage.CloseoutResponseMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.RETRIEVE_PENDING_PAYMENTS_RESPONSE:
-                    this.notifyObserversPendingPaymentsResponse(<sdk.remotemessage.RetrievePendingPaymentsResponseMessage> sdkMessage);
+                    this.notifyObserversPendingPaymentsResponse(<sdk.remotemessage.RetrievePendingPaymentsResponseMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.CARD_DATA_RESPONSE:
-                    this.notifyObserversReadCardData(<sdk.remotemessage.CardDataResponseMessage> sdkMessage);
+                    this.notifyObserversReadCardData(<sdk.remotemessage.CardDataResponseMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.ACTIVITY_MESSAGE_FROM_ACTIVITY:
-                    this.notifyObserverActivityMessage(<sdk.remotemessage.ActivityMessageFromActivity> sdkMessage);
+                    this.notifyObserverActivityMessage(<sdk.remotemessage.ActivityMessageFromActivity>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.DISCOVERY_REQUEST:
                     //Outbound no-op
@@ -265,52 +402,52 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
                     //Outbound no-op
                     break;
                 case sdk.remotemessage.Method.PRINT_CREDIT:
-                    this.notifyObserversPrintCredit(<sdk.remotemessage.CreditPrintMessage> sdkMessage);
+                    this.notifyObserversPrintCredit(<sdk.remotemessage.CreditPrintMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.PRINT_CREDIT_DECLINE:
-                    this.notifyObserversPrintCreditDecline(<sdk.remotemessage.DeclineCreditPrintMessage> sdkMessage);
+                    this.notifyObserversPrintCreditDecline(<sdk.remotemessage.DeclineCreditPrintMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.PRINT_PAYMENT:
-                    this.notifyObserversPrintPayment(<sdk.remotemessage.PaymentPrintMessage> sdkMessage);
+                    this.notifyObserversPrintPayment(<sdk.remotemessage.PaymentPrintMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.PRINT_PAYMENT_DECLINE:
-                    this.notifyObserversPrintPaymentDecline(<sdk.remotemessage.DeclinePaymentPrintMessage> sdkMessage);
+                    this.notifyObserversPrintPaymentDecline(<sdk.remotemessage.DeclinePaymentPrintMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.PRINT_PAYMENT_MERCHANT_COPY:
-                    this.notifyObserversPrintMerchantCopy(<sdk.remotemessage.PaymentPrintMerchantCopyMessage> sdkMessage);
+                    this.notifyObserversPrintMerchantCopy(<sdk.remotemessage.PaymentPrintMerchantCopyMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.REFUND_PRINT_PAYMENT:
-                    this.notifyObserversPrintPaymentRefund(<sdk.remotemessage.RefundPaymentPrintMessage> sdkMessage);
+                    this.notifyObserversPrintPaymentRefund(<sdk.remotemessage.RefundPaymentPrintMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.ACTIVITY_RESPONSE:
-                    this.notifyObserversActivityResponse(<sdk.remotemessage.ActivityResponseMessage> sdkMessage);
+                    this.notifyObserversActivityResponse(<sdk.remotemessage.ActivityResponseMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.REMOTE_ERROR:
-                    this.notifyObserversRemoteError(sdkMessage);
+                    this.notifyObserversRemoteError(<sdk.remotemessage.RemoteError>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.RETRIEVE_DEVICE_STATUS_RESPONSE:
-                    this.notifyObserversRetrieveDeviceStatusResponse(<sdk.remotemessage.RetrieveDeviceStatusResponseMessage> sdkMessage);
+                    this.notifyObserversRetrieveDeviceStatusResponse(<sdk.remotemessage.RetrieveDeviceStatusResponseMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.RESET_DEVICE_RESPONSE:
-                    this.notifyObserversResetDeviceResponse(<sdk.remotemessage.ResetDeviceResponseMessage> sdkMessage);
+                    this.notifyObserversResetDeviceResponse(<sdk.remotemessage.ResetDeviceResponseMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.RETRIEVE_PAYMENT_RESPONSE:
-                    this.notifyObserversRetrievePaymentResponse(<sdk.remotemessage.RetrievePaymentResponseMessage> sdkMessage);
+                    this.notifyObserversRetrievePaymentResponse(<sdk.remotemessage.RetrievePaymentResponseMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.GET_PRINTERS_RESPONSE:
-                    this.notifyObserversRetrievePrintersResponse(<sdk.remotemessage.GetPrintersResponseMessage> sdkMessage);
+                    this.notifyObserversRetrievePrintersResponse(<sdk.remotemessage.GetPrintersResponseMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.PRINT_JOB_STATUS_RESPONSE:
-                    this.notifyObserversPrintJobStatusResponse(<sdk.remotemessage.PrintJobStatusResponseMessage> sdkMessage);
+                    this.notifyObserversPrintJobStatusResponse(<sdk.remotemessage.PrintJobStatusResponseMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.CUSTOMER_PROVIDED_DATA_MESSAGE:
-                    this.notifyObserversCustomerProvidedDataMessage(<sdk.remotemessage.CustomerProvidedDataMessage> sdkMessage);
+                    this.notifyObserversCustomerProvidedDataMessage(<sdk.remotemessage.CustomerProvidedDataMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.INVALID_STATE_TRANSITION:
-                    this.notifyObserversInvalidStateTransitionResponse(<sdk.remotemessage.InvalidStateTransitionMessage> sdkMessage);
+                    this.notifyObserversInvalidStateTransitionResponse(<sdk.remotemessage.InvalidStateTransitionMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.SHOW_RECEIPT_OPTIONS_RESPONSE:
-                    this.notifyObserverDisplayReceiptOptionsResponse(<sdk.remotemessage.ShowReceiptOptionsResponseMessage> sdkMessage);
+                    this.notifyObserverDisplayReceiptOptionsResponse(<sdk.remotemessage.ShowReceiptOptionsResponseMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.SHOW_ORDER_SCREEN:
                     //Outbound no-op
@@ -383,24 +520,18 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
             let msgType: sdk.remotemessage.RemoteMessageType = rMessage.getType();
             if (msgType == sdk.remotemessage.RemoteMessageType.PING) {
                 this.handleRemoteMessagePING();
-            }
-            else if (msgType == sdk.remotemessage.RemoteMessageType.PONG) {
+            } else if (msgType == sdk.remotemessage.RemoteMessageType.PONG) {
                 this.handleRemoteMessagePONG();
-            }
-            else if (msgType == sdk.remotemessage.RemoteMessageType.COMMAND) {
+            } else if (msgType == sdk.remotemessage.RemoteMessageType.COMMAND) {
                 this.handleRemoteMessageCOMMAND(rMessage);
-            }
-            else if (msgType == sdk.remotemessage.RemoteMessageType.QUERY) {
+            } else if (msgType == sdk.remotemessage.RemoteMessageType.QUERY) {
                 this.handleRemoteMessageQUERY(rMessage);
-            }
-            else if (msgType == sdk.remotemessage.RemoteMessageType.EVENT) {
+            } else if (msgType == sdk.remotemessage.RemoteMessageType.EVENT) {
                 this.handleRemoteMessageEVENT(rMessage);
-            }
-            else {
+            } else {
                 this.logger.error('Unsupported message type: ' + rMessage && rMessage["getType"] ? rMessage.getType() : "Message type unavailable" + " message: " + JSON.stringify(rMessage));
             }
-        }
-        catch (eM) {
+        } catch (eM) {
             this.logger.error('Error processing message: ' + rMessage.getPayload(), eM);
         }
     }
@@ -411,13 +542,19 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      * @param {string} message - the raw message from the device
      */
     public onMessage(message: string): void {
-        this.logger.debug('onMessage: ' + message);
+        this.logger.debug(`DefaultCloverDevice, handling remote message receipt.  Message: ${message}.`);
         try {
-            // Parse the message
+            // The cloud proxy sends two versions of the force connect message.  The new SDK can't parse and doesn't need to worry about the old one.
+            const isLegacyForceConnect = (messageIn) => {
+                return messageIn.indexOf("method") === -1 && messageIn.indexOf("forceConnect") > -1;
+            };
+            if (isLegacyForceConnect(message)) {
+                this.logger.debug('onMessage: Received a legacy force connect message, dropping.');
+                return;
+            }
             let rMessage: sdk.remotemessage.RemoteMessage = this.messageParser.parseToRemoteMessage(message);
             this.handleRemoteMessage(rMessage);
-        }
-        catch (e) {
+        } catch (e) {
             this.logger.error(e);
         }
     }
@@ -425,27 +562,33 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
     /**
      * Send a PONG response
      */
-    private sendPong(): void {
-        let remoteMessage: sdk.remotemessage.RemoteMessage = new sdk.remotemessage.RemoteMessage();
-        remoteMessage.setType(sdk.remotemessage.RemoteMessageType.PONG);
-        remoteMessage.setPackageName(this.packageName);
-        remoteMessage.setRemoteSourceSDK(DefaultCloverDevice.REMOTE_SDK);
-        remoteMessage.setRemoteApplicationID(this.applicationId);
-        this.logger.debug('Sending PONG...');
-        this.sendRemoteMessage(remoteMessage);
+    private respondToDevicePing(): void {
+        if (this.transport) {
+            let remoteMessage: sdk.remotemessage.RemoteMessage = new sdk.remotemessage.RemoteMessage();
+            remoteMessage.setType(sdk.remotemessage.RemoteMessageType.PONG);
+            remoteMessage.setPackageName(this.packageName);
+            remoteMessage.setRemoteSourceSDK(DefaultCloverDevice.REMOTE_SDK);
+            remoteMessage.setRemoteApplicationID(this.applicationId);
+            this.sendRemoteMessage(remoteMessage);
+        } else {
+            this.logger.info("Cannot respond to PING, the transport has been shutdown.");
+        }
     }
 
     /**
      * Send a PING message
      */
-    private sendPing(): void {
-        let remoteMessage: sdk.remotemessage.RemoteMessage = new sdk.remotemessage.RemoteMessage();
-        remoteMessage.setType(sdk.remotemessage.RemoteMessageType.PING);
-        remoteMessage.setPackageName(this.packageName);
-        remoteMessage.setRemoteSourceSDK(DefaultCloverDevice.REMOTE_SDK);
-        remoteMessage.setRemoteApplicationID(this.applicationId);
-        this.logger.info('Sending PING...');
-        this.sendRemoteMessage(remoteMessage);
+    private sendPingToDevice(): void {
+        if (this.transport) {
+            let remoteMessage: sdk.remotemessage.RemoteMessage = new sdk.remotemessage.RemoteMessage();
+            remoteMessage.setType(sdk.remotemessage.RemoteMessageType.PING);
+            remoteMessage.setPackageName(this.packageName);
+            remoteMessage.setRemoteSourceSDK(DefaultCloverDevice.REMOTE_SDK);
+            remoteMessage.setRemoteApplicationID(this.applicationId);
+            this.sendRemoteMessage(remoteMessage);
+        } else {
+            this.logger.info("Cannot send PING, the transport has been shutdown.");
+        }
     }
 
     /**
@@ -489,6 +632,11 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      * @param drm
      */
     private notifyObserversReady(transport: CloverTransport, drm: sdk.remotemessage.DiscoveryResponseMessage): void {
+        if (drm.getReady()) {
+            this.stopReconnect();
+            this.clearHeartbeartResponseTimer();
+            this.initiateHeartbeat();
+        }
         this.deviceObservers.forEach((obs) => {
             obs.onDeviceReady(this, drm);
         });
@@ -553,7 +701,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
 
     private notifyObserversCustomerProvidedDataMessage(customerProvidedDataMessage: sdk.remotemessage.CustomerProvidedDataMessage): void {
         this.deviceObservers.forEach((obs) => {
-           obs.onCustomerProvidedDataMessage(sdk.remotepay.ResponseCode.SUCCESS, customerProvidedDataMessage.getEventId(), customerProvidedDataMessage.getConfig(), customerProvidedDataMessage.getData());
+            obs.onCustomerProvidedDataMessage(sdk.remotepay.ResponseCode.SUCCESS, customerProvidedDataMessage.getEventId(), customerProvidedDataMessage.getConfig(), customerProvidedDataMessage.getData());
         });
     }
 
@@ -950,7 +1098,9 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
     /**
      * Print Image (Bitmap)
      *
-     * @param {any} bitmap
+     * @param bitmap
+     * @param printRequestId
+     * @param printDeviceId
      */
     public doPrintImageObject(bitmap: any, printRequestId?: string, printDeviceId?: string): void {
         const message: sdk.remotemessage.ImagePrintMessage = new sdk.remotemessage.ImagePrintMessage();
@@ -967,7 +1117,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
             }
             if (this.isFragmentationSupported()) {
                 // We need to be putting this in the attachment instead of the payload (for the remoteMessage)
-                let base64Png: string = message.getPng();
+                let base64Png: any = message.getPng();
                 message.setPng(null);
                 this.sendObjectMessage(message, base64Png, DefaultCloverDevice.BASE64);
             } else {
@@ -986,6 +1136,8 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      * method is more robust (can handle large images via chunking, etc.).
      *
      * @param {string} url
+     * @param {string} printRequestId
+     * @param {string} printDeviceId
      */
     public doPrintImageUrl(url: string, printRequestId?: string, printDeviceId?: string): void {
         this.imageUtil.loadImageFromURL(url, (image) => {
@@ -1089,7 +1241,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         message.setOrderId(orderId);
         message.setRefundId(refundId);
         message.setDisableCloverPrinting(disablePrinting);
-        message.setDisableReceiptSelection(disableReceiptSelection)
+        message.setDisableReceiptSelection(disableReceiptSelection);
         message.setVersion(2);
         this.sendObjectMessage(message);
     }
@@ -1241,7 +1393,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         this.sendObjectMessage(message);
     }
 
-    public doSetCustomerInfo (customerInfo: sdk.remotepay.CustomerInfo): void {
+    public doSetCustomerInfo(customerInfo: sdk.remotepay.CustomerInfo): void {
         const message: sdk.remotemessage.CustomerInfoMessage = new sdk.remotemessage.CustomerInfoMessage();
         message.setCustomer(customerInfo);
         this.sendObjectMessage(message);
@@ -1252,14 +1404,12 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      */
     public dispose(): void {
         this.deviceObservers.splice(0, this.deviceObservers.length);
-        if (this.heartbeatCheckIntervalId) {
-            clearInterval(this.heartbeatCheckIntervalId);
-            this.heartbeatCheckIntervalId = null;
-        }
         if (this.transport) {
             this.transport.dispose();
             this.transport = null;
         }
+        this.stopReconnect(); // must be done after we dispose so the transport is shutdown.
+        this.stopHeartbeat();
     }
 
     public sendObjectMessage(remoteMessage: sdk.remotemessage.Message, attachment?: string, attachmentEncoding?: string): string {
@@ -1274,7 +1424,6 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         }
 
         // Check the message method
-        this.logger.info(remoteMessage.toString());
         if (remoteMessage.getMethod() == null) {
             this.logger.error('Invalid Message', new Error('Invalid Message: ' + remoteMessage.toString()));
             return null;
@@ -1291,7 +1440,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         remoteMessageToReturn.setId(messageId);
         remoteMessageToReturn.setType(sdk.remotemessage.RemoteMessageType.COMMAND);
         remoteMessageToReturn.setPackageName(this.packageName);
-        remoteMessageToReturn.setMethod(remoteMessage.getMethod().toString());
+        remoteMessageToReturn.setMethod(remoteMessage.getMethod());
         remoteMessageToReturn.setVersion(this.remoteMessageVersion);
         remoteMessageToReturn.setRemoteSourceSDK(DefaultCloverDevice.REMOTE_SDK);
         remoteMessageToReturn.setRemoteApplicationID(this.applicationId);
@@ -1310,8 +1459,8 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      * com.clover.remote.message.Message#fromJsonString
      */
     private addSuppressElementsWrapper(message: sdk.remotemessage.Message): sdk.remotemessage.Message {
-        for (var fieldKey in message) {
-            var metaInfo = message.getMetaInfo(fieldKey);
+        for (const fieldKey in message) {
+            const metaInfo: any = message ? message.getMetaInfo(fieldKey) : null;
             if (metaInfo && (metaInfo.type == Array)) {
                 message[fieldKey].suppressElementsWrapper = true;
             }
@@ -1333,7 +1482,6 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
             remoteMessage.setAttachmentEncoding(attachmentEncoding);
         }
         let messagePayload = JSON.stringify(message, DefaultCloverDevice.stringifyClover);
-
         if (this.isFragmentationSupported()) {
             const payloadTooLarge = (messagePayload ? messagePayload.length : 0) > this.maxMessageSizeInChars;
             if (payloadTooLarge || attachment) { // need to fragment
@@ -1378,7 +1526,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
                     } else {
                         // We got an attachment, but no encoding, complain.
                         this.logger.error('Attachment on message, but no encoding specified.  No idea how to send it.');
-                        // TODO:  Probably a good idea to throw here, but  then we need to handle that in the top level.  Leave for later.
+                        // TODO:  Probably a good idea to throw here, but then we need to handle that in the top level.  Leave for later.
                     }
                 }
             } else { // no need to fragment

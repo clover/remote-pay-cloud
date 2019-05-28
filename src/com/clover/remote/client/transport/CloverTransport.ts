@@ -17,35 +17,75 @@ export abstract class CloverTransport {
     // Flag to determine if the device is ready
     protected ready: Boolean = false;
 
-    constructor() {
-    }
+    protected constructor() {}
 
     /**
-     * Notify observers that the device is connected
+     * @deprecated - see notifyConnected.
      */
     protected notifyDeviceConnected(): void {
+        this.notifyConnected();
+    }
+
+    /**
+     * Notify observers that we are connected.  What "connected" means depends on the transport mechanism.
+     *
+     * For network (SNPD) this means that we have connected to the Clover device.
+     * For cloud (CPD) this means that we have connected to the cloud proxy.
+     */
+    protected notifyConnected(): void {
         this.observers.forEach((obs) => {
-            obs.onDeviceConnected(this);
+            obs.onConnected(this);
         });
     }
 
     /**
-     * Notify observers that the device is ready
+     * @deprecated - see notifyReady.
      */
     protected notifyDeviceReady(): void {
+        this.notifyReady();
+    }
+
+    /**
+     * Notify observers that we are ready to send messages.  This has different meanings depending on the transport mechanism.
+     *
+     * For network (SNPD) this means that we have connected to and successfully pinged the Clover device.
+     * For cloud (CPD) this means that we have connected to and successfully pinged the cloud proxy.
+     *
+     * This is generally used to indicate that we are clear to initiate the device via a Discovery Request.
+     *
+     * Note: this does not mean the device is ready to take a payment through the SDK, which is solely determined
+     * by the receipt of a Discovery Response (see DefaultCloverDevice.notifyObserversReady).
+     */
+    protected notifyReady(): void {
         this.ready = true;
         this.observers.forEach((obs) => {
-            obs.onDeviceReady(this);
+            obs.onReady(this);
         });
     }
 
     /**
-     * Notify observers that the device has disconnected
+     * @deprecated - see notifyDisconnected.
      */
     protected notifyDeviceDisconnected(): void {
+        this.notifyDisconnected();
+    }
+
+    /**
+     * Notify observers that we are disconnected.  What "disconnected" means depends on the transport mechanism.
+     *
+     * For network (SNPD) this means that we have disconnected from the Clover device.
+     * For cloud (CPD) this means that we have disconnected from the cloud proxy.
+     */
+    protected notifyDisconnected(): void {
         this.ready = false;
         this.observers.forEach((obs) => {
-            obs.onDeviceDisconnected(this);
+            obs.onDisconnected(this);
+        });
+    }
+
+    protected notifyConnectionAttemptComplete(): void {
+        this.observers.forEach((obs) => {
+            obs.onConnectionAttemptComplete(this);
         });
     }
 
@@ -77,7 +117,7 @@ export abstract class CloverTransport {
     public subscribe(observer: CloverTransportObserver): void {
         if (this.ready) {
             this.observers.forEach((obs) => {
-                obs.onDeviceReady(this);
+                obs.onReady(this);
             });
         }
         this.observers.push(observer);
@@ -108,9 +148,19 @@ export abstract class CloverTransport {
     }
 
     /**
+     * Initializes this transport.
+     */
+    public abstract initialize(): void;
+
+    /**
      * Properly dispose of this object
      */
     public abstract dispose(): void;
+
+    /**
+     * Has the transport been shutdown?
+     */
+    public abstract isShutdown(): boolean;
 
     /**
      * Request a disconnect then reconnect

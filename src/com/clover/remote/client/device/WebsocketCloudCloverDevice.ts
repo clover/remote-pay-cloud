@@ -37,13 +37,12 @@ export class WebsocketCloudCloverDevice extends DefaultCloverDevice {
         let method: sdk.remotemessage.Method = sdk.remotemessage.Method[rMessage.getMethod()];
         if (method == null) {
             this.logger.error('Unsupported method type: ' + rMessage.getMethod());
-        }
-        else {
+        } else {
             let sdkMessage: sdk.remotemessage.Message = this.messageParser.parseMessageFromRemoteMessageObj(rMessage);
             if (method == sdk.remotemessage.Method.FORCECONNECT) {
                 this.logger.info("Connection was stolen!  Will not attempt reconnect.", rMessage);
                 // Do we need to notify anyone?
-                this.notifyObserversForceConnect(sdkMessage);
+                this.notifyObserversForceConnect(<sdk.remotemessage.ForceConnectMessage> sdkMessage);
                 this.disposeWithoutMessage();
             }
         }

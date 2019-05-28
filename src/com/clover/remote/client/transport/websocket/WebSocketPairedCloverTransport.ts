@@ -13,9 +13,9 @@ import {WebSocketCloverTransport} from "./WebSocketCloverTransport";
  */
 export class WebSocketPairedCloverTransport extends WebSocketCloverTransport {
 
-    private endpoint: string
-    private posName: string;
-    private serialNumber: string;
+    private readonly endpoint: string;
+    private readonly posName: string;
+    private readonly serialNumber: string;
     private authToken: string;
     pairingDeviceConfiguration: PairingDeviceConfiguration; // Network Pay display specific
     isPairing: boolean = true;
@@ -34,7 +34,7 @@ export class WebSocketPairedCloverTransport extends WebSocketCloverTransport {
         this.initialize();
     }
 
-    protected initialize(): void {
+    public initialize(): void {
         this.initializeWithUri(this.endpoint);
     }
 
@@ -93,7 +93,7 @@ export class WebSocketPairedCloverTransport extends WebSocketCloverTransport {
                             } catch (e) {
                                 this.logger.debug("Error:" + e);
                             }
-                            this.notifyDeviceReady();
+                            this.notifyReady();
                         } else if (sdk.remotemessage.PairingState.FAILED == response.getPairingState()) {
                             this.logger.debug("Got FAILED pair response");
                             this.isPairing = true;

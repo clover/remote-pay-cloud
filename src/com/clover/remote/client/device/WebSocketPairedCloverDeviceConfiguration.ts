@@ -34,9 +34,9 @@ export class WebSocketPairedCloverDeviceConfiguration extends WebSocketCloverDev
      * @param {Object} webSocketFactoryFunction - the function that will return an instance of the CloverWebSocketInterface
      *    that will be used when connecting.
      * @param {IImageUtil} imageUtil - utility to translate images into base64 strings.
-     * @param {number} [heartbeatInterval] - Frequency at which we will ping the device - millis. Defaults to -1 (disabled), minimum value is 2500 millis.
-     * @param {number} [reconnectDelay] - upon disconnect, duration to wait until a reconnect is attempted - millis. Defaults to 3000 (millis), minimum value is 3000 millis.
-     * @param {number} [heartbeatDisconnectTimeout] - If a response to a heartbeat ping is not received within this time we will call disconnect. Defaults to 3000 (millis).
+     * @param {number} heartbeatInterval - Frequency at which we will ping the device - millis. Defaults to 5000 (millis), minimum value is 2500 millis. To disable the PING set to -1.
+     * @param {number} reconnectDelay - upon disconnect, duration to wait until a reconnect is attempted - millis. Defaults to 3000 (millis), minimum value is 3000 millis. To disable the reconnect set to -1.
+     * @param {number} heartbeatDisconnectTimeout - If a response to a heartbeat ping is not received within this time we will call disconnect.  Defaults to 3000 (millis).
      */
     constructor(endpoint: string,
                 applicationId: string,
@@ -77,7 +77,7 @@ export class WebSocketPairedCloverDeviceConfiguration extends WebSocketCloverDev
         // The connection is paired:
         let transport = new WebSocketPairedCloverTransport(
             this.uri,
-            this.reconnectDelay,
+            this.getReconnectDelay(),
             this.posName,
             this.serialNumber,
             this.authToken,

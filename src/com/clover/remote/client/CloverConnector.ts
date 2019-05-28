@@ -175,8 +175,6 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
             transactionSettings.setTipSuggestions(request.getTipSuggestions());
         }
 
-        // TODO figure out VasMode vs NFCMode
-
         this.setupBaseTransactionRequest(request, transactionSettings, builder, paymentRequestType);
     }
 
@@ -197,22 +195,27 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
             if (request.getDisableRestartTransactionOnFail() != null) {
                 transactionSettings.setDisableRestartTransactionOnFailure(request.getDisableRestartTransactionOnFail());
             }
-            if(request.getDisableReceiptSelection() != null) {
+            if (request.getDisableReceiptSelection() != null) {
                 transactionSettings.setDisableReceiptSelection(request.getDisableReceiptSelection());
             }
-            if(request.getDisableDuplicateChecking() != null) {
+            if (request.getDisableDuplicateChecking() != null) {
                 transactionSettings.setDisableDuplicateCheck(request.getDisableDuplicateChecking());
             }
-            if(request.getAutoAcceptPaymentConfirmations() != null) {
+            if (request.getAutoAcceptPaymentConfirmations() != null) {
                 transactionSettings.setAutoAcceptPaymentConfirmations(request.getAutoAcceptPaymentConfirmations());
             }
-            if(request.getRegionalExtras() != null) {
+            if (request.getRegionalExtras() != null) {
                 transactionSettings.setRegionalExtras(request.getRegionalExtras());
             }
-            if(request.getExtras() != null) {
+            if (request.getExtras() != null) {
                 builder.setPassThroughValues(request.getExtras());
             }
+            if (request.getExternalReferenceId() != null) {
+                builder.setExternalReferenceId(request.getExternalReferenceId());
+            }
+
             builder.setTransactionSettings(transactionSettings);
+
             let payIntent: sdk.remotemessage.PayIntent = builder.build();
             this.device.doTxStart(payIntent, null, paymentRequestType);
         }
@@ -1132,7 +1135,7 @@ export namespace CloverConnector {
             let response: sdk.remotepay.VoidPaymentRefundResponse = new sdk.remotepay.VoidPaymentRefundResponse();
             let reason = voidPaymentRefundResponseMessage.getReason();
             CloverConnector.populateBaseResponse(response, success, this.resultSuccessToResponseCode(success), reason, voidPaymentRefundResponseMessage.getMessage());
-            response.setRefundId(voidPaymentRefundResponseMessage.getRefund());
+            response.setRefundId(voidPaymentRefundResponseMessage.getRefund() ? voidPaymentRefundResponseMessage.getRefund().getId() : null);
             response.setReason(voidPaymentRefundResponseMessage.getReason());
 
         }
@@ -1249,13 +1252,13 @@ export namespace CloverConnector {
             this.cloverConnector.broadcaster.notifyOnPrintPaymentReceipt(message);
         }
 
-        public onPrintCredit(credit: sdk.remotepay.Credit): void {
+        public onPrintCredit(credit: sdk.payments.Credit): void {
             const message = new sdk.remotepay.PrintManualRefundReceiptMessage();
             message.setCredit(credit);
             this.cloverConnector.broadcaster.notifyOnPrintCreditReceipt(message);
         }
 
-        public onPrintCreditDecline(credit: sdk.remotepay.Credit, reason: string): void {
+        public onPrintCreditDecline(credit: sdk.payments.Credit, reason: string): void {
             const message = new sdk.remotepay.PrintManualRefundDeclineReceiptMessage();
             message.setCredit(credit);
             message.setReason(reason);
