@@ -16,18 +16,16 @@ export class CloverDeviceFactory {
      * @returns CloverDevice
      */
     static get(configuration) {
-        var cloverDevice = configuration.getCloverDeviceType();
-
+        const cloverDeviceType = configuration.getCloverDeviceType();
         // Try to get the requested clover device.
-        var cd = null;
+        let cloverDevice = null;
         try {
-            cd = new cloverDevice(configuration);
-        }
-        catch (e) {
+            cloverDevice = new cloverDeviceType(configuration);
+        } catch (e) {
             Logger.create().error(e);
         }
 
         // Return the clover device or null.
-        return cd;
+        return cloverDevice;
     }
 }

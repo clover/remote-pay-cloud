@@ -167,6 +167,6 @@ export class JSONToCustomObject {
     }
 
     private hasMetaInfo = function(obj: any) {
-        return obj["getMetaInfo"] && typeof(obj.getMetaInfo) === 'function'
+        return obj && obj["getMetaInfo"] && typeof(obj.getMetaInfo) === 'function'
     }
 }

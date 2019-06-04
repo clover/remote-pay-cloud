@@ -49,6 +49,7 @@ export namespace PayIntent {
         private cashAdvanceCustomerIdentification: sdk.payments.CashAdvanceCustomerIdentification;
         private transactionSettings: sdk.payments.TransactionSettings;
         private passThroughValues: object;
+        private externalReferenceId: string;
 
         public static buildTransactionSettingsFromPayIntent(payIntent: sdk.remotemessage.PayIntent): sdk.payments.TransactionSettings {
             let transactionSettings: sdk.payments.TransactionSettings = new sdk.payments.TransactionSettings();
@@ -111,6 +112,8 @@ export namespace PayIntent {
             this.applicationTracking = payIntent.getApplicationTracking();
             this.allowPartialAuth = payIntent.getAllowPartialAuth();
             this.germanInfo = payIntent.getGermanInfo();
+            this.externalReferenceId = payIntent.getExternalReferenceId();
+            this.passThroughValues = payIntent.getPassThroughValues();
 
 
             if (payIntent.getTransactionSettings() != null) {
@@ -174,7 +177,7 @@ export namespace PayIntent {
         }
 
         public setTaxableAmountRates(taxableAmountRates: Array<sdk.payments.TaxableAmountRate>): Builder {
-            this.taxableAmountRates = new Array<sdk.payments.TaxableAmountRate>(taxableAmountRates);
+            this.taxableAmountRates = taxableAmountRates;
             return this;
         }
 
@@ -302,6 +305,11 @@ export namespace PayIntent {
             return this;
         }
 
+        public setExternalReferenceId(externalReferenceId: string): Builder {
+            this.externalReferenceId = externalReferenceId;
+            return this;
+        }
+
         public build(): sdk.remotemessage.PayIntent {
             let payIntent: sdk.remotemessage.PayIntent = new sdk.remotemessage.PayIntent();
             payIntent.setAction(this.action);
@@ -342,6 +350,9 @@ export namespace PayIntent {
 
             payIntent.setCashAdvanceCustomerIdentification(this.cashAdvanceCustomerIdentification);
             payIntent.setTransactionSettings(this.transactionSettings);
+
+            payIntent.setPassThroughValues(this.passThroughValues);
+            payIntent.setExternalReferenceId(this.externalReferenceId);
             return payIntent;
         }
     }

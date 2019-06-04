@@ -17,7 +17,6 @@ var loyalty = sdk.loyalty;
 var CloverID = require("./CloverID.js");
 
 // These exports expose the CloverConnector and supporting objects
-var version = '3.0.0';
 var CloverConnector = require('./dist/com/clover/remote/client/CloverConnector.js').CloverConnector;
 var CloverDeviceFactory = require('./dist/com/clover/remote/client/device/CloverDeviceFactory.js').CloverDeviceFactory;
 
@@ -39,6 +38,7 @@ var WebSocketState = require('./dist/com/clover/websocket/WebSocketState.js').We
 var CloverWebSocketInterface = require('./dist/com/clover/websocket/CloverWebSocketInterface.js').CloverWebSocketInterface;
 var BrowserWebSocketImpl = require('./dist/com/clover/websocket/BrowserWebSocketImpl.js').BrowserWebSocketImpl;
 var JSONToCustomObject = require('./dist/com/clover/json/JSONToCustomObject.js').JSONToCustomObject;
+var Version = require('./dist/com/clover/Version.js').Version;
 
 var CloverConnectorFactoryBuilder = require('./dist/com/clover/remote/client/CloverConnectorFactoryBuilder.js').CloverConnectorFactoryBuilder;
 var ICloverConnectorFactory = require('./dist/com/clover/remote/client/ICloverConnectorFactory.js').ICloverConnectorFactory;
@@ -62,7 +62,7 @@ module.exports = {
     remotemessage: remotemessage,
     CloverID: CloverID,
     DebugConfig: DebugConfig,
-    version: version,
+    version: Version.CLOVER_CLOUD_SDK_VERSION,
     CloverConnector: CloverConnector,
     CloverDeviceFactory: CloverDeviceFactory,
     CloverTransport: CloverTransport,
@@ -85,5 +85,6 @@ module.exports = {
     CloverConnectorFactory: CloverConnectorFactory,
     CardEntryMethods: CardEntryMethods,
     LoyaltyDataTypes: LoyaltyDataTypes,
+    Version: Version,
     loyalty: loyalty
 };

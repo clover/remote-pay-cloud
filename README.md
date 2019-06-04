@@ -9,7 +9,7 @@ Do not change this or the versioning may not reflect the npm version correctly.
 --->
 ## Version
 
-Current version: 3.0.1
+Current version: 3.1.0
 
 ## Platforms supported
 
@@ -29,11 +29,11 @@ If used from a browser, the browser must support WebSockets. For more informatio
 
 ## Getting Started
 
-Please see the [Getting started with Clover Connector tutorial for JavaScript](https://docs.clover.com/build/getting-started-with-cloverconnector/?sdk=browser).
+Please see the [Getting started with Clover Connector tutorial for JavaScript](https://docs.clover.com/clover-platform/docs/cloud-sdk-v3).
 
 As a good starting point, install your choice of pay display app on the Clover device:
 - Cloud Pay Display app for cloud-based interactions between your POS system and the Clover device
-- [Secure Network Pay Display app](https://docs.clover.com/build/secure-network-pay-display/) for wireless local network-based interactions between your POS system and the Clover device
+- [Secure Network Pay Display app](https://docs.clover.com/clover-platform/docs/pay-display-apps#section--secure-network-pay-display-) for wireless local network-based interactions between your POS system and the Clover device
 
 ### Examples
 Example applications can be found on [GitHub](https://github.com/clover/remote-pay-cloud-examples).
@@ -41,8 +41,8 @@ Example applications can be found on [GitHub](https://github.com/clover/remote-p
 ### Additional resources
 - [Online Docs](http://clover.github.io/remote-pay-cloud/1.4.3/)
 - [Release Notes](https://github.com/clover/remote-pay-cloud/releases)
-- [Secure Network Pay Display](https://docs.clover.com/build/secure-network-pay-display/)
-- [Tutorial for the Browser SDK](https://docs.clover.com/build/getting-started-with-cloverconnector/?sdk=browser)
+- [Secure Network Pay Display](https://docs.clover.com/clover-platform/docs/pay-display-apps#section--secure-network-pay-display-)
+- [Tutorial for the Cloud SDK](https://docs.clover.com/clover-platform/docs/cloud-sdk-v3)
 - [API Class Documentation](http://clover.github.io/remote-pay-cloud-api/1.4.2/)
 - [Clover Developer Community](https://community.clover.com/index.html)
 
