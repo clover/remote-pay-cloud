@@ -1,3 +1,6 @@
+// Definitions by: David <https://github.com/david-clover-com>
+//                 Trevor <https://github.com/redharp>
+
 export {Logger} from "../src/com/clover/remote/client/util/Logger";
 export {DebugConfig} from "../src/com/clover/remote/client/util/DebugConfig";
 export {HttpSupport} from "../src/com/clover/util/HttpSupport";
@@ -9,7 +12,7 @@ export {CloverDeviceConfiguration} from "../src/com/clover/remote/client/device/
 
 export {WebSocketCloverDeviceConfiguration} from "../src/com/clover/remote/client/device/WebSocketCloverDeviceConfiguration";
 export {WebSocketPairedCloverDeviceConfiguration} from "../src/com/clover/remote/client/device/WebSocketPairedCloverDeviceConfiguration";
-export {WebSocketCloudCloverDeviceConfiguration} from "../src/com/clover/remote/client/device/WebSocketCloudCloverDeviceConfiguration";
+export {WebSocketCloudCloverDeviceConfiguration, WebSocketCloudCloverDeviceConfigurationBuilder} from "../src/com/clover/remote/client/device/WebSocketCloudCloverDeviceConfiguration";
 
 export {CloverTransport} from "../src/com/clover/remote/client/transport/CloverTransport";
 export {CloverTransportObserver} from "../src/com/clover/remote/client/transport/CloverTransportObserver";
