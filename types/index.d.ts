@@ -1,6 +1,3 @@
-// Definitions by: David <https://github.com/david-clover-com>
-//                 Trevor <https://github.com/redharp>
-
 export {Logger} from "../src/com/clover/remote/client/util/Logger";
 export {DebugConfig} from "../src/com/clover/remote/client/util/DebugConfig";
 export {HttpSupport} from "../src/com/clover/util/HttpSupport";
