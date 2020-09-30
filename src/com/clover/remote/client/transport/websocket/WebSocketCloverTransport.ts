@@ -261,7 +261,6 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
     public onMessage_cwscl(ws: CloverWebSocketClient, message: string): void { // CloverWebSocketClientListener
         if (this.cloverWebSocketClient == ws) {
             for (let observer of this.observers) {
-                this.logger.debug("Transport: message received: " + message);
                 observer.onMessage(message);
             }
         }

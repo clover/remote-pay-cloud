@@ -225,7 +225,8 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
     }
 
     /**
-     * @param transport
+     * @param transport - the way to notify is defined by the transport
+     * @param message - the optional message to send
      * @deprecated - see onDisconnected.
      */
     onDeviceDisconnected(transport: CloverTransport, message?: string): void {
@@ -368,6 +369,9 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
                 case sdk.remotemessage.Method.CAPTURE_PREAUTH_RESPONSE:
                     this.notifyObserversCapturePreAuth(<sdk.remotemessage.CapturePreAuthResponseMessage>sdkMessage);
                     break;
+                case sdk.remotemessage.Method.INCREMENT_PREAUTH_RESPONSE:
+                    this.notifyObserversIncrementPreAuth(<sdk.remotemessage.IncrementPreAuthResponseMessage>sdkMessage);
+                    break;
                 case sdk.remotemessage.Method.CLOSEOUT_RESPONSE:
                     this.notifyObserversCloseout(<sdk.remotemessage.CloseoutResponseMessage>sdkMessage);
                     break;
@@ -448,6 +452,15 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
                     break;
                 case sdk.remotemessage.Method.SHOW_RECEIPT_OPTIONS_RESPONSE:
                     this.notifyObserverDisplayReceiptOptionsResponse(<sdk.remotemessage.ShowReceiptOptionsResponseMessage>sdkMessage);
+                    break;
+                case sdk.remotemessage.Method.REQUEST_SIGNATURE_RESPONSE:
+                    this.notifyObserverDisplayCollectedSignature(<sdk.remotemessage.SignatureResponseMessage>sdkMessage);
+                    break;
+                case sdk.remotemessage.Method.BALANCE_INQUIRY_RESPONSE:
+                    this.notifyObserverBalanceInquiryResponse(<sdk.remotemessage.BalanceInquiryResponseMessage>sdkMessage);
+                    break;
+                case sdk.remotemessage.Method.REQUEST_TIP_RESPONSE: // this is NOT a tip in a payment flow, but for a stanalone tip request view REQUEST_TIP
+                    this.notifyObserverTipResponse(<sdk.remotemessage.RequestTipResponseMessage>sdkMessage);
                     break;
                 case sdk.remotemessage.Method.SHOW_ORDER_SCREEN:
                     //Outbound no-op
@@ -848,6 +861,12 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         });
     }
 
+    public notifyObserversIncrementPreAuth(incrementPreAuthResponseMessage: sdk.remotemessage.IncrementPreAuthResponseMessage): void {
+        this.deviceObservers.forEach((obs) => {
+            obs.onIncrementPreAuthResponse(incrementPreAuthResponseMessage);
+        });
+    }
+
     public notifyObserversCloseout(closeoutResponseMessage: sdk.remotemessage.CloseoutResponseMessage): void {
         this.deviceObservers.forEach((obs) => {
             obs.onCloseoutResponse(closeoutResponseMessage.getStatus(), closeoutResponseMessage.getReason(), closeoutResponseMessage.getBatch());
@@ -881,6 +900,24 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
             } else if (finishOkMessage.getRefund()) {
                 obs.onFinishOk(finishOkMessage.getRefund());
             }
+        });
+    }
+
+    public notifyObserverDisplayCollectedSignature(msg: sdk.remotemessage.SignatureResponseMessage) {
+        this.deviceObservers.forEach((obs) => {
+            obs.onSignatureCollected(msg);
+        });
+    }
+
+    public notifyObserverBalanceInquiryResponse(msg: sdk.remotemessage.BalanceInquiryResponseMessage) {
+        this.deviceObservers.forEach((obs) => {
+            obs.onBalanceInquiryResponse(msg);
+        });
+    }
+
+    public notifyObserverTipResponse(msg: sdk.remotemessage.RequestTipResponseMessage) {
+        this.deviceObservers.forEach((obs) => {
+            obs.onRequestTipResponse(msg);
         });
     }
 
@@ -1080,6 +1117,8 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      * Print Text
      *
      * @param {Array<string>} textLines
+     * @param printRequestId - an optional id that will be used for the printjob.  This id will be used in notification calls about the status of the job.
+     * @param printDeviceId - the printer id to use when printing.  If left unset the default is used
      */
     public doPrintText(textLines: Array<string>, printRequestId?: string, printDeviceId?: string): void {
         const message: sdk.remotemessage.TextPrintMessage = new sdk.remotemessage.TextPrintMessage();
@@ -1164,7 +1203,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      * Void Payment
      *
      * @param {sdk.payments.Payment} payment
-     * @param {sdk.order.VoidReason} reason
+     * @param {sdk.order.VoidReason} voidReason
      * @param {boolean} disablePrinting
      * @param {boolean} disableReceiptSelection
      */
@@ -1292,6 +1331,21 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
     }
 
     /**
+     * Capture Auth
+     *
+     * @param {string} paymentId
+     * @param {number} amount
+     * @param {number} amount
+     */
+    public doIncrementPreAuth(paymentId: string, amount: number): void {
+        const message: sdk.remotemessage.IncrementPreAuthMessage = new sdk.remotemessage.IncrementPreAuthMessage();
+        message.setVersion(1);
+        message.setPaymentId(paymentId);
+        message.setAmount(amount);
+        this.sendObjectMessage(message);
+    }
+
+    /**
      * Accept Payment
      *
      * @param {Payment} payment
@@ -1399,6 +1453,25 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         this.sendObjectMessage(message);
     }
 
+    public doCheckBalance(cardEntryMethods: number): void {
+        const balanceInquiryRequestMessage = new sdk.remotemessage.BalanceInquiryRequestMessage();
+        balanceInquiryRequestMessage.setCardEntryMethods(cardEntryMethods);
+        this.sendObjectMessage(balanceInquiryRequestMessage);
+    }
+
+    public doCollectSignature(acknowledge: string): void {
+        const signatureRequestMessage = new sdk.remotemessage.SignatureRequestMessage();
+        signatureRequestMessage.setAcknowledgementMessage(acknowledge);
+        this.sendObjectMessage(signatureRequestMessage);
+    }
+
+    public doRequestTip(tippableAmount: number, suggestions: Array<sdk.merchant.TipSuggestion>): void {
+        const requestTipRequestMessage = new sdk.remotemessage.RequestTipRequestMessage();
+        requestTipRequestMessage.setTipSuggestions(suggestions);
+        requestTipRequestMessage.setTippableAmount(tippableAmount);
+        this.sendObjectMessage(requestTipRequestMessage);
+    }
+
     /**
      * Dispose
      */
@@ -1436,6 +1509,7 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         }
 
         const messageId: string = (++DefaultCloverDevice.id) + '';
+        remoteMessage.setMessageId(messageId);
         const remoteMessageToReturn: sdk.remotemessage.RemoteMessage = new sdk.remotemessage.RemoteMessage();
         remoteMessageToReturn.setId(messageId);
         remoteMessageToReturn.setType(sdk.remotemessage.RemoteMessageType.COMMAND);
@@ -1462,7 +1536,9 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
         for (const fieldKey in message) {
             const metaInfo: any = message ? message.getMetaInfo(fieldKey) : null;
             if (metaInfo && (metaInfo.type == Array)) {
-                message[fieldKey].suppressElementsWrapper = true;
+                if (message[fieldKey] == Object) {
+                    message[fieldKey].suppressElementsWrapper = true;
+                }
             }
         }
         return message;

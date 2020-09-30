@@ -178,7 +178,6 @@ export class CloverConnectorBroadcaster
         this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
             try {
                 listener.onDeviceDisconnected();  // changed from onDisconnected in 1.3
-                listener.onDisconnected(); // left here for backwards compatibility.  Deprecated in 1.3*
             } catch (e) {
                 this.logger.error(e);
             }
@@ -190,7 +189,6 @@ export class CloverConnectorBroadcaster
         this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
             try {
                 listener.onDeviceReady(merchantInfo);  // changed from onReady in 1.3
-                listener.onReady(merchantInfo); // left here for backwards compatibility.  Deprecated in 1.3*
             } catch (e) {
                 this.logger.error(e);
             }
@@ -235,6 +233,17 @@ export class CloverConnectorBroadcaster
         this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
             try {
                 listener.onCapturePreAuthResponse(response);
+            } catch (e) {
+                this.logger.error(e);
+            }
+        });
+    }
+
+    public notifyOnIncrementPreAuthResponse(response: sdk.remotepay.IncrementPreAuthResponse): void {
+        this.logger.debug('Sending IncrementPreAuth notification to listeners');
+        this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
+            try {
+                listener.onIncrementPreAuthResponse(response);
             } catch (e) {
                 this.logger.error(e);
             }
@@ -453,6 +462,36 @@ export class CloverConnectorBroadcaster
         this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
             try {
                 listener.onInvalidStateTransitionResponse(response);
+            } catch (e) {
+                this.logger.error(e);
+            }
+        });
+    }
+
+    public notifyOnSignatureCollected(response: sdk.remotepay.SignatureResponse): void {
+        this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
+            try {
+                listener.onRequestSignatureResponse(response);
+            } catch (e) {
+                this.logger.error(e);
+            }
+        });
+    }
+
+    public notifyOnCheckBalanceResponse(response: sdk.remotepay.CheckBalanceResponse): void {
+        this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
+            try {
+                listener.onCheckBalanceResponse(response);
+            } catch (e) {
+                this.logger.error(e);
+            }
+        });
+    }
+
+    public notifyOnTipResponse(response: sdk.remotepay.TipResponse): void {
+        this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
+            try {
+                listener.onRequestTipResponse(response);
             } catch (e) {
                 this.logger.error(e);
             }

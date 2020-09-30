@@ -9,7 +9,7 @@ Do not change this or the versioning may not reflect the npm version correctly.
 --->
 ## Version
 
-Current version: 3.1.0
+Current version: 4.0.0
 
 ## Platforms supported
 
@@ -39,11 +39,11 @@ As a good starting point, install your choice of pay display app on the Clover d
 Example applications can be found on [GitHub](https://github.com/clover/remote-pay-cloud-examples).
 
 ### Additional resources
-- [Online Docs](http://clover.github.io/remote-pay-cloud/3.1.0/)
+- [Online Docs](http://clover.github.io/remote-pay-cloud/3.2.0/)
 - [Release Notes](https://github.com/clover/remote-pay-cloud/releases)
 - [Secure Network Pay Display](https://docs.clover.com/clover-platform/docs/pay-display-apps#section--secure-network-pay-display-)
 - [Tutorial for the Cloud SDK](https://docs.clover.com/clover-platform/docs/cloud-sdk-v3)
-- [API Class Documentation](http://clover.github.io/remote-pay-cloud-api/3.1.0/)
+- [API Class Documentation](http://clover.github.io/remote-pay-cloud-api/3.2.0/)
 - [Clover Developer Community](https://community.clover.com/index.html)
 
 ## License 

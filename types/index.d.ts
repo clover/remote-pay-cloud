@@ -8,8 +8,8 @@ export {CloverDeviceFactory} from "../src/com/clover/remote/client/device/Clover
 export {CloverDeviceConfiguration} from "../src/com/clover/remote/client/device/CloverDeviceConfiguration";
 
 export {WebSocketCloverDeviceConfiguration} from "../src/com/clover/remote/client/device/WebSocketCloverDeviceConfiguration";
-export {WebSocketPairedCloverDeviceConfiguration} from "../src/com/clover/remote/client/device/WebSocketPairedCloverDeviceConfiguration";
-export {WebSocketCloudCloverDeviceConfiguration} from "../src/com/clover/remote/client/device/WebSocketCloudCloverDeviceConfiguration";
+export {WebSocketPairedCloverDeviceConfiguration, WebSocketPairedCloverDeviceConfigurationBuilder} from "../src/com/clover/remote/client/device/WebSocketPairedCloverDeviceConfiguration";
+export {WebSocketCloudCloverDeviceConfiguration, WebSocketCloudCloverDeviceConfigurationBuilder} from "../src/com/clover/remote/client/device/WebSocketCloudCloverDeviceConfiguration";
 
 export {CloverTransport} from "../src/com/clover/remote/client/transport/CloverTransport";
 export {CloverTransportObserver} from "../src/com/clover/remote/client/transport/CloverTransportObserver";
@@ -29,5 +29,5 @@ export var CloverID : {
     getNewId(): string;
     isValidBase32Id(id: string): boolean;
     guid(): string;
-}
+};
 
