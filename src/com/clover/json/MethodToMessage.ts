@@ -22,6 +22,8 @@ export class MethodToMessage {
         MethodToMessage.methodToType[remotemessage.Method.CLOSEOUT_REQUEST] = remotemessage.CloseoutRequestMessage;
         MethodToMessage.methodToType[remotemessage.Method.CAPTURE_PREAUTH_RESPONSE] = remotemessage.CapturePreAuthResponseMessage;
         MethodToMessage.methodToType[remotemessage.Method.CAPTURE_PREAUTH] = remotemessage.CapturePreAuthMessage;
+        MethodToMessage.methodToType[remotemessage.Method.INCREMENT_PREAUTH_RESPONSE] = remotemessage.IncrementPreAuthResponseMessage;
+        MethodToMessage.methodToType[remotemessage.Method.INCREMENT_PREAUTH_REQUEST] = remotemessage.IncrementPreAuthMessage;
         MethodToMessage.methodToType[remotemessage.Method.CONFIRM_PAYMENT_MESSAGE] = remotemessage.ConfirmPaymentMessage;
         MethodToMessage.methodToType[remotemessage.Method.LAST_MSG_REQUEST] = remotemessage.LastMessageRequestMessage;
         MethodToMessage.methodToType[remotemessage.Method.LAST_MSG_RESPONSE] = remotemessage.LastMessageResponseMessage;
@@ -100,5 +102,8 @@ export class MethodToMessage {
         MethodToMessage.methodToType[remotemessage.Method.CUSTOMER_PROVIDED_DATA_MESSAGE] = remotemessage.CustomerProvidedDataMessage;
         MethodToMessage.methodToType[remotemessage.Method.INVALID_STATE_TRANSITION] = remotemessage.InvalidStateTransitionMessage;
         MethodToMessage.methodToType[remotemessage.Method.SHOW_RECEIPT_OPTIONS_RESPONSE] = remotemessage.ShowReceiptOptionsResponseMessage;
+        MethodToMessage.methodToType[remotemessage.Method.BALANCE_INQUIRY_RESPONSE] = remotemessage.BalanceInquiryResponseMessage;
+        MethodToMessage.methodToType[remotemessage.Method.REQUEST_SIGNATURE_RESPONSE] = remotemessage.SignatureResponseMessage;
+        MethodToMessage.methodToType[remotemessage.Method.REQUEST_TIP_RESPONSE] = remotemessage.RequestTipResponseMessage;
     }
 }

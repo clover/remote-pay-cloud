@@ -149,6 +149,8 @@ export interface CloverDeviceObserver {
      */
     onCapturePreAuth(capturePreAuthResponseMessage: sdk.remotemessage.CapturePreAuthResponseMessage): void;
 
+    onIncrementPreAuthResponse(incrementPreAuthResponseMessage: sdk.remotemessage.IncrementPreAuthResponseMessage): void;
+
     /**
      * Closeout Response
      *
@@ -341,4 +343,9 @@ export interface CloverDeviceObserver {
 
     onDisplayReceiptOptionsResponse(result: sdk.remotemessage.ResultStatus, reason: string);
 
+    onSignatureCollected(msg: sdk.remotemessage.SignatureResponseMessage);
+
+    onBalanceInquiryResponse(msg: sdk.remotemessage.BalanceInquiryResponseMessage);
+
+    onRequestTipResponse(msg: sdk.remotemessage.RequestTipResponseMessage);
 }

@@ -49,10 +49,6 @@ export class Endpoints {
     static WEBSOCKET_FRIENDLY_ID_SUFFIX = "&friendlyId={" + Endpoints.WEBSOCKET_FRIENDLY_ID_KEY + "}";
     static WEBSOCKET_FORCE_CONNECT_KEY: string = "wsForceConnect";
     static WEBSOCKET_FORCE_CONNECT_SUFFIX = "&forceConnect={" + Endpoints.WEBSOCKET_FORCE_CONNECT_KEY + "}";
-    static WEBSOCKET_MERCHANT_ID_KEY: string = "mid";
-    static WEBSOCKET_MERCHANT_ID_SUFFIX = "&wsMid={" + Endpoints.WEBSOCKET_MERCHANT_ID_KEY + "}";
-    static WEBSOCKET_ACCESS_TOKEN_KEY: string = "accessToken";
-    static WEBSOCKET_ACCESS_TOKEN_SUFFIX = "&wsAccessToken={" + Endpoints.WEBSOCKET_ACCESS_TOKEN_KEY + "}";
 
     static OAUTH_PATH: string = "oauth/authorize?response_type=token";
     static OAUTH_CLIENT_ID_KEY = "client_id";
@@ -107,15 +103,11 @@ export class Endpoints {
         variables[Endpoints.DOMAIN_KEY] = notificationResponse.host;
         variables[Endpoints.WEBSOCKET_FRIENDLY_ID_KEY] = encodeURIComponent(friendlyId);
         variables[Endpoints.WEBSOCKET_FORCE_CONNECT_KEY] = forceConnect;
-        variables[Endpoints.WEBSOCKET_MERCHANT_ID_KEY] = merchantId;
-        variables[Endpoints.WEBSOCKET_ACCESS_TOKEN_KEY] = accessToken;
 
         let deviceWebSocketEndpointPath: string = Endpoints.DOMAIN_PATH + Endpoints.WEBSOCKET_PATH +
             Endpoints.WEBSOCKET_TOKEN_SUFFIX +
             Endpoints.WEBSOCKET_FRIENDLY_ID_SUFFIX +
-            Endpoints.WEBSOCKET_FORCE_CONNECT_SUFFIX +
-            Endpoints.WEBSOCKET_MERCHANT_ID_SUFFIX +
-            Endpoints.WEBSOCKET_ACCESS_TOKEN_SUFFIX;
+            Endpoints.WEBSOCKET_FORCE_CONNECT_SUFFIX
 
         if (notificationResponse.serverIdentifier) {
             deviceWebSocketEndpointPath += "&" + Endpoints.CLOUD_SERVER_IDENTIFIER_KEY + "=" + notificationResponse.serverIdentifier;

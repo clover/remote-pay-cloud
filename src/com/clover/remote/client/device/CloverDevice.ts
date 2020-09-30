@@ -77,6 +77,9 @@ export abstract class CloverDevice {
      *
      * @param {sdk.payments.Payment} payment
      * @param {sdk.order.VoidReason} reason
+     * @param {boolean} disablePrinting
+     * @param {boolean} disableReceiptSelection
+     * @param {object} extras
      */
     public abstract doVoidPayment(payment: sdk.payments.Payment, reason: sdk.order.VoidReason, disablePrinting: boolean, disableReceiptSelection: boolean, extras: object): void;
 
@@ -98,6 +101,15 @@ export abstract class CloverDevice {
      * @param {number} tipAmount
      */
     public abstract doCaptureAuth(paymentId: string, amount: number, tipAmount: number): void;
+
+    /**
+     * Capture Auth
+     *
+     * @param {string} paymentId
+     * @param {number} amount
+     * @param {number} amount
+     */
+    public abstract doIncrementPreAuth(paymentId: string, amount: number): void;
 
     /**
      * Order Update
@@ -131,6 +143,7 @@ export abstract class CloverDevice {
      * @param {boolean} fullRefund
      * @param {boolean} disablePrinting
      * @param {boolean} disableReceiptSelection
+     * @param {object} extras
      */
     public abstract doPaymentRefund(orderId: string, paymentId: string, amount: number, fullRefund: boolean, disablePrinting?: boolean, disableReceiptSelection?: boolean, extras?: object): void;
 
@@ -154,6 +167,8 @@ export abstract class CloverDevice {
      * Print Text
      *
      * @param {Array<string>} textLines
+     * @param {string} printRequestId - an optional id that will be used for the printjob.  This id will be used in notification calls about the status of the job.
+     * @param {string} printDeviceId - the printer id to use when printing.  If left unset the default is used
      */
     public abstract doPrintText(textLines: Array<string>, printRequestId?: string, printDeviceId?: string): void;
 
@@ -185,6 +200,7 @@ export abstract class CloverDevice {
      * Open Cash Drawer
      *
      * @param {string} reason
+     * @param {string} deviceId (optional)
      */
     public abstract doOpenCashDrawer(reason: string, deviceId?: string): void;
 
@@ -192,6 +208,8 @@ export abstract class CloverDevice {
      * Print Image (Bitmap)
      *
      * @param {any} bitmap
+     * @param printRequestId
+     * @param printDeviceId
      */
     public abstract doPrintImageObject(bitmap: any, printRequestId?: string, printDeviceId?: string): void;
 
@@ -199,6 +217,8 @@ export abstract class CloverDevice {
      * Print Image (URL)
      *
      * @param {string} url
+     * @param printRequestId
+     * @param printDeviceId
      */
     public abstract doPrintImageUrl(url: string, printRequestId?: string, printDeviceId?: string): void;
 
@@ -324,4 +344,10 @@ export abstract class CloverDevice {
     public getSupportsVoidPaymentResponse(): boolean {
         return this.supportsVoidPaymentResponse;
     }
+
+    public abstract doCheckBalance(cardEntryMethods: number): void;
+
+    public abstract doCollectSignature(acknowledgementMessage: string): void;
+
+    public abstract doRequestTip(tippableAmount: number, suggestions: Array<sdk.merchant.TipSuggestion>): void;
 }
