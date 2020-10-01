@@ -39,14 +39,14 @@ As a good starting point, install your choice of pay display app on the Clover d
 Example applications can be found on [GitHub](https://github.com/clover/remote-pay-cloud-examples).
 
 ### Additional resources
-- [Online Docs](http://clover.github.io/remote-pay-cloud/3.2.0/)
+- [Online Docs](http://clover.github.io/remote-pay-cloud/4.0.0/)
 - [Release Notes](https://github.com/clover/remote-pay-cloud/releases)
-- [Secure Network Pay Display](https://docs.clover.com/clover-platform/docs/pay-display-apps#section--secure-network-pay-display-)
+- [Pay Display Applications](https://docs.clover.com/clover-platform/docs/pay-display-apps)
 - [Tutorial for the Cloud SDK](https://docs.clover.com/clover-platform/docs/cloud-sdk-v3)
-- [API Class Documentation](http://clover.github.io/remote-pay-cloud-api/3.2.0/)
+- [API Class Documentation](http://clover.github.io/remote-pay-cloud-api/4.0.0/)
 - [Clover Developer Community](https://community.clover.com/index.html)
 
 ## License 
-Copyright © 2017 Clover Network, Inc. All rights reserved.
+Copyright © 2020 Clover Network, Inc. All rights reserved.
 
 
