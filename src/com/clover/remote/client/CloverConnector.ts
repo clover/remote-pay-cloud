@@ -438,6 +438,7 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
             builder.setAmount(-Math.abs(request.getAmount()))
                 .setTransactionType(sdk.remotepay.TransactionType.CREDIT)
                 .setVaultedCard(request.getVaultedCard())
+                .setRequiresRemoteConfirmation(true)
                 .setExternalPaymentId(request.getExternalId());
 
             transactionSettings.setCardEntryMethods(request.getCardEntryMethods() ? request.getCardEntryMethods() : this.cardEntryMethods);

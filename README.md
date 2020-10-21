@@ -1,15 +1,10 @@
-![Clover logo](https://www.clover.com/assets/images/public-site/press/clover_primary_gray_rgb.png)
+![Clover logo](https://www.clover.com/static/media/clover-logo.4204a79c.svg)
 
 # Clover SDK for JavaScript integration
 
-<!---
-!!NOTE!!  The following is automatically updated to reflect the npm version.
-See the package.json postversion script, which maps to scripts/postversion.sh
-Do not change this or the versioning may not reflect the npm version correctly.
---->
 ## Version
 
-Current version: 4.0.0
+Current version: 4.0.1
 
 ## Platforms supported
 
