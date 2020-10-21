@@ -1,4 +1,3 @@
-# src should not be here, we need to publish it for typings.
 .idea
 node_modules
 test

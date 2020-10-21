@@ -6,6 +6,6 @@
         "declaration": true,
         "allowSyntheticDefaultImports": true,
         "sourceMap": false,
-        "types": ["remote-pay-cloud-api"]
+        "types": ["remote-pay-cloud-api", "node"]
     }
 }

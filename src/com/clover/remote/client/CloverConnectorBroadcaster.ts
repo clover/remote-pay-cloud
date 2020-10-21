@@ -471,7 +471,7 @@ export class CloverConnectorBroadcaster
     public notifyOnSignatureCollected(response: sdk.remotepay.SignatureResponse): void {
         this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
             try {
-                listener.onRequestSignatureResponse(response);
+                // TODO - this will be implemented in the future - listener.onRequestSignatureResponse(response);
             } catch (e) {
                 this.logger.error(e);
             }
@@ -491,7 +491,7 @@ export class CloverConnectorBroadcaster
     public notifyOnTipResponse(response: sdk.remotepay.TipResponse): void {
         this.listeners.forEach((listener: sdk.remotepay.ICloverConnectorListener) => {
             try {
-                listener.onRequestTipResponse(response);
+                // TODO - this will be implemented in the future - listener.onRequestTipResponse(response);
             } catch (e) {
                 this.logger.error(e);
             }
