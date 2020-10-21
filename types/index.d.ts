@@ -23,7 +23,7 @@ export {ICloverConnectorFactory} from "../dist/definitions/com/clover/remote/cli
 export {CloverConnectorFactory} from "../dist/definitions/com/clover/remote/client/CloverConnectorFactory";
 export {CardEntryMethods} from "../dist/definitions/com/clover/remote/client/CardEntryMethods";
 
-export {remotepay} from "remote-pay-cloud-api";
+export * from "remote-pay-cloud-api";
 
 export var CloverID : {
     getNewId(): string;
