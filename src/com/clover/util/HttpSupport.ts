@@ -32,7 +32,7 @@ export class HttpSupport {
                 if (xmlHttpInst.status == 200) {
                     try {
                         if (onDataLoaded) {
-                            var data = null;
+                            let data = null;
                             if (xmlHttpInst.responseText && xmlHttpInst.responseText != "") {
                                 data = JSON.parse(xmlHttpInst.responseText);
                             }
@@ -47,8 +47,14 @@ export class HttpSupport {
                 }
                 else {
                     if (onError) {
+                        let errorData = null;
+                        try {
+                            if (xmlHttpInst.responseText && xmlHttpInst.responseText != "") {
+                                errorData = JSON.parse(xmlHttpInst.responseText);
+                            }
+                        } catch (e) {} // Ignore, just return the default message
                         onError({
-                            message: "status returned was not 200",
+                            message: (errorData && errorData.details) || (errorData && errorData.message) || "status returned was not 200",
                             endpoint: endpoint,
                             status: xmlHttpInst.status
                         });
