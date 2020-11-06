@@ -239,12 +239,14 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      * For network (SNPD) this means that we have disconnected from the Clover device.
      * For cloud (CPD) this means that we have disconnected from the cloud proxy.
      */
-    public onDisconnected(transport: CloverTransport, message?: string): void {
+    public onDisconnected(transport: CloverTransport, message?: string, reconnect = true): void {
         // For CPD if we already have a device connected don't attempt reconnect
         if (!message || message.indexOf(Constants.device_already_connected) == -1) {
             this.stopHeartbeat(); // We are offline, kill the heartbeat.
             this.reconnecting = false;
-            this.initiateReconnect();
+            if (reconnect) {
+                this.initiateReconnect();
+            }
             this.notifyObserversDisconnected(transport, message);
         }
     }

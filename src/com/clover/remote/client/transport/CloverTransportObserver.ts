@@ -53,7 +53,7 @@ export interface CloverTransportObserver {
      * For network (SNPD) this means that we have disconnected from the Clover device.
      * For cloud (CPD) this means that we have disconnected from the cloud proxy.
      */
-    onDisconnected(transport: CloverTransport, message?: string): void;
+    onDisconnected(transport: CloverTransport, message?: string, reconnect?: boolean): void;
 
     /**
      * @param transport

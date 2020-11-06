@@ -24,12 +24,16 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
     static X_CLOVER_CONNECTED_ID: string = "X-CLOVER-CONNECTED-ID";
 
     private httpSupport: HttpSupport;
-    private cloverServer: string;
-    private merchantId: string;
-    private accessToken: string;
-    private deviceId: string;
-    private friendlyId: string;
-    private forceConnect: boolean;
+    // Set by the end user, used for connection initialization, returns the proxy url and sends a notification to the
+    // device to start CPD.
+    private readonly cloverServer: string;
+    // Set based on the return of the connection initialization request.
+    private webSocketURL: string;
+    private readonly merchantId: string;
+    private readonly accessToken: string;
+    private readonly deviceId: string;
+    private readonly friendlyId: string;
+    private readonly forceConnect: boolean;
 
     /**
      * @param {number} reconnectDelay - duration to wait until a reconnect is attempted - millis.
@@ -71,13 +75,18 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
      * Initialize the connection.
      */
     public initialize(): void {
+        // If we already have the webSocketUrl initialization has already been performed.
+        // Skip the call to COS and connect directly to the proxy.
+        if (this.webSocketURL && this.webSocketURL.length > 0) {
+            this.doOptionsCallToAvoid401Error(this.webSocketURL);
+        } else {
         // DSE-272, SEMI-2021, detect IE 11.
         if (typeof window !== "undefined" && !!window["MSInputMethodContext"] && !!document["documentMode"]) {
             // We should only enter this block if the browser is IE 11.  IE 11 has issues when the first call to the
             // server is a POST (initializeWithServer).  To work-around this we make a GET request
             // See http://jonnyreeves.co.uk/2013/making-xhr-request-to-https-domains-with-winjs/ for more information.
             this.httpSupport.getData(Endpoints.getMerchantEndpoint(this.cloverServer, this.merchantId, this.accessToken),
-                (data) => this.obtainWebSocketUrlAndSendPushAlert(),
+                    (_) => this.obtainWebSocketUrlAndSendPushAlert(),
                 (error) => {
                     this.logger.warn("IE 11 - Initial GET failed.", error);
                 });
@@ -85,6 +94,7 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
             // We aren't using IE, make the initial POST.
             this.obtainWebSocketUrlAndSendPushAlert();
         }
+    }
     }
 
     /**
@@ -108,7 +118,11 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
         this.httpSupport.postData(alertEndpoint,
             (data) => this.deviceNotificationSent(data),
             (error) => {
-                this.connectionError(this.cloverWebSocketClient, `Error sending alert to device. Details: ${error.message}`);
+                // If the error is a 404, don't attempt to reconnect.
+                this.connectionError(this.cloverWebSocketClient,
+                    `Error connecting to your Clover device. Details: ${error.message}`,
+                    null,
+                    error && error.status !== 404);
             },
             deviceContactInfo);
     }
@@ -127,10 +141,10 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
         // we will assume an earlier version of the protocol on the server,
         // and assume that the notification WAS SENT.
         if (!notificationResponse.hasOwnProperty('sent') || notificationResponse.sent) {
-            const deviceWebSocketEndpoint: string = Endpoints.getDeviceWebSocketEndpoint(notificationResponse, this.friendlyId, this.forceConnect, this.merchantId, this.accessToken);
-            this.doOptionsCallToAvoid401Error(deviceWebSocketEndpoint);
+            this.webSocketURL = Endpoints.getDeviceWebSocketEndpoint(notificationResponse, this.friendlyId, this.forceConnect, this.merchantId, this.accessToken);
+            this.doOptionsCallToAvoid401Error(this.webSocketURL);
         } else {
-            this.connectionError(this.cloverWebSocketClient, "Could not send alert to device.");
+            this.connectionError(this.cloverWebSocketClient, "The device is unreachable or an error has occurred sending the device a notification to start/connect to Cloud Pay Display.");
         }
     }
 
@@ -146,8 +160,8 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
         // server (sometimes).  Do a preliminary OPTIONS
         // request.  Although this happens regardless of if the error
         // happens, it is tremendously faster.
-        var deviceWebSocketEndpointCopy = deviceWebSocketEndpoint;
-        var httpUrl = null;
+        const deviceWebSocketEndpointCopy = deviceWebSocketEndpoint;
+        let httpUrl;
         if (deviceWebSocketEndpointCopy.indexOf("wss") > -1) {
             httpUrl = deviceWebSocketEndpointCopy.replace("wss", "https");
         } else {

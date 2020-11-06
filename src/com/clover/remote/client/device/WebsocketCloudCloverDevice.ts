@@ -52,13 +52,15 @@ export class WebsocketCloudCloverDevice extends DefaultCloverDevice {
      * Reports that this connection has been severed via a onDeviceError() notification
      * @param message
      */
-    private notifyObserversForceConnect(message: sdk.remotemessage.ForceConnectMessage): void {
+    private notifyObserversForceConnect(messageString: sdk.remotemessage.ForceConnectMessage): void {
         this.deviceObservers.forEach((obs) => {
-            let deviceErrorEvent: sdk.remotepay.CloverDeviceErrorEvent = new sdk.remotepay.CloverDeviceErrorEvent();
+            const message = JSON.stringify(messageString);
+            const deviceErrorEvent: sdk.remotepay.CloverDeviceErrorEvent = new sdk.remotepay.CloverDeviceErrorEvent();
             deviceErrorEvent.setCode(sdk.remotepay.DeviceErrorEventCode.Interrupted);
-            deviceErrorEvent.setMessage(JSON.stringify(message));
+            deviceErrorEvent.setMessage(message);
             deviceErrorEvent.setType(sdk.remotepay.ErrorType.COMMUNICATION);
             obs.onDeviceError(deviceErrorEvent);
+            obs.onDeviceDisconnected(this, message);
         });
     }
 

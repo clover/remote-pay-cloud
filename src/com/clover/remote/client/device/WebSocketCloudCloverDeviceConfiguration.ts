@@ -67,7 +67,7 @@ export class WebSocketCloudCloverDeviceConfiguration extends WebSocketCloverDevi
         this.httpSupport = httpSupport;
         this.merchantId = merchantId;
         this.deviceId = deviceId;
-        this.friendlyId = friendlyId;
+        this.friendlyId = friendlyId || "unknown";
         this.forceConnect = forceConnect;
     }
 
