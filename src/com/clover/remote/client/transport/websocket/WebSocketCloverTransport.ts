@@ -171,11 +171,14 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
         }
     }
 
-    public connectionError(ws: CloverWebSocketClient, message?: string, errorEventCode?: sdk.remotepay.DeviceErrorEventCode): void {
+    public connectionError(ws: CloverWebSocketClient,
+                           message?: string,
+                           errorEventCode?: sdk.remotepay.DeviceErrorEventCode,
+                           reconnect: boolean = true): void {
         this.logger.debug('Connection error...');
         if (this.cloverWebSocketClient == ws) {
             for (let observer of this.observers) {
-                observer.onDisconnected(this, message);
+                observer.onDisconnected(this, message, reconnect);
                 let deviceErrorEvent: sdk.remotepay.CloverDeviceErrorEvent = new sdk.remotepay.CloverDeviceErrorEvent();
                 deviceErrorEvent.setType(sdk.remotepay.ErrorType.COMMUNICATION);
                 deviceErrorEvent.setCode(errorEventCode || sdk.remotepay.DeviceErrorEventCode.NotConnected);
