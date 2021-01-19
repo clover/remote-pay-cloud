@@ -1,6 +1,6 @@
 {
   "name": "remote-pay-cloud",
-  "version": "4.0.4",
+  "version": "4.0.5",
   "description": "Access Clover devices through the cloud.",
   "keywords": [
     "clover",
@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "eventemitter3": "4.0.7",
-    "remote-pay-cloud-api": "4.0.3"
+    "remote-pay-cloud-api": "4.0.4"
   },
   "devDependencies": {
     "@types/node": "12.6.8",
@@ -41,15 +41,14 @@
     "gulp": "4.0.2",
     "gulp-sourcemaps": "2.6.5",
     "gulp-typedoc": "2.2.5",
-    "gulp-typescript": "3.2.4",
-    "jsdoc": "3.4.3",
+    "gulp-typescript": "6.0.0-alpha.1",
+    "jsdoc": "3.6.6",
     "merge2": "1.4.1",
-    "mocha": "4.0.1",
+    "mocha": "8.2.1",
     "path": "0.12.7",
     "ts-loader": "3.0.5",
     "typedoc": "0.19.2",
     "typescript": "3.9.7",
-    "webpack": "3.12.0",
-    "webpack-stream": "4.0.0"
+    "webpack-stream": "6.1.1"
   }
 }
