@@ -1,0 +1,795 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>CloverWebSocketInterface | Clover SDK for Javascript Integration</title>
+	<meta name="description" content="Documentation for Clover SDK for Javascript Integration">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">Clover SDK for Javascript Integration</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="../modules/_websocket_cloverwebsocketinterface_.html">&quot;websocket/CloverWebSocketInterface&quot;</a>
+				</li>
+				<li>
+					<a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html">CloverWebSocketInterface</a>
+				</li>
+			</ul>
+			<h1>Class CloverWebSocketInterface</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Used to abstract implementation details to allow for NodeJS and
+						Browser usage of the library.</p>
+					</div>
+					<p>WebSocket Clover Interface.  Abstracts the WebSocket implementation so that the library is not tied to a
+					Browser implementation.</p>
+					<p>Interface to connect a websocket implementation to.</p>
+					<dl class="tsd-comment-tags">
+						<dt>see</dt>
+						<dd><p><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSocket">https://developer.mozilla.org/en-US/docs/Web/API/WebSocket</a>
+							or <a href="https://html.spec.whatwg.org/multipage/web-sockets.html">https://html.spec.whatwg.org/multipage/web-sockets.html</a></p>
+						</dd>
+					</dl>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">CloverWebSocketInterface</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<a href="_websocket_browserwebsocketimpl_.browserwebsocketimpl.html" class="tsd-signature-type">BrowserWebSocketImpl</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#endpoint" class="tsd-kind-icon">endpoint</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#listeners" class="tsd-kind-icon">listeners</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#logger" class="tsd-kind-icon">logger</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#websocket" class="tsd-kind-icon">web<wbr>Socket</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#addlistener" class="tsd-kind-icon">add<wbr>Listener</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#connect" class="tsd-kind-icon">connect</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#createwebsocket" class="tsd-kind-icon">create<wbr>Web<wbr>Socket</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#getbufferedamount" class="tsd-kind-icon">get<wbr>Buffered<wbr>Amount</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#getlisteners" class="tsd-kind-icon">get<wbr>Listeners</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#getprotocol" class="tsd-kind-icon">get<wbr>Protocol</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#getreadystate" class="tsd-kind-icon">get<wbr>Ready<wbr>State</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#getstate" class="tsd-kind-icon">get<wbr>State</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#geturl" class="tsd-kind-icon">get<wbr>Url</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#isopen" class="tsd-kind-icon">is<wbr>Open</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#notifyonclose" class="tsd-kind-icon">notify<wbr>OnClose</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#notifyonerror" class="tsd-kind-icon">notify<wbr>OnError</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#notifyonmessage" class="tsd-kind-icon">notify<wbr>OnMessage</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#notifyonopen" class="tsd-kind-icon">notify<wbr>OnOpen</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#removelistener" class="tsd-kind-icon">remove<wbr>Listener</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#sendclose" class="tsd-kind-icon">send<wbr>Close</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#sendping" class="tsd-kind-icon">send<wbr>Ping</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#sendpong" class="tsd-kind-icon">send<wbr>Pong</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#sendtext" class="tsd-kind-icon">send<wbr>Text</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Clover<wbr>Web<wbr>Socket<wbr>Interface<span class="tsd-signature-symbol">(</span>endpoint<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html" class="tsd-signature-type">CloverWebSocketInterface</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in websocket/CloverWebSocketInterface.ts:26</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>endpoint: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html" class="tsd-signature-type">CloverWebSocketInterface</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="endpoint" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> endpoint</h3>
+					<div class="tsd-signature tsd-kind-icon">endpoint<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in websocket/CloverWebSocketInterface.ts:24</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="listeners" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> listeners</h3>
+					<div class="tsd-signature tsd-kind-icon">listeners<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_websocket_websocketlistener_.websocketlistener.html" class="tsd-signature-type">WebSocketListener</a><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in websocket/CloverWebSocketInterface.ts:19</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="logger" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> logger</h3>
+					<div class="tsd-signature tsd-kind-icon">logger<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Logger</span><span class="tsd-signature-symbol"> = Logger.create()</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in websocket/CloverWebSocketInterface.ts:22</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="websocket" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> web<wbr>Socket</h3>
+					<div class="tsd-signature tsd-kind-icon">web<wbr>Socket<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in websocket/CloverWebSocketInterface.ts:26</li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="addlistener" class="tsd-anchor"></a>
+					<h3>add<wbr>Listener</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Listener<span class="tsd-signature-symbol">(</span>listener<span class="tsd-signature-symbol">: </span><a href="../interfaces/_websocket_websocketlistener_.websocketlistener.html" class="tsd-signature-type">WebSocketListener</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in websocket/CloverWebSocketInterface.ts:164</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>listener: <a href="../interfaces/_websocket_websocketlistener_.websocketlistener.html" class="tsd-signature-type">WebSocketListener</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="connect" class="tsd-anchor"></a>
+					<h3>connect</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">connect<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html" class="tsd-signature-type">CloverWebSocketInterface</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in websocket/CloverWebSocketInterface.ts:44</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html" class="tsd-signature-type">CloverWebSocketInterface</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="createwebsocket" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> create<wbr>Web<wbr>Socket</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Web<wbr>Socket<span class="tsd-signature-symbol">(</span>endpoint<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in websocket/CloverWebSocketInterface.ts:42</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>For JS impls, we need to abstract out the WebSocket so that the library can be used in
+									browsers and non-browsers.</p>
+								</div>
+								<p>This MUST return immediately!  It cannot use any type of promise or deferral, or the listener
+								will not be properly attached before events begin firing.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>endpoint: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the uri to connect to</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getbufferedamount" class="tsd-anchor"></a>
+					<h3>get<wbr>Buffered<wbr>Amount</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Buffered<wbr>Amount<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in websocket/CloverWebSocketInterface.ts:190</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getlisteners" class="tsd-anchor"></a>
+					<h3>get<wbr>Listeners</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Listeners<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_websocket_websocketlistener_.websocketlistener.html" class="tsd-signature-type">WebSocketListener</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in websocket/CloverWebSocketInterface.ts:177</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_websocket_websocketlistener_.websocketlistener.html" class="tsd-signature-type">WebSocketListener</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getprotocol" class="tsd-anchor"></a>
+					<h3>get<wbr>Protocol</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Protocol<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in websocket/CloverWebSocketInterface.ts:194</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getreadystate" class="tsd-anchor"></a>
+					<h3>get<wbr>Ready<wbr>State</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Ready<wbr>State<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../enums/_websocket_websocketstate_.websocketstate.html" class="tsd-signature-type">WebSocketState</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in websocket/CloverWebSocketInterface.ts:186</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="../enums/_websocket_websocketstate_.websocketstate.html" class="tsd-signature-type">WebSocketState</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getstate" class="tsd-anchor"></a>
+					<h3>get<wbr>State</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>State<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../enums/_websocket_websocketstate_.websocketstate.html" class="tsd-signature-type">WebSocketState</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in websocket/CloverWebSocketInterface.ts:146</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="../enums/_websocket_websocketstate_.websocketstate.html" class="tsd-signature-type">WebSocketState</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="geturl" class="tsd-anchor"></a>
+					<h3>get<wbr>Url</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Url<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">String</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in websocket/CloverWebSocketInterface.ts:182</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">String</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="isopen" class="tsd-anchor"></a>
+					<h3>is<wbr>Open</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Open<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in websocket/CloverWebSocketInterface.ts:150</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="notifyonclose" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> notify<wbr>OnClose</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">notify<wbr>OnClose<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">CloseEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in websocket/CloverWebSocketInterface.ts:107</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <span class="tsd-signature-type">CloseEvent</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="notifyonerror" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> notify<wbr>OnError</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">notify<wbr>OnError<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in websocket/CloverWebSocketInterface.ts:86</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>A simple error event is passed per the websocket spec - <a href="https://www.w3.org/TR/websockets/#concept-websocket-close-fail">https://www.w3.org/TR/websockets/#concept-websocket-close-fail</a>
+									It doesn&#39;t appear that an exact typing for the websocket error event is available, so I am using any.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>simple event passed per websocket spec.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="notifyonmessage" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> notify<wbr>OnMessage</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">notify<wbr>OnMessage<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">MessageEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in websocket/CloverWebSocketInterface.ts:69</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <span class="tsd-signature-type">MessageEvent</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="notifyonopen" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> notify<wbr>OnOpen</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">notify<wbr>OnOpen<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Event</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in websocket/CloverWebSocketInterface.ts:57</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <span class="tsd-signature-type">Event</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="removelistener" class="tsd-anchor"></a>
+					<h3>remove<wbr>Listener</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Listener<span class="tsd-signature-symbol">(</span>listener<span class="tsd-signature-symbol">: </span><a href="../interfaces/_websocket_websocketlistener_.websocketlistener.html" class="tsd-signature-type">WebSocketListener</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in websocket/CloverWebSocketInterface.ts:168</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>listener: <a href="../interfaces/_websocket_websocketlistener_.websocketlistener.html" class="tsd-signature-type">WebSocketListener</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="sendclose" class="tsd-anchor"></a>
+					<h3>send<wbr>Close</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">send<wbr>Close<span class="tsd-signature-symbol">(</span>code<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, reason<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html" class="tsd-signature-type">CloverWebSocketInterface</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in websocket/CloverWebSocketInterface.ts:118</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> code: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> reason: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html" class="tsd-signature-type">CloverWebSocketInterface</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="sendping" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> send<wbr>Ping</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">send<wbr>Ping<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html" class="tsd-signature-type">CloverWebSocketInterface</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in websocket/CloverWebSocketInterface.ts:162</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Browser implementations do not do ping frames</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html" class="tsd-signature-type">CloverWebSocketInterface</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="sendpong" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> send<wbr>Pong</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">send<wbr>Pong<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html" class="tsd-signature-type">CloverWebSocketInterface</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in websocket/CloverWebSocketInterface.ts:157</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Browser implementations do not do pong frames</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html" class="tsd-signature-type">CloverWebSocketInterface</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="sendtext" class="tsd-anchor"></a>
+					<h3>send<wbr>Text</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">send<wbr>Text<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html" class="tsd-signature-type">CloverWebSocketInterface</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in websocket/CloverWebSocketInterface.ts:133</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>data: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html" class="tsd-signature-type">CloverWebSocketInterface</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_version_.html">&quot;<wbr>Version&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_remote_client_cardentrymethods_.html">&quot;remote/client/<wbr>Card<wbr>Entry<wbr>Methods&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_remote_client_cloverconnectorfactory_.html">&quot;remote/client/<wbr>Clover<wbr>Connector<wbr>Factory&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_remote_client_cloverconnectorfactorybuilder_.html">&quot;remote/client/<wbr>Clover<wbr>Connector<wbr>Factory<wbr>Builder&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_remote_client_cloverconnectorfactoryv2_.html">&quot;remote/client/<wbr>Clover<wbr>Connector<wbr>Factory<wbr>V2&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_remote_client_icloverconnectorfactory_.html">&quot;remote/client/IClover<wbr>Connector<wbr>Factory&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_remote_client_device_websocketcloudcloverdeviceconfiguration_.html">&quot;remote/client/device/<wbr>Web<wbr>Socket<wbr>Cloud<wbr>Clover<wbr>Device<wbr>Configuration&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_remote_client_device_websocketpairedcloverdeviceconfiguration_.html">&quot;remote/client/device/<wbr>Web<wbr>Socket<wbr>Paired<wbr>Clover<wbr>Device<wbr>Configuration&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_util_iimageutil_.html">&quot;util/IImage<wbr>Util&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_util_imageutil_.html">&quot;util/<wbr>Image<wbr>Util&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_websocket_browserwebsocketimpl_.html">&quot;websocket/<wbr>Browser<wbr>Web<wbr>Socket<wbr>Impl&quot;</a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="../modules/_websocket_cloverwebsocketinterface_.html">&quot;websocket/<wbr>Clover<wbr>Web<wbr>Socket<wbr>Interface&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_websocket_websocketlistener_.html">&quot;websocket/<wbr>Web<wbr>Socket<wbr>Listener&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_websocket_websocketstate_.html">&quot;websocket/<wbr>Web<wbr>Socket<wbr>State&quot;</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class tsd-parent-kind-module">
+						<a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html" class="tsd-kind-icon">Clover<wbr>Web<wbr>Socket<wbr>Interface</a>
+						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#endpoint" class="tsd-kind-icon">endpoint</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#listeners" class="tsd-kind-icon">listeners</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#logger" class="tsd-kind-icon">logger</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#websocket" class="tsd-kind-icon">web<wbr>Socket</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#addlistener" class="tsd-kind-icon">add<wbr>Listener</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#connect" class="tsd-kind-icon">connect</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#createwebsocket" class="tsd-kind-icon">create<wbr>Web<wbr>Socket</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#getbufferedamount" class="tsd-kind-icon">get<wbr>Buffered<wbr>Amount</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#getlisteners" class="tsd-kind-icon">get<wbr>Listeners</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#getprotocol" class="tsd-kind-icon">get<wbr>Protocol</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#getreadystate" class="tsd-kind-icon">get<wbr>Ready<wbr>State</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#getstate" class="tsd-kind-icon">get<wbr>State</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#geturl" class="tsd-kind-icon">get<wbr>Url</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#isopen" class="tsd-kind-icon">is<wbr>Open</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#notifyonclose" class="tsd-kind-icon">notify<wbr>OnClose</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#notifyonerror" class="tsd-kind-icon">notify<wbr>OnError</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#notifyonmessage" class="tsd-kind-icon">notify<wbr>OnMessage</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#notifyonopen" class="tsd-kind-icon">notify<wbr>OnOpen</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#removelistener" class="tsd-kind-icon">remove<wbr>Listener</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#sendclose" class="tsd-kind-icon">send<wbr>Close</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#sendping" class="tsd-kind-icon">send<wbr>Ping</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#sendpong" class="tsd-kind-icon">send<wbr>Pong</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_websocket_cloverwebsocketinterface_.cloverwebsocketinterface.html#sendtext" class="tsd-kind-icon">send<wbr>Text</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
