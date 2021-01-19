@@ -2,9 +2,9 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
+    mode: 'production',
     entry: {
-        "clover": "./index.js",
-        "clover.min": "./index.js"
+        "clover": "./index.js"
     },
     output: {
         path: path.join(__dirname, 'bundle'),
@@ -23,11 +23,5 @@ module.exports = {
     },
     resolve: {
         extensions: [ ".tsx", ".ts", ".js" ]
-    },
-    plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            include: /\.min\.js$/,
-            minimize: true
-        })
-    ]
+    }
 };
