@@ -1536,9 +1536,10 @@ export abstract class DefaultCloverDevice extends CloverDevice implements Clover
      */
     private addSuppressElementsWrapper(message: sdk.remotemessage.Message): sdk.remotemessage.Message {
         for (const fieldKey in message) {
-            const metaInfo: any = message ? message.getMetaInfo(fieldKey) : null;
-            if (metaInfo && (metaInfo.type == Array)) {
-                if (message[fieldKey] == Object) {
+            // Make sure the message has property and is defined so we can set the `suppressElementsWrapper` flag
+            if (message.hasOwnProperty(fieldKey) && message[fieldKey]) {
+                const metaInfo: any = message ? message.getMetaInfo(fieldKey) : null;
+                if (metaInfo && (metaInfo.type == Array)) {
                     message[fieldKey].suppressElementsWrapper = true;
                 }
             }

@@ -80,21 +80,21 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
         if (this.webSocketURL && this.webSocketURL.length > 0) {
             this.doOptionsCallToAvoid401Error(this.webSocketURL);
         } else {
-        // DSE-272, SEMI-2021, detect IE 11.
-        if (typeof window !== "undefined" && !!window["MSInputMethodContext"] && !!document["documentMode"]) {
-            // We should only enter this block if the browser is IE 11.  IE 11 has issues when the first call to the
-            // server is a POST (initializeWithServer).  To work-around this we make a GET request
-            // See http://jonnyreeves.co.uk/2013/making-xhr-request-to-https-domains-with-winjs/ for more information.
-            this.httpSupport.getData(Endpoints.getMerchantEndpoint(this.cloverServer, this.merchantId, this.accessToken),
+            // DSE-272, SEMI-2021, detect IE 11.
+            if (typeof window !== "undefined" && !!window["MSInputMethodContext"] && !!document["documentMode"]) {
+                // We should only enter this block if the browser is IE 11.  IE 11 has issues when the first call to the
+                // server is a POST (initializeWithServer).  To work-around this we make a GET request
+                // See http://jonnyreeves.co.uk/2013/making-xhr-request-to-https-domains-with-winjs/ for more information.
+                this.httpSupport.getData(Endpoints.getMerchantEndpoint(this.cloverServer, this.merchantId, this.accessToken),
                     (_) => this.obtainWebSocketUrlAndSendPushAlert(),
-                (error) => {
-                    this.logger.warn("IE 11 - Initial GET failed.", error);
-                });
-        } else {
-            // We aren't using IE, make the initial POST.
-            this.obtainWebSocketUrlAndSendPushAlert();
+                    (error) => {
+                        this.logger.warn("IE 11 - Initial GET failed.", error);
+                    });
+            } else {
+                // We aren't using IE, make the initial POST.
+                this.obtainWebSocketUrlAndSendPushAlert();
+            }
         }
-    }
     }
 
     /**

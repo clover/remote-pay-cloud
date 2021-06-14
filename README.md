@@ -4,7 +4,7 @@
 
 ## Version
 
-Current version: 4.0.5
+Current version: 4.0.6
 
 ## Platforms supported
 
