@@ -126,8 +126,9 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
      * Called from subclasses at the end of the constructor.
      *
      * @param deviceEndpoint
+     * @param accessToken
      */
-    protected initializeWithUri(deviceEndpoint: string): void { // synchronized
+    protected initializeWithUri(deviceEndpoint: string, accessToken?: string): void { // synchronized
         if (this.cloverWebSocketClient != null) {
             if (this.cloverWebSocketClient.isOpen() || this.cloverWebSocketClient.isConnecting()) {
                 return;
@@ -136,7 +137,7 @@ export abstract class WebSocketCloverTransport extends CloverTransport implement
             }
         }
         this.cloverWebSocketClient = new CloverWebSocketClient(deviceEndpoint, this, this.webSocketImplClass);
-        this.cloverWebSocketClient.connect();
+        this.cloverWebSocketClient.connect(accessToken);
         this.logger.info('Connection attempt complete.');
         this.notifyConnectionAttemptComplete();
     }

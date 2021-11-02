@@ -90,15 +90,15 @@ export class Endpoints {
      * The endpoint used to connect to a websocket on the server that will proxy to a device.  Used by
      * remote-pay cloud connectors.
      *
-     * @param {any} - notificationResponse - The notification response from COS.
+     * @param {any} notificationResponse - The notification response from COS.
      * @param {string} friendlyId - an id used to identify the POS.
      * @param {boolean} forceConnect - if true, then the attempt will overtake any existing connection
      * @param {boolean} merchantId - unique identifier for the merchant.
-     * @param {boolean} accessToken - mid access token
      * @returns {string} The endpoint used to connect to a websocket on the server that will proxy to a device
      */
-    public static getDeviceWebSocketEndpoint(notificationResponse: any, friendlyId: string, forceConnect: boolean, merchantId: string, accessToken: string): string {
+    public static getDeviceWebSocketEndpoint(notificationResponse: any, friendlyId: string, forceConnect: boolean, merchantId: string): string {
         const variables = {};
+        // This is not an access token its a device id.
         variables[Endpoints.WEBSOCKET_TOKEN_KEY] = notificationResponse.token;
         variables[Endpoints.DOMAIN_KEY] = notificationResponse.host;
         variables[Endpoints.WEBSOCKET_FRIENDLY_ID_KEY] = encodeURIComponent(friendlyId);
@@ -121,16 +121,14 @@ export class Endpoints {
      *
      * @param {string} domain - the clover server.  EX: https://www.clover.com, http://localhost:9000
      * @param {string} merchantId - the id of the merchant to use when getting the merchant.
-     * @param {string} accessToken - the OAuth token used when accessing the server
      * @returns {string} endpoint - the url to use to retrieve the merchant
      */
-    public static getMerchantEndpoint(domain: string, merchantId: string, accessToken: string): string {
+    public static getMerchantEndpoint(domain: string, merchantId: string): string {
         var variables = {};
         variables[Endpoints.MERCHANT_V3_KEY] = merchantId;
-        variables[Endpoints.ACCESS_TOKEN_KEY] = accessToken;
         variables[Endpoints.DOMAIN_KEY] = domain;
 
-        let merchantEndpointPath: string = Endpoints.DOMAIN_PATH + Endpoints.MERCHANT_V3_PATH + Endpoints.ACCESS_TOKEN_SUFFIX;
+        let merchantEndpointPath: string = Endpoints.DOMAIN_PATH + Endpoints.MERCHANT_V3_PATH;
         return Endpoints.setVariables(merchantEndpointPath, variables);
     }
 
@@ -146,10 +144,9 @@ export class Endpoints {
     public static getDevicesEndpoint(domain: string, merchantId: string, accessToken: string): string {
         var variables = {};
         variables[Endpoints.MERCHANT_V3_KEY] = merchantId;
-        variables[Endpoints.ACCESS_TOKEN_KEY] = accessToken;
         variables[Endpoints.DOMAIN_KEY] = domain;
 
-        let devicesEndpointPath: string = Endpoints.DOMAIN_PATH + Endpoints.DEVICE_PATH + Endpoints.ACCESS_TOKEN_SUFFIX;
+        let devicesEndpointPath: string = Endpoints.DOMAIN_PATH + Endpoints.DEVICE_PATH;
         return Endpoints.setVariables(devicesEndpointPath, variables);
     }
 
@@ -160,13 +157,12 @@ export class Endpoints {
      * @param {string} accessToken - the OAuth token used when accessing the server
      * @returns {string} endpoint - the url to use alert a device that we want to communicate with it
      */
-    public static getAlertDeviceEndpoint(domain: string, merchantId: string, accessToken: string): string {
+    public static getAlertDeviceEndpoint(domain: string, merchantId: string): string {
         var variables = {};
         variables[Endpoints.MERCHANT_V3_KEY] = merchantId;
-        variables[Endpoints.ACCESS_TOKEN_KEY] = accessToken;
         variables[Endpoints.DOMAIN_KEY] = domain;
 
-        let alertDeviceEndpointPath: string = Endpoints.DOMAIN_PATH + Endpoints.REMOTE_PAY_PATH + Endpoints.ACCESS_TOKEN_SUFFIX;
+        let alertDeviceEndpointPath: string = Endpoints.DOMAIN_PATH + Endpoints.REMOTE_PAY_PATH;
         return Endpoints.setVariables(alertDeviceEndpointPath, variables);
     }
 

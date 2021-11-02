@@ -38,11 +38,12 @@ export abstract class CloverWebSocketInterface {
      * will not be properly attached before events begin firing.
      *
      * @param endpoint - the uri to connect to
+     * @param accessToken - the access token that is used to ensure the merchant and device are associated to the token
      */
-    public abstract createWebSocket(endpoint: string): any;
+    public abstract createWebSocket(endpoint: string, accessToken): any;
 
-    public connect(): CloverWebSocketInterface {
-        this.webSocket = this.createWebSocket(this.endpoint);
+    public connect(accessToken: string): CloverWebSocketInterface {
+        this.webSocket = this.createWebSocket(this.endpoint, accessToken);
         if (typeof this.webSocket["addEventListener"] !== "function") {
             this.logger.error("FATAL: The websocket implementation being used must have an 'addEventListener' function.  Either use a supported websocket implementation (https://www.npmjs.com/package/ws) or override the connect method on CloverWebSocketInterface.");
         } else {

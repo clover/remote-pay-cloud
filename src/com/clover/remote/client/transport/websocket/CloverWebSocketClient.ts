@@ -32,7 +32,7 @@ export class CloverWebSocketClient implements WebSocketListener {
         return (this.socket ? this.socket.getBufferedAmount(): 0);
     }
 
-    public connect(): void {
+    public connect(accessToken: string): void {
         if (this.socket != null) {
             throw new Error("Socket already created. Must create a new CloverWebSocketClient");
         }
@@ -41,7 +41,7 @@ export class CloverWebSocketClient implements WebSocketListener {
             this.socket = this.webSocketImplClass(this.endpoint);
             // socket.setAutoFlush(true);
             this.socket.addListener(this);
-            this.socket.connect();
+            this.socket.connect(accessToken);
         } catch (e) {
             this.logger.error('connect, connectionError', e);
             this.listener.connectionError(this, e.message);
