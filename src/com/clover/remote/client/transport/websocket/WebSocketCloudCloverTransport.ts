@@ -85,11 +85,12 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
                 // We should only enter this block if the browser is IE 11.  IE 11 has issues when the first call to the
                 // server is a POST (initializeWithServer).  To work-around this we make a GET request
                 // See http://jonnyreeves.co.uk/2013/making-xhr-request-to-https-domains-with-winjs/ for more information.
-                this.httpSupport.getData(Endpoints.getMerchantEndpoint(this.cloverServer, this.merchantId, this.accessToken),
+                this.httpSupport.getData(Endpoints.getMerchantEndpoint(this.cloverServer, this.merchantId),
                     (_) => this.obtainWebSocketUrlAndSendPushAlert(),
                     (error) => {
                         this.logger.warn("IE 11 - Initial GET failed.", error);
-                    });
+                    },
+                    this.buildAuthorizationHeader(this.accessToken));
             } else {
                 // We aren't using IE, make the initial POST.
                 this.obtainWebSocketUrlAndSendPushAlert();
@@ -113,7 +114,7 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
         // Do the notification call.  This needs to happen every time we attempt to connect.
         // It COULD mean that the device gets a notification when the Cloud Pay Display is
         // already running, but this is not harmful.
-        let alertEndpoint: string = Endpoints.getAlertDeviceEndpoint(this.cloverServer, this.merchantId, this.accessToken);
+        let alertEndpoint: string = Endpoints.getAlertDeviceEndpoint(this.cloverServer, this.merchantId);
         let deviceContactInfo: DeviceContactInfo = new DeviceContactInfo(this.deviceId.replace(/-/g, ""), true);
         this.httpSupport.postData(alertEndpoint,
             (data) => this.deviceNotificationSent(data),
@@ -124,7 +125,8 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
                     null,
                     error && error.status !== 404);
             },
-            deviceContactInfo);
+            deviceContactInfo,
+            this.buildAuthorizationHeader(this.accessToken));
     }
 
     /**
@@ -141,7 +143,7 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
         // we will assume an earlier version of the protocol on the server,
         // and assume that the notification WAS SENT.
         if (!notificationResponse.hasOwnProperty('sent') || notificationResponse.sent) {
-            this.webSocketURL = Endpoints.getDeviceWebSocketEndpoint(notificationResponse, this.friendlyId, this.forceConnect, this.merchantId, this.accessToken);
+            this.webSocketURL = Endpoints.getDeviceWebSocketEndpoint(notificationResponse, this.friendlyId, this.forceConnect, this.merchantId);
             this.doOptionsCallToAvoid401Error(this.webSocketURL);
         } else {
             this.connectionError(this.cloverWebSocketClient, "The device is unreachable or an error has occurred sending the device a notification to start/connect to Cloud Pay Display.");
@@ -169,7 +171,8 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
         }
         this.httpSupport.options(httpUrl,
             (data, xmlHttpReqImpl) => this.afterOptionsCall(deviceWebSocketEndpoint, xmlHttpReqImpl),
-            (data, xmlHttpReqImpl) => this.afterOptionsCall(deviceWebSocketEndpoint, xmlHttpReqImpl));
+            (data, xmlHttpReqImpl) => this.afterOptionsCall(deviceWebSocketEndpoint, xmlHttpReqImpl),
+            this.buildAuthorizationHeader(this.accessToken));
     }
 
     /**
@@ -208,7 +211,11 @@ export class WebSocketCloudCloverTransport extends WebSocketCloverTransport {
             this.notifyConnectionAttemptComplete();
             return; // done connecting
         }
-        super.initializeWithUri(deviceWebSocketEndpoint);
+        super.initializeWithUri(deviceWebSocketEndpoint, this.accessToken);
+    }
+    
+    private buildAuthorizationHeader(token: string): object {
+        return {"Authorization": `Bearer ${token}`};
     }
 
     /**

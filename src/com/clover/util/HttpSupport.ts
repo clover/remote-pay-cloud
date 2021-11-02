@@ -1,4 +1,5 @@
 import {Logger} from '../remote/client/util/Logger';
+import {addHeaders} from "./addHeaders";
 
 /**
  * Interface used to abstract implementation details to allow for NodeJS and
@@ -68,7 +69,7 @@ export class HttpSupport {
     /**
      * Make the REST call to get the data
      */
-    public doXmlHttp(method: string, endpoint: string, onDataLoaded: Function, onError: Function): void {
+    public doXmlHttp(method: string, endpoint: string, onDataLoaded: Function, onError: Function, additionalHeaders?: any): void {
         const xmlHttp = new this.xmlHttpImplClass();
         this.setXmlHttpCallback(xmlHttp, endpoint, onDataLoaded, onError);
         xmlHttp.open(method, endpoint, true);
@@ -77,7 +78,7 @@ export class HttpSupport {
         if (typeof(navigator) !== "undefined" && navigator.userAgent.search("Firefox")) {
             xmlHttp.setRequestHeader("Accept", "*/*");
         }
-
+        addHeaders(additionalHeaders, xmlHttp);
         xmlHttp.send();
     }
 
@@ -86,13 +87,7 @@ export class HttpSupport {
         this.setXmlHttpCallback(xmlHttp, endpoint, onDataLoaded, onError);
 
         xmlHttp.open(method, endpoint, true);
-        if (additionalHeaders) {
-            for (var key in additionalHeaders) {
-                if (additionalHeaders.hasOwnProperty(key)) {
-                    xmlHttp.setRequestHeader(key, additionalHeaders[key]);
-                }
-            }
-        }
+        addHeaders(additionalHeaders, xmlHttp);
         if (sendData) {
             xmlHttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
             var sendDataStr = JSON.stringify(sendData);
@@ -113,15 +108,15 @@ export class HttpSupport {
     /**
      * Make the REST call to get the data
      */
-    public getData(endpoint: string, onDataLoaded: Function, onError: Function): void {
-        this.doXmlHttp("GET", endpoint, onDataLoaded, onError)
+    public getData(endpoint: string, onDataLoaded: Function, onError: Function, additionalHeaders?: object): void {
+        this.doXmlHttp("GET", endpoint, onDataLoaded, onError, additionalHeaders)
     }
 
     /**
      * Make the REST call to get the data
      */
-    public options(endpoint: string, onDataLoaded: Function, onError: Function): void {
-        this.doXmlHttp("OPTIONS", endpoint, onDataLoaded, onError)
+    public options(endpoint: string, onDataLoaded: Function, onError: Function, additionalHeaders?: object): void {
+        this.doXmlHttp("OPTIONS", endpoint, onDataLoaded, onError, additionalHeaders)
     }
 
     /**

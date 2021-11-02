@@ -213,6 +213,9 @@ export class CloverConnector implements sdk.remotepay.ICloverConnector {
             if (request.getExternalReferenceId() != null) {
                 builder.setExternalReferenceId(request.getExternalReferenceId());
             }
+            if (request.getPresentQrcOnly() != null) {
+                builder.setIsPresentQrcOnly(request.getPresentQrcOnly())
+            }
 
             builder.setTransactionSettings(transactionSettings);
 

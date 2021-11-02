@@ -15,10 +15,12 @@ export class BrowserWebSocketImpl extends CloverWebSocketInterface {
      *
      * @override
      * @param endpoint - the url that will connected to
+     * @param accessToken - Here the access token is passed as a second param to `new WebSocket()` and will be read
+     * by the support server as a "subprotocol" in the Sec-WebSocket-Protocol header value.
      * @returns {WebSocket} - the specific implementation of a websocket
      */
-    public createWebSocket(endpoint: string): any {
-        return new WebSocket(endpoint);
+    public createWebSocket(endpoint: string, accessToken?: string): any {
+        return new WebSocket(endpoint, accessToken);
     }
 
     /**

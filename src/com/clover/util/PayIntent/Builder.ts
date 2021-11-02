@@ -50,6 +50,7 @@ export namespace PayIntent {
         private transactionSettings: sdk.payments.TransactionSettings;
         private passThroughValues: object;
         private externalReferenceId: string;
+        private isPresentQrcOnly: boolean;
 
         public static buildTransactionSettingsFromPayIntent(payIntent: sdk.remotemessage.PayIntent): sdk.payments.TransactionSettings {
             let transactionSettings: sdk.payments.TransactionSettings = new sdk.payments.TransactionSettings();
@@ -310,6 +311,11 @@ export namespace PayIntent {
             return this;
         }
 
+        public setIsPresentQrcOnly(isPresentQrcOnly: boolean): Builder {
+            this.isPresentQrcOnly = isPresentQrcOnly;
+            return this;
+        }
+
         public build(): sdk.remotemessage.PayIntent {
             let payIntent: sdk.remotemessage.PayIntent = new sdk.remotemessage.PayIntent();
             payIntent.setAction(this.action);
@@ -353,6 +359,8 @@ export namespace PayIntent {
 
             payIntent.setPassThroughValues(this.passThroughValues);
             payIntent.setExternalReferenceId(this.externalReferenceId);
+            payIntent.setIsPresentQrcOnly(this.isPresentQrcOnly);
+            
             return payIntent;
         }
     }
